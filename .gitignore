@@ -1,0 +1,16 @@
+# Misc
+.DS_Store
+.env
+
+# Editor
+.idea
+.vscode
+
+# Dependencies
+node_modules
+
+# TypeScript
+dist
+
+# Turborepo
+.turbo

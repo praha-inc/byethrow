@@ -1,0 +1,59 @@
+{
+  "name": "@praha/byethrow",
+  "version": "0.0.0",
+  "description": "A lightweight, tree-shakable Result type package with a simple, consistent API designed",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "throw",
+    "error",
+    "functional"
+  ],
+  "homepage": "https://github.com/praha-inc/byethrow/blob/main/packages/byethrow/README.md",
+  "bugs": {
+    "url": "https://github.com/praha-inc/byethrow/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/praha-inc/byethrow.git",
+    "directory": "packages/byethrow"
+  },
+  "license": "MIT",
+  "author": "PrAha, Inc.",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    "require": {
+      "types": "./dist/cjs/index.d.ts",
+      "default": "./dist/cjs/index.cjs"
+    },
+    "import": {
+      "types": "./dist/esm/index.d.ts",
+      "default": "./dist/esm/index.js"
+    }
+  },
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/cjs/index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "lint:code": "eslint .",
+    "lint:type": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@rslib/core": "0.9.1",
+    "eslint": "9.27.0",
+    "typescript": "5.8.3",
+    "vitest": "3.1.4"
+  },
+  "publishConfig": {
+    "provenance": true
+  }
+}
