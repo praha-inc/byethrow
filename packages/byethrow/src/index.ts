@@ -1,3 +1,1 @@
-export const greeting = () => {
-  console.log('Hello, World!');
-};
+export * as Result from './exports';

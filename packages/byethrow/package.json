@@ -42,8 +42,8 @@
   ],
   "scripts": {
     "build": "rslib build",
-    "test": "vitest run",
-    "test:watch": "vitest watch",
+    "test": "vitest run --typecheck",
+    "test:watch": "vitest watch --typecheck",
     "lint:code": "eslint .",
     "lint:type": "tsc --noEmit"
   },
