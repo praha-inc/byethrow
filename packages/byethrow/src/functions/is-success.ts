@@ -17,6 +17,8 @@ import type { Result, Success } from '../result';
  *   console.log(result.value); // Safe access to value
  * }
  * ```
+ *
+ * @category Type Guards
  */
 export const isSuccess = <T>(result: Result<T, unknown>): result is Success<T> => {
   return result.type === 'Success';

@@ -27,6 +27,8 @@
  * );
  * // Result: 9
  * ```
+ *
+ * @category Utilities
  */
 export const pipe: {
   <A>(a: A): A;

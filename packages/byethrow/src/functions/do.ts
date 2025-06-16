@@ -12,6 +12,8 @@ import { succeed } from './succeed';
  * const result = Result.do();
  * // Result.Result<{}, never>
  * ```
+ *
+ * @category Creators
  */
 const do_ = () => succeed({});
 

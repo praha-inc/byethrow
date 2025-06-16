@@ -27,6 +27,8 @@ import type { ResultFor } from '../result';
  * const result = Result.fail(Promise.resolve('Async error'));
  * // Result.ResultAsync<never, string>
  * ```
+ *
+ * @category Creators
  */
 export const fail = <E>(error: E): ResultFor<E, never, Awaited<E>> => {
   if (isPromise(error)) {
