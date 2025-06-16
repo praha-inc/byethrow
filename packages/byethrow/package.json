@@ -49,11 +49,11 @@
     "lint:type": "tsc --noEmit"
   },
   "devDependencies": {
-    "@rslib/core": "0.9.1",
-    "eslint": "9.27.0",
+    "@rslib/core": "0.10.0",
+    "eslint": "9.29.0",
     "typedoc": "0.28.5",
     "typescript": "5.8.3",
-    "vitest": "3.1.4"
+    "vitest": "3.2.3"
   },
   "publishConfig": {
     "provenance": true
