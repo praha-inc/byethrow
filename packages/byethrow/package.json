@@ -42,6 +42,7 @@
   ],
   "scripts": {
     "build": "rslib build",
+    "build:doc": "typedoc",
     "test": "vitest run --typecheck",
     "test:watch": "vitest watch --typecheck",
     "lint:code": "eslint .",
@@ -50,6 +51,7 @@
   "devDependencies": {
     "@rslib/core": "0.9.1",
     "eslint": "9.27.0",
+    "typedoc": "0.28.5",
     "typescript": "5.8.3",
     "vitest": "3.1.4"
   },
