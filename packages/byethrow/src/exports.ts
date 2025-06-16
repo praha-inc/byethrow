@@ -6,3 +6,5 @@ export * from './functions/is-success';
 export * from './functions/pipe';
 export * from './functions/succeed';
 export * from './functions/try';
+export * from './functions/unwrap';
+export * from './functions/unwrap-error';
