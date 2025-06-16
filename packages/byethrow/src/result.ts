@@ -16,6 +16,8 @@ import type { HasPromise } from './internals/types/has-promise';
  *   value: 42,
  * };
  * ```
+ *
+ * @category Core Types
  */
 export type Success<T> = {
   readonly type: 'Success';
@@ -36,6 +38,8 @@ export type Success<T> = {
  *   error: 'Something went wrong',
  * };
  * ```
+ *
+ * @category Core Types
  */
 export type Failure<E> = {
   readonly type: 'Failure';
@@ -58,6 +62,8 @@ export type Failure<E> = {
  *     : { type: 'Failure', error: 'Oops' };
  * };
  * ```
+ *
+ * @category Core Types
  */
 export type Result<T, E> = Success<T> | Failure<E>;
 
@@ -80,6 +86,8 @@ export type Result<T, E> = Success<T> | Failure<E>;
  *   }
  * };
  * ```
+ *
+ * @category Core Types
  */
 export type ResultAsync<T, E> = Promise<Result<T, E>>;
 
@@ -102,6 +110,8 @@ export type ResultAsync<T, E> = Promise<Result<T, E>>;
  *
  * const result: Result.ResultMaybeAsync<number, string> = Promise.resolve({ type: 'Failure', error: 'error' });
  * ```
+ *
+ * @category Core Types
  */
 export type ResultMaybeAsync<T, E> = Result<T, E> | Promise<Result<T, E>>;
 
@@ -129,6 +139,8 @@ export type ResultMaybeAsync<T, E> = Result<T, E> | Promise<Result<T, E>>;
  * type R = Result.Result<number, string>;
  * type Output = Result.ResultFor<R, number, string>; // Result.Result<number, string>
  * ```
+ *
+ * @category Core Types
  */
 export type ResultFor<R, T, E> = true extends HasPromise<R> ? ResultAsync<T, E> : Result<T, E>;
 
@@ -152,6 +164,8 @@ export type ResultFor<R, T, E> = true extends HasPromise<R> ? ResultAsync<T, E> 
  * const fn = () => Promise.resolve({ type: 'Success', value: 123 } as const);
  * type SuccessValue = Result.InferSuccess<typeof fn>; // number
  * ```
+ *
+ * @category Infer Types
  */
 export type InferSuccess<T> =
   [T] extends [(...args: any[]) => ResultMaybeAsync<infer U, any>] ? U :
@@ -178,6 +192,8 @@ export type InferSuccess<T> =
  * const fn = () => Promise.resolve({ type: 'Failure', error: new Error() } as const);
  * type ErrorValue = Result.InferFailure<typeof fn>; // Error
  * ```
+ *
+ * @category Infer Types
  */
 export type InferFailure<T> =
   [T] extends [(...args: any[]) => ResultMaybeAsync<any, infer U>] ? U :

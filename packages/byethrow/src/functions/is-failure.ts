@@ -17,6 +17,8 @@ import type { Failure, Result } from '../result';
  *   console.error(result.error); // Safe access to error
  * }
  * ```
+ *
+ * @category Type Guards
  */
 export const isFailure = <E>(result: Result<unknown, E>): result is Failure<E> => {
   return result.type === 'Failure';

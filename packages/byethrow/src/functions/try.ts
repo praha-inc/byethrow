@@ -67,6 +67,8 @@ import type { Result, ResultAsync } from '../result';
  *
  * const result = await fn(); // Result.ResultAsync<string, never>
  * ```
+ *
+ * @category Creators
  */
 const try_: {
   <T extends (...args: readonly any[]) => Promise<any>, E>(

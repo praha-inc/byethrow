@@ -28,6 +28,8 @@ import type { Result } from '../result';
  * const result: Result.Result<number, string> = { type: 'Success', value: 123 };
  * const error = Result.unwrapError(result); // throws 123
  * ```
+ *
+ * @category Unwraps
  */
 export const unwrapError = <E>(result: Result<unknown, E>): E => {
   if (isSuccess(result)) {

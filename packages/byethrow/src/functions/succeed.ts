@@ -27,6 +27,8 @@ import type { ResultFor } from '../result';
  * const result = Result.succeed(Promise.resolve(42));
  * // Result.ResultAsync<number, never>
  * ```
+ *
+ * @category Creators
  */
 export const succeed = <T>(value: T): ResultFor<T, Awaited<T>, never> => {
   if (isPromise(value)) {
