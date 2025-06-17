@@ -18,4 +18,10 @@ describe('fail', () => {
 
     expectTypeOf(result).toEqualTypeOf<ResultAsync<never, Error>>();
   });
+
+  it('should return a Result with a no value', () => {
+    const result = fail();
+
+    expectTypeOf(result).toEqualTypeOf<Result<never, void>>();
+  });
 });

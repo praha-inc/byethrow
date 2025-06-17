@@ -22,4 +22,12 @@ describe('succeed', () => {
       value: { id: '123', name: 'test' },
     });
   });
+
+  it('should create a Success object with a no value', () => {
+    const result = succeed();
+
+    expect(result).toEqual({
+      type: 'Success',
+    });
+  });
 });
