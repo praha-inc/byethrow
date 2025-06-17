@@ -43,7 +43,7 @@
   "scripts": {
     "build": "rslib build",
     "build:doc": "typedoc",
-    "test": "vitest run --typecheck",
+    "test": "vitest run",
     "test:watch": "vitest watch --typecheck",
     "lint:code": "eslint .",
     "lint:type": "tsc --noEmit"
