@@ -1,5 +1,0 @@
----
-"byethrow": patch
----
-
-First release
