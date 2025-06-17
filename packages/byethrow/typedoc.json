@@ -6,6 +6,7 @@
     "Core Types",
     "Infer Types",
     "Creators",
+    "Combinators",
     "Unwraps",
     "Type Guards",
     "Utilities",
