@@ -6,21 +6,59 @@
  *
  * @example Basic Usage
  * ```ts
- * import { Result } from './path/to/module';
+ * import { Result } from '@praha/byethrow';
  *
- * const result = Result.succeed(123);
+ * const validateId = (id: string) => {
+ *   if (!id.startsWith('u')) {
+ *     return Result.fail(new Error('Invalid ID format'));
+ *   }
+ *   return Result.succeed();
+ * };
+ *
+ * const findUser = Result.try({
+ *   try: (id: string) => {
+ *     return { id, name: 'John Doe' };
+ *   },
+ *   catch: (error) => new Error('Failed to find user', { cause: error }),
+ * });
+ *
+ * const result = Result.pipe(
+ *   Result.succeed('u123'),
+ *   Result.andThrough(validateId),
+ *   Result.andThen(findUser),
+ * );
+ *
  * if (Result.isSuccess(result)) {
- *   console.log(Result.unwrap(result)); // 123
+ *   console.log(result.value); // User found: John Doe
  * }
  * ```
  *
  * @example Shorthand Usage
  * ```ts
- * import { R } from './path/to/module';
+ * import { R } from '@praha/byethrow';
  *
- * const result = R.succeed(123);
+ * const validateId = (id: string) => {
+ *   if (!id.startsWith('u')) {
+ *     return R.fail(new Error('Invalid ID format'));
+ *   }
+ *   return R.succeed();
+ * };
+ *
+ * const findUser = R.try({
+ *   try: (id: string) => {
+ *     return { id, name: 'John Doe' };
+ *   },
+ *   catch: (error) => new Error('Failed to find user', { cause: error }),
+ * });
+ *
+ * const result = R.pipe(
+ *   R.succeed('u123'),
+ *   R.andThrough(validateId),
+ *   R.andThen(findUser),
+ * );
+ *
  * if (R.isSuccess(result)) {
- *   console.log(R.unwrap(result)); // 123
+ *   console.log(result.value); // User found: John Doe
  * }
  * ```
  */
