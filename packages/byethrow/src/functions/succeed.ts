@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-assignment */
 
 import { isPromise } from '../internals/helpers/is-promise';
 
@@ -28,11 +28,27 @@ import type { ResultFor } from '../result';
  * // Result.ResultAsync<number, never>
  * ```
  *
+ * @example With No Value
+ * ```ts
+ * import { Result } from '@praha/byethrow';
+ *
+ * const result = Result.succeed();
+ * // Result.Result<void, never>
+ * ```
+ *
  * @category Creators
  */
-export const succeed = <T>(value: T): ResultFor<T, Awaited<T>, never> => {
+export const succeed: {
+  (): ResultFor<never, void, never>;
+  <T>(value: T): ResultFor<T, Awaited<T>, never>;
+} = (...args: any[]) => {
+  const value = args[0];
+  if (value === undefined) {
+    return { type: 'Success' };
+  }
+
   if (isPromise(value)) {
-    return value.then((value) => ({ type: 'Success', value: value })) as any;
+    return value.then((value) => ({ type: 'Success', value: value }));
   }
   return { type: 'Success', value } as any;
 };

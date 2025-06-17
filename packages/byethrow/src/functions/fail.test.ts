@@ -22,4 +22,12 @@ describe('fail', () => {
       error: new Error('Test promise error'),
     });
   });
+
+  it('should create a Failure object with a no value', () => {
+    const result = fail();
+
+    expect(result).toEqual({
+      type: 'Failure',
+    });
+  });
 });
