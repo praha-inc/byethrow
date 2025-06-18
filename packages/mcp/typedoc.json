@@ -1,0 +1,13 @@
+{
+  "$schema": "https://typedoc-plugin-markdown.org/schema.json",
+  "entryPoints": ["../byethrow/src/index.ts"],
+  "tsconfig": "../byethrow//tsconfig.build.json",
+  "plugin": ["typedoc-plugin-markdown", "./plugin.mjs"],
+  "router": "kind",
+  "readme": "none",
+  "indexFormat": "table",
+  "hidePageHeader": true,
+  "hideBreadcrumbs": true,
+  "useCodeBlocks": true,
+  "preserveLinkText": false
+}

@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/@praha%2Fbyethrow.svg)](https://www.npmjs.com/package/@praha/byethrow)
 [![npm download](https://img.shields.io/npm/dm/@praha/byethrow.svg)](https://www.npmjs.com/package/@praha/byethrow)
-[![license](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/praha-inc/byethrow/blob/main/LICENSE)
+[![license](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/praha-inc/byethrow/blob/main/packages/byethrow/LICENSE)
 [![Github](https://img.shields.io/github/followers/praha-inc?label=Follow&logo=github&style=social)](https://github.com/orgs/praha-inc/followers)
 
 A lightweight, tree-shakable Result type package with a simple, consistent API designed.
