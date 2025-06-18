@@ -3,6 +3,7 @@
   "entryPoints": ["./src/index.ts"],
   "tsconfig": "./tsconfig.build.json",
   "githubPages": true,
+  "useFirstParagraphOfCommentAsSummary": true,
   "categoryOrder": [
     "Core Types",
     "Infer Types",
