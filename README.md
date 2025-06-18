@@ -9,10 +9,11 @@
 
 ## Structure
 
-| Package Name                           | Version                                                                                                         | Description  | Changelog                                   |
-|----------------------------------------|-----------------------------------------------------------------------------------------------------------------|--------------|---------------------------------------------|
-| [`@praha/byethrow`](packages/byethrow) | [![npm version](https://badge.fury.io/js/@praha%2Fbyethrow.svg)](https://www.npmjs.com/package/@praha/byethrow) | core package | [CHANGELOG](packages/byethrow/CHANGELOG.md) |
-| `@praha/eslint-plugin-byethrow`        | 🚧                                                                                                              | 🚧           | 🚧                                          |
+| Package Name                           | Version                                                                                                                 | Description             | Changelog                                   |
+|----------------------------------------|-------------------------------------------------------------------------------------------------------------------------|-------------------------|---------------------------------------------|
+| [`@praha/byethrow`](packages/byethrow) | [![npm version](https://badge.fury.io/js/@praha%2Fbyethrow.svg)](https://www.npmjs.com/package/@praha/byethrow)         | Core package            | [CHANGELOG](packages/byethrow/CHANGELOG.md) |
+| [`@praha/byethrow-mcp`](packages/mcp)  | [![npm version](https://badge.fury.io/js/@praha%2Fbyethrow-mcp.svg)](https://www.npmjs.com/package/@praha/byethrow-mcp) | MCP server for byethrow | [CHANGELOG](packages/mcp/CHANGELOG.md)      |
+| `@praha/eslint-plugin-byethrow`        | 🚧                                                                                                                      | 🚧                      | 🚧                                          |
 
 ## 🤝 Contributing
 

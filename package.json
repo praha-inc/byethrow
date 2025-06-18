@@ -2,6 +2,7 @@
   "name": "byethrow",
   "private": true,
   "scripts": {
+    "generate": "turbo generate",
     "build": "turbo build",
     "test": "turbo test",
     "lint:code": "turbo lint:code",
