@@ -34,7 +34,7 @@ const loadDocument = (key: string) => {
 consola.info('Registering tools...');
 
 server.tool(
-  'Module reference',
+  'ModuleReference',
   'Returns a overview of @praha/byethrow and a list of modules to be exported.',
   () => {
     consola.info('Tool invoked: Module reference');
@@ -48,7 +48,7 @@ server.tool(
 );
 
 server.tool(
-  'Function reference',
+  'FunctionReference',
   'Returns a detailed reference of the functions that @praha/byethrow has and an example of how the functions are used.',
   { name: z.string().describe('The name of the function to reference.') },
   ({ name }) => {
@@ -63,7 +63,7 @@ server.tool(
 );
 
 server.tool(
-  'Type reference',
+  'TypeReference',
   'Returns a detailed reference of the types that @praha/byethrow has and an example of how the types are used.',
   { name: z.string().describe('The name of the type to reference.') },
   ({ name }) => {
