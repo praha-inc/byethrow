@@ -1,5 +1,11 @@
 # @praha/byethrow-mcp
 
+## 0.0.3
+
+### Patch Changes
+
+- [#15](https://github.com/praha-inc/byethrow/pull/15) [`e8bc7af`](https://github.com/praha-inc/byethrow/commit/e8bc7af4b7de9806aba0e7779215435cb394016d) Thanks [@Karibash](https://github.com/Karibash)! - Avoid including spaces in tool names
+
 ## 0.0.2
 
 ### Patch Changes
