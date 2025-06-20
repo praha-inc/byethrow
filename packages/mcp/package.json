@@ -23,7 +23,9 @@
   "author": "PrAha, Inc.",
   "sideEffects": false,
   "type": "module",
-  "bin": "dist/index.js",
+  "bin": {
+    "byethrow-mcp": "./dist/index.js"
+  },
   "files": [
     "dist",
     "LICENSE",
