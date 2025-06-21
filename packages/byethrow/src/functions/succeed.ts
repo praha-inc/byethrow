@@ -36,6 +36,8 @@ import type { ResultFor } from '../result';
  * // Result.Result<void, never>
  * ```
  *
+ * @see {@link combine} - For combining multiple Results into a single Result.
+ *
  * @category Creators
  */
 export const succeed: {

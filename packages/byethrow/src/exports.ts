@@ -2,6 +2,7 @@ export * from './result';
 export * from './functions/and-then';
 export * from './functions/and-through';
 export * from './functions/bind';
+export * from './functions/combine';
 export * from './functions/do';
 export * from './functions/fail';
 export * from './functions/is-failure';
