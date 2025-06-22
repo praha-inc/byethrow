@@ -1,5 +1,11 @@
 # @praha/byethrow
 
+## 0.2.0
+
+### Minor Changes
+
+- [#19](https://github.com/praha-inc/byethrow/pull/19) [`dc54f50`](https://github.com/praha-inc/byethrow/commit/dc54f50f4db183d8c1b2735f07b0d3c4c665173f) Thanks [@Karibash](https://github.com/Karibash)! - feature: Add orElse function
+
 ## 0.1.0
 
 ### Minor Changes
