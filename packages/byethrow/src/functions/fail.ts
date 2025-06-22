@@ -35,6 +35,9 @@ import type { ResultFor } from '../result';
  * const result = Result.fail();
  * // Result.Result<never, void>
  * ```
+ *
+ * @see {@link combine} - For combining multiple Results into a single Result.
+ *
  * @category Creators
  */
 export const fail: {

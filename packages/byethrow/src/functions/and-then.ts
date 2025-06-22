@@ -43,6 +43,8 @@ import type { InferFailure, InferSuccess, Result, ResultFor, ResultMaybeAsync } 
  * // result: { type: 'Failure', error: 'error: 3' }
  * ```
  *
+ * @see {@link pipe} - It is recommended to use this function with the {@link pipe} function for better readability and composability.
+ *
  * @category Combinators
  */
 export const andThen: {
