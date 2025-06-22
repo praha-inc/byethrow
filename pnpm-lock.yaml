@@ -68,6 +68,9 @@ importers:
       '@modelcontextprotocol/sdk':
         specifier: ^1.12.3
         version: 1.13.0
+      '@praha/byethrow':
+        specifier: workspace:*
+        version: link:../byethrow
       consola:
         specifier: ^3.4.2
         version: 3.4.2
