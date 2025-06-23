@@ -48,8 +48,8 @@ importers:
   packages/byethrow:
     devDependencies:
       '@rslib/core':
-        specifier: 0.10.1
-        version: 0.10.1(typescript@5.8.3)
+        specifier: 0.10.2
+        version: 0.10.2(typescript@5.8.3)
       eslint:
         specifier: 9.29.0
         version: 9.29.0(jiti@2.4.2)
@@ -79,8 +79,8 @@ importers:
         version: 3.25.67
     devDependencies:
       '@rslib/core':
-        specifier: 0.10.1
-        version: 0.10.1(typescript@5.8.3)
+        specifier: 0.10.2
+        version: 0.10.2(typescript@5.8.3)
       '@rspack/core':
         specifier: 1.3.15
         version: 1.3.15(@swc/helpers@0.5.17)
@@ -731,8 +731,8 @@ packages:
     engines: {node: '>=16.10.0'}
     hasBin: true
 
-  '@rslib/core@0.10.1':
-    resolution: {integrity: sha512-MuWsloiz9aQgMWZy2eBp4TZVkVj4lzgg7sLM7Vr8I8+fjBVMvjosl9uZVHPvnE55VEyYTPsRG6FIdjMUaWyBEQ==}
+  '@rslib/core@0.10.2':
+    resolution: {integrity: sha512-qDXXCMPNqoWyKdssm8djYD59dy1745rhr6jz3D+MSm46/k2Uxi1NZvgGDHS9xiikZUZbwZmGgJNg4m2ytur5uQ==}
     engines: {node: '>=16.7.0'}
     hasBin: true
     peerDependencies:
@@ -2158,8 +2158,8 @@ packages:
     resolution: {integrity: sha512-nLTrUKm2UyiL7rlhapu/Zl45FwNgkZGaCpZbIHajDYgwlJCOzLSk+cIPAnsEqV955GjILJnKbdQC1nVPz+gAYQ==}
     engines: {node: '>= 18'}
 
-  rsbuild-plugin-dts@0.10.1:
-    resolution: {integrity: sha512-pYoJbbWcXU/15/vL45wXmEwQH0LM7GRgW0YZ60vTE1wfNFsu/Esq2YZapIN7EKFszY7lRmEWPDKaeC4MczA9VA==}
+  rsbuild-plugin-dts@0.10.2:
+    resolution: {integrity: sha512-Fjh8TXBMHhoSpWclfk6JoNZskUfc7b4ywwVSqXKEWbpXdpuInAchYLb6HKk8ZPcOGY+y5tLP6Ro6M6sWJ1qAgA==}
     engines: {node: '>=16.7.0'}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -3270,10 +3270,10 @@ snapshots:
       core-js: 3.43.0
       jiti: 2.4.2
 
-  '@rslib/core@0.10.1(typescript@5.8.3)':
+  '@rslib/core@0.10.2(typescript@5.8.3)':
     dependencies:
       '@rsbuild/core': 1.4.0-beta.4
-      rsbuild-plugin-dts: 0.10.1(@rsbuild/core@1.4.0-beta.4)(typescript@5.8.3)
+      rsbuild-plugin-dts: 0.10.2(@rsbuild/core@1.4.0-beta.4)(typescript@5.8.3)
       tinyglobby: 0.2.14
     optionalDependencies:
       typescript: 5.8.3
@@ -4706,7 +4706,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  rsbuild-plugin-dts@0.10.1(@rsbuild/core@1.4.0-beta.4)(typescript@5.8.3):
+  rsbuild-plugin-dts@0.10.2(@rsbuild/core@1.4.0-beta.4)(typescript@5.8.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
       '@rsbuild/core': 1.4.0-beta.4
