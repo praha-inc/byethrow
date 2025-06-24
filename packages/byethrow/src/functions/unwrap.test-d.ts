@@ -10,4 +10,11 @@ describe('unwrap', () => {
 
     expectTypeOf(value).toEqualTypeOf<string>();
   });
+
+  it('should unwrap the value from an async success result', () => {
+    const asyncResult = succeed(Promise.resolve(42));
+    const value = unwrap(asyncResult);
+
+    expectTypeOf(value).toEqualTypeOf<Promise<number>>();
+  });
 });
