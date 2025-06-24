@@ -1,5 +1,11 @@
 # @praha/byethrow
 
+## 0.2.1
+
+### Patch Changes
+
+- [#30](https://github.com/praha-inc/byethrow/pull/30) [`45220aa`](https://github.com/praha-inc/byethrow/commit/45220aa5e43b4e2670dec320ea9974b09b396001) Thanks [@Karibash](https://github.com/Karibash)! - Make it possible to pass ResultAsync to the unwrap function
+
 ## 0.2.0
 
 ### Minor Changes
