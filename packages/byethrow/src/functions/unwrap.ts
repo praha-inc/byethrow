@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-return */
 
 import { isFailure } from './is-failure';
+import { isPromise } from '../internals/helpers/is-promise';
 
 import type { HasPromise } from '../internals/types/has-promise';
 import type { InferSuccess, ResultMaybeAsync } from '../result';
@@ -54,7 +55,7 @@ import type { InferSuccess, ResultMaybeAsync } from '../result';
 export const unwrap = <R extends ResultMaybeAsync<any, any>>(
   result: R,
 ): true extends HasPromise<R> ? Promise<InferSuccess<R>> : InferSuccess<R> => {
-  if (result instanceof Promise) {
+  if (isPromise(result)) {
     return result.then((r) => {
       if (isFailure(r)) {
         throw r.error;
