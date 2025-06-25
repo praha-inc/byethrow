@@ -67,7 +67,7 @@ export const andThrough: {
     const apply = (r: Result<InferSuccess<R1>, InferFailure<R1>>) => {
       if (isFailure(r)) return r;
       const next = fn(r.value);
-      if (next instanceof Promise) {
+      if (isPromise(next)) {
         return next.then((n) => {
           if (isFailure(n)) return n;
           return r;

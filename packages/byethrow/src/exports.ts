@@ -5,6 +5,8 @@ export * from './functions/bind';
 export * from './functions/combine';
 export * from './functions/do';
 export * from './functions/fail';
+export * from './functions/inspect';
+export * from './functions/inspect-error';
 export * from './functions/is-failure';
 export * from './functions/is-success';
 export * from './functions/map';
