@@ -1,5 +1,15 @@
 # @praha/byethrow
 
+## 0.3.0
+
+### Minor Changes
+
+- [#29](https://github.com/praha-inc/byethrow/pull/29) [`facac40`](https://github.com/praha-inc/byethrow/commit/facac402c93c8b6195922644b9b8a9458b266e29) Thanks [@Karibash](https://github.com/Karibash)! - Add inspect function
+
+### Patch Changes
+
+- [#29](https://github.com/praha-inc/byethrow/pull/29) [`9d8144d`](https://github.com/praha-inc/byethrow/commit/9d8144d2783bd21dda6ae0c7d3fe0d2326923549) Thanks [@Karibash](https://github.com/Karibash)! - Use isPromise instead of instanceof to confirm the promise
+
 ## 0.2.1
 
 ### Patch Changes
