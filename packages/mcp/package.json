@@ -46,7 +46,7 @@
   "devDependencies": {
     "@rslib/core": "0.10.4",
     "@rspack/core": "1.4.1",
-    "@types/node": "24.0.4",
+    "@types/node": "24.0.7",
     "eslint": "9.29.0",
     "typedoc": "0.28.6",
     "typedoc-plugin-markdown": "4.7.0",
