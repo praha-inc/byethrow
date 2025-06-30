@@ -1,5 +1,11 @@
 # @praha/byethrow-mcp
 
+## 0.0.8
+
+### Patch Changes
+
+- [#42](https://github.com/praha-inc/byethrow/pull/42) [`a027aee`](https://github.com/praha-inc/byethrow/commit/a027aee4fda209d5f1485abcb38d491125e2db95) Thanks [@Karibash](https://github.com/Karibash)! - Change the byethrow to a devDependencies
+
 ## 0.0.7
 
 ### Patch Changes
