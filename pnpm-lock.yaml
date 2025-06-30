@@ -4,6 +4,14 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@changesets/apply-release-plan':
+    hash: 134168d4ebb16d330cecdce99bf1defd78880d33d6c8d6f903587e5c25541e24
+    path: patches/@changesets__apply-release-plan.patch
+  '@changesets/assemble-release-plan':
+    hash: 9f15586ee8e841089a62d13dc5a5c37bf178ffb0fbf574e787950df4ec551518
+    path: patches/@changesets__assemble-release-plan.patch
+
 importers:
 
   .:
@@ -68,9 +76,6 @@ importers:
       '@modelcontextprotocol/sdk':
         specifier: ^1.12.3
         version: 1.13.0
-      '@praha/byethrow':
-        specifier: workspace:*
-        version: link:../byethrow
       consola:
         specifier: ^3.4.2
         version: 3.4.2
@@ -78,6 +83,9 @@ importers:
         specifier: ^3.25.67
         version: 3.25.67
     devDependencies:
+      '@praha/byethrow':
+        specifier: workspace:*
+        version: link:../byethrow
       '@rslib/core':
         specifier: 0.10.4
         version: 0.10.4(typescript@5.8.3)
@@ -2554,7 +2562,7 @@ snapshots:
 
   '@babel/runtime@7.27.3': {}
 
-  '@changesets/apply-release-plan@7.0.12':
+  '@changesets/apply-release-plan@7.0.12(patch_hash=134168d4ebb16d330cecdce99bf1defd78880d33d6c8d6f903587e5c25541e24)':
     dependencies:
       '@changesets/config': 3.1.1
       '@changesets/get-version-range-type': 0.4.0
@@ -2570,7 +2578,7 @@ snapshots:
       resolve-from: 5.0.0
       semver: 7.7.2
 
-  '@changesets/assemble-release-plan@6.0.9':
+  '@changesets/assemble-release-plan@6.0.9(patch_hash=9f15586ee8e841089a62d13dc5a5c37bf178ffb0fbf574e787950df4ec551518)':
     dependencies:
       '@changesets/errors': 0.2.0
       '@changesets/get-dependents-graph': 2.1.3
@@ -2593,8 +2601,8 @@ snapshots:
 
   '@changesets/cli@2.29.5':
     dependencies:
-      '@changesets/apply-release-plan': 7.0.12
-      '@changesets/assemble-release-plan': 6.0.9
+      '@changesets/apply-release-plan': 7.0.12(patch_hash=134168d4ebb16d330cecdce99bf1defd78880d33d6c8d6f903587e5c25541e24)
+      '@changesets/assemble-release-plan': 6.0.9(patch_hash=9f15586ee8e841089a62d13dc5a5c37bf178ffb0fbf574e787950df4ec551518)
       '@changesets/changelog-git': 0.2.1
       '@changesets/config': 3.1.1
       '@changesets/errors': 0.2.0
@@ -2652,7 +2660,7 @@ snapshots:
 
   '@changesets/get-release-plan@4.0.13':
     dependencies:
-      '@changesets/assemble-release-plan': 6.0.9
+      '@changesets/assemble-release-plan': 6.0.9(patch_hash=9f15586ee8e841089a62d13dc5a5c37bf178ffb0fbf574e787950df4ec551518)
       '@changesets/config': 3.1.1
       '@changesets/pre': 2.0.2
       '@changesets/read': 0.6.5
