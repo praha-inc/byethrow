@@ -44,7 +44,7 @@
     "zod": "^3.25.67"
   },
   "devDependencies": {
-    "@rslib/core": "0.10.3",
+    "@rslib/core": "0.10.4",
     "@rspack/core": "1.4.1",
     "@types/node": "24.0.4",
     "eslint": "9.29.0",
