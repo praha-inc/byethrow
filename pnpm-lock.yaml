@@ -68,9 +68,6 @@ importers:
       '@modelcontextprotocol/sdk':
         specifier: ^1.12.3
         version: 1.13.0
-      '@praha/byethrow':
-        specifier: workspace:*
-        version: link:../byethrow
       consola:
         specifier: ^3.4.2
         version: 3.4.2
@@ -78,6 +75,9 @@ importers:
         specifier: ^3.25.67
         version: 3.25.67
     devDependencies:
+      '@praha/byethrow':
+        specifier: workspace:*
+        version: link:../byethrow
       '@rslib/core':
         specifier: 0.10.4
         version: 0.10.4(typescript@5.8.3)

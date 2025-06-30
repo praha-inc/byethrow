@@ -39,11 +39,11 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.3",
-    "@praha/byethrow": "workspace:*",
     "consola": "^3.4.2",
     "zod": "^3.25.67"
   },
   "devDependencies": {
+    "@praha/byethrow": "workspace:*",
     "@rslib/core": "0.10.4",
     "@rspack/core": "1.4.1",
     "@types/node": "24.0.7",
