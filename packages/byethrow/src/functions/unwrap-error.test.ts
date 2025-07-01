@@ -1,37 +1,71 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { fail } from './fail';
 import { succeed } from './succeed';
 import { unwrapError } from './unwrap-error';
 
 describe('unwrapError', () => {
-  describe('when result is synchronous', () => {
-    it('should return the value if result is failure', () => {
-      const result = fail('error');
-      const value = unwrapError(result);
+  describe('when input is synchronous', () => {
+    describe('when input is a success', () => {
+      const input = succeed(42);
 
-      expect(value).toBe('error');
+      it('should throw the success value when no default is provided', () => {
+        expect(() => unwrapError(input)).toThrow('42');
+      });
+
+      it('should return the default value when default is provided', () => {
+        const result = unwrapError(input, 0);
+
+        expect(result).toBe(0);
+      });
     });
 
-    it('should throw an error if result is success', () => {
-      const result = succeed('success');
+    describe('when input is a failure', () => {
+      const input = fail('error');
 
-      expect(() => unwrapError(result)).toThrow('success');
+      it('should return the failure value', () => {
+        const result = unwrapError(input, 99);
+
+        expect(result).toBe('error');
+      });
+
+      it('should return the failure value when default is provided', () => {
+        const result = unwrapError(input, 99);
+
+        expect(result).toBe('error');
+      });
     });
   });
 
-  describe('when result is asynchronous (Promise)', () => {
-    it('should return the value if result is failure', async () => {
-      const result = await fail(Promise.resolve('error'));
-      const value = unwrapError(result);
+  describe('when input is asynchronous (Promise)', () => {
+    describe('when input is a success', () => {
+      const input = succeed(Promise.resolve(42));
 
-      expect(value).toBe('error');
+      it('should throw the success value when no default is provided', async () => {
+        await expect(unwrapError(input)).rejects.toThrow('42');
+      });
+
+      it('should return the default value when default is provided', async () => {
+        const result = await unwrapError(input, 0);
+
+        expect(result).toBe(0);
+      });
     });
 
-    it('should throw an error if result is success', async () => {
-      const result = await succeed(Promise.resolve('success'));
+    describe('when input is a failure', () => {
+      const input = fail(Promise.resolve('error'));
 
-      expect(() => unwrapError(result)).toThrow('success');
+      it('should return the failure value', async () => {
+        const result = await unwrapError(input, 99);
+
+        expect(result).toBe('error');
+      });
+
+      it('should return the failure value when default is provided', async () => {
+        const result = await unwrapError(input, 99);
+
+        expect(result).toBe('error');
+      });
     });
   });
 });
