@@ -8,6 +8,7 @@ export * from './functions/fail';
 export * from './functions/inspect';
 export * from './functions/inspect-error';
 export * from './functions/is-failure';
+export * from './functions/is-result';
 export * from './functions/is-success';
 export * from './functions/map';
 export * from './functions/map-error';
