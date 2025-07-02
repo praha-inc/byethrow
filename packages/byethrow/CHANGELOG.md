@@ -1,5 +1,11 @@
 # @praha/byethrow
 
+## 0.4.0
+
+### Minor Changes
+
+- [#48](https://github.com/praha-inc/byethrow/pull/48) [`f35c6c9`](https://github.com/praha-inc/byethrow/commit/f35c6c9d0f9e7a3803c10ae4e5d425b7b9abe0aa) Thanks [@Karibash](https://github.com/Karibash)! - Add type guard function to check if unknown values are Result types
+
 ## 0.3.0
 
 ### Minor Changes
