@@ -137,4 +137,46 @@ describe('try', () => {
       });
     });
   });
+
+  describe('when Promise is passed directly', () => {
+    describe('when catch handler is provided', () => {
+      it('should succeed when promise resolves', async () => {
+        const result = await try_({
+          try: Promise.resolve('success'),
+          catch: String,
+        });
+
+        expect(result).toEqual(succeed('success'));
+      });
+
+      it('should fail when promise rejects', async () => {
+        const result = await try_({
+          try: Promise.reject(new Error('failure')),
+          catch: String,
+        });
+
+        expect(result).toEqual(fail('Error: failure'));
+      });
+    });
+
+    describe('when safe mode is enabled', () => {
+      it('should succeed when promise resolves', async () => {
+        const result = await try_({
+          safe: true,
+          try: Promise.resolve('success'),
+        });
+
+        expect(result).toEqual(succeed('success'));
+      });
+
+      it('should preserve promise rejections in safe mode', async () => {
+        const result = try_({
+          safe: true,
+          try: Promise.reject(new Error('failure')),
+        });
+
+        await expect(result).rejects.toThrow('failure');
+      });
+    });
+  });
 });
