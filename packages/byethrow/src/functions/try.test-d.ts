@@ -54,4 +54,28 @@ describe('try', () => {
       });
     });
   });
+
+  describe('when Promise is passed directly', () => {
+    describe('when catch handler is provided', () => {
+      it('should return a ResultAsync with inferred success and error types', () => {
+        const result = try_({
+          try: Promise.resolve('success'),
+          catch: String,
+        });
+
+        expectTypeOf(result).toEqualTypeOf<ResultAsync<string, string>>();
+      });
+    });
+
+    describe('when safe mode is enabled', () => {
+      it('should return a ResultAsync with inferred success type and never as error type', () => {
+        const result = try_({
+          safe: true,
+          try: Promise.resolve('success'),
+        });
+
+        expectTypeOf(result).toEqualTypeOf<ResultAsync<string, never>>();
+      });
+    });
+  });
 });
