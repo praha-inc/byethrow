@@ -1,5 +1,13 @@
 # @praha/byethrow
 
+## 0.4.1
+
+### Patch Changes
+
+- [#56](https://github.com/praha-inc/byethrow/pull/56) [`4822d35`](https://github.com/praha-inc/byethrow/commit/4822d35fa4f06067214b5264be13fb80a288edec) Thanks [@Karibash](https://github.com/Karibash)! - Make it possible to pass Promise directly to the try function
+
+- [#52](https://github.com/praha-inc/byethrow/pull/52) [`d8d2e0b`](https://github.com/praha-inc/byethrow/commit/d8d2e0b798e126ab28e7aa7175b3edb0ad6dcf5f) Thanks [@Karibash](https://github.com/Karibash)! - Make it possible to pass default values to unwrap and unwrapError functions
+
 ## 0.4.0
 
 ### Minor Changes
