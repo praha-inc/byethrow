@@ -13,6 +13,7 @@ export * from './functions/is-success';
 export * from './functions/map';
 export * from './functions/map-error';
 export * from './functions/or-else';
+export * from './functions/parse';
 export * from './functions/pipe';
 export * from './functions/succeed';
 export * from './functions/try';

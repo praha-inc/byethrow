@@ -48,6 +48,9 @@
     "lint:code": "eslint .",
     "lint:type": "tsc --noEmit"
   },
+  "dependencies": {
+    "@standard-schema/spec": "^1.0.0"
+  },
   "devDependencies": {
     "@rslib/core": "0.10.4",
     "eslint": "9.30.1",
