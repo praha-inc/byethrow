@@ -1,5 +1,11 @@
 # @praha/byethrow
 
+## 0.5.0
+
+### Minor Changes
+
+- [#61](https://github.com/praha-inc/byethrow/pull/61) [`19d515e`](https://github.com/praha-inc/byethrow/commit/19d515e453615146fe584476624d211b0249c745) Thanks [@Karibash](https://github.com/Karibash)! - Add parse function with Standard Schema support
+
 ## 0.4.1
 
 ### Patch Changes
