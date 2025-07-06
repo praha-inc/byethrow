@@ -1,5 +1,11 @@
 # @praha/byethrow
 
+## 0.6.0
+
+### Minor Changes
+
+- [#63](https://github.com/praha-inc/byethrow/pull/63) [`d9fbb0c`](https://github.com/praha-inc/byethrow/commit/d9fbb0c7892fed88d566593cdb6351046d4fff6b) Thanks [@Karibash](https://github.com/Karibash)! - Add Result assertion functions
+
 ## 0.5.0
 
 ### Minor Changes
