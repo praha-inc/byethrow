@@ -48,6 +48,8 @@ import type { InferFailure, InferSuccess, Result, ResultMaybeAsync } from '../re
  * const value = Result.unwrap(result, 0); // 0
  * ```
  *
+ * @see {@link assertSuccess} - When used with {@link assertSuccess}, you can safely unwrap the {@link Result}.
+ *
  * @category Unwraps
  */
 export const unwrap: {
