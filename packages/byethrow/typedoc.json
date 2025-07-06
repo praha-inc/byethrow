@@ -10,6 +10,7 @@
     "Creators",
     "Combinators",
     "Unwraps",
+    "Assertions",
     "Type Guards",
     "Utilities",
     "*"

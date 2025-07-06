@@ -1,0 +1,54 @@
+import { isSuccess } from './is-success';
+
+import type { Failure, Result } from '../result';
+
+/**
+ * Asserts that a {@link Result} is a {@link Failure} and returns it.
+ * If the result is a {@link Success}, throws an error.
+ *
+ * @function
+ * @typeParam E - The type of the error value.
+ * @param result - The {@link Result} to assert as a {@link Failure}.
+ * @returns The {@link Failure} result.
+ * @throws {Error} If the result is a {@link Success}.
+ *
+ * @example
+ * ```ts
+ * import { Result } from '@praha/byethrow';
+ *
+ * const result: Result.Result<number, string> = Result.fail('error');
+ * const failure = Result.assertFailure(result);
+ * // failure: { type: 'Failure', error: 'error' }
+ * ```
+ *
+ * @example Throws on Success
+ * ```ts
+ * import { Result } from '@praha/byethrow';
+ *
+ * const result: Result.Result<number, string> = Result.succeed(42);
+ * Result.assertFailure(result); // throws Error
+ * ```
+ *
+ * @example Safe unwrap with assertFailure
+ * ```ts
+ * import { Result } from '@praha/byethrow';
+ *
+ * const result: Result.Result<number, string> = getResult();
+ * const value = Result.pipe(
+ *   result,
+ *   Result.andThen(() => Result.fail('die')),
+ *   Result.assertFailure,
+ *   Result.unwrapError(), // Safe unwrap after assertion
+ * );
+ * ```
+ *
+ * @see {@link unwrapError} - Use with `assertFailure` to safely unwrap error values.
+ *
+ * @category Assertions
+ */
+export const assertFailure = <E>(result: Result<never, E>): Failure<E> => {
+  if (isSuccess(result)) {
+    throw new Error('Expected a Failure result, but received a Success');
+  }
+  return result;
+};
