@@ -52,7 +52,7 @@
     "@standard-schema/spec": "^1.0.0"
   },
   "devDependencies": {
-    "@rslib/core": "0.10.4",
+    "@rslib/core": "0.10.5",
     "eslint": "9.30.1",
     "typedoc": "0.28.7",
     "typescript": "5.8.3",
