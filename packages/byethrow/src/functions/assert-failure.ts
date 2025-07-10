@@ -1,15 +1,18 @@
-import { isSuccess } from './is-success';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { Failure, Result } from '../result';
+import { isSuccess } from './is-success';
+import { isPromise } from '../internals/helpers/is-promise';
+
+import type { Failure, InferFailure, Result, ResultAsync } from '../result';
 
 /**
- * Asserts that a {@link Result} is a {@link Failure} and returns it.
+ * Asserts that a {@link Result} or {@link ResultAsync} is a {@link Failure} and returns it.
  * If the result is a {@link Success}, throws an error.
  *
  * @function
  * @typeParam E - The type of the error value.
- * @param result - The {@link Result} to assert as a {@link Failure}.
- * @returns The {@link Failure} result.
+ * @param result - The {@link Result} or {@link ResultAsync} to assert as a {@link Failure}.
+ * @returns The {@link Failure} result or a Promise of {@link Success} result.
  * @throws {Error} If the result is a {@link Success}.
  *
  * @example
@@ -46,9 +49,16 @@ import type { Failure, Result } from '../result';
  *
  * @category Assertions
  */
-export const assertFailure = <E>(result: Result<never, E>): Failure<E> => {
-  if (isSuccess(result)) {
-    throw new Error('Expected a Failure result, but received a Success');
-  }
-  return result;
+export const assertFailure: {
+  <R extends ResultAsync<never, any>>(result: R): Promise<Failure<InferFailure<R>>>;
+  <R extends Result<never, any>>(result: R): Failure<InferFailure<R>>;
+} = <E>(result: Result<never, E> | ResultAsync<never, E>): any => {
+  const apply = (r: Result<never, E>): Failure<E> => {
+    if (isSuccess(r)) {
+      throw new Error('Expected a Failure result, but received a Success');
+    }
+    return r;
+  };
+
+  return isPromise(result) ? result.then(apply) : apply(result);
 };
