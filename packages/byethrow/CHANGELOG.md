@@ -1,5 +1,11 @@
 # @praha/byethrow
 
+## 0.6.1
+
+### Patch Changes
+
+- [#74](https://github.com/praha-inc/byethrow/pull/74) [`1229e80`](https://github.com/praha-inc/byethrow/commit/1229e80f7daab65d8026a8a95a8e8206f31ca928) Thanks [@Karibash](https://github.com/Karibash)! - Make it possible to pass Promise directly to the assert functions
+
 ## 0.6.0
 
 ### Minor Changes
