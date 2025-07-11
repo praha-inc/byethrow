@@ -26,7 +26,12 @@ describe('unwrap', () => {
       const input = fail('error');
 
       it('should throw the error when no default is provided', () => {
-        expect(() => unwrap(input)).toThrow('error');
+        try {
+          unwrap(input);
+        } catch (error) {
+          expect(error).toBe('error');
+        }
+        expect.hasAssertions();
       });
 
       it('should return the default value when default is provided', () => {
@@ -58,7 +63,7 @@ describe('unwrap', () => {
       const input = fail(Promise.resolve('error'));
 
       it('should throw the error when no default is provided', async () => {
-        await expect(unwrap(input)).rejects.toThrow('error');
+        await expect(unwrap(input)).rejects.toBe('error');
       });
 
       it('should return the default value when default is provided', async () => {
