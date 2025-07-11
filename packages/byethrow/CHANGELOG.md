@@ -1,5 +1,11 @@
 # @praha/byethrow
 
+## 0.6.2
+
+### Patch Changes
+
+- [#78](https://github.com/praha-inc/byethrow/pull/78) [`5c58e25`](https://github.com/praha-inc/byethrow/commit/5c58e250c8dd4c35dbf24278fb203b6746c33ca9) Thanks [@kmymso](https://github.com/kmymso)! - Fix a bug where an error wrapped by the unwrap function is thrown
+
 ## 0.6.1
 
 ### Patch Changes
