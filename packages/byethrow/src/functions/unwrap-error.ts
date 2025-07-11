@@ -69,7 +69,8 @@ export const unwrapError: {
     const apply = (r: Result<InferSuccess<R>, InferFailure<R>>): InferFailure<R> | T => {
       if (isSuccess(r)) {
         if (hasDefault) return defaultValue as T;
-        throw new Error(String(r.value));
+        // eslint-disable-next-line @typescript-eslint/only-throw-error
+        throw r.value;
       }
       return r.error;
     };
@@ -84,7 +85,8 @@ export const unwrapError: {
     const apply = (r: Result<InferSuccess<R>, InferFailure<R>>): InferFailure<R> | T => {
       if (isSuccess(r)) {
         if (hasDefault) return defaultValue as T;
-        throw new Error(String(r.value));
+        // eslint-disable-next-line @typescript-eslint/only-throw-error
+        throw r.value;
       }
       return r.error;
     };
