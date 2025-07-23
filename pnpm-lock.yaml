@@ -80,6 +80,9 @@ importers:
       '@modelcontextprotocol/sdk':
         specifier: ^1.12.3
         version: 1.16.0
+      citty:
+        specifier: ^0.1.6
+        version: 0.1.6
       consola:
         specifier: ^3.4.2
         version: 3.4.2
@@ -1162,6 +1165,9 @@ packages:
   ci-info@4.2.0:
     resolution: {integrity: sha512-cYY9mypksY8NRqgDB1XD1RiJL338v/551niynFTGkZOO2LHuB2OmOYxDIe/ttN9AHwrqdum1360G3ald0W9kCg==}
     engines: {node: '>=8'}
+
+  citty@0.1.6:
+    resolution: {integrity: sha512-tskPPKEs8D2KPafUypv2gxwJP8h/OaJmC82QQGGDQcHvXX43xF2VDACcJVmZ0EuSxkpO9Kc4MlrA3q0+FG58AQ==}
 
   clean-regexp@1.0.0:
     resolution: {integrity: sha512-GfisEZEJvzKrmGWkvfhgzcz/BllN1USeqD2V6tg14OAOgaCD2Z/PUEuxnAZ/nPvmaHRG7a8y77p1T/IRQ4D1Hw==}
@@ -3629,6 +3635,10 @@ snapshots:
   ci-info@3.9.0: {}
 
   ci-info@4.2.0: {}
+
+  citty@0.1.6:
+    dependencies:
+      consola: 3.4.2
 
   clean-regexp@1.0.0:
     dependencies:
