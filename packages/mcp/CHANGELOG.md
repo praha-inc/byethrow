@@ -1,5 +1,11 @@
 # @praha/byethrow-mcp
 
+## 0.1.0
+
+### Minor Changes
+
+- [#92](https://github.com/praha-inc/byethrow/pull/92) [`4917942`](https://github.com/praha-inc/byethrow/commit/4917942a184783e8f95206f396ee3acc43d93960) Thanks [@Karibash](https://github.com/Karibash)! - Add verbose option
+
 ## 0.0.14
 
 ### Patch Changes
