@@ -21,7 +21,7 @@
     "@praha/eslint-config-style": "3.0.6",
     "@praha/eslint-config-typescript": "3.0.6",
     "@tsconfig/strictest": "2.0.5",
-    "eslint": "9.31.0",
+    "eslint": "9.32.0",
     "pkg-pr-new": "0.0.54",
     "turbo": "2.5.5",
     "vitest": "3.2.4"
