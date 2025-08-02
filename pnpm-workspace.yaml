@@ -1,5 +1,6 @@
 packages:
   - packages/*
+  - website
 
 patchedDependencies:
   '@changesets/apply-release-plan': patches/@changesets__apply-release-plan.patch

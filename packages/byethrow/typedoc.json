@@ -2,7 +2,7 @@
   "$schema": "https://typedoc.org/schema.json",
   "entryPoints": ["./src/index.ts"],
   "tsconfig": "./tsconfig.build.json",
-  "githubPages": true,
+  "readme": "none",
   "useFirstParagraphOfCommentAsSummary": true,
   "categoryOrder": [
     "Core Types",

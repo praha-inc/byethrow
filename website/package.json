@@ -1,0 +1,25 @@
+{
+  "name": "@praha/byethrow-website",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "dev": "rspress dev",
+    "build": "rspress build",
+    "build:api": "pnpm --filter @praha/byethrow build:doc && mv ../packages/byethrow/docs ./doc_build/api",
+    "build:deploy": "pnpm build && pnpm build:api && touch doc_build/.nojekyll",
+    "preview": "rspress preview",
+    "lint:code": "eslint .",
+    "lint:type": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@rspress/core": "2.0.0-beta.24",
+    "@rspress/plugin-llms": "2.0.0-beta.24",
+    "@rspress/plugin-sitemap": "2.0.0-beta.24",
+    "@types/react": "19.1.9",
+    "@types/react-dom": "19.1.7"
+  }
+}
