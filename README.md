@@ -1,4 +1,4 @@
-# byethrow
+# byethrow 👋
 
 [![license](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/praha-inc/byethrow/blob/main/LICENSE)
 [![Github](https://img.shields.io/github/followers/praha-inc?label=Follow&logo=github&style=social)](https://github.com/orgs/praha-inc/followers)

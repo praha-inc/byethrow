@@ -1,4 +1,4 @@
-# @praha/byethrow
+# @praha/byethrow 👋
 
 [![npm version](https://badge.fury.io/js/@praha%2Fbyethrow.svg)](https://www.npmjs.com/package/@praha/byethrow)
 [![npm download](https://img.shields.io/npm/dm/@praha/byethrow.svg)](https://www.npmjs.com/package/@praha/byethrow)
