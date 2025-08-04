@@ -2,6 +2,8 @@ import { defineConfig } from '@rspress/core';
 import { pluginLlms } from '@rspress/plugin-llms';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
 
+import { pluginTypedoc } from './plugins/typedoc';
+
 export default defineConfig({
   title: 'byethrow',
   base: '/byethrow/',
@@ -12,6 +14,7 @@ export default defineConfig({
   plugins: [
     pluginLlms(),
     pluginSitemap({ siteUrl: 'https://praha-inc.github.io/byethrow' }),
+    pluginTypedoc(),
   ],
   markdown: {
     link: {

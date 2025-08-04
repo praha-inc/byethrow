@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "rspress dev",
     "build": "rspress build",
-    "build:api": "pnpm --filter @praha/byethrow build:doc && mv ../packages/byethrow/docs ./doc_build/api",
-    "build:deploy": "pnpm build && pnpm build:api && touch doc_build/.nojekyll",
+    "build:deploy": "pnpm build && touch doc_build/.nojekyll",
     "preview": "rspress preview",
     "lint:code": "eslint .",
     "lint:type": "tsc --noEmit"
@@ -20,6 +19,7 @@
     "@rspress/plugin-llms": "2.0.0-beta.24",
     "@rspress/plugin-sitemap": "2.0.0-beta.24",
     "@types/react": "19.1.9",
-    "@types/react-dom": "19.1.7"
+    "@types/react-dom": "19.1.7",
+    "execa": "9.6.0"
   }
 }
