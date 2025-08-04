@@ -29,8 +29,8 @@ npm install @praha/byethrow
 
 ## 📚 Documentation
 
-Detailed API docs are available at:
-👉 https://praha-inc.github.io/byethrow
+- Website: For detailed information and usage examples, visit the [byethrow website](https://praha-inc.github.io/byethrow).
+- API Reference: For a complete API reference of the core package effect, see the [byethrow API Reference](https://praha-inc.github.io/byethrow/api).
 
 ## 🚀 Quick Example
 

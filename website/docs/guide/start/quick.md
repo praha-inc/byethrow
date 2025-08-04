@@ -1,0 +1,193 @@
+# Quick Start
+
+Get up and running with `@praha/byethrow` in minutes!
+
+This guide will walk you through the essential concepts and usage patterns.
+
+## Installation
+
+Install the package using your preferred package manager:
+
+```bash
+npm install @praha/byethrow
+```
+
+```bash
+pnpm add @praha/byethrow
+```
+
+```bash
+yarn add @praha/byethrow
+```
+
+## Basic Concepts
+
+`@praha/byethrow` provides a `Result` type that represents the outcome of an operation that might fail. Instead of throwing exceptions, functions return a `Result` that can be either:
+
+- **Success**: Contains a value of type `T`
+- **Failure**: Contains an error of type `E`
+
+This approach makes error handling explicit and predictable.
+
+## Your First Result
+
+Let's start with a simple example:
+
+```ts
+import { Result } from '@praha/byethrow';
+
+// Creating a successful result
+const success = Result.succeed('Hello, World!');
+
+// Creating a failed result
+const failure = Result.fail(new Error('Something went wrong'));
+
+// Checking the result
+if (Result.isSuccess(success)) {
+  console.log(success.value); // "Hello, World!"
+}
+
+if (Result.isFailure(failure)) {
+  console.log(failure.error.message); // "Something went wrong"
+}
+```
+
+## Handling Operations That Might Fail
+
+Use `Result.try` to wrap functions that might throw exceptions:
+
+```ts
+import { Result } from '@praha/byethrow';
+
+const parseNumber = Result.try({
+  try: (input: string) => {
+    const num = Number(input);
+    if (Number.isNaN(num)) {
+      throw new Error('Not a valid number');
+    }
+    return num;
+  },
+  catch: (error) => new Error('Failed to parse number', { cause: error }),
+});
+
+const result = parseNumber('42');
+if (Result.isSuccess(result)) {
+  console.log(result.value); // 42
+}
+```
+
+## Transforming Values
+
+Use `Result.map` to transform successful values:
+
+```ts
+import { Result } from '@praha/byethrow';
+
+const double = (x: number) => x * 2;
+
+const result = Result.pipe(
+  Result.succeed(21),
+  Result.map(double)
+);
+
+if (Result.isSuccess(result)) {
+  console.log(result.value); // 42
+}
+```
+
+## Chaining Operations
+
+One of the most powerful features is chaining operations together using `Result.pipe`:
+
+```ts
+import { Result } from '@praha/byethrow';
+
+const validateId = (id: string) => {
+  if (!id.startsWith('u')) {
+    return Result.fail(new Error('Invalid ID format'));
+  }
+  return Result.succeed(id);
+};
+
+const findUser = (id: string) => {
+  // Simulate a database lookup
+  if (id === 'u123') {
+    return Result.succeed({ id, name: 'John Doe' });
+  }
+  return Result.fail(new Error('User not found'));
+};
+
+const toWelcome = (user: Result.InferSuccess<typeof findUser>) => {
+  return `Welcome, ${user.name}!`;
+};
+
+// Chain multiple operations
+const result = Result.pipe(
+  Result.succeed('u123'),
+  Result.andThen(validateId),
+  Result.andThen(findUser),
+  Result.map(toWelcome)
+);
+
+if (Result.isSuccess(result)) {
+  console.log(result.value); // "Welcome, John Doe!"
+}
+```
+
+## Error Handling
+
+Handle errors gracefully with `Result.orElse`:
+
+```ts
+import { Result } from '@praha/byethrow';
+
+const riskyOperation = () => Result.fail(new Error('Operation failed'));
+
+const fallback = () => Result.succeed('Default value');
+
+const result = Result.pipe(
+  riskyOperation(),
+  Result.orElse(fallback)
+);
+
+if (Result.isSuccess(result)) {
+  console.log(result.value); // "Default value"
+}
+```
+
+## Working with Async Operations
+
+`@praha/byethrow` works seamlessly with asynchronous operations:
+
+```ts
+import { Result } from '@praha/byethrow';
+
+const validateId = (id: string) => {
+  if (!id.startsWith('u')) {
+    return Result.fail(new Error('Invalid ID format'));
+  }
+  return Result.succeed(id);
+};
+
+const findUser = Result.try({
+  try: async (userId: string) => {
+    const response = await fetch(`/api/users/${userId}`);
+    return await response.json();
+  },
+  catch: (error) => new Error('Failed to find user', { cause: error }),
+});
+
+const result = await Result.pipe(
+  Result.succeed('u123'),
+  Result.andThen(validateId),
+  Result.andThen(findUser),
+);
+
+if (Result.isSuccess(result)) {
+  console.log('User data:', result.value);
+}
+```
+
+---
+
+Happy coding with `@praha/byethrow`! 🚀
