@@ -4,6 +4,7 @@ import { pluginSitemap } from '@rspress/plugin-sitemap';
 
 export default defineConfig({
   title: 'byethrow',
+  base: '/byethrow/',
   description: 'A lightweight, tree-shakable Result type package with a simple, consistent API designed.',
   icon: '/waving-hand.png',
   logo: '/waving-hand.png',
