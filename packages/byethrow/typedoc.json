@@ -2,8 +2,12 @@
   "$schema": "https://typedoc.org/schema.json",
   "entryPoints": ["./src/index.ts"],
   "tsconfig": "./tsconfig.build.json",
+  "plugin": ["typedoc-plugin-markdown"],
+  "router": "kind",
   "readme": "none",
-  "useFirstParagraphOfCommentAsSummary": true,
+  "indexFormat": "table",
+  "hidePageHeader": true,
+  "hideBreadcrumbs": true,
   "categoryOrder": [
     "Core Types",
     "Infer Types",
