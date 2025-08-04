@@ -167,10 +167,10 @@ export type ResultFor<R, T, E> = true extends HasPromise<R> ? ResultAsync<T, E> 
  *
  * @category Infer Types
  */
-export type InferSuccess<T> =
-  [T] extends [(...args: any[]) => ResultMaybeAsync<infer U, any>] ? U :
-      [T] extends [ResultMaybeAsync<infer U, any>] ? U :
-        never;
+export type InferSuccess<T>
+  = [T] extends [(...args: any[]) => ResultMaybeAsync<infer U, any>] ? U
+    : [T] extends [ResultMaybeAsync<infer U, any>] ? U
+        : never;
 
 /**
  * Infers the {@link Failure} value type `E` from a Result or a function returning a Result.
@@ -195,7 +195,7 @@ export type InferSuccess<T> =
  *
  * @category Infer Types
  */
-export type InferFailure<T> =
-  [T] extends [(...args: any[]) => ResultMaybeAsync<any, infer U>] ? U :
-      [T] extends [ResultMaybeAsync<any, infer U>] ? U :
-        never;
+export type InferFailure<T>
+  = [T] extends [(...args: any[]) => ResultMaybeAsync<any, infer U>] ? U
+    : [T] extends [ResultMaybeAsync<any, infer U>] ? U
+        : never;
