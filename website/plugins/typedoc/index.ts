@@ -7,7 +7,7 @@ import type { RspressPlugin } from '@rspress/core';
 
 const cleanDirectory = async (directory: string): Promise<void> => {
   if (fs.existsSync(directory)) {
-    await fs.promises.rmdir(directory);
+    await fs.promises.rm(directory, { recursive: true, force: true });
   }
 };
 
