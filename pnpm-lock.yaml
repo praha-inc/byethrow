@@ -82,7 +82,7 @@ importers:
     dependencies:
       '@modelcontextprotocol/sdk':
         specifier: ^1.12.3
-        version: 1.17.1
+        version: 1.17.2
       citty:
         specifier: ^0.1.6
         version: 0.1.6
@@ -530,8 +530,8 @@ packages:
       '@types/react': '>=16'
       react: '>=16'
 
-  '@modelcontextprotocol/sdk@1.17.1':
-    resolution: {integrity: sha512-CPle1OQehbWqd25La9Ack5B07StKIxh4+Bf19qnpZKJC1oI22Y0czZHbifjw1UoczIfKBwBDAp/dFxvHG13B5A==}
+  '@modelcontextprotocol/sdk@1.17.2':
+    resolution: {integrity: sha512-EFLRNXR/ixpXQWu6/3Cu30ndDFIFNaqUXcTqsGebujeMan9FzhAaFFswLRiFj61rgygDRr8WO1N+UijjgRxX9g==}
     engines: {node: '>=18'}
 
   '@module-federation/error-codes@0.17.1':
@@ -3840,7 +3840,7 @@ snapshots:
       '@types/react': 19.1.9
       react: 19.1.1
 
-  '@modelcontextprotocol/sdk@1.17.1':
+  '@modelcontextprotocol/sdk@1.17.2':
     dependencies:
       ajv: 6.12.6
       content-type: 1.0.5
