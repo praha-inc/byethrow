@@ -49,7 +49,7 @@
     "@rspack/core": "1.4.11",
     "@types/node": "24.2.1",
     "eslint": "9.32.0",
-    "typedoc": "0.28.9",
+    "typedoc": "0.28.10",
     "typedoc-plugin-markdown": "4.8.0",
     "typescript": "5.8.3"
   },
