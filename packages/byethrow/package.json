@@ -1,6 +1,6 @@
 {
   "name": "@praha/byethrow",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "A lightweight, tree-shakable Result type package with a simple, consistent API designed",
   "keywords": [
     "javascript",

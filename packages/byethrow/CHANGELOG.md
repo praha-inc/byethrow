@@ -1,5 +1,11 @@
 # @praha/byethrow
 
+## 0.6.3
+
+### Patch Changes
+
+- [#134](https://github.com/praha-inc/byethrow/pull/134) [`22dedca`](https://github.com/praha-inc/byethrow/commit/22dedca5646471e43f2de1781eef4da641d68c0d) Thanks [@Karibash](https://github.com/Karibash)! - Fix bug where specifying undefined when creating a Result causes the value and error properties to be missing
+
 ## 0.6.2
 
 ### Patch Changes
