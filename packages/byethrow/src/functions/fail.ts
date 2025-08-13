@@ -44,11 +44,11 @@ export const fail: {
   (): ResultFor<never, never, void>;
   <E>(error: E): ResultFor<E, never, Awaited<E>>;
 } = (...args: any[]) => {
-  const error = args[0];
-  if (error === undefined) {
+  if (args.length <= 0) {
     return { type: 'Failure' };
   }
 
+  const error = args[0];
   if (isPromise(error)) {
     return error.then((error) => ({ type: 'Failure', error: error }));
   }
