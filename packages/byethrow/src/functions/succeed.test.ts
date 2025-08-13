@@ -30,4 +30,14 @@ describe('succeed', () => {
       type: 'Success',
     });
   });
+
+  it('should create a Success object with undefined value', () => {
+    // eslint-disable-next-line unicorn/no-useless-undefined
+    const result = succeed(undefined);
+
+    expect(result).toEqual({
+      type: 'Success',
+      value: undefined,
+    });
+  });
 });

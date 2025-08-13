@@ -30,4 +30,14 @@ describe('fail', () => {
       type: 'Failure',
     });
   });
+
+  it('should create a Failure object with undefined value', () => {
+    // eslint-disable-next-line unicorn/no-useless-undefined
+    const result = fail(undefined);
+
+    expect(result).toEqual({
+      type: 'Failure',
+      error: undefined,
+    });
+  });
 });

@@ -44,11 +44,11 @@ export const succeed: {
   (): ResultFor<never, void, never>;
   <T>(value: T): ResultFor<T, Awaited<T>, never>;
 } = (...args: any[]) => {
-  const value = args[0];
-  if (value === undefined) {
+  if (args.length <= 0) {
     return { type: 'Success' };
   }
 
+  const value = args[0];
   if (isPromise(value)) {
     return value.then((value) => ({ type: 'Success', value: value }));
   }
