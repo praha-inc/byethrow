@@ -50,7 +50,7 @@
     "@types/node": "24.2.1",
     "eslint": "9.32.0",
     "typedoc": "0.28.10",
-    "typedoc-plugin-markdown": "4.8.0",
+    "typedoc-plugin-markdown": "4.8.1",
     "typescript": "5.8.3"
   },
   "publishConfig": {
