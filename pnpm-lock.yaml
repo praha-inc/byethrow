@@ -131,8 +131,8 @@ importers:
         specifier: 2.0.0-beta.26
         version: 2.0.0-beta.26(@types/react@19.1.10)(acorn@8.15.0)
       '@rspress/plugin-llms':
-        specifier: 2.0.0-beta.26
-        version: 2.0.0-beta.26(@rspress/core@2.0.0-beta.26(@types/react@19.1.10)(acorn@8.15.0))
+        specifier: 2.0.0-beta.27
+        version: 2.0.0-beta.27(@rspress/core@2.0.0-beta.26(@types/react@19.1.10)(acorn@8.15.0))
       '@rspress/plugin-sitemap':
         specifier: 2.0.0-beta.26
         version: 2.0.0-beta.26(@rspress/core@2.0.0-beta.26(@types/react@19.1.10)(acorn@8.15.0))
@@ -1009,11 +1009,11 @@ packages:
     resolution: {integrity: sha512-NpNhTKBIlV3O6ADhoZkgHvBFvXMW2TYlIWmIT1ysJESUBqDpaN9H3Teve5fugjU2pQ2ORBZO6SQGKliMw/8m/Q==}
     engines: {node: '>= 10'}
 
-  '@rspress/plugin-llms@2.0.0-beta.26':
-    resolution: {integrity: sha512-5xZ0m8zmoWW6rOD/Aj7Bsz4JcIpTk4xvLH4VfTM5NFMgKnvxVfq2IrAX9rzygvTxwnPzvAjOD1JkLQ3yLgKcnA==}
+  '@rspress/plugin-llms@2.0.0-beta.27':
+    resolution: {integrity: sha512-oGPRqVyFlsxKa2BWzSlAaUyRfd+qFq0X/0E9rui7dimWYOM7o7ul8rfWXqMHc4AIBYADXirTHn7OtJFN2gGWcg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      '@rspress/core': ^2.0.0-beta.26
+      '@rspress/core': ^2.0.0-beta.27
 
   '@rspress/plugin-sitemap@2.0.0-beta.26':
     resolution: {integrity: sha512-LTUIBv5zRRDQOtgMKXYiXlPBiAxBuylWofqjwtbkUjTVJSGG2xqzHVyOw2MLiCMJca2DkY9mfq9r8PuKUKdxHw==}
@@ -4403,7 +4403,7 @@ snapshots:
       '@rspress/mdx-rs-win32-arm64-msvc': 0.6.6
       '@rspress/mdx-rs-win32-x64-msvc': 0.6.6
 
-  '@rspress/plugin-llms@2.0.0-beta.26(@rspress/core@2.0.0-beta.26(@types/react@19.1.10)(acorn@8.15.0))':
+  '@rspress/plugin-llms@2.0.0-beta.27(@rspress/core@2.0.0-beta.26(@types/react@19.1.10)(acorn@8.15.0))':
     dependencies:
       '@rspress/core': 2.0.0-beta.26(@types/react@19.1.10)(acorn@8.15.0)
       remark-mdx: 3.1.0
