@@ -1,5 +1,11 @@
 # @praha/byethrow-mcp
 
+## 0.1.2
+
+### Patch Changes
+
+- [#150](https://github.com/praha-inc/byethrow/pull/150) [`d627b1e`](https://github.com/praha-inc/byethrow/commit/d627b1e3df4d8bc004ca4a1a6110356d1253f99f) Thanks [@Karibash](https://github.com/Karibash)! - Change the version of zod to one that is compatible with the mcp sdk
+
 ## 0.1.1
 
 ### Patch Changes
