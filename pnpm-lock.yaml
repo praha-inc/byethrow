@@ -134,8 +134,8 @@ importers:
         specifier: 2.0.0-beta.28
         version: 2.0.0-beta.28(@rspress/core@2.0.0-beta.28(@types/react@19.1.10)(acorn@8.15.0))
       '@rspress/plugin-sitemap':
-        specifier: 2.0.0-beta.27
-        version: 2.0.0-beta.27(@rspress/core@2.0.0-beta.28(@types/react@19.1.10)(acorn@8.15.0))
+        specifier: 2.0.0-beta.28
+        version: 2.0.0-beta.28(@rspress/core@2.0.0-beta.28(@types/react@19.1.10)(acorn@8.15.0))
       '@types/react':
         specifier: 19.1.10
         version: 19.1.10
@@ -1027,11 +1027,11 @@ packages:
     peerDependencies:
       '@rspress/core': ^2.0.0-beta.28
 
-  '@rspress/plugin-sitemap@2.0.0-beta.27':
-    resolution: {integrity: sha512-qPkTl3TzTDym9ZtUZIGxbIXPj3cN0Sj+TLQ/o17PXHCI1+dLx6uWkHvtkJXNS/CqI1s9oxEHVXrGVi7pEu+5Gw==}
+  '@rspress/plugin-sitemap@2.0.0-beta.28':
+    resolution: {integrity: sha512-K22uv7WVo3zr+xGkmXb36+kjLIybebH9FSL/Tf4lBhhGitTqZnlpwKtjNeoM8QXr1grVb0RRHQ06CuBNPpvF3w==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      '@rspress/core': ^2.0.0-beta.27
+      '@rspress/core': ^2.0.0-beta.28
 
   '@rspress/runtime@2.0.0-beta.28':
     resolution: {integrity: sha512-umKKNgxGTNUYhFoWskxTPH4XADEoGkMgc9jNw57weD3ToUVdgmAuzIF1Ltpu8DESG0xI6Pg8Fr/SNcp+kiEe8A==}
@@ -4395,7 +4395,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rspress/plugin-sitemap@2.0.0-beta.27(@rspress/core@2.0.0-beta.28(@types/react@19.1.10)(acorn@8.15.0))':
+  '@rspress/plugin-sitemap@2.0.0-beta.28(@rspress/core@2.0.0-beta.28(@types/react@19.1.10)(acorn@8.15.0))':
     dependencies:
       '@rspress/core': 2.0.0-beta.28(@types/react@19.1.10)(acorn@8.15.0)
 
