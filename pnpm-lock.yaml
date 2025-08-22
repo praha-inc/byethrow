@@ -131,8 +131,8 @@ importers:
         specifier: 2.0.0-beta.28
         version: 2.0.0-beta.28(@types/react@19.1.10)(acorn@8.15.0)
       '@rspress/plugin-llms':
-        specifier: 2.0.0-beta.27
-        version: 2.0.0-beta.27(@rspress/core@2.0.0-beta.28(@types/react@19.1.10)(acorn@8.15.0))
+        specifier: 2.0.0-beta.28
+        version: 2.0.0-beta.28(@rspress/core@2.0.0-beta.28(@types/react@19.1.10)(acorn@8.15.0))
       '@rspress/plugin-sitemap':
         specifier: 2.0.0-beta.27
         version: 2.0.0-beta.27(@rspress/core@2.0.0-beta.28(@types/react@19.1.10)(acorn@8.15.0))
@@ -1021,11 +1021,11 @@ packages:
     resolution: {integrity: sha512-NpNhTKBIlV3O6ADhoZkgHvBFvXMW2TYlIWmIT1ysJESUBqDpaN9H3Teve5fugjU2pQ2ORBZO6SQGKliMw/8m/Q==}
     engines: {node: '>= 10'}
 
-  '@rspress/plugin-llms@2.0.0-beta.27':
-    resolution: {integrity: sha512-oGPRqVyFlsxKa2BWzSlAaUyRfd+qFq0X/0E9rui7dimWYOM7o7ul8rfWXqMHc4AIBYADXirTHn7OtJFN2gGWcg==}
+  '@rspress/plugin-llms@2.0.0-beta.28':
+    resolution: {integrity: sha512-x6n+BhsP0NjnpFEaMyRsVs773nlnfsUYbLuc+zCQkftdgreJNKqEZLUTOv1nbcY2VTJ+uoJVTtoRUJAhw+9G0A==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      '@rspress/core': ^2.0.0-beta.27
+      '@rspress/core': ^2.0.0-beta.28
 
   '@rspress/plugin-sitemap@2.0.0-beta.27':
     resolution: {integrity: sha512-qPkTl3TzTDym9ZtUZIGxbIXPj3cN0Sj+TLQ/o17PXHCI1+dLx6uWkHvtkJXNS/CqI1s9oxEHVXrGVi7pEu+5Gw==}
@@ -4384,7 +4384,7 @@ snapshots:
       '@rspress/mdx-rs-win32-arm64-msvc': 0.6.6
       '@rspress/mdx-rs-win32-x64-msvc': 0.6.6
 
-  '@rspress/plugin-llms@2.0.0-beta.27(@rspress/core@2.0.0-beta.28(@types/react@19.1.10)(acorn@8.15.0))':
+  '@rspress/plugin-llms@2.0.0-beta.28(@rspress/core@2.0.0-beta.28(@types/react@19.1.10)(acorn@8.15.0))':
     dependencies:
       '@rspress/core': 2.0.0-beta.28(@types/react@19.1.10)(acorn@8.15.0)
       remark-mdx: 3.1.0
@@ -4392,7 +4392,6 @@ snapshots:
       remark-stringify: 11.0.0
       unified: 11.0.5
       unist-util-visit: 5.0.0
-      unist-util-visit-children: 3.0.0
     transitivePeerDependencies:
       - supports-color
 
