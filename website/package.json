@@ -15,7 +15,7 @@
     "react-dom": "^19.1.1"
   },
   "devDependencies": {
-    "@rspress/core": "2.0.0-beta.27",
+    "@rspress/core": "2.0.0-beta.28",
     "@rspress/plugin-llms": "2.0.0-beta.27",
     "@rspress/plugin-sitemap": "2.0.0-beta.27",
     "@types/react": "19.1.10",
