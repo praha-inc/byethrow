@@ -6,16 +6,16 @@ import type { FC } from 'react';
 
 type PopupElement = [reference: HTMLElement, floating: HTMLElement];
 
+const findPopupElements = (): PopupElement[] => {
+  return [...document.querySelectorAll('.twoslash-hover')]
+    .map((element) => [element, element.children[0]] as PopupElement);
+};
+
 const createPopupRoot = (): HTMLElement => {
   const root = document.createElement('div');
   root.className = 'twoslash twoslash-popup-root';
   document.body.append(root);
   return root;
-};
-
-const findPopupElements = (): PopupElement[] => {
-  return [...document.querySelectorAll('.twoslash-hover')]
-    .map((element) => [element, element.children[0]] as PopupElement);
 };
 
 const getNavHeight = (): number => {
@@ -87,17 +87,22 @@ const TwoSlashPopup: FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const root = createPopupRoot();
-    const elements = findPopupElements();
-    elements.forEach(([_, floating]) => root.append(floating));
+    let root: HTMLElement;
+    let cleanups: (() => void)[];
+    let unregisters: (() => void)[];
 
-    const cleanups = elements.map(updatePopupPosition);
-    const unregisters = elements.map(registerPopupEvent);
+    setTimeout(() => {
+      const elements = findPopupElements();
+      root = createPopupRoot();
+      elements.forEach(([_, floating]) => root.append(floating));
+      cleanups = elements.map(updatePopupPosition);
+      unregisters = elements.map(registerPopupEvent);
+    });
 
     return () => {
-      cleanups.forEach((cleanup) => cleanup());
-      unregisters.forEach((unregister) => unregister());
-      root.remove();
+      cleanups?.forEach((cleanup) => cleanup());
+      unregisters?.forEach((unregister) => unregister());
+      root?.remove();
     };
   }, [location.pathname]);
 
