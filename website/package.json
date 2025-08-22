@@ -11,15 +11,25 @@
     "lint:type": "tsc --noEmit"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.7.3",
+    "@rspress/core": "^2.0.0-beta.27",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
   "devDependencies": {
-    "@rspress/core": "2.0.0-beta.28",
+    "@praha/byethrow": "workspace:*",
     "@rspress/plugin-llms": "2.0.0-beta.28",
     "@rspress/plugin-sitemap": "2.0.0-beta.28",
+    "@shikijs/twoslash": "3.9.2",
+    "@shikijs/types": "3.10.0",
+    "@types/hast": "3.0.4",
+    "@types/mdast": "4.0.4",
     "@types/react": "19.1.10",
     "@types/react-dom": "19.1.7",
-    "execa": "9.6.0"
+    "execa": "9.6.0",
+    "mdast-util-from-markdown": "2.0.2",
+    "mdast-util-gfm": "3.1.0",
+    "mdast-util-to-hast": "13.2.0",
+    "zod": "^3.25.76"
   }
 }

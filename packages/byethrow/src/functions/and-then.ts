@@ -27,6 +27,8 @@ import type { InferFailure, InferSuccess, Result, ResultFor, ResultMaybeAsync } 
  *
  * @example Failure Case (input is a Failure)
  * ```ts
+ * import { Result } from '@praha/byethrow';
+ *
  * const result = Result.pipe(
  *   Result.fail('error'),
  *   Result.andThen((x) => Result.succeed(x * 2)),
@@ -36,6 +38,8 @@ import type { InferFailure, InferSuccess, Result, ResultFor, ResultMaybeAsync } 
  *
  * @example Failure Case (function returns a Failure)
  * ```ts
+ * import { Result } from '@praha/byethrow';
+ *
  * const result = Result.pipe(
  *   Result.succeed(3),
  *   Result.andThen((x) => Result.fail('error: ' + x)),

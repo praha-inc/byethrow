@@ -19,16 +19,17 @@ import type { Failure, InferFailure, Result, ResultAsync } from '../result';
  * ```ts
  * import { Result } from '@praha/byethrow';
  *
- * const result: Result.Result<number, string> = Result.fail('error');
+ * const result = Result.fail('error');
  * const failure = Result.assertFailure(result);
  * // failure: { type: 'Failure', error: 'error' }
  * ```
  *
  * @example Throws on Success
  * ```ts
+ * // @errors: 2769
  * import { Result } from '@praha/byethrow';
  *
- * const result: Result.Result<number, string> = Result.succeed(42);
+ * const result = Result.succeed(42);
  * Result.assertFailure(result); // throws Error
  * ```
  *
@@ -36,9 +37,9 @@ import type { Failure, InferFailure, Result, ResultAsync } from '../result';
  * ```ts
  * import { Result } from '@praha/byethrow';
  *
- * const result: Result.Result<number, string> = getResult();
+ * const getResult = (): Result.Result<number, string> => Result.fail('error');
  * const value = Result.pipe(
- *   result,
+ *   getResult(),
  *   Result.andThen(() => Result.fail('die')),
  *   Result.assertFailure,
  *   Result.unwrapError(), // Safe unwrap after assertion

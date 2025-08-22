@@ -34,7 +34,7 @@ import type { InferFailure, InferSuccess, Result, ResultFor, ResultMaybeAsync } 
  * import { Result } from '@praha/byethrow';
  *
  * const result = Result.pipe(
- *   Result.fail('error),
+ *   Result.fail('error'),
  *   Result.andThrough((x) => {
  *     return x > 0 ? Result.succeed(null) : Result.fail('Must be > 0');
  *   }),
