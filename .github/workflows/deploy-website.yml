@@ -18,7 +18,9 @@ jobs:
 
       - name: Build
         working-directory: website
-        run: npm run build:deploy
+        run: |
+          pnpm run -w build --filter @praha/byethrow-website
+          touch doc_build/.nojekyll
 
       - name: Upload
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0

@@ -5,7 +5,6 @@
   "scripts": {
     "dev": "rspress dev",
     "build": "rspress build",
-    "build:deploy": "pnpm build && touch doc_build/.nojekyll",
     "preview": "rspress preview",
     "lint:code": "eslint .",
     "lint:type": "tsc --noEmit"
