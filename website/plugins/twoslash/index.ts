@@ -54,31 +54,34 @@ function renderMarkdownInline(this: ShikiTransformerContextCommon, md: string): 
   return children;
 }
 
-const compose = (parts: {
-  popup: Element;
-  token: Text | Element;
-}): ElementContent[] => {
-  return [
-    {
-      type: 'element',
-      tagName: 'div',
-      properties: {
-        class: 'twoslash-popup-wrapper',
-      },
-      children: [
-        parts.popup,
-        {
-          type: 'element',
-          tagName: 'div',
-          properties: {
-            class: 'twoslash-popup-arrow',
-          },
-          children: [],
+const compose = (always: boolean = false) => {
+  return (parts: {
+    popup: Element;
+    token: Text | Element;
+  }): ElementContent[] => {
+    return [
+      {
+        type: 'element',
+        tagName: 'div',
+        properties: {
+          class: 'twoslash-popup-wrapper',
+          ['data-always']: always,
         },
-      ],
-    },
-    parts.token,
-  ];
+        children: [
+          parts.popup,
+          {
+            type: 'element',
+            tagName: 'div',
+            properties: {
+              class: 'twoslash-popup-arrow',
+            },
+            children: [],
+          },
+        ],
+      },
+      parts.token,
+    ];
+  };
 };
 
 export const pluginTwoslash = (): RspressPlugin => {
@@ -96,9 +99,8 @@ export const pluginTwoslash = (): RspressPlugin => {
           renderMarkdown,
           renderMarkdownInline,
           hast: {
-            hoverCompose: compose,
-            queryCompose: compose,
-            errorCompose: compose,
+            hoverCompose: compose(),
+            queryCompose: compose(true),
           },
         },
       }));
