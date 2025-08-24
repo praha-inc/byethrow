@@ -85,6 +85,10 @@
     text-wrap: balance;
 }
 
+.twoslash .twoslash-popup-container .twoslash-popup-arrow {
+    display: none;
+}
+
 .twoslash .twoslash-query-presisted .twoslash-popup-container {
     z-index: 9;
     transform: translateY(1.5em);

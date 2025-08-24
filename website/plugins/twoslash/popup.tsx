@@ -52,6 +52,10 @@ const updatePopupPosition = ([reference, floating]: PopupElement): () => void =>
 };
 
 const registerPopupEvent = ([reference, floating]: PopupElement): () => void => {
+  if (floating.dataset['always'] === 'true') {
+    return () => {};
+  }
+
   let timeoutId: NodeJS.Timeout | null = null;
 
   const showPopup = () => {
@@ -94,9 +98,16 @@ const TwoSlashPopup: FC = () => {
     setTimeout(() => {
       const elements = findPopupElements();
       root = createPopupRoot();
-      elements.forEach(([_, floating]) => root.append(floating));
       cleanups = elements.map(updatePopupPosition);
       unregisters = elements.map(registerPopupEvent);
+
+      elements.forEach(([_, floating]) => {
+        root.append(floating);
+        if (floating.dataset['always'] === 'true') {
+          floating.style.opacity = '1';
+          floating.style.visibility = 'visible';
+        }
+      });
     });
 
     return () => {
