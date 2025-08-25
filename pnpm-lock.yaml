@@ -173,7 +173,7 @@ importers:
         specifier: 13.2.0
         version: 13.2.0
       zod:
-        specifier: ^3.25.76
+        specifier: 3.25.76
         version: 3.25.76
 
 packages:
