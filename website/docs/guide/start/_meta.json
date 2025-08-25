@@ -1,5 +1,22 @@
 [
-  "introduction",
-  "why",
-  "quick"
+  {
+    "type": "file",
+    "name": "introduction",
+    "label": "Introduction"
+  },
+  {
+    "type": "file",
+    "name": "why",
+    "label": "Why byethrow?"
+  },
+  {
+    "type": "file",
+    "name": "quick",
+    "label": "Quick Start"
+  },
+  {
+    "type": "file",
+    "name": "importing-result",
+    "label": "Importing Result"
+  }
 ]
