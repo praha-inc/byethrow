@@ -1,123 +1,121 @@
 import { arrow, autoUpdate, computePosition, flip, offset, shift, size } from '@floating-ui/dom';
-import { useLocation } from '@rspress/core/runtime';
-import { useEffect } from 'react';
-
-import type { FC } from 'react';
-
-type PopupElement = [reference: HTMLElement, floating: HTMLElement];
-
-const findPopupElements = (): PopupElement[] => {
-  return [...document.querySelectorAll('.twoslash-hover')]
-    .map((element) => [element, element.children[0]] as PopupElement);
-};
-
-const createPopupRoot = (): HTMLElement => {
-  const root = document.createElement('div');
-  root.className = 'twoslash twoslash-popup-root';
-  document.body.append(root);
-  return root;
-};
 
 const getNavHeight = (): number => {
-  const style = getComputedStyle(document.body);
-  return Number(style.getPropertyValue('--rp-nav-height').replaceAll(/[^0-9]/g, ''));
+  const element = document.querySelector('.rspress-sidebar-menu-container');
+  if (!element) return 0;
+  return Number(getComputedStyle(element).height.replaceAll(/[^0-9]/g, ''));
 };
 
-const updatePopupPosition = ([reference, floating]: PopupElement): () => void => {
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
-  return autoUpdate(reference, floating, async () => {
-    const arrowElement = floating.lastElementChild as HTMLElement;
-    const position = await computePosition(reference, floating, {
-      placement: 'bottom-start',
-      middleware: [
-        flip(),
-        offset(4),
-        shift({ padding: 16 }),
-        arrow({ padding: 8, element: arrowElement }),
-        size({
-          padding: { top: getNavHeight(), right: 16, bottom: 16, left: 16 },
-          apply: ({ availableWidth, availableHeight, elements }) => {
-            elements.floating.style.maxWidth = `${Math.min(700, Math.max(0, availableWidth))}px`;
-            elements.floating.style.maxHeight = `${Math.min(500, Math.max(0, availableHeight))}px`;
-          },
-        }),
-      ],
-    });
-    floating.style.left = `${position.x}px`;
-    floating.style.top = `${position.y}px`;
-    arrowElement.style.left = `${position.middlewareData.arrow?.x}px`;
-    arrowElement.style.top = `${position.middlewareData.arrow?.y}px`;
-    arrowElement.className = position.placement.includes('top') ? 'twoslash-popup-arrow twoslash-popup-arrow-top' : 'twoslash-popup-arrow twoslash-popup-arrow-bottom';
-  });
-};
+export class TwoslashPopupPortal extends HTMLElement {
+  static NAME = 'twoslash-popup-portal';
 
-const registerPopupEvent = ([reference, floating]: PopupElement): () => void => {
-  if (floating.dataset['always'] === 'true') {
-    return () => {};
+  static get instance(): Element {
+    const element = document.querySelector(TwoslashPopupPortal.NAME);
+    if (!element) {
+      const portal = document.createElement(TwoslashPopupPortal.NAME);
+      portal.className = 'twoslash';
+      document.body.append(portal);
+      return portal;
+    }
+    return element;
+  }
+}
+
+export class TwoslashPopupTrigger extends HTMLElement {
+  static NAME = 'twoslash-popup-trigger';
+}
+
+export class TwoslashPopupContainer extends HTMLElement {
+  static NAME = 'twoslash-popup-container';
+
+  #clone: {
+    element: HTMLElement;
+    cleanup: () => void;
+  } | undefined;
+
+  connectedCallback() {
+    const trigger = this.parentElement;
+    if (!(trigger instanceof TwoslashPopupTrigger)) return;
+
+    const element = this.cloneNode(true) as HTMLElement;
+    const cleanups = [
+      this.#registerUpdatePosition(trigger, element),
+      this.#registerPopupEvent(trigger, element),
+    ];
+
+    this.#clone = {
+      element,
+      cleanup: () => cleanups.forEach((cleanup) => cleanup()),
+    };
+    TwoslashPopupPortal.instance.append(this.#clone.element);
+    this.#clone.element.dataset['initialized'] = 'true';
   }
 
-  let timeoutId: NodeJS.Timeout | null = null;
+  disconnectedCallback() {
+    this.#clone?.cleanup();
+    this.#clone?.element.remove();
+  }
 
-  const showPopup = () => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-      timeoutId = null;
-    }
-    floating.style.opacity = '1';
-    floating.style.visibility = 'visible';
-  };
-
-  const hidePopup = () => {
-    timeoutId = setTimeout(() => {
-      floating.style.opacity = '0';
-      floating.style.visibility = 'hidden';
-    }, 100);
-  };
-
-  reference.addEventListener('mouseenter', showPopup);
-  reference.addEventListener('mouseleave', hidePopup);
-  floating.addEventListener('mouseenter', showPopup);
-  floating.addEventListener('mouseleave', hidePopup);
-
-  return () => {
-    reference.removeEventListener('mouseenter', showPopup);
-    reference.removeEventListener('mouseleave', hidePopup);
-    floating.removeEventListener('mouseenter', showPopup);
-    floating.removeEventListener('mouseleave', hidePopup);
-  };
-};
-
-const TwoSlashPopup: FC = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    let root: HTMLElement;
-    let cleanups: (() => void)[];
-    let unregisters: (() => void)[];
-
-    setTimeout(() => {
-      const elements = findPopupElements();
-      root = createPopupRoot();
-      cleanups = elements.map(updatePopupPosition);
-      unregisters = elements.map(registerPopupEvent);
-
-      elements.forEach(([_, floating]) => {
-        root.append(floating);
-        if (floating.dataset['always'] === 'true') {
-          floating.style.opacity = '1';
-          floating.style.visibility = 'visible';
-        }
+  #registerUpdatePosition(trigger: HTMLElement, popup: HTMLElement): () => void {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    return autoUpdate(trigger, popup, async () => {
+      const arrowElement = popup.firstElementChild as HTMLElement;
+      const position = await computePosition(trigger, popup, {
+        placement: 'bottom-start',
+        middleware: [
+          flip(),
+          offset(4),
+          shift({ padding: 16 }),
+          arrow({ padding: 8, element: arrowElement }),
+          size({
+            padding: { top: getNavHeight() + 16, right: 16, bottom: 16, left: 16 },
+            apply: ({ availableWidth, availableHeight, elements }) => {
+              elements.floating.style.maxWidth = `${Math.min(700, Math.max(0, availableWidth))}px`;
+              elements.floating.style.maxHeight = `${Math.min(500, Math.max(0, availableHeight))}px`;
+            },
+          }),
+        ],
       });
+
+      popup.style.left = `${position.x}px`;
+      popup.style.top = `${position.y}px`;
+      arrowElement.style.left = `${position.middlewareData.arrow?.x}px`;
+      arrowElement.style.top = `${position.middlewareData.arrow?.y}px`;
+      arrowElement.dataset['side'] = position.placement;
     });
+  }
+
+  #registerPopupEvent(trigger: HTMLElement, popup: HTMLElement) {
+    if (popup.dataset['always'] === 'true') {
+      return () => {};
+    }
+
+    let timeoutId: NodeJS.Timeout | null = null;
+
+    const showPopup = () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+      popup.dataset['state'] = 'show';
+    };
+
+    const hidePopup = () => {
+      timeoutId = setTimeout(() => {
+        popup.dataset['state'] = 'hidden';
+      }, 100);
+    };
+
+    trigger.addEventListener('mouseenter', showPopup);
+    trigger.addEventListener('mouseleave', hidePopup);
+    popup.addEventListener('mouseenter', showPopup);
+    popup.addEventListener('mouseleave', hidePopup);
 
     return () => {
-      cleanups?.forEach((cleanup) => cleanup());
-      unregisters?.forEach((unregister) => unregister());
-      root?.remove();
+      trigger.removeEventListener('mouseenter', showPopup);
+      trigger.removeEventListener('mouseleave', hidePopup);
+      popup.removeEventListener('mouseenter', showPopup);
+      popup.removeEventListener('mouseleave', hidePopup);
     };
-  }, [location.pathname]);
-
-  return null;
-};
-
-export default TwoSlashPopup;
+  }
+}

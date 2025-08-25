@@ -7,7 +7,7 @@ import { defaultHandlers, toHast } from 'mdast-util-to-hast';
 
 import type { RspressPlugin } from '@rspress/core';
 import type { ShikiTransformerContextCommon } from '@shikijs/types';
-import type { Element, ElementContent, Text } from 'hast';
+import type { Element, ElementContent } from 'hast';
 import type { Code } from 'mdast';
 
 // eslint-disable-next-line func-style
@@ -54,41 +54,11 @@ function renderMarkdownInline(this: ShikiTransformerContextCommon, md: string): 
   return children;
 }
 
-const compose = (always: boolean = false) => {
-  return (parts: {
-    popup: Element;
-    token: Text | Element;
-  }): ElementContent[] => {
-    return [
-      {
-        type: 'element',
-        tagName: 'div',
-        properties: {
-          class: 'twoslash-popup-wrapper',
-          ['data-always']: always,
-        },
-        children: [
-          parts.popup,
-          {
-            type: 'element',
-            tagName: 'div',
-            properties: {
-              class: 'twoslash-popup-arrow',
-            },
-            children: [],
-          },
-        ],
-      },
-      parts.token,
-    ];
-  };
-};
-
 export const pluginTwoslash = (): RspressPlugin => {
   return {
     name: '@praha/twoslash',
     globalUIComponents: [
-      path.join(import.meta.dirname, './popup.tsx'),
+      path.join(import.meta.dirname, './register.tsx'),
     ],
     config: (config) => {
       config.markdown ??= {};
@@ -99,8 +69,44 @@ export const pluginTwoslash = (): RspressPlugin => {
           renderMarkdown,
           renderMarkdownInline,
           hast: {
-            hoverCompose: compose(),
-            queryCompose: compose(true),
+            hoverToken: {
+              tagName: 'twoslash-popup-trigger',
+            },
+            hoverPopup: {
+              tagName: 'twoslash-popup-container',
+              children: (elements) => [
+                {
+                  type: 'element',
+                  tagName: 'div',
+                  properties: { class: 'twoslash-popup-arrow' },
+                  children: [],
+                },
+                {
+                  type: 'element',
+                  tagName: 'div',
+                  properties: { class: 'twoslash-popup-inner' },
+                  children: elements,
+                },
+              ],
+            },
+            queryToken: {
+              tagName: 'twoslash-popup-trigger',
+            },
+            queryPopup: {
+              tagName: 'twoslash-popup-container',
+              properties: {
+                'data-always': 'true',
+              },
+              children: (elements) => [
+                elements.at(0)!,
+                {
+                  type: 'element',
+                  tagName: 'div',
+                  properties: { class: 'twoslash-popup-inner' },
+                  children: elements.slice(1),
+                },
+              ],
+            },
           },
         },
       }));
