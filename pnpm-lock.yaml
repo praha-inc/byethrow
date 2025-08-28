@@ -90,8 +90,8 @@ importers:
         specifier: ^3.4.2
         version: 3.4.2
       zod:
-        specifier: ^3.23.8
-        version: 3.25.76
+        specifier: ^4.0.0
+        version: 4.1.5
     devDependencies:
       '@praha/byethrow':
         specifier: workspace:*
@@ -173,8 +173,8 @@ importers:
         specifier: 13.2.0
         version: 13.2.0
       zod:
-        specifier: 3.25.76
-        version: 3.25.76
+        specifier: 4.1.5
+        version: 4.1.5
 
 packages:
 
@@ -3523,6 +3523,9 @@ packages:
 
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
+
+  zod@4.1.5:
+    resolution: {integrity: sha512-rcUUZqlLJgBC33IT3PNMgsCq6TzLQEG/Ei/KTCU0PedSWRMAXoOUN+4t/0H+Q8bdnLPdqUYnvboJT0bn/229qg==}
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
@@ -7442,5 +7445,7 @@ snapshots:
       zod: 3.25.76
 
   zod@3.25.76: {}
+
+  zod@4.1.5: {}
 
   zwitch@2.0.4: {}
