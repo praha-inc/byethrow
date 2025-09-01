@@ -137,8 +137,8 @@ importers:
         specifier: workspace:*
         version: link:../packages/byethrow
       '@rspress/plugin-llms':
-        specifier: 2.0.0-beta.28
-        version: 2.0.0-beta.28(@rspress/core@2.0.0-beta.29(@types/react@19.1.12))
+        specifier: 2.0.0-beta.29
+        version: 2.0.0-beta.29(@rspress/core@2.0.0-beta.29(@types/react@19.1.12))
       '@rspress/plugin-sitemap':
         specifier: 2.0.0-beta.28
         version: 2.0.0-beta.28(@rspress/core@2.0.0-beta.29(@types/react@19.1.12))
@@ -1076,11 +1076,11 @@ packages:
     resolution: {integrity: sha512-NpNhTKBIlV3O6ADhoZkgHvBFvXMW2TYlIWmIT1ysJESUBqDpaN9H3Teve5fugjU2pQ2ORBZO6SQGKliMw/8m/Q==}
     engines: {node: '>= 10'}
 
-  '@rspress/plugin-llms@2.0.0-beta.28':
-    resolution: {integrity: sha512-x6n+BhsP0NjnpFEaMyRsVs773nlnfsUYbLuc+zCQkftdgreJNKqEZLUTOv1nbcY2VTJ+uoJVTtoRUJAhw+9G0A==}
+  '@rspress/plugin-llms@2.0.0-beta.29':
+    resolution: {integrity: sha512-KoYveLTG8DDyZk7VGwPsUEXmMQ0DvRYgCaO+0Fy/YzvDaomT6f29PveAQj1ufaJjaha+Sg8L75S9jcQ13EJmrQ==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      '@rspress/core': ^2.0.0-beta.28
+      '@rspress/core': ^2.0.0-beta.29
 
   '@rspress/plugin-sitemap@2.0.0-beta.28':
     resolution: {integrity: sha512-K22uv7WVo3zr+xGkmXb36+kjLIybebH9FSL/Tf4lBhhGitTqZnlpwKtjNeoM8QXr1grVb0RRHQ06CuBNPpvF3w==}
@@ -2953,9 +2953,6 @@ packages:
   remark-gfm@4.0.1:
     resolution: {integrity: sha512-1quofZ2RQ9EWdeN34S79+KExV1764+wCUGop5CPL1WGdD0ocPpu91lzPGbwWMECpEpd42kJGQwzRfyov9j4yNg==}
 
-  remark-mdx@3.1.0:
-    resolution: {integrity: sha512-Ngl/H3YXyBV9RcRNdlYsZujAmhsxwzxpDzpDEhFBVAGthS4GDgnctpDjgFl/ULx5UEDzqtW1cyBSNKqYYrqLBA==}
-
   remark-mdx@3.1.1:
     resolution: {integrity: sha512-Pjj2IYlUY3+D8x00UJsIOg5BEvfMyeI+2uLPn9VO9Wg4MEtN/VTIq2NEJQfde9PnX15KgtHyl9S0BcTnWrIuWg==}
 
@@ -4511,10 +4508,10 @@ snapshots:
       '@rspress/mdx-rs-win32-arm64-msvc': 0.6.6
       '@rspress/mdx-rs-win32-x64-msvc': 0.6.6
 
-  '@rspress/plugin-llms@2.0.0-beta.28(@rspress/core@2.0.0-beta.29(@types/react@19.1.12))':
+  '@rspress/plugin-llms@2.0.0-beta.29(@rspress/core@2.0.0-beta.29(@types/react@19.1.12))':
     dependencies:
       '@rspress/core': 2.0.0-beta.29(@types/react@19.1.12)
-      remark-mdx: 3.1.0
+      remark-mdx: 3.1.1
       remark-parse: 11.0.0
       remark-stringify: 11.0.0
       unified: 11.0.5
@@ -6838,13 +6835,6 @@ snapshots:
       remark-parse: 11.0.0
       remark-stringify: 11.0.0
       unified: 11.0.5
-    transitivePeerDependencies:
-      - supports-color
-
-  remark-mdx@3.1.0:
-    dependencies:
-      mdast-util-mdx: 3.0.0
-      micromark-extension-mdxjs: 3.0.0
     transitivePeerDependencies:
       - supports-color
 
