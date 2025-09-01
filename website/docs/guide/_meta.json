@@ -6,6 +6,11 @@
   },
   {
     "type": "dir",
+    "name": "best-practices",
+    "label": "Best Practices"
+  },
+  {
+    "type": "dir",
     "name": "ecosystem",
     "label": "Tools & Integrations"
   }

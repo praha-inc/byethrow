@@ -1,0 +1,295 @@
+import { PackageManagerTabs } from '../../../theme';
+
+# Custom Error
+
+When creating errors with `Result.fail()`, we strongly recommend using custom errors instead of plain strings or generic Error objects. This guide explains what custom errors are, why they're beneficial, and how to create them effectively.
+
+## What are Custom Errors?
+
+Custom errors are specialized error classes that provide more structure and context than generic Error objects. They come in two main forms:
+
+### 1. Custom Error Classes (Recommended)
+
+Custom error classes inherit from the built-in `Error` class and provide additional functionality:
+
+```ts
+import { Result } from '@praha/byethrow';
+import { z } from 'zod';
+
+class ValidationError extends Error {
+  public override readonly name = 'ValidationError';
+
+  constructor(message: string, options?: ErrorOptions) {
+    super(message, options);
+  }
+}
+
+// Usage with Result.fail()
+const validateEmail = (email: string): Result.Result<string, ValidationError> => {
+  return Result.pipe(
+    email,
+    Result.parse(z.string().email()),
+    Result.mapError((error) => new ValidationError('Invalid email format', { cause: error })),
+  );
+};
+```
+
+### 2. Objects with Identifiable Tags
+
+You can also use plain objects with distinguishable properties as error types:
+
+```ts
+import { Result } from '@praha/byethrow';
+import { z } from 'zod';
+
+type ValidationError = {
+  type: 'ValidationError';
+  message: string;
+  value: string;
+};
+
+const validateEmail = (email: string): Result.Result<string, ValidationError> => {
+  return Result.pipe(
+    email,
+    Result.parse(z.string().email()),
+    Result.mapError((error) => ({
+      type: 'ValidationError',
+      message: 'Invalid email format',
+      value: email,
+    })),
+  );
+};
+```
+
+## Why Use Custom Error Classes?
+
+While both approaches work, we recommend using custom Error classes for the following reasons:
+
+### Stack Trace Availability
+
+Custom Error classes automatically capture stack traces, making debugging much easier:
+
+```ts
+// @noErrors
+import { Result } from '@praha/byethrow';
+
+// ---cut-start---
+type User = { id: string; name: string };
+// ---cut-end---
+class DatabaseError extends Error {
+  public override readonly name = 'DatabaseError';
+
+  constructor(message: string, options?: ErrorOptions) {
+    super(message, options);
+  }
+}
+
+const fetchUser = (id: string): Result.Result<User, DatabaseError> => {
+  try {
+    // Database operation...
+  } catch (error) {
+    // The stack trace will show exactly where the error occurred
+    return Result.fail(new DatabaseError('Failed to fetch user'));
+  }
+};
+```
+
+### Error Chaining with Cause Option
+
+Custom Error classes support the `cause` option, allowing you to preserve the original error context:
+
+```ts
+// @noErrors
+import { Result } from '@praha/byethrow';
+
+// ---cut-start---
+type User = { id: string; name: string };
+// ---cut-end---
+class DatabaseError extends Error {
+  public override readonly name = 'DatabaseError';
+
+  constructor(message: string, options?: ErrorOptions) {
+    super(message, options);
+  }
+}
+
+const fetchUser = (id: string): Result.Result<User, DatabaseError> => {
+  try {
+    // Database operation...
+  } catch (error) {
+    // Preserve the original error as cause
+    return Result.fail(new DatabaseError('Failed to fetch user', { 
+      cause: error 
+    }));
+  }
+};
+```
+
+## Recommended: Using @praha/error-factory
+
+For creating custom error classes efficiently, we recommend using `@praha/error-factory`. This library reduces boilerplate code and ensures consistent error structures.
+
+### Installation
+
+<PackageManagerTabs command="install @praha/error-factory" />
+
+### Basic Usage with Result
+
+First, define the necessary custom error.
+
+```ts
+import { ErrorFactory } from '@praha/error-factory';
+
+class ValidationError extends ErrorFactory({
+  name: 'ValidationError',
+  message: 'Invalid input provided',
+}) {}
+
+class QueryError extends ErrorFactory({
+  name: 'QueryError',
+  message: 'An error occurred while executing a query',
+  fields: ErrorFactory.fields<{ query: string }>(),
+}) {}
+
+class NotFoundError extends ErrorFactory({
+  name: 'NotFoundError',
+  message: 'Resource not found',
+}) {}
+```
+
+Next, create a function that returns the previously defined custom error together with a `Result`.
+
+```ts
+import { ErrorFactory } from '@praha/error-factory';
+
+class ValidationError extends ErrorFactory({
+  name: 'ValidationError',
+  message: 'Invalid input provided',
+}) {}
+
+class QueryError extends ErrorFactory({
+  name: 'QueryError',
+  message: 'An error occurred while executing a query',
+  fields: ErrorFactory.fields<{ query: string }>(),
+}) {}
+
+class NotFoundError extends ErrorFactory({
+  name: 'NotFoundError',
+  message: 'Resource not found',
+}) {}
+
+type QueryResult = Record<string, string>;
+const database = { query: (sql: string): Promise<QueryResult> => Promise.resolve({}) };
+type User = { id: string; name: string };
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+import { z } from 'zod';
+
+// Use custom errors in Result operations
+const validateId = (id: string) => {
+  return Result.pipe(
+    id,
+    Result.parse(z.string().startsWith('u')),
+    Result.mapError((error) => new ValidationError({ cause: error })),
+  );
+};
+
+const executeQuery = (sql: string) => {
+  return Result.try({
+    try: database.query(sql),
+    catch: (error) => new QueryError({ query: sql, cause: error }),
+  });
+};
+
+// Combine everything
+const findUser = (id: string) => {
+  return Result.pipe(
+    validateId(id),
+    Result.andThen((id) => executeQuery(`SELECT * FROM users WHERE id = '${id}'`)),
+    Result.andThen((row) => {
+      if (!row) {
+        return Result.fail(new NotFoundError());
+      }
+      return Result.succeed({ id: row.id, name: row.name });
+    }),
+  );
+};
+```
+
+Finally, execute the function and handle it appropriately.
+
+```ts
+import { Result } from '@praha/byethrow';
+import { ErrorFactory } from '@praha/error-factory';
+import { z } from 'zod';
+
+type QueryResult = Record<string, string>;
+const database = { query: (sql: string): Promise<QueryResult> => Promise.resolve({}) };
+type User = { id: string; name: string };
+
+// Define custom errors
+class ValidationError extends ErrorFactory({
+  name: 'ValidationError',
+  message: 'Invalid input provided',
+}) {}
+
+class QueryError extends ErrorFactory({
+  name: 'QueryError',
+  message: 'An error occurred while executing a query',
+  fields: ErrorFactory.fields<{ query: string }>(),
+}) {}
+
+class NotFoundError extends ErrorFactory({
+  name: 'NotFoundError',
+  message: 'Resource not found',
+}) {}
+
+// Use custom errors in Result operations
+const validateId = (id: string) => {
+  return Result.pipe(
+    id,
+    Result.parse(z.string().startsWith('u')),
+    Result.mapError((error) => new ValidationError({ cause: error })),
+  );
+};
+
+const executeQuery = (sql: string) => {
+  return Result.try({
+    try: database.query(sql),
+    catch: (error) => new QueryError({ query: sql, cause: error }),
+  });
+};
+
+// Combine everything
+const findUser = (id: string) => {
+  return Result.pipe(
+    validateId(id),
+    Result.andThen(() => executeQuery(`SELECT * FROM users WHERE id = '${id}'`)),
+    Result.andThen((row) => {
+      if (!row) {
+        return Result.fail(new NotFoundError());
+      }
+      return Result.succeed({ id: row.id, name: row.name });
+    }),
+  );
+};
+// ---cut-before---
+// Execute and handle errors
+const result = await findUser('u123');
+if (Result.isSuccess(result)) {
+  console.log(result.value);
+} else {
+  // Handle each error type separately.
+  switch (result.error.name) {
+    case 'ValidationError':
+      console.error('Validation error:', result.error.message);
+      break;
+    case 'QueryError':
+      console.error('Query error:', result.error.message, 'Query:', result.error.query);
+      break;
+    case 'NotFoundError':
+      console.error('Not found error:', result.error.message);
+      break;
+  }
+}
+```
