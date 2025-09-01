@@ -136,6 +136,9 @@ importers:
       '@praha/byethrow':
         specifier: workspace:*
         version: link:../packages/byethrow
+      '@praha/error-factory':
+        specifier: 1.1.0
+        version: 1.1.0
       '@rspress/plugin-llms':
         specifier: 2.0.0-beta.29
         version: 2.0.0-beta.29(@rspress/core@2.0.0-beta.29(@types/react@19.1.12))
@@ -717,6 +720,9 @@ packages:
   '@pkgr/core@0.2.9':
     resolution: {integrity: sha512-QNqXyfVS2wm9hweSYD2O7F0G06uurj9kZ96TRQE5Y9hU7+tgdZwIkbAKc5Ocy1HxEY2kuDQa6cQ1WRs/O5LFKA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
+
+  '@praha/error-factory@1.1.0':
+    resolution: {integrity: sha512-jqppI7ad8SquD47OyvH4/B/juN3EdybwsirI28u+oFG6+9TGzHsovABAUF1julSfylG+Es28EBF3QahZD+7f3Q==}
 
   '@praha/eslint-config-common@4.0.2':
     resolution: {integrity: sha512-5hWCdZJCVZ/92/Ya9juUisxCsXiYL+U3F1PgBmYc/VpfTWPEioZa0Od4uANcYgRT30Rj2ARPmP2Eh72zNYZGKw==}
@@ -4156,6 +4162,8 @@ snapshots:
       '@octokit/openapi-types': 24.2.0
 
   '@pkgr/core@0.2.9': {}
+
+  '@praha/error-factory@1.1.0': {}
 
   '@praha/eslint-config-common@4.0.2(eslint@9.34.0(jiti@2.5.1))':
     dependencies:
