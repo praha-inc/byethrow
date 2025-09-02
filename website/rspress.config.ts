@@ -1,8 +1,8 @@
 import { defineConfig } from '@rspress/core';
 import { pluginLlms } from '@rspress/plugin-llms';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
+import { pluginTwoslash } from '@rspress/plugin-twoslash';
 
-import { pluginTwoslash } from './plugins/twoslash';
 import { pluginTypedoc } from './plugins/typedoc';
 
 export default defineConfig({
@@ -15,7 +15,7 @@ export default defineConfig({
   plugins: [
     pluginLlms(),
     pluginSitemap({ siteUrl: 'https://praha-inc.github.io/byethrow' }),
-    pluginTwoslash(),
+    pluginTwoslash({ explicitTrigger: false }),
     pluginTypedoc(),
   ],
   markdown: {

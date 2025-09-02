@@ -143,8 +143,11 @@ importers:
         specifier: 2.0.0-beta.30
         version: 2.0.0-beta.30(@rspress/core@2.0.0-beta.30(@types/react@19.1.12))
       '@rspress/plugin-sitemap':
-        specifier: 2.0.0-beta.29
-        version: 2.0.0-beta.29(@rspress/core@2.0.0-beta.30(@types/react@19.1.12))
+        specifier: 2.0.0-beta.30
+        version: 2.0.0-beta.30(@rspress/core@2.0.0-beta.30(@types/react@19.1.12))
+      '@rspress/plugin-twoslash':
+        specifier: 2.0.0-beta.30
+        version: 2.0.0-beta.30(@rspress/core@2.0.0-beta.30(@types/react@19.1.12))(react@19.1.1)(typescript@5.9.2)
       '@shikijs/twoslash':
         specifier: 3.12.0
         version: 3.12.0(typescript@5.9.2)
@@ -1070,11 +1073,18 @@ packages:
     peerDependencies:
       '@rspress/core': ^2.0.0-beta.30
 
-  '@rspress/plugin-sitemap@2.0.0-beta.29':
-    resolution: {integrity: sha512-yc+y9MJ20YlWmbWlXTbaj2xY7fEQQLa6cNV8Ic7TUlVLNIp+tnEIYzns/GkIz38nU50lfATaFjBclSQhPjH9Ug==}
+  '@rspress/plugin-sitemap@2.0.0-beta.30':
+    resolution: {integrity: sha512-h7tPpPWUaqErNVfqqILoxP6xldX1e09+oJc//lCE8i9/6nKjIblul0I1dGl9JlM17YMm6keUKzcSa1CZT5cdgA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      '@rspress/core': ^2.0.0-beta.29
+      '@rspress/core': ^2.0.0-beta.30
+
+  '@rspress/plugin-twoslash@2.0.0-beta.30':
+    resolution: {integrity: sha512-JiwnLOUa/0m6+C7u7A7Sn/cClo/pzaUCDoubOBdEjjdTxFGMR06dZrkaapI21/P8NnuknOdCZP5Y4ML04bO7+g==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      '@rspress/core': ^2.0.0-beta.30
+      react: '>=18.0.0'
 
   '@rspress/runtime@2.0.0-beta.30':
     resolution: {integrity: sha512-MdaFVy85Ih7M7jL06m+K+tpbvQnE5g8lswdGE2Uf7VB+/ImdUErQM54zZ2+z9kJgp+2clD6pwAY9Mrkdj91K1w==}
@@ -4487,9 +4497,22 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rspress/plugin-sitemap@2.0.0-beta.29(@rspress/core@2.0.0-beta.30(@types/react@19.1.12))':
+  '@rspress/plugin-sitemap@2.0.0-beta.30(@rspress/core@2.0.0-beta.30(@types/react@19.1.12))':
     dependencies:
       '@rspress/core': 2.0.0-beta.30(@types/react@19.1.12)
+
+  '@rspress/plugin-twoslash@2.0.0-beta.30(@rspress/core@2.0.0-beta.30(@types/react@19.1.12))(react@19.1.1)(typescript@5.9.2)':
+    dependencies:
+      '@floating-ui/dom': 1.7.4
+      '@rspress/core': 2.0.0-beta.30(@types/react@19.1.12)
+      '@shikijs/twoslash': 3.12.0(typescript@5.9.2)
+      mdast-util-from-markdown: 2.0.2
+      mdast-util-gfm: 3.1.0
+      mdast-util-to-hast: 13.2.0
+      react: 19.1.1
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
 
   '@rspress/runtime@2.0.0-beta.30':
     dependencies:
