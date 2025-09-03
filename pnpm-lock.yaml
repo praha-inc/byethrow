@@ -149,11 +149,11 @@ importers:
         specifier: 2.0.0-beta.30
         version: 2.0.0-beta.30(@rspress/core@2.0.0-beta.30(@types/react@19.1.12))(react@19.1.1)(typescript@5.9.2)
       '@shikijs/twoslash':
-        specifier: 3.12.0
-        version: 3.12.0(typescript@5.9.2)
+        specifier: 3.12.2
+        version: 3.12.2(typescript@5.9.2)
       '@shikijs/types':
-        specifier: 3.12.0
-        version: 3.12.0
+        specifier: 3.12.2
+        version: 3.12.2
       '@types/hast':
         specifier: 3.0.4
         version: 3.0.4
@@ -1103,11 +1103,11 @@ packages:
   '@selderee/plugin-htmlparser2@0.11.0':
     resolution: {integrity: sha512-P33hHGdldxGabLFjPPpaTxVolMrzrcegejx+0GxjrIb9Zv48D8yAIA/QTDR2dFl7Uz7urX8aX6+5bCZslr+gWQ==}
 
-  '@shikijs/core@3.12.0':
-    resolution: {integrity: sha512-rPfCBd6gHIKBPpf2hKKWn2ISPSrmRKAFi+bYDjvZHpzs3zlksWvEwaF3Z4jnvW+xHxSRef7qDooIJkY0RpA9EA==}
-
   '@shikijs/core@3.12.1':
     resolution: {integrity: sha512-j9+UDQ6M50xvaSR/e9lg212H0Fqxy3lYd39Q6YITYQxfrb5VYNUKPLZp4PN9f+YmRcdpyNAm3obn/tIZ2WkUWg==}
+
+  '@shikijs/core@3.12.2':
+    resolution: {integrity: sha512-L1Safnhra3tX/oJK5kYHaWmLEBJi1irASwewzY3taX5ibyXyMkkSDZlq01qigjryOBwrXSdFgTiZ3ryzSNeu7Q==}
 
   '@shikijs/engine-javascript@3.12.1':
     resolution: {integrity: sha512-mwif5T3rEBSMn/1m9dNi4WmB4dxH4VfYqreQMLpbFYov8MM3Gus98I549amFMjtEmYDAkTKGP7bmsv1n9t9I+A==}
@@ -1133,8 +1133,8 @@ packages:
   '@shikijs/themes@3.12.1':
     resolution: {integrity: sha512-9JrAm9cA5hqM/YXymA3oAAZdnCgQf1zyrNDtsnM105nNEoEpux4dyzdoOjc2KawEKj1iUs/WH2ota6Atp7GYkQ==}
 
-  '@shikijs/twoslash@3.12.0':
-    resolution: {integrity: sha512-gO8u8ZYs7MginBaIFZf4nDX46gZZNcbtLwjy4bdPxw/uG6GKAWhvLSh5jMLnjA+7++K3UpuylAe+vqF9doAJgA==}
+  '@shikijs/twoslash@3.12.2':
+    resolution: {integrity: sha512-JthKvEvyE/gbu3u693mhNhEO6GYP1vetrwgEfqTAsT/G9AJ6nf7g7JVqdTSs+axdfilGWzZKeYdjfyanu/v5AA==}
     peerDependencies:
       typescript: '>=5.5.0'
 
@@ -1143,6 +1143,9 @@ packages:
 
   '@shikijs/types@3.12.1':
     resolution: {integrity: sha512-Is/p+1vTss22LIsGCJTmGrxu7ZC1iBL9doJFYLaZ4aI8d0VDXb7Mn0kBzhkc7pdsRpmUbQLQ5HXwNpa3H6F8og==}
+
+  '@shikijs/types@3.12.2':
+    resolution: {integrity: sha512-K5UIBzxCyv0YoxN3LMrKB9zuhp1bV+LgewxuVwHdl4Gz5oePoUFrr9EfgJlGlDeXCU1b/yhdnXeuRvAnz8HN8Q==}
 
   '@shikijs/vscode-textmate@10.0.2':
     resolution: {integrity: sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg==}
@@ -3906,7 +3909,7 @@ snapshots:
       '@shikijs/engine-oniguruma': 3.12.0
       '@shikijs/langs': 3.12.0
       '@shikijs/themes': 3.12.0
-      '@shikijs/types': 3.12.0
+      '@shikijs/types': 3.12.2
       '@shikijs/vscode-textmate': 10.0.2
 
   '@humanfs/core@0.19.1': {}
@@ -4504,7 +4507,7 @@ snapshots:
     dependencies:
       '@floating-ui/dom': 1.7.4
       '@rspress/core': 2.0.0-beta.30(@types/react@19.1.12)
-      '@shikijs/twoslash': 3.12.0(typescript@5.9.2)
+      '@shikijs/twoslash': 3.12.2(typescript@5.9.2)
       mdast-util-from-markdown: 2.0.2
       mdast-util-gfm: 3.1.0
       mdast-util-to-hast: 13.2.0
@@ -4555,16 +4558,16 @@ snapshots:
       domhandler: 5.0.3
       selderee: 0.11.0
 
-  '@shikijs/core@3.12.0':
+  '@shikijs/core@3.12.1':
     dependencies:
-      '@shikijs/types': 3.12.0
+      '@shikijs/types': 3.12.1
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
       hast-util-to-html: 9.0.5
 
-  '@shikijs/core@3.12.1':
+  '@shikijs/core@3.12.2':
     dependencies:
-      '@shikijs/types': 3.12.1
+      '@shikijs/types': 3.12.2
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
       hast-util-to-html: 9.0.5
@@ -4610,10 +4613,10 @@ snapshots:
     dependencies:
       '@shikijs/types': 3.12.1
 
-  '@shikijs/twoslash@3.12.0(typescript@5.9.2)':
+  '@shikijs/twoslash@3.12.2(typescript@5.9.2)':
     dependencies:
-      '@shikijs/core': 3.12.0
-      '@shikijs/types': 3.12.0
+      '@shikijs/core': 3.12.2
+      '@shikijs/types': 3.12.2
       twoslash: 0.3.4(typescript@5.9.2)
       typescript: 5.9.2
     transitivePeerDependencies:
@@ -4625,6 +4628,11 @@ snapshots:
       '@types/hast': 3.0.4
 
   '@shikijs/types@3.12.1':
+    dependencies:
+      '@shikijs/vscode-textmate': 10.0.2
+      '@types/hast': 3.0.4
+
+  '@shikijs/types@3.12.2':
     dependencies:
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
