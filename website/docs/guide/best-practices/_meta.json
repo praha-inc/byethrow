@@ -1,6 +1,11 @@
 [
   {
     "type": "file",
+    "name": "result-vs-throw",
+    "label": "Result vs throw"
+  },
+  {
+    "type": "file",
     "name": "custom-error",
     "label": "Custom Error"
   }
