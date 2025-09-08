@@ -178,6 +178,9 @@ importers:
       mdast-util-to-hast:
         specifier: 13.2.0
         version: 13.2.0
+      ts-pattern:
+        specifier: 5.8.0
+        version: 5.8.0
       zod:
         specifier: 3.25.76
         version: 3.25.76
@@ -3227,6 +3230,9 @@ packages:
     engines: {node: '>=18.12'}
     peerDependencies:
       typescript: '>=4.8.4'
+
+  ts-pattern@5.8.0:
+    resolution: {integrity: sha512-kIjN2qmWiHnhgr5DAkAafF9fwb0T5OhMVSWrm8XEdTFnX6+wfXwYOFjeF86UZ54vduqiR7BfqScFmXSzSaH8oA==}
 
   tsconfig-paths@4.2.0:
     resolution: {integrity: sha512-NoZ4roiN7LnbKn9QqE1amc9DJfzvZXxF4xDavcOWt1BPkdx+m+0gJuPM+S0vCe7zTJMYUP0R8pO2XMr+Y8oLIg==}
@@ -7134,6 +7140,8 @@ snapshots:
   ts-api-utils@2.1.0(typescript@5.9.2):
     dependencies:
       typescript: 5.9.2
+
+  ts-pattern@5.8.0: {}
 
   tsconfig-paths@4.2.0:
     dependencies:
