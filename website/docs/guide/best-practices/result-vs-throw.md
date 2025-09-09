@@ -13,12 +13,12 @@ The distinction between what should be handled with Result versus what should be
 These are errors that are part of your application's business logic and should be handled explicitly:
 
 ```ts
+// @noErrors
 class PostNotFoundError extends Error {}
 class PostPermissionError extends Error {}
 class PostAlreadyDeletedError extends Error {}
 import { Result } from '@praha/byethrow';
 // ---cut-before---
-// @noErrors
 // Example of a post deletion function
 type PostDeleteError = (
   | PostNotFoundError
@@ -26,7 +26,7 @@ type PostDeleteError = (
   | PostAlreadyDeletedError
 );
 
-const deletePost = (postId: string): Result.Result<void, PostDeleteError> => {
+const deletePost = async (postId: string): Result.ResultAsync<void, PostDeleteError> => {
   // Business logic errors that should be handled by the application
 }
 ```
@@ -41,9 +41,9 @@ These are infrastructure-level or truly unexpected errors:
 - Unknown exceptions
 
 ```ts
+// @noErrors
 interface Database {}
 // ---cut-before---
-// @noErrors
 // Example of an infrastructure-level function
 const connectToDatabase = async (): Promise<Database> => {
   // This function may throw errors like connection failures, timeouts, etc.
@@ -60,7 +60,9 @@ However, when you want more detailed stack traces for debugging purposes, we rec
 
 First, define a custom error class for unexpected errors:
 
-> For more details about `@praha/error-factory`, see the [Custom Error](./custom-error.mdx#recommended-using-prahaerror-factory) page.
+:::tip
+For more details about `@praha/error-factory`, see the [Custom Error](./custom-error.mdx#recommended-using-prahaerror-factory) page.
+:::
 
 ```ts
 import { ErrorFactory } from '@praha/error-factory';

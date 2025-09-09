@@ -8,5 +8,10 @@
     "type": "file",
     "name": "custom-error",
     "label": "Custom Error"
+  },
+  {
+    "type": "file",
+    "name": "pattern-matching",
+    "label": "Pattern Matching"
   }
 ]
