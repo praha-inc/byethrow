@@ -20,8 +20,8 @@ importers:
         specifier: 0.5.1
         version: 0.5.1
       '@changesets/cli':
-        specifier: 2.29.6
-        version: 2.29.6(@types/node@24.3.1)
+        specifier: 2.29.7
+        version: 2.29.7(@types/node@24.3.1)
       '@praha/eslint-config-common':
         specifier: 4.0.2
         version: 4.0.2(eslint@9.35.0(jiti@2.5.1))
@@ -265,8 +265,8 @@ packages:
     resolution: {integrity: sha512-9uIQ10o0WGdpP6GDhXcdOJPJuDgFtIDtN/9+ArJQ2NAfAmiuhTQdzkaTGR33v43GYS2UrSA0eX2pPPHoFVvpxA==}
     engines: {node: '>=6.9.0'}
 
-  '@changesets/apply-release-plan@7.0.12':
-    resolution: {integrity: sha512-EaET7As5CeuhTzvXTQCRZeBUcisoYPDDcXvgTE/2jmmypKp0RC7LxKj/yzqeh/1qFTZI7oDGFcL1PHRuQuketQ==}
+  '@changesets/apply-release-plan@7.0.13':
+    resolution: {integrity: sha512-BIW7bofD2yAWoE8H4V40FikC+1nNFEKBisMECccS16W1rt6qqhNTBDmIw5HaqmMgtLNz9e7oiALiEUuKrQ4oHg==}
 
   '@changesets/assemble-release-plan@6.0.9':
     resolution: {integrity: sha512-tPgeeqCHIwNo8sypKlS3gOPmsS3wP0zHt67JDuL20P4QcXiw/O4Hl7oXiuLnP9yg+rXLQ2sScdV1Kkzde61iSQ==}
@@ -277,8 +277,8 @@ packages:
   '@changesets/changelog-github@0.5.1':
     resolution: {integrity: sha512-BVuHtF+hrhUScSoHnJwTELB4/INQxVFc+P/Qdt20BLiBFIHFJDDUaGsZw+8fQeJTRP5hJZrzpt3oZWh0G19rAQ==}
 
-  '@changesets/cli@2.29.6':
-    resolution: {integrity: sha512-6qCcVsIG1KQLhpQ5zE8N0PckIx4+9QlHK3z6/lwKnw7Tir71Bjw8BeOZaxA/4Jt00pcgCnCSWZnyuZf5Il05QQ==}
+  '@changesets/cli@2.29.7':
+    resolution: {integrity: sha512-R7RqWoaksyyKXbKXBTbT4REdy22yH81mcFK6sWtqSanxUCbUi9Uf+6aqxZtDQouIqPdem2W56CdxXgsxdq7FLQ==}
     hasBin: true
 
   '@changesets/config@3.1.1':
@@ -3550,7 +3550,7 @@ snapshots:
 
   '@babel/runtime@7.28.3': {}
 
-  '@changesets/apply-release-plan@7.0.12(patch_hash=134168d4ebb16d330cecdce99bf1defd78880d33d6c8d6f903587e5c25541e24)':
+  '@changesets/apply-release-plan@7.0.13(patch_hash=134168d4ebb16d330cecdce99bf1defd78880d33d6c8d6f903587e5c25541e24)':
     dependencies:
       '@changesets/config': 3.1.1
       '@changesets/get-version-range-type': 0.4.0
@@ -3587,9 +3587,9 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@changesets/cli@2.29.6(@types/node@24.3.1)':
+  '@changesets/cli@2.29.7(@types/node@24.3.1)':
     dependencies:
-      '@changesets/apply-release-plan': 7.0.12(patch_hash=134168d4ebb16d330cecdce99bf1defd78880d33d6c8d6f903587e5c25541e24)
+      '@changesets/apply-release-plan': 7.0.13(patch_hash=134168d4ebb16d330cecdce99bf1defd78880d33d6c8d6f903587e5c25541e24)
       '@changesets/assemble-release-plan': 6.0.9(patch_hash=9f15586ee8e841089a62d13dc5a5c37bf178ffb0fbf574e787950df4ec551518)
       '@changesets/changelog-git': 0.2.1
       '@changesets/config': 3.1.1
