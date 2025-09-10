@@ -17,31 +17,7 @@ import type { Result, ResultAsync } from '../result';
  * @typeParam T - The function type to execute (sync or async) or a Promise type.
  * @typeParam E - The error type to return if `catch` is used.
  *
- * @example Promise Try-Catch
- * ```ts
- * import { Result } from '@praha/byethrow';
- *
- * const result = Result.try({
- *   try: fetch('/api/data'),
- *   catch: (error) => new Error('Fetch failed', { cause: error }),
- * });
- *
- * // result is ResultAsync<Response, Error>
- * ```
- *
- * @example Promise Safe
- * ```ts
- * import { Result } from '@praha/byethrow';
- *
- * const result = Result.try({
- *   safe: true,
- *   try: Promise.resolve('ok'),
- * });
- *
- * // result is ResultAsync<string, never>
- * ```
- *
- * @example Sync Try-Catch
+ * @example Sync try-catch
  * ```ts
  * import { Result } from '@praha/byethrow';
  *
@@ -56,7 +32,24 @@ import type { Result, ResultAsync } from '../result';
  * const result = fn(5); // Result.Result<number, Error>
  * ```
  *
- * @example Sync Safe
+ * @example Sync try-catch with immediate execution
+ * ```ts
+ * import { Result } from '@praha/byethrow';
+ *
+ * const result = Result.try({
+ *   immediate: true,
+ *   try: () => {
+ *     const x = Math.random() * 10 - 5;
+ *     if (x < 0) throw new Error('Negative!');
+ *     return x * 2;
+ *   },
+ *   catch: (error) => new Error('Oops!', { cause: error }),
+ * });
+ *
+ * // result is Result<number, Error>
+ * ```
+ *
+ * @example Sync safe
  * ```ts
  * import { Result } from '@praha/byethrow';
  *
@@ -68,7 +61,20 @@ import type { Result, ResultAsync } from '../result';
  * const result = fn(1); // Result.Result<number, never>
  * ```
  *
- * @example Async Function Try-Catch
+ * @example Sync safe with immediate execution
+ * ```ts
+ * import { Result } from '@praha/byethrow';
+ *
+ * const result = Result.try({
+ *   safe: true,
+ *   immediate: true,
+ *   try: () => Math.random() + 1,
+ * });
+ *
+ * // result is Result<number, never>
+ * ```
+ *
+ * @example Async try-catch
  * ```ts
  * import { Result } from '@praha/byethrow';
  *
@@ -80,7 +86,20 @@ import type { Result, ResultAsync } from '../result';
  * const result = await fn('abc'); // Result.ResultAsync<Response, Error>
  * ```
  *
- * @example Async Function Safe
+ * @example Async try-catch with immediate execution
+ * ```ts
+ * import { Result } from '@praha/byethrow';
+ *
+ * const result = Result.try({
+ *   immediate: true,
+ *   try: () => fetch('/api/data'),
+ *   catch: (error) => new Error('Fetch failed', { cause: error }),
+ * });
+ *
+ * // result is ResultAsync<Response, Error>
+ * ```
+ *
+ * @example Async safe
  * ```ts
  * import { Result } from '@praha/byethrow';
  *
@@ -92,41 +111,48 @@ import type { Result, ResultAsync } from '../result';
  * const result = await fn(); // Result.ResultAsync<string, never>
  * ```
  *
+ * @example Async safe with immediate execution
+ * ```ts
+ * import { Result } from '@praha/byethrow';
+ *
+ * const result = Result.try({
+ *   safe: true,
+ *   immediate: true,
+ *   try: () => Promise.resolve('ok'),
+ * });
+ *
+ * // result is ResultAsync<string, never>
+ * ```
+ *
  * @category Creators
  */
 const try_: {
-  <T extends Promise<any>, E>(
-    options: { try: T; catch: (error: unknown) => E }
-  ): ResultAsync<Awaited<T>, E>;
-  <T extends Promise<any>>(
-    options: { try: T; safe: true }
-  ): ResultAsync<Awaited<T>, never>;
   <T extends (...args: readonly any[]) => Promise<any>, E>(
     options: { try: T; catch: (error: unknown) => E }
   ): (...args: Parameters<T>) => ResultAsync<Awaited<ReturnType<T>>, E>;
+  <T extends () => Promise<any>, E>(
+    options: { immediate: true; try: T; catch: (error: unknown) => E }
+  ): ResultAsync<Awaited<ReturnType<T>>, E>;
   <T extends (...args: readonly any[]) => Promise<any>>(
-    options: { try: T; safe: true }
+    options: { safe: true; try: T }
   ): (...args: Parameters<T>) => ResultAsync<Awaited<ReturnType<T>>, never>;
+  <T extends () => Promise<any>>(
+    options: { safe: true; immediate: true; try: T }
+  ): ResultAsync<Awaited<ReturnType<T>>, never>;
   <T extends (...args: readonly any[]) => any, E>(
     options: { try: T; catch: (error: unknown) => E }
   ): (...args: Parameters<T>) => Result<ReturnType<T>, E>;
+  <T extends () => any, E>(
+    options: { immediate: true; try: T; catch: (error: unknown) => E }
+  ): Result<ReturnType<T>, E>;
   <T extends (...args: readonly any[]) => any>(
-    options: { try: T; safe: true }
+    options: { safe: true; try: T }
   ): (...args: Parameters<T>) => Result<ReturnType<T>, never>;
+  <T extends () => any>(
+    options: { safe: true; immediate: true; try: T }
+  ): Result<ReturnType<T>, never>;
 } = (options: any) => {
-  if (isPromise(options.try)) {
-    if ('safe' in options && options.safe) {
-      return succeed(options.try);
-    }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return options.try.then(
-      (value: any) => succeed(value),
-      (error: unknown) => fail(options.catch(error)),
-    );
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return ((...args: any[]) => {
+  const fn = (...args: any[]) => {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const output = options.try(...args);
@@ -144,7 +170,14 @@ const try_: {
 
       return fail(options.catch(error));
     }
-  }) as any;
+  };
+
+  if ('immediate' in options && options.immediate) {
+    return fn();
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return fn as any;
 };
 
 export { try_ as try };
