@@ -35,6 +35,30 @@ describe('try', () => {
 
         expect(result).toEqual(succeed('Hello World'));
       });
+
+      describe('when immediate mode is enabled', () => {
+        it('should succeed when no error is thrown', () => {
+          const result = try_({
+            immediate: true,
+            try: () => 'success',
+            catch: String,
+          });
+
+          expect(result).toEqual(succeed('success'));
+        });
+
+        it('should fail when an error is thrown', () => {
+          const result = try_({
+            immediate: true,
+            try: () => {
+              throw new Error('failure');
+            },
+            catch: String,
+          });
+
+          expect(result).toEqual(fail('Error: failure'));
+        });
+      });
     });
 
     describe('when safe mode is enabled', () => {
@@ -56,6 +80,30 @@ describe('try', () => {
             },
           })(),
         ).toThrow('failure');
+      });
+
+      describe('when immediate mode is enabled', () => {
+        it('should succeed when no error is thrown', () => {
+          const result = try_({
+            safe: true,
+            immediate: true,
+            try: () => 'success',
+          });
+
+          expect(result).toEqual(succeed('success'));
+        });
+
+        it('should throw error when one is thrown', () => {
+          expect(() =>
+            try_({
+              safe: true,
+              immediate: true,
+              try: () => {
+                throw new Error('failure');
+              },
+            }),
+          ).toThrow('failure');
+        });
       });
     });
   });
@@ -103,6 +151,32 @@ describe('try', () => {
 
         expect(result).toEqual(succeed('Hello World'));
       });
+
+      describe('when immediate mode is enabled', () => {
+        it('should succeed when promise resolves', async () => {
+          const result = await try_({
+            immediate: true,
+            // eslint-disable-next-line @typescript-eslint/require-await
+            try: async () => 'success',
+            catch: String,
+          });
+
+          expect(result).toEqual(succeed('success'));
+        });
+
+        it('should fail when promise rejects', async () => {
+          const result = await try_({
+            immediate: true,
+            // eslint-disable-next-line @typescript-eslint/require-await
+            try: async () => {
+              throw new Error('failure');
+            },
+            catch: String,
+          });
+
+          expect(result).toEqual(fail('Error: failure'));
+        });
+      });
     });
 
     describe('when safe mode is enabled', () => {
@@ -135,47 +209,29 @@ describe('try', () => {
           },
         })()).rejects.toThrow('failure');
       });
-    });
-  });
 
-  describe('when Promise is passed directly', () => {
-    describe('when catch handler is provided', () => {
-      it('should succeed when promise resolves', async () => {
-        const result = await try_({
-          try: Promise.resolve('success'),
-          catch: String,
+      describe('when immediate mode is enabled', () => {
+        it('should succeed when promise resolves', async () => {
+          const result = await try_({
+            safe: true,
+            immediate: true,
+            // eslint-disable-next-line @typescript-eslint/require-await
+            try: async () => 'success',
+          });
+
+          expect(result).toEqual(succeed('success'));
         });
 
-        expect(result).toEqual(succeed('success'));
-      });
-
-      it('should fail when promise rejects', async () => {
-        const result = await try_({
-          try: Promise.reject(new Error('failure')),
-          catch: String,
+        it('should throw when promise rejects', async () => {
+          await expect(() => try_({
+            safe: true,
+            immediate: true,
+            // eslint-disable-next-line @typescript-eslint/require-await
+            try: async () => {
+              throw new Error('failure');
+            },
+          })).rejects.toThrow('failure');
         });
-
-        expect(result).toEqual(fail('Error: failure'));
-      });
-    });
-
-    describe('when safe mode is enabled', () => {
-      it('should succeed when promise resolves', async () => {
-        const result = await try_({
-          safe: true,
-          try: Promise.resolve('success'),
-        });
-
-        expect(result).toEqual(succeed('success'));
-      });
-
-      it('should preserve promise rejections in safe mode', async () => {
-        const result = try_({
-          safe: true,
-          try: Promise.reject(new Error('failure')),
-        });
-
-        await expect(result).rejects.toThrow('failure');
       });
     });
   });
