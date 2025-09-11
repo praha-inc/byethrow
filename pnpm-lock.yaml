@@ -60,8 +60,8 @@ importers:
         version: 1.0.0
     devDependencies:
       '@rslib/core':
-        specifier: 0.13.0
-        version: 0.13.0(typescript@5.9.2)
+        specifier: 0.13.1
+        version: 0.13.1(typescript@5.9.2)
       eslint:
         specifier: 9.35.0
         version: 9.35.0(jiti@2.5.1)
@@ -97,8 +97,8 @@ importers:
         specifier: workspace:*
         version: link:../byethrow
       '@rslib/core':
-        specifier: 0.13.0
-        version: 0.13.0(typescript@5.9.2)
+        specifier: 0.13.1
+        version: 0.13.1(typescript@5.9.2)
       '@rspack/core':
         specifier: 1.5.3
         version: 1.5.3(@swc/helpers@0.5.17)
@@ -870,13 +870,18 @@ packages:
     engines: {node: '>=18.12.0'}
     hasBin: true
 
+  '@rsbuild/core@1.5.6':
+    resolution: {integrity: sha512-EbJ9HlkI2Y2C59pAv877rHz3qS+5dy9anXxagOOXEHt4u3/uqSj7pcz3cD+UWkFQ4XOGJ3mMwkPfR7EE24t12A==}
+    engines: {node: '>=18.12.0'}
+    hasBin: true
+
   '@rsbuild/plugin-react@1.4.0':
     resolution: {integrity: sha512-YhhOUOonJBjnKpUf7E4iXKidldPWAGmYBRtDjQgcSmW4tbW0DasFpNCqLn5870Q2Ly6oCU06sLv+8G597I36+w==}
     peerDependencies:
       '@rsbuild/core': 1.x
 
-  '@rslib/core@0.13.0':
-    resolution: {integrity: sha512-jRCKUQPBhIXKQT5LVC76pcpAg4H10xU8kjxxLqMW5qKTXka5PlF86zyZ/gSolgkHx+AHaFPYweGZKPxbMaI45A==}
+  '@rslib/core@0.13.1':
+    resolution: {integrity: sha512-XDyTHHXtLs9Cki5vzaabgFXbn/EksCmR571SVbIxJZB05zD7LwbbpcyTXgXk2DrW/6nOm7aTceh/mQHF5qq9gQ==}
     engines: {node: '>=18.12.0'}
     hasBin: true
     peerDependencies:
@@ -2410,8 +2415,8 @@ packages:
   magic-string@0.30.17:
     resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
 
-  magic-string@0.30.18:
-    resolution: {integrity: sha512-yi8swmWbO17qHhwIBNeeZxTceJMeBvWJaId6dyvTSOwTipqeHhMhOrz6513r1sOKnpvQ7zkhlG8tPrpilwTxHQ==}
+  magic-string@0.30.19:
+    resolution: {integrity: sha512-2N21sPY9Ws53PZvsEpVtNuSW+ScYbQdp4b9qUaL+9QkHUrGFKo56Lg9Emg5s9V/qrtNBmiR01sYhUOwu3H+VOw==}
 
   markdown-extensions@2.0.0:
     resolution: {integrity: sha512-o5vL7aDWatOTX8LzaS1WMoaoxIiLRQJuIKKe2wAw6IeULDHaqbiqiggmx+pKvZDb1Sj+pE46Sn1T7lCqfFtg1Q==}
@@ -2999,8 +3004,8 @@ packages:
     resolution: {integrity: sha512-nLTrUKm2UyiL7rlhapu/Zl45FwNgkZGaCpZbIHajDYgwlJCOzLSk+cIPAnsEqV955GjILJnKbdQC1nVPz+gAYQ==}
     engines: {node: '>= 18'}
 
-  rsbuild-plugin-dts@0.13.0:
-    resolution: {integrity: sha512-6E82mYpQkPNBOU2i+UBEdvrvsrtKU3Yo0llTn89QKmLD6m47qgjzXzryuhpdYg0qW6urvBhFWcq59HY1QIedcw==}
+  rsbuild-plugin-dts@0.13.1:
+    resolution: {integrity: sha512-pIT5on+uD3J5wNO1OdiAQWlFM4t3JHr2P2OxxpPHYgdP259Q2CScgUwPclPhma7rMippOEx2FmX8qbVurcxq9A==}
     engines: {node: '>=18.12.0'}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -4306,6 +4311,14 @@ snapshots:
       core-js: 3.45.1
       jiti: 2.5.1
 
+  '@rsbuild/core@1.5.6':
+    dependencies:
+      '@rspack/core': 1.5.3(@swc/helpers@0.5.17)
+      '@rspack/lite-tapable': 1.0.1
+      '@swc/helpers': 0.5.17
+      core-js: 3.45.1
+      jiti: 2.5.1
+
   '@rsbuild/plugin-react@1.4.0(@rsbuild/core@1.5.3)':
     dependencies:
       '@rsbuild/core': 1.5.3
@@ -4314,10 +4327,10 @@ snapshots:
     transitivePeerDependencies:
       - webpack-hot-middleware
 
-  '@rslib/core@0.13.0(typescript@5.9.2)':
+  '@rslib/core@0.13.1(typescript@5.9.2)':
     dependencies:
-      '@rsbuild/core': 1.5.4
-      rsbuild-plugin-dts: 0.13.0(@rsbuild/core@1.5.4)(typescript@5.9.2)
+      '@rsbuild/core': 1.5.6
+      rsbuild-plugin-dts: 0.13.1(@rsbuild/core@1.5.6)(typescript@5.9.2)
       tinyglobby: 0.2.15
     optionalDependencies:
       typescript: 5.9.2
@@ -4554,7 +4567,7 @@ snapshots:
 
   '@rspress/shared@2.0.0-beta.31':
     dependencies:
-      '@rsbuild/core': 1.5.3
+      '@rsbuild/core': 1.5.4
       '@shikijs/rehype': 3.12.2
       gray-matter: 4.0.3
       lodash-es: 4.17.21
@@ -5320,7 +5333,7 @@ snapshots:
       get-tsconfig: 4.10.1
       is-bun-module: 2.0.0
       stable-hash-x: 0.2.0
-      tinyglobby: 0.2.14
+      tinyglobby: 0.2.15
       unrs-resolver: 1.11.1
     optionalDependencies:
       eslint-plugin-import-x: 4.16.1(@typescript-eslint/utils@8.39.1(eslint@9.35.0(jiti@2.5.1))(typescript@5.9.2))(eslint@9.35.0(jiti@2.5.1))
@@ -6037,7 +6050,7 @@ snapshots:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  magic-string@0.30.18:
+  magic-string@0.30.19:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
 
@@ -6933,11 +6946,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  rsbuild-plugin-dts@0.13.0(@rsbuild/core@1.5.4)(typescript@5.9.2):
+  rsbuild-plugin-dts@0.13.1(@rsbuild/core@1.5.6)(typescript@5.9.2):
     dependencies:
       '@ast-grep/napi': 0.37.0
-      '@rsbuild/core': 1.5.4
-      magic-string: 0.30.18
+      '@rsbuild/core': 1.5.6
+      magic-string: 0.30.19
       picocolors: 1.1.1
       tinyglobby: 0.2.15
       tsconfig-paths: 4.2.0
@@ -7390,7 +7403,7 @@ snapshots:
       picomatch: 4.0.3
       postcss: 8.5.6
       rollup: 4.46.2
-      tinyglobby: 0.2.14
+      tinyglobby: 0.2.15
     optionalDependencies:
       '@types/node': 24.3.1
       fsevents: 2.3.3
