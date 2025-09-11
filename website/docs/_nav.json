@@ -5,6 +5,11 @@
     "activeMatch": "/guide/"
   },
   {
+    "text": "Examples",
+    "link": "/examples/parse-package-json",
+    "activeMatch": "/examples/"
+  },
+  {
     "text": "API Reference",
     "link": "/api/modules/Result",
     "activeMatch": "/api/"
