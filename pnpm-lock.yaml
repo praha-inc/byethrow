@@ -140,8 +140,8 @@ importers:
         specifier: 1.1.0
         version: 1.1.0
       '@rspress/plugin-llms':
-        specifier: 2.0.0-beta.31
-        version: 2.0.0-beta.31(@rspress/core@2.0.0-beta.32(@types/react@19.1.12))
+        specifier: 2.0.0-beta.32
+        version: 2.0.0-beta.32(@rspress/core@2.0.0-beta.32(@types/react@19.1.12))
       '@rspress/plugin-sitemap':
         specifier: 2.0.0-beta.31
         version: 2.0.0-beta.31(@rspress/core@2.0.0-beta.32(@types/react@19.1.12))
@@ -1083,11 +1083,11 @@ packages:
     resolution: {integrity: sha512-NpNhTKBIlV3O6ADhoZkgHvBFvXMW2TYlIWmIT1ysJESUBqDpaN9H3Teve5fugjU2pQ2ORBZO6SQGKliMw/8m/Q==}
     engines: {node: '>= 10'}
 
-  '@rspress/plugin-llms@2.0.0-beta.31':
-    resolution: {integrity: sha512-rTy3ppTZCJ3oDA0rXsIXm8JCOx8iL7wQ2iFkAAtRpxwQ35qvhfnq/DGpibo8RSDnJMlqxmeGLwvQzBT+pa5dwg==}
+  '@rspress/plugin-llms@2.0.0-beta.32':
+    resolution: {integrity: sha512-18QMlaeJ8K3xhf1a9d77l5KD2pUBMS2LsT+mxYLKCCe8pLi61rIPZbufq6xLdWaWpqyerLAcDmiDH8crSVd91w==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      '@rspress/core': ^2.0.0-beta.31
+      '@rspress/core': ^2.0.0-beta.32
 
   '@rspress/plugin-sitemap@2.0.0-beta.31':
     resolution: {integrity: sha512-xPrSztGCW6gpE+5mfzn5YmAZbNVtbNta/nfztiGhE78swEWPoJvpB9utLkhapSljHIa9qXXRQknrWYgDJToRPA==}
@@ -4517,7 +4517,7 @@ snapshots:
       '@rspress/mdx-rs-win32-arm64-msvc': 0.6.6
       '@rspress/mdx-rs-win32-x64-msvc': 0.6.6
 
-  '@rspress/plugin-llms@2.0.0-beta.31(@rspress/core@2.0.0-beta.32(@types/react@19.1.12))':
+  '@rspress/plugin-llms@2.0.0-beta.32(@rspress/core@2.0.0-beta.32(@types/react@19.1.12))':
     dependencies:
       '@rspress/core': 2.0.0-beta.32(@types/react@19.1.12)
       remark-mdx: 3.1.1
