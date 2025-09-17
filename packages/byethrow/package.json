@@ -52,7 +52,7 @@
     "@standard-schema/spec": "^1.0.0"
   },
   "devDependencies": {
-    "@rslib/core": "0.13.2",
+    "@rslib/core": "0.13.3",
     "eslint": "9.35.0",
     "typedoc": "0.28.12",
     "typedoc-plugin-markdown": "4.8.1",
