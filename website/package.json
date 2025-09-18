@@ -19,7 +19,7 @@
     "@praha/byethrow": "workspace:*",
     "@praha/error-factory": "1.1.0",
     "@rspress/plugin-llms": "2.0.0-beta.33",
-    "@rspress/plugin-sitemap": "2.0.0-beta.32",
+    "@rspress/plugin-sitemap": "2.0.0-beta.33",
     "@rspress/plugin-twoslash": "2.0.0-beta.32",
     "@shikijs/twoslash": "3.12.2",
     "@shikijs/types": "3.12.2",
