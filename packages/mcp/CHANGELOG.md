@@ -1,5 +1,12 @@
 # @praha/byethrow-mcp
 
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies [[`2b198c8`](https://github.com/praha-inc/byethrow/commit/2b198c8de38cf1888eb9015223a23eaf65172057)]:
+  - @praha/byethrow@0.7.1
+
 ## 0.1.3
 
 ### Patch Changes
