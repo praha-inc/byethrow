@@ -1,5 +1,11 @@
 # @praha/byethrow
 
+## 0.7.1
+
+### Patch Changes
+
+- [#238](https://github.com/praha-inc/byethrow/pull/238) [`2b198c8`](https://github.com/praha-inc/byethrow/commit/2b198c8de38cf1888eb9015223a23eaf65172057) Thanks [@Karibash](https://github.com/Karibash)! - Add file extensions to import paths in TypeScript declaration files
+
 ## 0.7.0
 
 ### Minor Changes
