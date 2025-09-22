@@ -1,5 +1,23 @@
 import { defineConfig } from '@rslib/core';
 
+import type { Format, LibConfig } from '@rslib/core';
+
+const createLibrary = (format: Format): LibConfig => ({
+  format,
+  bundle: false,
+  dts: true,
+  redirect: {
+    dts: {
+      extension: true,
+    },
+  },
+  output: {
+    distPath: {
+      root: `./dist/${format}`,
+    },
+  },
+});
+
 export default defineConfig({
   source: {
     entry: {
@@ -12,25 +30,7 @@ export default defineConfig({
     tsconfigPath: './tsconfig.build.json',
   },
   lib: [
-    {
-      format: 'cjs',
-      bundle: false,
-      dts: true,
-      output: {
-        distPath: {
-          root: './dist/cjs',
-        },
-      },
-    },
-    {
-      format: 'esm',
-      bundle: false,
-      dts: true,
-      output: {
-        distPath: {
-          root: './dist/esm',
-        },
-      },
-    },
+    createLibrary('cjs'),
+    createLibrary('esm'),
   ],
 });
