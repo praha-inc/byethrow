@@ -4,6 +4,7 @@ import { LlmsContainer, LlmsCopyButton, LlmsViewOptions } from '@rspress/plugin-
 
 export * from '@rspress/core/theme';
 
+export * from './components/stackblitz';
 export { HomeLayout } from './layouts/home-layout';
 
 export const getCustomMDXComponent = (): ReturnType<typeof baseGetCustomMDXComponent> => {

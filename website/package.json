@@ -12,6 +12,7 @@
   "dependencies": {
     "@floating-ui/dom": "^1.7.3",
     "@rspress/core": "^2.0.0-beta.27",
+    "@stackblitz/sdk": "^1.11.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
