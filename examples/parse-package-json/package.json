@@ -1,0 +1,22 @@
+{
+  "name": "@praha/byethrow-example-parse-package-json",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx ./src/index.ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@praha/byethrow": "0.7.1",
+    "@praha/error-factory": "1.2.1",
+    "ts-pattern": "5.8.0",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@tsconfig/strictest": "2.0.6",
+    "@types/node": "24.5.2",
+    "memfs": "4.43.0",
+    "tsx": "4.20.5",
+    "vitest": "3.2.4"
+  }
+}
