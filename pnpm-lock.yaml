@@ -140,8 +140,8 @@ importers:
         specifier: workspace:*
         version: link:../packages/byethrow
       '@praha/error-factory':
-        specifier: 1.2.0
-        version: 1.2.0
+        specifier: 1.2.1
+        version: 1.2.1
       '@rspress/plugin-llms':
         specifier: 2.0.0-beta.33
         version: 2.0.0-beta.33(@rspress/core@2.0.0-beta.33(@types/react@19.1.13))
@@ -726,8 +726,8 @@ packages:
     resolution: {integrity: sha512-QNqXyfVS2wm9hweSYD2O7F0G06uurj9kZ96TRQE5Y9hU7+tgdZwIkbAKc5Ocy1HxEY2kuDQa6cQ1WRs/O5LFKA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
 
-  '@praha/error-factory@1.2.0':
-    resolution: {integrity: sha512-mmixNZY6ZJZsioFiQ4U2HRqRwAEMC6KHlaowDl/vVR8h09KFpVs2vLh3ln8MntJgLeKBe8v3e+SeY4mDfx98uA==}
+  '@praha/error-factory@1.2.1':
+    resolution: {integrity: sha512-F4KIuX48NLPlW/y95QrtJp2zUhAFkmHcOfXOyBWsGjFD82DUI+7aTYlFQ44Oci0rtCMSRAFHlgHlxcs1V9n9fg==}
 
   '@praha/eslint-config-common@4.0.2':
     resolution: {integrity: sha512-5hWCdZJCVZ/92/Ya9juUisxCsXiYL+U3F1PgBmYc/VpfTWPEioZa0Od4uANcYgRT30Rj2ARPmP2Eh72zNYZGKw==}
@@ -4214,7 +4214,7 @@ snapshots:
 
   '@pkgr/core@0.2.9': {}
 
-  '@praha/error-factory@1.2.0': {}
+  '@praha/error-factory@1.2.1': {}
 
   '@praha/eslint-config-common@4.0.2(eslint@9.36.0(jiti@2.5.1))':
     dependencies:
