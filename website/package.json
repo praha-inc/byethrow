@@ -21,7 +21,7 @@
     "@praha/error-factory": "1.2.1",
     "@rspress/plugin-llms": "2.0.0-beta.34",
     "@rspress/plugin-sitemap": "2.0.0-beta.34",
-    "@rspress/plugin-twoslash": "2.0.0-beta.33",
+    "@rspress/plugin-twoslash": "2.0.0-beta.34",
     "@shikijs/twoslash": "3.13.0",
     "@shikijs/types": "3.13.0",
     "@types/hast": "3.0.4",
