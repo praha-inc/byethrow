@@ -29,6 +29,7 @@ export const list = defineCommand({
         results.forEach(({ name }) => {
           console.log(name);
         });
+        exit(0);
       }),
       Result.inspectError((error) => {
         console.error(error);
