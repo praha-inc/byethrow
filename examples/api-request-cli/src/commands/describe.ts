@@ -23,6 +23,7 @@ export const describe = defineCommand({
         console.log(`Height: ${result.height / 10} m`);
         console.log(`Weight: ${result.weight / 10} kg`);
         console.log(`Types: ${result.types.map((type) => type.type.name).join(', ')}`);
+        exit(0);
       }),
       Result.inspectError((error) => {
         console.error(error);
