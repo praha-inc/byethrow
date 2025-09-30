@@ -1,5 +1,5 @@
 import sdk from '@stackblitz/sdk';
-import { useEffect, useId } from 'react';
+import { useEffect, useId, useRef } from 'react';
 
 import type { EmbedOptions } from '@stackblitz/sdk';
 import type { FC } from 'react';
@@ -14,8 +14,15 @@ export const Stackblitz: FC<StackblitzProps> = ({
   options,
 }) => {
   const id = useId();
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!ref.current) return;
+
+    const element = document.createElement('div');
+    element.id = id;
+    ref.current.append(element);
+
     void sdk.embedGithubProject(id, repository, {
       height: '500',
       ...options,
@@ -23,6 +30,6 @@ export const Stackblitz: FC<StackblitzProps> = ({
   }, []);
 
   return (
-    <div id={id}>Embed Stackblitz editor</div>
+    <div ref={ref} />
   );
 };
