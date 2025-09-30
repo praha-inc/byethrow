@@ -1,4 +1,6 @@
-import { defineCommand, runMain } from 'citty';
+import { exit } from 'node:process';
+
+import { defineCommand, runMain, showUsage } from 'citty';
 
 import { describe } from './commands/describe';
 import { list } from './commands/list';
@@ -11,6 +13,10 @@ const main = defineCommand({
   subCommands: {
     list,
     describe,
+  },
+  run: async (context) => {
+    await showUsage(context.cmd);
+    exit(0);
   },
 });
 
