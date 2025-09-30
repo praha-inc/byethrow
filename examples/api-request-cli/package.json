@@ -1,0 +1,23 @@
+{
+  "name": "@praha/byethrow-example-api-request-cli",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx ./src/index.ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@praha/byethrow": "0.7.1",
+    "@praha/error-factory": "1.2.1",
+    "citty": "0.1.6",
+    "ts-pattern": "5.8.0",
+    "valibot": "1.1.0",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@tsconfig/strictest": "2.0.6",
+    "@types/node": "24.5.2",
+    "tsx": "4.20.6",
+    "vitest": "3.2.4"
+  }
+}
