@@ -53,7 +53,7 @@
   },
   "devDependencies": {
     "@rslib/core": "0.15.0",
-    "eslint": "9.36.0",
+    "eslint": "9.37.0",
     "typedoc": "0.28.13",
     "typedoc-plugin-markdown": "4.9.0",
     "typescript": "5.9.3",
