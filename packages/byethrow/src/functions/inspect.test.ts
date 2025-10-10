@@ -49,14 +49,14 @@ describe('inspect', () => {
       describe('when input is a success', () => {
         const input = succeed(42);
 
-        it('should return the original success result unchanged', () => {
-          const result = inspect(sideEffect)(input);
+        it('should return the original success result unchanged', async () => {
+          const result = await inspect(sideEffect)(input);
 
           expect(result).toEqual(succeed(42));
         });
 
-        it('should call the side effect function with the success value', () => {
-          inspect(sideEffect)(input);
+        it('should call the side effect function with the success value', async () => {
+          await inspect(sideEffect)(input);
 
           expect(sideEffect).toHaveBeenCalledWith(42);
           expect(sideEffect).toHaveBeenCalledTimes(1);
@@ -66,14 +66,14 @@ describe('inspect', () => {
       describe('when input is a failure', () => {
         const input = fail('error message');
 
-        it('should return the original failure result unchanged', () => {
-          const result = inspect(sideEffect)(input);
+        it('should return the original failure result unchanged', async () => {
+          const result = await inspect(sideEffect)(input);
 
           expect(result).toEqual(fail('error message'));
         });
 
-        it('should not call the side effect function', () => {
-          inspect(sideEffect)(input);
+        it('should not call the side effect function', async () => {
+          await inspect(sideEffect)(input);
 
           expect(sideEffect).not.toHaveBeenCalled();
         });

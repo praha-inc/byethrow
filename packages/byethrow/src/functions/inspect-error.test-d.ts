@@ -45,7 +45,7 @@ describe('inspectError', () => {
           it('should preserve the original result type', () => {
             const result = inspectError(sideEffect)(input);
 
-            expectTypeOf(result).toEqualTypeOf<Result<never, string>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<never, string>>();
           });
         });
 
@@ -55,7 +55,7 @@ describe('inspectError', () => {
           it('should preserve the original result type', () => {
             const result = inspectError(sideEffect)(input);
 
-            expectTypeOf(result).toEqualTypeOf<Result<number, never>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<number, never>>();
           });
         });
       });
@@ -154,7 +154,7 @@ describe('inspectError', () => {
               inspectError((x) => Promise.resolve(x.length)),
             );
 
-            expectTypeOf(result).toEqualTypeOf<Result<never, string>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<never, string>>();
           });
         });
 
@@ -167,7 +167,7 @@ describe('inspectError', () => {
               inspectError((x: string) => Promise.resolve(x.length)),
             );
 
-            expectTypeOf(result).toEqualTypeOf<Result<number, never>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<number, never>>();
           });
         });
       });
