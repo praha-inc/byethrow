@@ -10,7 +10,7 @@ Ensure inspect function waits for callback execution to complete
 
 ### Migration guide:
 
-** Before:**
+**Before:**
 ```ts
 const result = Result.pipe(
   Result.succeed('success'),
@@ -25,7 +25,7 @@ const result = Result.pipe(
 console.log(result); // Result<string, never>
 ```
 
-** After:**
+**After:**
 ```ts
 const result = Result.pipe(
   Result.succeed('success'),
