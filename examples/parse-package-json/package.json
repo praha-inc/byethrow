@@ -10,7 +10,7 @@
     "@praha/byethrow": "0.7.2",
     "@praha/error-factory": "1.2.1",
     "ts-pattern": "5.8.0",
-    "zod": "4.1.12"
+    "zod": "3.25.76"
   },
   "devDependencies": {
     "@tsconfig/strictest": "2.0.6",
