@@ -12,7 +12,7 @@
     "citty": "0.1.6",
     "ts-pattern": "5.8.0",
     "valibot": "1.1.0",
-    "zod": "3.25.76"
+    "zod": "4.1.12"
   },
   "devDependencies": {
     "@tsconfig/strictest": "2.0.6",
