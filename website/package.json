@@ -28,7 +28,7 @@
     "@types/mdast": "4.0.4",
     "@types/node": "24.7.2",
     "@types/react": "19.2.2",
-    "@types/react-dom": "19.2.1",
+    "@types/react-dom": "19.2.2",
     "execa": "9.6.0",
     "mdast-util-from-markdown": "2.0.2",
     "mdast-util-gfm": "3.1.0",
