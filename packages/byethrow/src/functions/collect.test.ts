@@ -1,15 +1,15 @@
 import { describe, expect, it } from 'vitest';
 
-import { combine } from './combine';
+import { collect } from './collect';
 import { fail } from './fail';
 import { succeed } from './succeed';
 
-describe('combine', () => {
+describe('collect', () => {
   describe('when input is an array', () => {
     describe('when all results are successful', () => {
       it('should return a Success with an array of values', () => {
         const input = [succeed(1), succeed(2), succeed(3)];
-        const result = combine(input);
+        const result = collect(input);
 
         expect(result).toEqual(succeed([1, 2, 3]));
       });
@@ -18,7 +18,7 @@ describe('combine', () => {
     describe('when some results are failures', () => {
       it('should return a Failure with an array of errors', () => {
         const input = [succeed(1), fail('error1'), fail('error2')];
-        const result = combine(input);
+        const result = collect(input);
 
         expect(result).toEqual(fail(['error1', 'error2']));
       });
@@ -27,7 +27,7 @@ describe('combine', () => {
     describe('when all results are failures', () => {
       it('should return a Failure with an array of all errors', () => {
         const input = [fail('error1'), fail('error2'), fail('error3')];
-        const result = combine(input);
+        const result = collect(input);
 
         expect(result).toEqual(fail(['error1', 'error2', 'error3']));
       });
@@ -36,7 +36,7 @@ describe('combine', () => {
     describe('when array is empty', () => {
       it('should return a Success with an empty array', () => {
         const input: never[] = [];
-        const result = combine(input);
+        const result = collect(input);
 
         expect(result).toEqual(succeed([]));
       });
@@ -49,7 +49,7 @@ describe('combine', () => {
           succeed(Promise.resolve(2)),
           succeed(Promise.resolve(3)),
         ];
-        const result = await combine(input);
+        const result = await collect(input);
 
         expect(result).toEqual(succeed([1, 2, 3]));
       });
@@ -60,7 +60,7 @@ describe('combine', () => {
           succeed(Promise.resolve(2)),
           succeed(3),
         ];
-        const result = await combine(input);
+        const result = await collect(input);
 
         expect(result).toEqual(succeed([1, 2, 3]));
       });
@@ -71,7 +71,7 @@ describe('combine', () => {
           fail(Promise.resolve('error1')),
           fail(Promise.resolve('error2')),
         ];
-        const result = await combine(input);
+        const result = await collect(input);
 
         expect(result).toEqual(fail(['error1', 'error2']));
       });
@@ -86,7 +86,7 @@ describe('combine', () => {
           b: succeed('hello'),
           c: succeed(true),
         };
-        const result = combine(input);
+        const result = collect(input);
 
         expect(result).toEqual(succeed({ a: 1, b: 'hello', c: true }));
       });
@@ -99,7 +99,7 @@ describe('combine', () => {
           b: fail('error1'),
           c: fail('error2'),
         };
-        const result = combine(input);
+        const result = collect(input);
 
         expect(result).toEqual(fail(['error1', 'error2']));
       });
@@ -112,7 +112,7 @@ describe('combine', () => {
           b: fail('error2'),
           c: fail('error3'),
         };
-        const result = combine(input);
+        const result = collect(input);
 
         expect(result).toEqual(fail(['error1', 'error2', 'error3']));
       });
@@ -121,7 +121,7 @@ describe('combine', () => {
     describe('when object is empty', () => {
       it('should return a Success with an empty object', () => {
         const input = {};
-        const result = combine(input);
+        const result = collect(input);
 
         expect(result).toEqual(succeed({}));
       });
@@ -134,7 +134,7 @@ describe('combine', () => {
           b: succeed(Promise.resolve('hello')),
           c: succeed(Promise.resolve(true)),
         };
-        const result = await combine(input);
+        const result = await collect(input);
 
         expect(result).toEqual(succeed({ a: 1, b: 'hello', c: true }));
       });
@@ -145,7 +145,7 @@ describe('combine', () => {
           b: succeed(Promise.resolve('hello')),
           c: succeed(true),
         };
-        const result = await combine(input);
+        const result = await collect(input);
 
         expect(result).toEqual(succeed({ a: 1, b: 'hello', c: true }));
       });
@@ -156,7 +156,7 @@ describe('combine', () => {
           b: fail(Promise.resolve('error1')),
           c: fail(Promise.resolve('error2')),
         };
-        const result = await combine(input);
+        const result = await collect(input);
 
         expect(result).toEqual(fail(['error1', 'error2']));
       });
