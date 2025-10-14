@@ -10,12 +10,12 @@ describe('isSuccess', () => {
   it('should narrow the type to Success when given a successful Result', () => {
     const result = succeed('value');
     if (isSuccess(result)) {
-      expectTypeOf(result).toEqualTypeOf<Success<string>>();
+      expectTypeOf(result).toEqualTypeOf<Success<'value'>>();
     }
   });
 
   it('should not narrow the type to Success when given a failed Result', () => {
-    const result = fail('value');
+    const result = fail('error');
     if (isSuccess(result)) {
       expectTypeOf(result).toEqualTypeOf<Success<never>>();
     }
