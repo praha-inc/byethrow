@@ -21,7 +21,7 @@ describe('bind', () => {
             it('should return a success result with both original and new values', () => {
               const result = bind('bar', output)(input);
 
-              expectTypeOf(result).toEqualTypeOf<Result<{ foo: number; bar: string }, never>>();
+              expectTypeOf(result).toEqualTypeOf<Result<{ foo: 1; bar: string }, never>>();
             });
           });
 
@@ -32,7 +32,7 @@ describe('bind', () => {
             it('should return a failure result with error type and updated value as never', () => {
               const result = bind('bar', output)(input);
 
-              expectTypeOf(result).toEqualTypeOf<Result<{ foo: number; bar: never }, string>>();
+              expectTypeOf(result).toEqualTypeOf<Result<{ foo: 1; bar: never }, string>>();
             });
           });
         });
@@ -59,7 +59,7 @@ describe('bind', () => {
           it('should return a ResultAsync with success containing resolved value', () => {
             const result = bind('bar', output)(input);
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: number; bar: string }, never>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: 1; bar: string }, never>>();
           });
         });
 
@@ -70,7 +70,7 @@ describe('bind', () => {
           it('should return a ResultAsync with failure containing resolved error', () => {
             const result = bind('bar', output)(input);
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: number; bar: never }, string>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: 1; bar: never }, string>>();
           });
         });
       });
@@ -155,7 +155,7 @@ describe('bind', () => {
                 bind('bar', (x) => succeed(x.foo.toString())),
               );
 
-              expectTypeOf(result).toEqualTypeOf<Result<{ foo: number; bar: string }, never>>();
+              expectTypeOf(result).toEqualTypeOf<Result<{ foo: 1; bar: string }, never>>();
             });
           });
 
@@ -166,7 +166,7 @@ describe('bind', () => {
                 bind('bar', (x) => fail(x.foo.toString())),
               );
 
-              expectTypeOf(result).toEqualTypeOf<Result<{ foo: number; bar: never }, string>>();
+              expectTypeOf(result).toEqualTypeOf<Result<{ foo: 1; bar: never }, string>>();
             });
           });
         });
@@ -195,7 +195,7 @@ describe('bind', () => {
               bind('bar', (x) => succeed(Promise.resolve(x.foo.toString()))),
             );
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: number; bar: string }, never>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: 1; bar: string }, never>>();
           });
         });
 
@@ -206,7 +206,7 @@ describe('bind', () => {
               bind('bar', (x) => fail(Promise.resolve(x.foo.toString()))),
             );
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: number; bar: never }, string>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: 1; bar: never }, string>>();
           });
         });
       });

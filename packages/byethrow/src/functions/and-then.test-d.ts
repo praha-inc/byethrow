@@ -30,7 +30,7 @@ describe('andThen', () => {
           it('should return a Result with original error', () => {
             const result = andThen(transform)(input);
 
-            expectTypeOf(result).toEqualTypeOf<Result<string, string>>();
+            expectTypeOf(result).toEqualTypeOf<Result<string, 'error'>>();
           });
         });
       });
@@ -55,7 +55,7 @@ describe('andThen', () => {
           it('should return a ResultAsync with original error', () => {
             const result = andThen(transform)(input);
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<string, string>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<string, 'error'>>();
           });
         });
       });

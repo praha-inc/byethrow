@@ -13,7 +13,7 @@ describe('assertSuccess', () => {
         const input = succeed('value');
         const result = assertSuccess(input);
 
-        expectTypeOf(result).toEqualTypeOf<Success<string>>();
+        expectTypeOf(result).toEqualTypeOf<Success<'value'>>();
       });
     });
 
@@ -31,7 +31,7 @@ describe('assertSuccess', () => {
   describe('when input is asynchronous (Promise)', () => {
     describe('when input is a success', () => {
       it('should infer success type', () => {
-        const input = Promise.resolve(succeed('value'));
+        const input = succeed(Promise.resolve('value'));
         const result = assertSuccess(input);
 
         expectTypeOf(result).toEqualTypeOf<Promise<Success<string>>>();

@@ -13,7 +13,7 @@ describe('assertFailure', () => {
         const input = fail('error');
         const result = assertFailure(input);
 
-        expectTypeOf(result).toEqualTypeOf<Failure<string>>();
+        expectTypeOf(result).toEqualTypeOf<Failure<'error'>>();
       });
     });
 

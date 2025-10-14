@@ -11,13 +11,13 @@ describe('collect', () => {
     it('should collect array of successful Results', () => {
       const result = collect([succeed(1), succeed(2), succeed(3)]);
 
-      expectTypeOf(result).toEqualTypeOf<Result<[number, number, number], never[]>>();
+      expectTypeOf(result).toEqualTypeOf<Result<[1, 2, 3], never[]>>();
     });
 
     it('should handle array with mixed success and failure types', () => {
       const result = collect([succeed(1), succeed('hello'), fail('error'), fail(true)]);
 
-      expectTypeOf(result).toEqualTypeOf<Result<[number, string, never, never], (string | boolean)[]>>();
+      expectTypeOf(result).toEqualTypeOf<Result<[1, 'hello', never, never], ('error' | true)[]>>();
     });
 
     it('should handle async array input', () => {
@@ -36,7 +36,7 @@ describe('collect', () => {
       };
       const result = collect(input);
 
-      expectTypeOf(result).toEqualTypeOf<Result<{ a: number; b: string; c: boolean }, never[]>>();
+      expectTypeOf(result).toEqualTypeOf<Result<{ a: 1; b: 'hello'; c: true }, never[]>>();
     });
 
     it('should handle object with mixed success and failure types', () => {
@@ -48,7 +48,7 @@ describe('collect', () => {
       };
       const result = collect(input);
 
-      expectTypeOf(result).toEqualTypeOf<Result<{ a: number; b: string; c: never; d: never }, (string | boolean)[]>>();
+      expectTypeOf(result).toEqualTypeOf<Result<{ a: 1; b: 'hello'; c: never; d: never }, ('error' | true)[]>>();
     });
 
     it('should handle async object input', () => {

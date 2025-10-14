@@ -6,17 +6,16 @@ import type { Result, ResultAsync } from '../result';
 
 describe('fail', () => {
   it('should return a Result when given a plain error', () => {
-    const error = new Error('Test error');
-    const result = fail(error);
+    const result = fail('error');
 
-    expectTypeOf(result).toEqualTypeOf<Result<never, Error>>();
+    expectTypeOf(result).toEqualTypeOf<Result<never, 'error'>>();
   });
 
   it('should return a ResultAsync when given a Promise of error', () => {
-    const error = Promise.resolve(new Error('Test promise error'));
+    const error = Promise.resolve('error' as const);
     const result = fail(error);
 
-    expectTypeOf(result).toEqualTypeOf<ResultAsync<never, Error>>();
+    expectTypeOf(result).toEqualTypeOf<ResultAsync<never, 'error'>>();
   });
 
   it('should return a Result with a no value', () => {

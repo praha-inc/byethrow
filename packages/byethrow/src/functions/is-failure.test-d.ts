@@ -15,9 +15,9 @@ describe('isFailure', () => {
   });
 
   it('should narrow the type to Failure when given a failed Result', () => {
-    const result = fail('value');
+    const result = fail('error');
     if (isFailure(result)) {
-      expectTypeOf(result).toEqualTypeOf<Failure<string>>();
+      expectTypeOf(result).toEqualTypeOf<Failure<'error'>>();
     }
   });
 });

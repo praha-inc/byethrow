@@ -20,7 +20,7 @@ describe('andThrough', () => {
           it('should return a Result with original value', () => {
             const result = andThrough(transform)(input);
 
-            expectTypeOf(result).toEqualTypeOf<Result<number, never>>();
+            expectTypeOf(result).toEqualTypeOf<Result<2, never>>();
           });
         });
 
@@ -30,7 +30,7 @@ describe('andThrough', () => {
           it('should return a Result with original error', () => {
             const result = andThrough(transform)(input);
 
-            expectTypeOf(result).toEqualTypeOf<Result<never, string>>();
+            expectTypeOf(result).toEqualTypeOf<Result<never, 'error'>>();
           });
         });
       });
@@ -45,7 +45,7 @@ describe('andThrough', () => {
           it('should return a ResultAsync with original value', () => {
             const result = andThrough(transform)(input);
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<number, never>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<2, never>>();
           });
         });
 
@@ -55,7 +55,7 @@ describe('andThrough', () => {
           it('should return a ResultAsync with original error', () => {
             const result = andThrough(transform)(input);
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<never, string>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<never, 'error'>>();
           });
         });
       });
@@ -126,7 +126,7 @@ describe('andThrough', () => {
               andThrough((x) => succeed(x.toString())),
             );
 
-            expectTypeOf(result).toEqualTypeOf<Result<number, never>>();
+            expectTypeOf(result).toEqualTypeOf<Result<2, never>>();
           });
         });
 
@@ -154,7 +154,7 @@ describe('andThrough', () => {
               andThrough((x) => succeed(Promise.resolve(x.toString()))),
             );
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<number, never>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<2, never>>();
           });
         });
 

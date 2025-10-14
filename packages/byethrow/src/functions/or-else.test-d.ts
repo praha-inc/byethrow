@@ -18,7 +18,7 @@ describe('orElse', () => {
           it('should return a Result with original value', () => {
             const result = orElse(transform)(input);
 
-            expectTypeOf(result).toEqualTypeOf<Result<number | string, never>>();
+            expectTypeOf(result).toEqualTypeOf<Result<42 | string, never>>();
           });
         });
 
@@ -57,7 +57,7 @@ describe('orElse', () => {
           it('should return a ResultAsync with original value', () => {
             const result = orElse(transform)(input);
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<number | string, never>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<42 | string, never>>();
           });
         });
 
@@ -182,7 +182,7 @@ describe('orElse', () => {
               orElse((x: string) => succeed(x.toUpperCase())),
             );
 
-            expectTypeOf(result).toEqualTypeOf<Result<number | string, never>>();
+            expectTypeOf(result).toEqualTypeOf<Result<42 | string, never>>();
           });
         });
 
@@ -223,7 +223,7 @@ describe('orElse', () => {
               orElse((x: string) => succeed(Promise.resolve(x.toUpperCase()))),
             );
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<number | string, never>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<42 | string, never>>();
           });
         });
 

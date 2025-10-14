@@ -20,7 +20,7 @@ describe('inspectError', () => {
           it('should preserve the original result type', () => {
             const result = inspectError(sideEffect)(input);
 
-            expectTypeOf(result).toEqualTypeOf<Result<never, string>>();
+            expectTypeOf(result).toEqualTypeOf<Result<never, 'error'>>();
           });
         });
 
@@ -30,7 +30,7 @@ describe('inspectError', () => {
           it('should preserve the original result type', () => {
             const result = inspectError(sideEffect)(input);
 
-            expectTypeOf(result).toEqualTypeOf<Result<number, never>>();
+            expectTypeOf(result).toEqualTypeOf<Result<42, never>>();
           });
         });
       });
@@ -45,7 +45,7 @@ describe('inspectError', () => {
           it('should preserve the original result type', () => {
             const result = inspectError(sideEffect)(input);
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<never, string>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<never, 'error'>>();
           });
         });
 
@@ -55,7 +55,7 @@ describe('inspectError', () => {
           it('should preserve the original result type', () => {
             const result = inspectError(sideEffect)(input);
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<number, never>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<42, never>>();
           });
         });
       });
@@ -126,7 +126,7 @@ describe('inspectError', () => {
               inspectError((x) => x.length),
             );
 
-            expectTypeOf(result).toEqualTypeOf<Result<never, string>>();
+            expectTypeOf(result).toEqualTypeOf<Result<never, 'error'>>();
           });
         });
 
@@ -139,7 +139,7 @@ describe('inspectError', () => {
               inspectError((x: string) => x.length),
             );
 
-            expectTypeOf(result).toEqualTypeOf<Result<number, never>>();
+            expectTypeOf(result).toEqualTypeOf<Result<42, never>>();
           });
         });
       });
@@ -154,7 +154,7 @@ describe('inspectError', () => {
               inspectError((x) => Promise.resolve(x.length)),
             );
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<never, string>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<never, 'error'>>();
           });
         });
 
@@ -167,7 +167,7 @@ describe('inspectError', () => {
               inspectError((x: string) => Promise.resolve(x.length)),
             );
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<number, never>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<42, never>>();
           });
         });
       });

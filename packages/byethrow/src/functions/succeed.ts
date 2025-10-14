@@ -36,13 +36,13 @@ import type { ResultFor } from '../result';
  * // Result.Result<void, never>
  * ```
  *
- * @see {@link combine} - For combining multiple Results into a single Result.
+ * @see {@link collect} - For collect multiple Results into a single Result.
  *
  * @category Creators
  */
 export const succeed: {
   (): ResultFor<never, void, never>;
-  <T>(value: T): ResultFor<T, Awaited<T>, never>;
+  <const T>(value: T): ResultFor<T, Awaited<T>, never>;
 } = (...args: any[]) => {
   if (args.length <= 0) {
     return { type: 'Success' };
