@@ -7,58 +7,121 @@ import { succeed } from './succeed';
 import type { Result, ResultAsync } from '../result';
 
 describe('collect', () => {
-  describe('when input is an array', () => {
-    it('should collect array of successful Results', () => {
-      const result = collect([succeed(1), succeed(2), succeed(3)]);
+  describe('when collecting an object of Results', () => {
+    describe('when all Results are synchronous', () => {
+      it('should return a synchronous Result with object of values', () => {
+        const result = collect({
+          name: succeed('Alice'),
+          age: succeed(20),
+        });
 
-      expectTypeOf(result).toEqualTypeOf<Result<[1, 2, 3], never[]>>();
+        expectTypeOf(result).toEqualTypeOf<Result<{ name: 'Alice'; age: 20 }, never[]>>();
+      });
+
+      it('should return a synchronous Result with error array when some fail', () => {
+        const result = collect({
+          name: succeed('Alice'),
+          age: fail('Invalid age'),
+        });
+
+        expectTypeOf(result).toEqualTypeOf<Result<{ name: 'Alice'; age: never }, 'Invalid age'[]>>();
+      });
     });
 
-    it('should handle array with mixed success and failure types', () => {
-      const result = collect([succeed(1), succeed('hello'), fail('error'), fail(true)]);
+    describe('when some Results are asynchronous', () => {
+      it('should return a ResultAsync with object of values', () => {
+        const result = collect({
+          name: succeed(Promise.resolve('Alice')),
+          age: succeed(20),
+        });
 
-      expectTypeOf(result).toEqualTypeOf<Result<[1, 'hello', never, never], ('error' | true)[]>>();
-    });
+        expectTypeOf(result).toEqualTypeOf<ResultAsync<{ name: string; age: 20 }, never[]>>();
+      });
 
-    it('should handle async array input', () => {
-      const result = collect([succeed(Promise.resolve(1)), succeed(Promise.resolve(2))]);
+      it('should return a ResultAsync with error array when some fail', () => {
+        const result = collect({
+          name: succeed(Promise.resolve('Alice')),
+          age: fail('Invalid age'),
+        });
 
-      expectTypeOf(result).toEqualTypeOf<ResultAsync<[number, number], never[]>>();
+        expectTypeOf(result).toEqualTypeOf<ResultAsync<{ name: string; age: never }, 'Invalid age'[]>>();
+      });
     });
   });
 
-  describe('when input is an object', () => {
-    it('should collect object of successful Results', () => {
-      const input = {
-        a: succeed(1),
-        b: succeed('hello'),
-        c: succeed(true),
-      };
-      const result = collect(input);
+  describe('when collecting an array of Results', () => {
+    describe('when all Results are synchronous', () => {
+      it('should return a synchronous Result with array of values', () => {
+        const result = collect([
+          succeed(1),
+          succeed(2),
+          succeed(3),
+        ]);
 
-      expectTypeOf(result).toEqualTypeOf<Result<{ a: 1; b: 'hello'; c: true }, never[]>>();
+        expectTypeOf(result).toEqualTypeOf<Result<[1, 2, 3], never[]>>();
+      });
+
+      it('should return a synchronous Result with error array when some fail', () => {
+        const result = collect([
+          succeed(1),
+          fail('error1'),
+          fail('error2'),
+        ]);
+
+        expectTypeOf(result).toEqualTypeOf<Result<[1, never, never], ('error1' | 'error2')[]>>();
+      });
     });
 
-    it('should handle object with mixed success and failure types', () => {
-      const input = {
-        a: succeed(1),
-        b: succeed('hello'),
-        c: fail('error'),
-        d: fail(true),
-      };
-      const result = collect(input);
+    describe('when some Results are asynchronous', () => {
+      it('should return a ResultAsync with array of values', () => {
+        const result = collect([
+          succeed(Promise.resolve(1)),
+          succeed(2),
+          succeed(3),
+        ]);
 
-      expectTypeOf(result).toEqualTypeOf<Result<{ a: 1; b: 'hello'; c: never; d: never }, ('error' | true)[]>>();
+        expectTypeOf(result).toEqualTypeOf<ResultAsync<[number, 2, 3], never[]>>();
+      });
+
+      it('should return a ResultAsync with error array when some fail', () => {
+        const result = collect([
+          succeed(Promise.resolve(1)),
+          fail('error1'),
+          fail('error2'),
+        ]);
+
+        expectTypeOf(result).toEqualTypeOf<ResultAsync<[number, never, never], ('error1' | 'error2')[]>>();
+      });
+    });
+  });
+
+  describe('when collecting an array with a mapping function', () => {
+    describe('when the mapping function returns synchronous Results', () => {
+      it('should return a synchronous Result with array of mapped values', () => {
+        const result = collect([1, 2, 3], (x) => succeed(x.toString()));
+
+        expectTypeOf(result).toEqualTypeOf<Result<[string, string, string], never[]>>();
+      });
+
+      it('should return a synchronous Result with error array when some fail', () => {
+        const result = collect([1, 2, 3], (x) => x > 1 ? fail(x.toString()) : succeed(x.toString()));
+
+        expectTypeOf(result).toEqualTypeOf<Result<[string, string, string], string[]>>();
+      });
     });
 
-    it('should handle async object input', () => {
-      const input = {
-        a: succeed(Promise.resolve(1)),
-        b: succeed(Promise.resolve('hello')),
-      };
-      const result = collect(input);
+    describe('when the mapping function returns asynchronous Results', () => {
+      it('should return a ResultAsync with array of mapped values', () => {
+        const result = collect([1, 2, 3], (x) => succeed(Promise.resolve(x.toString())));
 
-      expectTypeOf(result).toEqualTypeOf<ResultAsync<{ a: number; b: string }, never[]>>();
+        expectTypeOf(result).toEqualTypeOf<ResultAsync<[string, string, string], never[]>>();
+      });
+
+      it('should return a ResultAsync with error array when some fail', () => {
+        const result = collect([1, 2, 3], (x) => x > 1 ? fail(Promise.resolve(x.toString())) : succeed(Promise.resolve(x.toString())));
+
+        expectTypeOf(result).toEqualTypeOf<ResultAsync<[string, string, string], string[]>>();
+      });
     });
   });
 });
