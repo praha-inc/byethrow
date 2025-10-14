@@ -68,12 +68,46 @@ import type {
  * // { type: 'Failure', error: ['error1', 'error2'] }
  * ```
  *
+ * @example Using a mapper function (all succeed)
+ * ```ts
+ * import { Result } from '@praha/byethrow';
+ *
+ * const result = Result.collect(['1', '2', '3'], (value) => {
+ *   const number = Number(value);
+ *   return Number.isNaN(number)
+ *     ? Result.fail(`Invalid number: ${value}`)
+ *     : Result.succeed(number);
+ * });
+ * // { type: 'Success', value: [1, 2, 3] }
+ * ```
+ *
+ * @example Using a mapper function (some fail)
+ * ```ts
+ * import { Result } from '@praha/byethrow';
+ *
+ * const result = Result.collect(['1', 'invalid', '3'], (value) => {
+ *   const number = Number(value);
+ *   return Number.isNaN(number)
+ *     ? Result.fail(`Invalid number: ${value}`)
+ *     : Result.succeed(number);
+ * });
+ * // { type: 'Failure', error: ['Invalid number: invalid'] }
+ * ```
+ *
  * @category Utilities
  */
 export const collect: {
   <X extends Record<string, ResultMaybeAsync<any, any>>>(x: X): ResultFor<X[keyof X], { [K in keyof X ]: InferSuccess<X[K]> }, InferFailure<X[keyof X]>[]>;
   <const X extends Array<ResultMaybeAsync<any, any>>>(x: X): ResultFor<X[number], { [K in keyof X ]: InferSuccess<X[K]> }, InferFailure<X[number]>[]>;
-} = (value: unknown): any => {
+  <const X extends ReadonlyArray<ResultMaybeAsync<any, any>>>(x: X): ResultFor<X[number], { [K in keyof X ]: InferSuccess<X[K]> }, InferFailure<X[number]>[]>;
+  <const X extends Array<unknown>, Fn extends (value: X[number]) => ResultMaybeAsync<any, any>>(x: X, fn: Fn): ResultFor<ReturnType<Fn>, { [K in keyof X]: InferSuccess<Fn> }, InferFailure<Fn>[]>;
+  <const X extends ReadonlyArray<unknown>, Fn extends (value: X[number]) => ResultMaybeAsync<any, any>>(x: X, fn: Fn): ResultFor<ReturnType<Fn>, { [K in keyof X]: InferSuccess<Fn> }, InferFailure<Fn>[]>;
+} = (value: unknown, fn?: (value: unknown) => ResultMaybeAsync<any, any>): any => {
+  // eslint-disable-next-line unicorn/consistent-function-scoping
+  const toResult = (grouped: { errors: unknown[]; successes: unknown[] | Record<string, unknown> }) => {
+    return grouped.errors.length > 0 ? fail(grouped.errors) : succeed(grouped.successes);
+  };
+
   if (Array.isArray(value)) {
     const group = (results: Result<unknown, unknown>[]) => {
       const errors: unknown[] = [];
@@ -90,17 +124,24 @@ export const collect: {
       return { errors, successes };
     };
 
+    if (fn) {
+      const results = value.map(fn);
+      if (results.some(isPromise)) {
+        return Promise.all(results).then((results: Array<Result<unknown, unknown>>) => {
+          return toResult(group(results));
+        });
+      }
+
+      return toResult(group(results as Array<Result<unknown, unknown>>));
+    }
+
     if (value.some(isPromise)) {
-      const results = value as Array<ResultAsync<unknown, unknown>>;
-      return Promise.all(results).then((results: Array<Result<unknown, unknown>>) => {
-        const { successes, errors } = group(results);
-        return errors.length > 0 ? fail(errors) : succeed(successes);
+      return Promise.all(value).then((results: Array<Result<unknown, unknown>>) => {
+        return toResult(group(results));
       });
     }
 
-    const results = value as Array<Result<unknown, unknown>>;
-    const { successes, errors } = group(results);
-    return errors.length > 0 ? fail(errors) : succeed(successes);
+    return toResult(group(value as Array<Result<unknown, unknown>>));
   } else {
     const group = (entries: Array<Readonly<[string, Result<unknown, unknown>]>>) => {
       const errors: unknown[] = [];
@@ -122,12 +163,10 @@ export const collect: {
       const results = entries as Array<[string, ResultAsync<any, any>]>;
       const promises = results.map(async ([key, result]) => [key, await result] as const);
       return Promise.all(promises).then((entries) => {
-        const { successes, errors } = group(entries);
-        return errors.length > 0 ? fail(errors) : succeed(successes);
+        return toResult(group(entries));
       });
     }
 
-    const { successes, errors } = group(entries);
-    return errors.length > 0 ? fail(errors) : succeed(successes);
+    return toResult(group(entries));
   }
 };
