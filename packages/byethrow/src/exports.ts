@@ -4,7 +4,7 @@ export * from './functions/and-through';
 export * from './functions/assert-failure';
 export * from './functions/assert-success';
 export * from './functions/bind';
-export * from './functions/combine';
+export * from './functions/collect';
 export * from './functions/do';
 export * from './functions/fail';
 export * from './functions/inspect';

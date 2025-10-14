@@ -15,29 +15,40 @@ import type {
 } from '../result';
 
 /**
- * Combines multiple {@link Result} or {@link ResultAsync} values into a single result.
- * If all inputs are {@link Success}, returns a {@link Success} with combined values.
- * If any input is a {@link Failure}, returns a {@link Failure} with an array of all errors.
+ * Collects multiple {@link Result} or {@link ResultAsync} values into a single result.
+ * If all results are {@link Success}, returns a {@link Success} containing all values.
+ * If any result is a {@link Failure}, returns a {@link Failure} containing an array of all errors.
  *
  * @function
  * @typeParam X - The input type (object or array of Results).
  *
- * @example Object Input
+ * @example Object of Results (all succeed)
  * ```ts
  * import { Result } from '@praha/byethrow';
  *
- * const result = Result.combine({
- *   a: Result.succeed(1),
- *   b: Result.succeed('hello'),
+ * const result = Result.collect({
+ *   name: Result.succeed('Alice'),
+ *   age: Result.succeed(20),
  * });
- * // { type: 'Success', value: { a: 1, b: 'hello' } }
+ * // { type: 'Success', value: { name: 'Alice', age: 20 } }
  * ```
  *
- * @example Array Input
+ * @example Object of Results (some fail)
  * ```ts
  * import { Result } from '@praha/byethrow';
  *
- * const result = Result.combine([
+ * const result = Result.collect({
+ *   name: Result.succeed('Alice'),
+ *   age: Result.fail('Invalid age'),
+ * });
+ * // { type: 'Failure', error: ['Invalid age'] }
+ * ```
+ *
+ * @example Array of Results (all succeed)
+ * ```ts
+ * import { Result } from '@praha/byethrow';
+ *
+ * const result = Result.collect([
  *   Result.succeed(1),
  *   Result.succeed(2),
  *   Result.succeed(3),
@@ -45,11 +56,11 @@ import type {
  * // { type: 'Success', value: [1, 2, 3] }
  * ```
  *
- * @example With Failures
+ * @example Array of Results (some fail)
  * ```ts
  * import { Result } from '@praha/byethrow';
  *
- * const result = Result.combine([
+ * const result = Result.collect([
  *   Result.succeed(1),
  *   Result.fail('error1'),
  *   Result.fail('error2'),
@@ -59,7 +70,7 @@ import type {
  *
  * @category Utilities
  */
-export const combine: {
+export const collect: {
   <X extends Record<string, ResultMaybeAsync<any, any>>>(x: X): ResultFor<X[keyof X], { [K in keyof X ]: InferSuccess<X[K]> }, InferFailure<X[keyof X]>[]>;
   <const X extends Array<ResultMaybeAsync<any, any>>>(x: X): ResultFor<X[number], { [K in keyof X ]: InferSuccess<X[K]> }, InferFailure<X[number]>[]>;
 } = (value: unknown): any => {
