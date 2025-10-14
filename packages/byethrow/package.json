@@ -59,6 +59,9 @@
     "typescript": "5.9.3",
     "vitest": "3.2.4"
   },
+  "peerDependencies": {
+    "typescript": ">=5.0.0"
+  },
   "publishConfig": {
     "provenance": true
   }
