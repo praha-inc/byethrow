@@ -17,6 +17,7 @@ export * from './functions/map-error';
 export * from './functions/or-else';
 export * from './functions/parse';
 export * from './functions/pipe';
+export * from './functions/sequence';
 export * from './functions/succeed';
 export * from './functions/try';
 export * from './functions/unwrap';
