@@ -1,5 +1,28 @@
 # @praha/byethrow
 
+## 0.8.0
+
+### Minor Changes
+
+- [#298](https://github.com/praha-inc/byethrow/pull/298) [`f270af3`](https://github.com/praha-inc/byethrow/commit/f270af333ff9ac4d9d6c5b01dfc3c0fd0ed2ae8b) Thanks [@Karibash](https://github.com/Karibash)! - Rename combine function to collect
+
+  **BREAKING CHANGES:**
+
+  The `combine` function has been renamed to `collect`.
+  Update all usages from `Result.combine()` to `Result.collect()`.
+
+- [#302](https://github.com/praha-inc/byethrow/pull/302) [`89b6142`](https://github.com/praha-inc/byethrow/commit/89b61425c5caa23b083d0be4358ca2bacc481802) Thanks [@Karibash](https://github.com/Karibash)! - Add a sequence function
+
+- [#301](https://github.com/praha-inc/byethrow/pull/301) [`bc91d35`](https://github.com/praha-inc/byethrow/commit/bc91d35db5b7383efdb00f832849467be95b8e8d) Thanks [@Karibash](https://github.com/Karibash)! - Add a mapping function that converts array elements into Result
+
+### Patch Changes
+
+- [#304](https://github.com/praha-inc/byethrow/pull/304) [`262f781`](https://github.com/praha-inc/byethrow/commit/262f781367d941a8919cf1b929b436d2ff75dfdb) Thanks [@Karibash](https://github.com/Karibash)! - Add const type parameters to map functions
+
+- [#296](https://github.com/praha-inc/byethrow/pull/296) [`1fd15a6`](https://github.com/praha-inc/byethrow/commit/1fd15a69fe6876397e1a9df6aa3bc5a8a2187a23) Thanks [@Karibash](https://github.com/Karibash)! - Make it require TypeScript v5 or higher
+
+- [#300](https://github.com/praha-inc/byethrow/pull/300) [`59bbe47`](https://github.com/praha-inc/byethrow/commit/59bbe47367155e8497e60c3d6aec72151bb23bd3) Thanks [@Karibash](https://github.com/Karibash)! - Add const type parameters to succeed and fail functions
+
 ## 0.7.2
 
 ### Patch Changes
