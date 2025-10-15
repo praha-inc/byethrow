@@ -41,8 +41,8 @@ import type { InferFailure, InferSuccess, Result, ResultFor, ResultMaybeAsync } 
  * @category Combinators
  */
 export const map: {
-  <R1 extends ResultMaybeAsync<any, any>, T2>(fn: (a: InferSuccess<R1>) => T2): (result: R1) => ResultFor<R1, T2, InferFailure<R1>>;
-  <T1, T2>(fn: (a: T1) => T2): <R1 extends ResultMaybeAsync<T1, any>>(result: R1) => ResultFor<R1, T2, InferFailure<R1>>;
+  <R1 extends ResultMaybeAsync<any, any>, const T2>(fn: (a: InferSuccess<R1>) => T2): (result: R1) => ResultFor<R1, T2, InferFailure<R1>>;
+  <T1, const T2>(fn: (a: T1) => T2): <R1 extends ResultMaybeAsync<T1, any>>(result: R1) => ResultFor<R1, T2, InferFailure<R1>>;
 } = <T1, T2>(fn: (a: T1) => T2) => {
   return <R1 extends ResultMaybeAsync<T1, any>>(result: R1): ResultFor<R1, T2, InferFailure<R1>> => {
     const apply = (r: Result<T1, InferFailure<R1>>) => {
