@@ -5,7 +5,7 @@
 
 ## Introduction
 
-`@praha/byethrow` is a lightweight, tree-shakable Result type package with a simple, consistent API designed to handle fallible operations in JavaScript and TypeScript. It provides a straightforward way to manage errors and results without the complexity of larger libraries.
+`@praha/byethrow` is a lightweight, tree-shakable Result type package with a simple, consistent API designed to handle fallible operations in JavaScript and TypeScript. It provides a straightforward way to manage errors and results without the complexity of larger libraries. For a usage guide, visit the [official documentation](https://praha-inc.github.io/byethrow/).
 
 ## Structure
 
