@@ -61,8 +61,8 @@ import type { InferFailure, InferSuccess, Result, ResultFor, ResultMaybeAsync } 
  * @category Combinators
  */
 export const bind: {
-  <N extends string, R1 extends ResultMaybeAsync<any, any>, R2 extends ResultMaybeAsync<any, any>>(name: N, fn: (a: InferSuccess<R1>) => R2): (result: R1) => InferSuccess<R1> extends object ? ResultFor<R1 | R2, { [K in N | keyof InferSuccess<R1>]: K extends keyof InferSuccess<R1> ? InferSuccess<R1>[K] : InferSuccess<R2> }, InferFailure<R1> | InferFailure<R2>> : unknown;
-  <N extends string, F extends (a: any) => ResultMaybeAsync<any, any>>(name: N, fn: F): <R1 extends ResultMaybeAsync<Parameters<F>[0], any>>(result: R1) => Parameters<F>[0] extends object ? ResultFor<R1 | ReturnType<F>, { [K in N | keyof Parameters<F>[0]]: K extends keyof Parameters<F>[0] ? Parameters<F>[0][K] : InferSuccess<F> }, InferFailure<R1> | InferFailure<F>> : unknown;
+  <N extends string, R1 extends ResultMaybeAsync<any, any>, R2 extends ResultMaybeAsync<any, any>>(name: N, fn: (a: InferSuccess<R1>) => R2): (result: R1) => InferSuccess<R1> extends object ? ResultFor<R1 | R2, { [K in N | keyof InferSuccess<R1>]: K extends Exclude<keyof InferSuccess<R1>, N> ? InferSuccess<R1>[K] : InferSuccess<R2> }, InferFailure<R1> | InferFailure<R2>> : unknown;
+  <N extends string, F extends (a: any) => ResultMaybeAsync<any, any>>(name: N, fn: F): <R1 extends ResultMaybeAsync<Parameters<F>[0], any>>(result: R1) => Parameters<F>[0] extends object ? ResultFor<R1 | ReturnType<F>, { [K in N | keyof Parameters<F>[0]]: K extends Exclude<keyof Parameters<F>[0], N> ? Parameters<F>[0][K] : InferSuccess<F> }, InferFailure<R1> | InferFailure<F>> : unknown;
 } = <N extends string, T1 extends object, T2, E2>(name: N, fn: (a: T1) => ResultMaybeAsync<T2, E2>) => {
   return <E1>(result: ResultMaybeAsync<T1, E1>) => {
     const apply = (r: Result<T1, E1>) => {
