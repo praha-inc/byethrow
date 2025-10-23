@@ -26,6 +26,12 @@ describe('bind', () => {
 
             expect(output).toBeCalledWith({ foo: 1 });
           });
+
+          it('should allow binding to an existing key, overwriting the value', () => {
+            const result = bind('foo', output)(input);
+
+            expect(result).toEqual({ type: 'Success', value: { foo: '1' } });
+          });
         });
 
         describe('when output is a failure', () => {
@@ -80,6 +86,12 @@ describe('bind', () => {
 
           expect(output).toBeCalledWith({ foo: 1 });
         });
+
+        it('should allow binding to an existing key, overwriting the value', async () => {
+          const result = await bind('foo', output)(input);
+
+          expect(result).toEqual({ type: 'Success', value: { foo: '1' } });
+        });
       });
 
       describe('when output is a failure', () => {
@@ -117,6 +129,12 @@ describe('bind', () => {
           await bind('bar', output)(input);
 
           expect(output).toBeCalledWith({ foo: 1 });
+        });
+
+        it('should allow binding to an existing key, overwriting the value', async () => {
+          const result = await bind('foo', output)(input);
+
+          expect(result).toEqual({ type: 'Success', value: { foo: '1' } });
         });
       });
 
@@ -170,6 +188,12 @@ describe('bind', () => {
           await bind('bar', output)(input);
 
           expect(output).toBeCalledWith({ foo: 1 });
+        });
+
+        it('should allow binding to an existing key, overwriting the value', async () => {
+          const result = await bind('foo', output)(input);
+
+          expect(result).toEqual({ type: 'Success', value: { foo: '1' } });
         });
       });
 

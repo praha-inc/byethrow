@@ -23,6 +23,12 @@ describe('bind', () => {
 
               expectTypeOf(result).toEqualTypeOf<Result<{ foo: 1; bar: string }, never>>();
             });
+
+            it('should allow binding to an existing key, overwriting the value', () => {
+              const result = bind('foo', output)(input);
+
+              expectTypeOf(result).toEqualTypeOf<Result<{ foo: string }, never>>();
+            });
           });
 
           describe('when output is a failure', () => {
@@ -33,6 +39,12 @@ describe('bind', () => {
               const result = bind('bar', output)(input);
 
               expectTypeOf(result).toEqualTypeOf<Result<{ foo: 1; bar: never }, string>>();
+            });
+
+            it('should allow binding to an existing key, overwriting the value', () => {
+              const result = bind('foo', output)(input);
+
+              expectTypeOf(result).toEqualTypeOf<Result<{ foo: never }, string>>();
             });
           });
         });
@@ -45,6 +57,12 @@ describe('bind', () => {
             const result = bind('bar', output)(input);
 
             expectTypeOf(result).toEqualTypeOf<Result<{ foo: number; bar: string }, string>>();
+          });
+
+          it('should allow binding to an existing key, overwriting the value', () => {
+            const result = bind('foo', output)(input);
+
+            expectTypeOf(result).toEqualTypeOf<Result<{ foo: string }, string>>();
           });
         });
       });
@@ -61,6 +79,12 @@ describe('bind', () => {
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: 1; bar: string }, never>>();
           });
+
+          it('should allow binding to an existing key, overwriting the value', () => {
+            const result = bind('foo', output)(input);
+
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: string }, never>>();
+          });
         });
 
         describe('when output is a failure', () => {
@@ -71,6 +95,12 @@ describe('bind', () => {
             const result = bind('bar', output)(input);
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: 1; bar: never }, string>>();
+          });
+
+          it('should allow binding to an existing key, overwriting the value', () => {
+            const result = bind('foo', output)(input);
+
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: never }, string>>();
           });
         });
       });
@@ -89,6 +119,12 @@ describe('bind', () => {
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: number; bar: string }, never>>();
           });
+
+          it('should allow binding to an existing key, overwriting the value', () => {
+            const result = bind('foo', output)(input);
+
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: string }, never>>();
+          });
         });
 
         describe('when output is a failure', () => {
@@ -100,6 +136,12 @@ describe('bind', () => {
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: number; bar: never }, string>>();
           });
+
+          it('should allow binding to an existing key, overwriting the value', () => {
+            const result = bind('foo', output)(input);
+
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: never }, string>>();
+          });
         });
 
         describe('when input is a failure', () => {
@@ -110,6 +152,12 @@ describe('bind', () => {
             const result = bind('bar', output)(input);
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: number; bar: string }, string>>();
+          });
+
+          it('should allow binding to an existing key, overwriting the value', () => {
+            const result = bind('foo', output)(input);
+
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: string }, string>>();
           });
         });
       });
@@ -126,6 +174,12 @@ describe('bind', () => {
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: number; bar: string }, never>>();
           });
+
+          it('should allow binding to an existing key, overwriting the value', () => {
+            const result = bind('foo', output)(input);
+
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: string }, never>>();
+          });
         });
 
         describe('when output is a failure', () => {
@@ -136,6 +190,12 @@ describe('bind', () => {
             const result = bind('bar', output)(input);
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: number; bar: never }, string>>();
+          });
+
+          it('should allow binding to an existing key, overwriting the value', () => {
+            const result = bind('foo', output)(input);
+
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: never }, string>>();
           });
         });
       });
@@ -157,6 +217,15 @@ describe('bind', () => {
 
               expectTypeOf(result).toEqualTypeOf<Result<{ foo: 1; bar: string }, never>>();
             });
+
+            it('should allow binding to an existing key, overwriting the value', () => {
+              const result = pipe(
+                input,
+                bind('foo', (x) => succeed(x.foo.toString())),
+              );
+
+              expectTypeOf(result).toEqualTypeOf<Result<{ foo: string }, never>>();
+            });
           });
 
           describe('when output is a failure', () => {
@@ -167,6 +236,15 @@ describe('bind', () => {
               );
 
               expectTypeOf(result).toEqualTypeOf<Result<{ foo: 1; bar: never }, string>>();
+            });
+
+            it('should allow binding to an existing key, overwriting the value', () => {
+              const result = pipe(
+                input,
+                bind('foo', (x) => fail(x.foo.toString())),
+              );
+
+              expectTypeOf(result).toEqualTypeOf<Result<{ foo: never }, string>>();
             });
           });
         });
@@ -181,6 +259,15 @@ describe('bind', () => {
             );
 
             expectTypeOf(result).toEqualTypeOf<Result<{ foo: number; bar: string }, string>>();
+          });
+
+          it('should allow binding to an existing key, overwriting the value', () => {
+            const result = pipe(
+              input,
+              bind('foo', (x) => succeed(x.foo.toString())),
+            );
+
+            expectTypeOf(result).toEqualTypeOf<Result<{ foo: string }, string>>();
           });
         });
       });
@@ -197,6 +284,15 @@ describe('bind', () => {
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: 1; bar: string }, never>>();
           });
+
+          it('should allow binding to an existing key, overwriting the value', () => {
+            const result = pipe(
+              input,
+              bind('foo', (x) => succeed(Promise.resolve(x.foo.toString()))),
+            );
+
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: string }, never>>();
+          });
         });
 
         describe('when output is a failure', () => {
@@ -207,6 +303,15 @@ describe('bind', () => {
             );
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: 1; bar: never }, string>>();
+          });
+
+          it('should allow binding to an existing key, overwriting the value', () => {
+            const result = pipe(
+              input,
+              bind('foo', (x) => fail(Promise.resolve(x.foo.toString()))),
+            );
+
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: never }, string>>();
           });
         });
       });
@@ -225,6 +330,15 @@ describe('bind', () => {
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: number; bar: string }, never>>();
           });
+
+          it('should allow binding to an existing key, overwriting the value', () => {
+            const result = pipe(
+              input,
+              bind('foo', (x) => succeed(x.foo.toString())),
+            );
+
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: string }, never>>();
+          });
         });
 
         describe('when output is a failure', () => {
@@ -235,6 +349,15 @@ describe('bind', () => {
             );
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: number; bar: never }, string>>();
+          });
+
+          it('should allow binding to an existing key, overwriting the value', () => {
+            const result = pipe(
+              input,
+              bind('foo', (x) => fail(x.foo.toString())),
+            );
+
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: never }, string>>();
           });
         });
 
@@ -248,6 +371,15 @@ describe('bind', () => {
             );
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: number; bar: string }, string>>();
+          });
+
+          it('should allow binding to an existing key, overwriting the value', () => {
+            const result = pipe(
+              input,
+              bind('foo', (x) => succeed(x.foo.toString())),
+            );
+
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: string }, string>>();
           });
         });
       });
@@ -264,6 +396,15 @@ describe('bind', () => {
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: number; bar: string }, never>>();
           });
+
+          it('should allow binding to an existing key, overwriting the value', () => {
+            const result = pipe(
+              input,
+              bind('foo', (x) => succeed(Promise.resolve(x.foo.toString()))),
+            );
+
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: string }, never>>();
+          });
         });
 
         describe('when output is a failure', () => {
@@ -274,6 +415,15 @@ describe('bind', () => {
             );
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: number; bar: never }, string>>();
+          });
+
+          it('should allow binding to an existing key, overwriting the value', () => {
+            const result = pipe(
+              input,
+              bind('foo', (x) => fail(Promise.resolve(x.foo.toString()))),
+            );
+
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: never }, string>>();
           });
         });
       });
