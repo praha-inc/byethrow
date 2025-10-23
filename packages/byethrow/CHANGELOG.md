@@ -1,5 +1,11 @@
 # @praha/byethrow
 
+## 0.8.1
+
+### Patch Changes
+
+- [#314](https://github.com/praha-inc/byethrow/pull/314) [`1f65986`](https://github.com/praha-inc/byethrow/commit/1f65986ffe8297bd999ad6917b47cdc0bb13e908) Thanks [@Karibash](https://github.com/Karibash)! - Make it possible to overwrite existing keys using the bind function
+
 ## 0.8.0
 
 ### Minor Changes
