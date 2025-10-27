@@ -33,7 +33,7 @@
     "mdast-util-from-markdown": "2.0.2",
     "mdast-util-gfm": "3.1.0",
     "mdast-util-to-hast": "13.2.0",
-    "ts-pattern": "5.8.0",
+    "ts-pattern": "5.9.0",
     "zod": "3.25.76"
   }
 }
