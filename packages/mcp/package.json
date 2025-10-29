@@ -47,7 +47,7 @@
     "@praha/byethrow": "workspace:*",
     "@rslib/core": "0.16.1",
     "@rspack/core": "1.5.8",
-    "@types/node": "24.9.1",
+    "@types/node": "24.9.2",
     "eslint": "9.38.0",
     "typedoc": "0.28.14",
     "typedoc-plugin-markdown": "4.9.0",
