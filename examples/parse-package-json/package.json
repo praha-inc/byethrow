@@ -13,7 +13,7 @@
     "zod": "3.25.76"
   },
   "devDependencies": {
-    "@tsconfig/strictest": "2.0.6",
+    "@tsconfig/strictest": "2.0.7",
     "@types/node": "24.9.2",
     "memfs": "4.50.0",
     "tsx": "4.20.6",
