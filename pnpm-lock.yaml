@@ -152,8 +152,8 @@ importers:
         specifier: 2.0.0-beta.35
         version: 2.0.0-beta.35(@rspress/core@2.0.0-beta.35(@types/react@19.2.2))
       '@rspress/plugin-twoslash':
-        specifier: 2.0.0-beta.34
-        version: 2.0.0-beta.34(@rspress/core@2.0.0-beta.35(@types/react@19.2.2))(react@19.2.0)(typescript@5.9.3)
+        specifier: 2.0.0-beta.35
+        version: 2.0.0-beta.35(@rspress/core@2.0.0-beta.35(@types/react@19.2.2))(react@19.2.0)(typescript@5.9.3)
       '@shikijs/twoslash':
         specifier: 3.14.0
         version: 3.14.0(typescript@5.9.3)
@@ -1130,11 +1130,11 @@ packages:
     peerDependencies:
       '@rspress/core': ^2.0.0-beta.35
 
-  '@rspress/plugin-twoslash@2.0.0-beta.34':
-    resolution: {integrity: sha512-QiFb+7pNKTicvdgvy0PUtSX7BeYpuTJNarq8WaqT6XVWzNHiCAF1atv+C/ccaA6vmFjXQquCyjiUVxkqRimNrg==}
+  '@rspress/plugin-twoslash@2.0.0-beta.35':
+    resolution: {integrity: sha512-GR2ErlOyQb3N+nhaft5tr5DZ17cu14LhFl5ZCXnAYFQaZZhFTm/vOjgmWEWzIU5pR9ffnIJ943jJgPb+7IoEVQ==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      '@rspress/core': ^2.0.0-beta.34
+      '@rspress/core': ^2.0.0-beta.35
       react: '>=18.0.0'
 
   '@rspress/runtime@2.0.0-beta.35':
@@ -4597,7 +4597,7 @@ snapshots:
     dependencies:
       '@rspress/core': 2.0.0-beta.35(@types/react@19.2.2)
 
-  '@rspress/plugin-twoslash@2.0.0-beta.34(@rspress/core@2.0.0-beta.35(@types/react@19.2.2))(react@19.2.0)(typescript@5.9.3)':
+  '@rspress/plugin-twoslash@2.0.0-beta.35(@rspress/core@2.0.0-beta.35(@types/react@19.2.2))(react@19.2.0)(typescript@5.9.3)':
     dependencies:
       '@floating-ui/dom': 1.7.4
       '@rspress/core': 2.0.0-beta.35(@types/react@19.2.2)
