@@ -1,5 +1,9 @@
 [
   {
+    "type": "section-header",
+    "label": "Examples"
+  },
+  {
     "type": "file",
     "name": "parse-package-json",
     "label": "Parse package.json"
