@@ -124,16 +124,16 @@ importers:
   website:
     dependencies:
       '@rspress/core':
-        specifier: ^2.0.0-beta.27
+        specifier: 2.0.0-beta.35
         version: 2.0.0-beta.35(@types/react@19.2.2)
       '@stackblitz/sdk':
-        specifier: ^1.11.0
+        specifier: 1.11.0
         version: 1.11.0
       react:
-        specifier: ^19.1.1
+        specifier: 19.2.0
         version: 19.2.0
       react-dom:
-        specifier: ^19.1.1
+        specifier: 19.2.0
         version: 19.2.0(react@19.2.0)
     devDependencies:
       '@praha/byethrow':
