@@ -123,9 +123,6 @@ importers:
 
   website:
     dependencies:
-      '@floating-ui/dom':
-        specifier: ^1.7.3
-        version: 1.7.4
       '@rspress/core':
         specifier: ^2.0.0-beta.27
         version: 2.0.0-beta.35(@types/react@19.2.2)
@@ -154,18 +151,6 @@ importers:
       '@rspress/plugin-twoslash':
         specifier: 2.0.0-beta.35
         version: 2.0.0-beta.35(@rspress/core@2.0.0-beta.35(@types/react@19.2.2))(react@19.2.0)(typescript@5.9.3)
-      '@shikijs/twoslash':
-        specifier: 3.14.0
-        version: 3.14.0(typescript@5.9.3)
-      '@shikijs/types':
-        specifier: 3.14.0
-        version: 3.14.0
-      '@types/hast':
-        specifier: 3.0.4
-        version: 3.0.4
-      '@types/mdast':
-        specifier: 4.0.4
-        version: 4.0.4
       '@types/node':
         specifier: 24.9.2
         version: 24.9.2
@@ -178,15 +163,6 @@ importers:
       execa:
         specifier: 9.6.0
         version: 9.6.0
-      mdast-util-from-markdown:
-        specifier: 2.0.2
-        version: 2.0.2
-      mdast-util-gfm:
-        specifier: 3.1.0
-        version: 3.1.0
-      mdast-util-to-hast:
-        specifier: 13.2.0
-        version: 13.2.0
       ts-pattern:
         specifier: 5.9.0
         version: 5.9.0
