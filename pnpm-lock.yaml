@@ -125,7 +125,7 @@ importers:
     dependencies:
       '@rspress/core':
         specifier: 2.0.0-beta.35
-        version: 2.0.0-beta.35(@types/react@19.2.2)
+        version: 2.0.0-beta.35(@types/react@19.2.3)
       '@stackblitz/sdk':
         specifier: 1.11.0
         version: 1.11.0
@@ -144,22 +144,22 @@ importers:
         version: 1.2.1
       '@rspress/plugin-llms':
         specifier: 2.0.0-beta.35
-        version: 2.0.0-beta.35(@rspress/core@2.0.0-beta.35(@types/react@19.2.2))
+        version: 2.0.0-beta.35(@rspress/core@2.0.0-beta.35(@types/react@19.2.3))
       '@rspress/plugin-sitemap':
         specifier: 2.0.0-beta.35
-        version: 2.0.0-beta.35(@rspress/core@2.0.0-beta.35(@types/react@19.2.2))
+        version: 2.0.0-beta.35(@rspress/core@2.0.0-beta.35(@types/react@19.2.3))
       '@rspress/plugin-twoslash':
         specifier: 2.0.0-beta.35
-        version: 2.0.0-beta.35(@rspress/core@2.0.0-beta.35(@types/react@19.2.2))(react@19.2.0)(typescript@5.9.3)
+        version: 2.0.0-beta.35(@rspress/core@2.0.0-beta.35(@types/react@19.2.3))(react@19.2.0)(typescript@5.9.3)
       '@types/node':
         specifier: 24.10.0
         version: 24.10.0
       '@types/react':
-        specifier: 19.2.2
-        version: 19.2.2
+        specifier: 19.2.3
+        version: 19.2.3
       '@types/react-dom':
         specifier: 19.2.2
-        version: 19.2.2(@types/react@19.2.2)
+        version: 19.2.2(@types/react@19.2.3)
       execa:
         specifier: 9.6.0
         version: 9.6.0
@@ -1239,8 +1239,8 @@ packages:
     peerDependencies:
       '@types/react': ^19.2.0
 
-  '@types/react@19.2.2':
-    resolution: {integrity: sha512-6mDvHUFSjyT2B2yeNx2nUgMxh9LtOWvkhIU3uePn2I2oyNymUAX1NIsdgviM4CH+JSrp2D2hsMvJOkxY+0wNRA==}
+  '@types/react@19.2.3':
+    resolution: {integrity: sha512-k5dJVszUiNr1DSe8Cs+knKR6IrqhqdhpUwzqhkS8ecQTSf3THNtbfIp/umqHMpX2bv+9dkx3fwDv/86LcSfvSg==}
 
   '@types/unist@2.0.11':
     resolution: {integrity: sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==}
@@ -4042,10 +4042,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@mdx-js/react@3.1.1(@types/react@19.2.2)(react@19.2.0)':
+  '@mdx-js/react@3.1.1(@types/react@19.2.3)(react@19.2.0)':
     dependencies:
       '@types/mdx': 2.0.13
-      '@types/react': 19.2.2
+      '@types/react': 19.2.3
       react: 19.2.0
 
   '@modelcontextprotocol/sdk@1.21.1':
@@ -4497,16 +4497,16 @@ snapshots:
       html-entities: 2.6.0
       react-refresh: 0.17.0
 
-  '@rspress/core@2.0.0-beta.35(@types/react@19.2.2)':
+  '@rspress/core@2.0.0-beta.35(@types/react@19.2.3)':
     dependencies:
       '@mdx-js/mdx': 3.1.1
-      '@mdx-js/react': 3.1.1(@types/react@19.2.2)(react@19.2.0)
+      '@mdx-js/react': 3.1.1(@types/react@19.2.3)(react@19.2.0)
       '@rsbuild/core': 1.5.17
       '@rsbuild/plugin-react': 1.4.1(@rsbuild/core@1.5.17)
       '@rspress/mdx-rs': 0.6.6
       '@rspress/runtime': 2.0.0-beta.35
       '@rspress/shared': 2.0.0-beta.35
-      '@rspress/theme-default': 2.0.0-beta.35(@types/react@19.2.2)
+      '@rspress/theme-default': 2.0.0-beta.35(@types/react@19.2.3)
       '@shikijs/rehype': 3.14.0
       '@types/unist': 3.0.3
       '@unhead/react': 2.0.19(react@19.2.0)
@@ -4575,9 +4575,9 @@ snapshots:
       '@rspress/mdx-rs-win32-arm64-msvc': 0.6.6
       '@rspress/mdx-rs-win32-x64-msvc': 0.6.6
 
-  '@rspress/plugin-llms@2.0.0-beta.35(@rspress/core@2.0.0-beta.35(@types/react@19.2.2))':
+  '@rspress/plugin-llms@2.0.0-beta.35(@rspress/core@2.0.0-beta.35(@types/react@19.2.3))':
     dependencies:
-      '@rspress/core': 2.0.0-beta.35(@types/react@19.2.2)
+      '@rspress/core': 2.0.0-beta.35(@types/react@19.2.3)
       remark-mdx: 3.1.1
       remark-parse: 11.0.0
       remark-stringify: 11.0.0
@@ -4586,14 +4586,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rspress/plugin-sitemap@2.0.0-beta.35(@rspress/core@2.0.0-beta.35(@types/react@19.2.2))':
+  '@rspress/plugin-sitemap@2.0.0-beta.35(@rspress/core@2.0.0-beta.35(@types/react@19.2.3))':
     dependencies:
-      '@rspress/core': 2.0.0-beta.35(@types/react@19.2.2)
+      '@rspress/core': 2.0.0-beta.35(@types/react@19.2.3)
 
-  '@rspress/plugin-twoslash@2.0.0-beta.35(@rspress/core@2.0.0-beta.35(@types/react@19.2.2))(react@19.2.0)(typescript@5.9.3)':
+  '@rspress/plugin-twoslash@2.0.0-beta.35(@rspress/core@2.0.0-beta.35(@types/react@19.2.3))(react@19.2.0)(typescript@5.9.3)':
     dependencies:
       '@floating-ui/dom': 1.7.4
-      '@rspress/core': 2.0.0-beta.35(@types/react@19.2.2)
+      '@rspress/core': 2.0.0-beta.35(@types/react@19.2.3)
       '@shikijs/twoslash': 3.14.0(typescript@5.9.3)
       mdast-util-from-markdown: 2.0.2
       mdast-util-gfm: 3.1.0
@@ -4621,9 +4621,9 @@ snapshots:
       lodash-es: 4.17.21
       unified: 11.0.5
 
-  '@rspress/theme-default@2.0.0-beta.35(@types/react@19.2.2)':
+  '@rspress/theme-default@2.0.0-beta.35(@types/react@19.2.3)':
     dependencies:
-      '@mdx-js/react': 3.1.1(@types/react@19.2.2)(react@19.2.0)
+      '@mdx-js/react': 3.1.1(@types/react@19.2.3)(react@19.2.0)
       '@rspress/runtime': 2.0.0-beta.35
       '@rspress/shared': 2.0.0-beta.35
       '@unhead/react': 2.0.19(react@19.2.0)
@@ -4780,11 +4780,11 @@ snapshots:
     dependencies:
       undici-types: 7.16.0
 
-  '@types/react-dom@19.2.2(@types/react@19.2.2)':
+  '@types/react-dom@19.2.2(@types/react@19.2.3)':
     dependencies:
-      '@types/react': 19.2.2
+      '@types/react': 19.2.3
 
-  '@types/react@19.2.2':
+  '@types/react@19.2.3':
     dependencies:
       csstype: 3.1.3
 
