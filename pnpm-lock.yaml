@@ -146,8 +146,8 @@ importers:
         specifier: 2.0.0-rc.0
         version: 2.0.0-rc.0(@rspress/core@2.0.0-rc.0(@types/react@19.2.4))
       '@rspress/plugin-sitemap':
-        specifier: 2.0.0-beta.35
-        version: 2.0.0-beta.35(@rspress/core@2.0.0-rc.0(@types/react@19.2.4))
+        specifier: 2.0.0-rc.0
+        version: 2.0.0-rc.0(@rspress/core@2.0.0-rc.0(@types/react@19.2.4))
       '@rspress/plugin-twoslash':
         specifier: 2.0.0-beta.35
         version: 2.0.0-beta.35(@rspress/core@2.0.0-rc.0(@types/react@19.2.4))(react@19.2.0)(typescript@5.9.3)
@@ -1013,11 +1013,11 @@ packages:
     peerDependencies:
       '@rspress/core': ^2.0.0-rc.0
 
-  '@rspress/plugin-sitemap@2.0.0-beta.35':
-    resolution: {integrity: sha512-AcYtgQfnLj1W5JEATtKgeN4L6N+fRnshykk2S1ESHctoV6gw+8q7oZKtiBH2c4i5LL/0AeCj7biPDYcEwV9IBQ==}
+  '@rspress/plugin-sitemap@2.0.0-rc.0':
+    resolution: {integrity: sha512-hT4cLX29Xot+GvL4WsepncuF1qzlRw86SCHlfcFtqgPBGsr9vYqcER02fMPpcGq0zh2PoKQ8cnntkrecI6aeFg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      '@rspress/core': ^2.0.0-beta.35
+      '@rspress/core': ^2.0.0-rc.0
 
   '@rspress/plugin-twoslash@2.0.0-beta.35':
     resolution: {integrity: sha512-GR2ErlOyQb3N+nhaft5tr5DZ17cu14LhFl5ZCXnAYFQaZZhFTm/vOjgmWEWzIU5pR9ffnIJ943jJgPb+7IoEVQ==}
@@ -4421,7 +4421,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rspress/plugin-sitemap@2.0.0-beta.35(@rspress/core@2.0.0-rc.0(@types/react@19.2.4))':
+  '@rspress/plugin-sitemap@2.0.0-rc.0(@rspress/core@2.0.0-rc.0(@types/react@19.2.4))':
     dependencies:
       '@rspress/core': 2.0.0-rc.0(@types/react@19.2.4)
 
