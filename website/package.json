@@ -20,7 +20,7 @@
     "@praha/error-factory": "1.2.1",
     "@rspress/plugin-llms": "2.0.0-rc.0",
     "@rspress/plugin-sitemap": "2.0.0-rc.0",
-    "@rspress/plugin-twoslash": "2.0.0-beta.35",
+    "@rspress/plugin-twoslash": "2.0.0-rc.0",
     "@types/node": "24.10.1",
     "@types/react": "19.2.4",
     "@types/react-dom": "19.2.3",
