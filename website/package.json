@@ -10,7 +10,7 @@
     "lint:type": "tsc --noEmit"
   },
   "dependencies": {
-    "@rspress/core": "2.0.0-rc.0",
+    "@rspress/core": "2.0.0-rc.1",
     "@stackblitz/sdk": "1.11.0",
     "react": "19.2.0",
     "react-dom": "19.2.0"
