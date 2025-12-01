@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@changesets/changelog-github": "0.5.2",
-    "@changesets/cli": "2.29.7",
+    "@changesets/cli": "2.29.8",
     "@praha/eslint-config-common": "4.0.3",
     "@praha/eslint-config-definer": "2.0.2",
     "@praha/eslint-config-javascript": "3.0.9",
