@@ -63,8 +63,8 @@ importers:
         version: 1.0.0
     devDependencies:
       '@rslib/core':
-        specifier: 0.18.1
-        version: 0.18.1(typescript@5.9.3)
+        specifier: 0.18.2
+        version: 0.18.2(typescript@5.9.3)
       eslint:
         specifier: 9.39.1
         version: 9.39.1(jiti@2.6.1)
@@ -100,8 +100,8 @@ importers:
         specifier: workspace:*
         version: link:../byethrow
       '@rslib/core':
-        specifier: 0.18.1
-        version: 0.18.1(typescript@5.9.3)
+        specifier: 0.18.2
+        version: 0.18.2(typescript@5.9.3)
       '@rspack/core':
         specifier: 1.6.4
         version: 1.6.4(@swc/helpers@0.5.17)
@@ -870,8 +870,8 @@ packages:
     peerDependencies:
       '@rsbuild/core': 1.x
 
-  '@rslib/core@0.18.1':
-    resolution: {integrity: sha512-eDDz6y8anIAF17gQJBDfH6l/JTidkXANYAFq8iuymFQg/wE2PEKyBNC2K6n+jg4rT1a7AhuVbHZb5oDumaFopQ==}
+  '@rslib/core@0.18.2':
+    resolution: {integrity: sha512-KIlBl8V675gzBcL17cCS5buN9wZSaS6JT7s9p1OZLOtBZTuCCu1q+5TfyTdnmFATEGgtrue4xhnX8HhAFKuMPw==}
     engines: {node: '>=18.12.0'}
     hasBin: true
     peerDependencies:
@@ -3081,8 +3081,8 @@ packages:
     resolution: {integrity: sha512-nLTrUKm2UyiL7rlhapu/Zl45FwNgkZGaCpZbIHajDYgwlJCOzLSk+cIPAnsEqV955GjILJnKbdQC1nVPz+gAYQ==}
     engines: {node: '>= 18'}
 
-  rsbuild-plugin-dts@0.18.1:
-    resolution: {integrity: sha512-2nj8zlMxyEkc4Z7wFo1zn1R2SQNyUSH1+g0hx5RKP0yJJojRovYbENjLf6ixFo7RwUU0PhS9EnuiiKqHPt8+FA==}
+  rsbuild-plugin-dts@0.18.2:
+    resolution: {integrity: sha512-gUZ6MXjp7PQtBWlyCkcNp34scgc7qSQRc6Rw4YHVeuBnLvVAXsToYJHn32ImYPBJzRGFA9dz5D1r7ZZKurD7Vg==}
     engines: {node: '>=18.12.0'}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -4394,10 +4394,10 @@ snapshots:
     transitivePeerDependencies:
       - webpack-hot-middleware
 
-  '@rslib/core@0.18.1(typescript@5.9.3)':
+  '@rslib/core@0.18.2(typescript@5.9.3)':
     dependencies:
       '@rsbuild/core': 1.6.9
-      rsbuild-plugin-dts: 0.18.1(@rsbuild/core@1.6.9)(typescript@5.9.3)
+      rsbuild-plugin-dts: 0.18.2(@rsbuild/core@1.6.9)(typescript@5.9.3)
     optionalDependencies:
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -4694,7 +4694,7 @@ snapshots:
 
   '@rspress/shared@2.0.0-rc.1':
     dependencies:
-      '@rsbuild/core': 1.6.6
+      '@rsbuild/core': 1.6.9
       '@shikijs/rehype': 3.14.0
       gray-matter: 4.0.3
       lodash-es: 4.17.21
@@ -7074,7 +7074,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  rsbuild-plugin-dts@0.18.1(@rsbuild/core@1.6.9)(typescript@5.9.3):
+  rsbuild-plugin-dts@0.18.2(@rsbuild/core@1.6.9)(typescript@5.9.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
       '@rsbuild/core': 1.6.9
