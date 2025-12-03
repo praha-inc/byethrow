@@ -24,7 +24,7 @@
     "@types/node": "24.10.1",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
-    "execa": "9.6.0",
+    "execa": "9.6.1",
     "ts-pattern": "5.9.0",
     "zod": "4.1.13"
   }
