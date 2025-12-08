@@ -1,29 +1,71 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { execa } from 'execa';
+import { Application, DeclarationReflection } from 'typedoc';
+import { load as pluginFrontmatter } from 'typedoc-plugin-frontmatter';
+import { load as pluginMarkdown, MarkdownPageEvent } from 'typedoc-plugin-markdown';
 
 import type { RspressPlugin } from '@rspress/core';
+import type { Reflection } from 'typedoc';
+import type { MarkdownTheme } from 'typedoc-plugin-markdown';
 
-const cleanDirectory = async (directory: string): Promise<void> => {
-  if (fs.existsSync(directory)) {
-    await fs.promises.rm(directory, { recursive: true, force: true });
-  }
+const pluginDescription = (app: Application) => {
+  app.renderer.on(MarkdownPageEvent.BEGIN, (page) => {
+    if (!(page.model instanceof DeclarationReflection)) return;
+
+    const context = (app.renderer.theme as MarkdownTheme).getRenderContext(page as MarkdownPageEvent<Reflection>);
+    const comment = page.model.comment || page.model.signatures?.[0]?.comment;
+    if (comment) {
+      // @ts-expect-error Typedoc does not recognize frontmatter property
+      page['frontmatter'] = {
+        description: context
+          .helpers
+          .getDescriptionForComment(comment)
+          ?.replaceAll(/\[([^\]]+)]\([^)]+\)/g, '$1'),
+      };
+    }
+  });
 };
 
 const createApiDocument = async (apiDirectory: string): Promise<void> => {
-  await execa('pnpm', ['--filter', '@praha/byethrow', 'build:doc']);
-  await fs.promises.rename(
-    path.resolve(process.cwd(), '../packages/byethrow/docs'),
-    apiDirectory,
-  );
-};
+  const app = await Application.bootstrapWithPlugins({
+    name: 'byethrow',
+    entryPoints: ['../packages/byethrow/src/index.ts'],
+    tsconfig: '../packages/byethrow/tsconfig.build.json',
+    disableSources: true,
+    router: 'kind',
+    readme: 'none',
+    indexFormat: 'table',
+    githubPages: false,
+    requiredToBeDocumented: ['Class', 'Function', 'Interface'],
+    categoryOrder: [
+      'Core Types',
+      'Infer Types',
+      'Creators',
+      'Combinators',
+      'Unwraps',
+      'Assertions',
+      'Type Guards',
+      'Utilities',
+      '*',
+    ],
+    // @ts-expect-error Typedoc does not export a type for this options
+    plugin: [pluginFrontmatter, pluginMarkdown, pluginDescription],
+    entryFileName: 'index',
+    hidePageHeader: true,
+    hideBreadcrumbs: true,
+    pageTitleTemplates: {
+      module: '{kind}: {name}', // e.g. "Module: MyModule"
+    },
+  });
 
-const readmeToIndex = async (apiDirectory: string): Promise<void> => {
-  await fs.promises.rename(
-    path.join(apiDirectory, 'README.md'),
-    path.join(apiDirectory, 'index.md'),
-  );
+  const project = await app.convert();
+  if (project) {
+    await app.outputs.writeOutput(
+      { name: 'markdown', path: apiDirectory },
+      project,
+    );
+  }
 };
 
 const createMetaJson = async (apiDirectory: string): Promise<void> => {
@@ -53,9 +95,7 @@ export const pluginTypedoc = (): RspressPlugin => {
     name: '@praha/typedoc',
     config: async (config) => {
       const apiDirectory = path.join(config.root!, 'api');
-      await cleanDirectory(apiDirectory);
       await createApiDocument(apiDirectory);
-      await readmeToIndex(apiDirectory);
       await createMetaJson(apiDirectory);
       return config;
     },
