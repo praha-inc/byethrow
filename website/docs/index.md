@@ -1,5 +1,6 @@
 ---
 pageType: home
+titleSuffix: A lightweight Result type library
 
 hero:
   name: byethrow

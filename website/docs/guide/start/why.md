@@ -1,3 +1,7 @@
+---
+description: Discover why @praha/byethrow is the sweet spot between simplicity and power for Result type error handling in TypeScript.
+---
+
 # Why byethrow?
 
 `@praha/byethrow` strikes a thoughtful balance in the Result type ecosystem.

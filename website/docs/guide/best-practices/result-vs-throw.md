@@ -1,3 +1,7 @@
+---
+description: Understand when to use Result types versus throw statements, and learn the philosophy of handling anticipated vs unexpected errors.
+---
+
 # Result vs throw
 
 You may have encountered opinions like: "Since JavaScript can throw errors anywhere and it's impossible to manage everything with Result, there's no point in introducing Result at all."

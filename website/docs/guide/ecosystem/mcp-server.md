@@ -1,3 +1,7 @@
+---
+description: Set up the @praha/byethrow MCP server to give AI assistants access to up-to-date documentation and code examples.
+---
+
 # MCP Server
 
 The `@praha/byethrow-mcp` package provides a Model Context Protocol (MCP) server that gives AI assistants direct access to up-to-date documentation and code examples for the byethrow library. This integration allows AI tools to provide more accurate and current assistance when working with byethrow.

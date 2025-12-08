@@ -1,3 +1,7 @@
+---
+description: Learn the two import methods for @praha/byethrow - namespace approach and direct imports - and how to optimize your bundle size.
+---
+
 # Importing Result
 
 `@praha/byethrow` provides two distinct import methods to balance efficient development with optimal bundle size. Both approaches fully support tree-shaking, ensuring that unused features are automatically excluded from your final bundle.
