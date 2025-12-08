@@ -12,7 +12,8 @@
         "generate"
       ],
       "outputs": [
-        "dist/**"
+        "dist/**",
+        "doc_build/**"
       ]
     },
     "test": {

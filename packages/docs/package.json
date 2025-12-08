@@ -1,0 +1,49 @@
+{
+  "name": "@praha/byethrow-docs",
+  "version": "0.0.0",
+  "description": "Documentation for @praha/byethrow",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "throw",
+    "error",
+    "functional",
+    "documents"
+  ],
+  "homepage": "https://github.com/praha-inc/byethrow/blob/main/packages/docs/README.md",
+  "bugs": {
+    "url": "https://github.com/praha-inc/byethrow/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/praha-inc/byethrow.git",
+    "directory": "packages/docs"
+  },
+  "license": "MIT",
+  "author": "PrAha, Inc.",
+  "sideEffects": false,
+  "type": "module",
+  "files": [
+    "docs",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsx ./scripts/copy.ts",
+    "lint:code": "eslint .",
+    "lint:type": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@praha/byethrow-website": "workspace:*",
+    "@types/node": "24.10.2",
+    "eslint": "9.39.1",
+    "tsx": "4.21.0",
+    "typescript": "5.9.3"
+  },
+  "peerDependencies": {
+    "@praha/byethrow": "workspace:*"
+  },
+  "publishConfig": {
+    "provenance": true
+  }
+}
