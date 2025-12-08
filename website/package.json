@@ -10,7 +10,7 @@
     "lint:type": "tsc --noEmit"
   },
   "dependencies": {
-    "@rspress/core": "2.0.0-rc.1",
+    "@rspress/core": "2.0.0-rc.2",
     "@stackblitz/sdk": "1.11.0",
     "react": "19.2.1",
     "react-dom": "19.2.1"
@@ -19,8 +19,8 @@
     "@praha/byethrow": "workspace:*",
     "@praha/error-factory": "1.2.1",
     "@rspress/plugin-llms": "2.0.0-rc.2",
-    "@rspress/plugin-sitemap": "2.0.0-rc.1",
-    "@rspress/plugin-twoslash": "2.0.0-rc.0",
+    "@rspress/plugin-sitemap": "2.0.0-rc.2",
+    "@rspress/plugin-twoslash": "2.0.0-rc.2",
     "@types/node": "24.10.1",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",

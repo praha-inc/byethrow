@@ -113,6 +113,7 @@ export const collect: {
     const errors: unknown[] = [];
     const results = entries.map(([, entry]) => (fn ? fn(entry) : entry) as ResultMaybeAsync<unknown, unknown>);
     if (results.some(isPromise)) {
+      // eslint-disable-next-line @typescript-eslint/await-thenable
       return Promise.all(results).then((results): ResultMaybeAsync<T, unknown[]> => {
         const accumulator = initialValue;
         for (const [index, result] of results.entries()) {

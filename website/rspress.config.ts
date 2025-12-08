@@ -1,5 +1,4 @@
 import { defineConfig } from '@rspress/core';
-import { pluginLlms } from '@rspress/plugin-llms';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
 import { pluginTwoslash } from '@rspress/plugin-twoslash';
 
@@ -12,17 +11,12 @@ export default defineConfig({
   icon: '/waving-hand.png',
   logo: '/waving-hand.png',
   logoText: 'byethrow',
+  llms: true,
   plugins: [
-    pluginLlms(),
     pluginSitemap({ siteUrl: 'https://praha-inc.github.io/byethrow' }),
     pluginTwoslash({ explicitTrigger: false }),
     pluginTypedoc(),
   ],
-  markdown: {
-    link: {
-      checkDeadLinks: true,
-    },
-  },
   route: {
     cleanUrls: true,
   },

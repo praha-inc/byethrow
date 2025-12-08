@@ -1,8 +1,8 @@
 /* eslint-disable import-x/export */
-import { getCustomMDXComponent as baseGetCustomMDXComponent } from '@rspress/core/theme';
+import { getCustomMDXComponent as baseGetCustomMDXComponent } from '@rspress/core/theme-original';
 import { LlmsContainer, LlmsCopyButton, LlmsViewOptions } from '@rspress/plugin-llms/runtime';
 
-export * from '@rspress/core/theme';
+export * from '@rspress/core/theme-original';
 
 export * from './components/stackblitz';
 export { HomeLayout } from './layouts/home-layout';
