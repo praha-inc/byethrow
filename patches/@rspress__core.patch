@@ -1,0 +1,14 @@
+diff --git a/dist/node/ssg-md/llms/emitLlmsTxt.js b/dist/node/ssg-md/llms/emitLlmsTxt.js
+index 39ebfa879379dac51659d7bfe5fa475985335c9f..e19bc32a718b0e7fa34f939b3ee72cd91b5aa99d 100644
+--- a/dist/node/ssg-md/llms/emitLlmsTxt.js
++++ b/dist/node/ssg-md/llms/emitLlmsTxt.js
+@@ -30,7 +30,8 @@ async function emitLlmsTxt(config, routeService, emitAsset, mdContents) {
+             }));
+     }).flat().filter((i)=>i.activeMatch || i.link) : [];
+     const defaultLang = routeService.getDefaultLang();
+-    await Promise.all(routeService.getLangs().map(async (lang)=>{
++    const langs = new Set([defaultLang, ...routeService.getLangs()]);
++    await Promise.all(langs.values().map(async (lang)=>{
+         const navList = noVersionNav.filter((i)=>i.lang === lang);
+         const routeGroups = new Array(navList.length).fill(0).map(()=>[]);
+         const others = [];

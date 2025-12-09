@@ -1,4 +1,4 @@
-import { HomeLayout as BaseHomeLayout, PackageManagerTabs } from '@rspress/core/theme';
+import { HomeLayout as BaseHomeLayout, PackageManagerTabs } from '@rspress/core/theme-original';
 
 import type { FC } from 'react';
 
