@@ -23,18 +23,43 @@
   "author": "PrAha, Inc.",
   "sideEffects": false,
   "type": "module",
+  "exports": {
+    "require": {
+      "types": "./dist/cjs/index.d.ts",
+      "default": "./dist/cjs/index.cjs"
+    },
+    "import": {
+      "types": "./dist/esm/index.d.ts",
+      "default": "./dist/esm/index.js"
+    }
+  },
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/cjs/index.d.ts",
+  "bin": {
+    "byethrow-docs": "./bin/cli.js"
+  },
   "files": [
+    "bin",
+    "dist",
     "docs",
     "LICENSE",
     "README.md"
   ],
   "scripts": {
-    "build": "tsx ./scripts/copy.ts",
+    "generate": "tsx ./scripts/copy.ts",
+    "build": "rslib build",
     "lint:code": "eslint .",
     "lint:type": "tsc --noEmit"
   },
+  "dependencies": {
+    "citty": "^0.1.6",
+    "flexsearch": "^0.8.212",
+    "sqlite3": "^5.1.7"
+  },
   "devDependencies": {
     "@praha/byethrow-website": "workspace:*",
+    "@rslib/core": "0.18.4",
     "@types/node": "24.10.2",
     "eslint": "9.39.1",
     "tsx": "4.21.0",

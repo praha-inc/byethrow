@@ -18,6 +18,22 @@ The documentation is also available online at [Website](https://praha-inc.github
 npm install @praha/byethrow-docs
 ```
 
+## 📚 Usage
+
+### CLI
+
+This package includes a CLI tool for searching documentation.
+
+```bash
+# Search documentation
+npx @praha/byethrow-docs search "your query"
+
+# Limit number of results (default: 5)
+npx @praha/byethrow-docs search "your query" --limit 10
+```
+
+The search command returns JSON output with matching documentation paths and highlighted snippets.
+
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome.
