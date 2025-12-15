@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@praha/byethrow": "workspace:*",
-    "@rslib/core": "0.18.3",
+    "@rslib/core": "0.18.4",
     "@rspack/core": "1.6.6",
     "@types/node": "24.10.2",
     "eslint": "9.39.1",
