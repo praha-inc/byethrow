@@ -128,8 +128,8 @@ importers:
         specifier: 0.18.4
         version: 0.18.4(typescript@5.9.3)
       '@rspack/core':
-        specifier: 1.6.6
-        version: 1.6.6(@swc/helpers@0.5.17)
+        specifier: 1.6.7
+        version: 1.6.7(@swc/helpers@0.5.17)
       '@types/node':
         specifier: 24.10.2
         version: 24.10.2
