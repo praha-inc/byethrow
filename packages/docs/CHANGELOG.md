@@ -1,5 +1,11 @@
 # @praha/byethrow-docs
 
+## 0.1.0
+
+### Minor Changes
+
+- [#413](https://github.com/praha-inc/byethrow/pull/413) [`322ae63`](https://github.com/praha-inc/byethrow/commit/322ae6336e221a78a95505fae9e783cdb3435717) Thanks [@Karibash](https://github.com/Karibash)! - Add a CLI to search documents
+
 ## 0.0.1
 
 ### Patch Changes
