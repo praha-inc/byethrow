@@ -22,7 +22,7 @@
     "@rspress/plugin-llms": "2.0.0-rc.2",
     "@rspress/plugin-sitemap": "2.0.0-rc.2",
     "@rspress/plugin-twoslash": "2.0.0-rc.2",
-    "@types/node": "24.10.3",
+    "@types/node": "24.10.4",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
     "execa": "9.6.1",
