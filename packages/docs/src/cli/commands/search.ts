@@ -1,14 +1,8 @@
-import path from 'node:path';
-import url from 'node:url';
-
 import { defineCommand } from 'citty';
 
-import { createDocument, indexingDocuments, readIndexManifest } from '../..';
+import { searchDocuments } from '../..';
 
-const __filename = url.fileURLToPath(import.meta.url);
-const indexPath = path.join(__filename, '../../../../.index');
-
-export const searchCommand = defineCommand({
+export default defineCommand({
   meta: {
     name: 'search',
     description: 'Search documentation',
@@ -26,27 +20,10 @@ export const searchCommand = defineCommand({
     },
   },
   run: async ({ args }) => {
-    const document = await createDocument(indexPath);
-    const manifest = readIndexManifest(indexPath);
-    if (manifest?.version !== BYETHROW_DOCS_VERSION) {
-      await indexingDocuments(document);
-    }
-
-    const [result] = await document.searchAsync({
-      enrich: true,
-      highlight: {
-        template: '<em>$1</em>',
-        boundary: 128,
-      },
+    const result = await searchDocuments({
       query: args.query,
       limit: Number(args.limit),
     });
-
-    console.log(JSON.stringify({
-      hits: (result?.result ?? []).map((result) => ({
-        path: result.id,
-        highlight: result.highlight,
-      })),
-    }, null, 2));
+    console.log(JSON.stringify(result, null, 2));
   },
 });

@@ -1,7 +1,5 @@
 import { defineCommand, runMain } from 'citty';
 
-import { searchCommand } from './commands/search.js';
-
 const main = defineCommand({
   meta: {
     name: '@praha/byethrowｰdocs',
@@ -9,7 +7,8 @@ const main = defineCommand({
     description: 'Documentation CLI for @praha/byethrow',
   },
   subCommands: {
-    search: searchCommand,
+    list: () => import('./commands/list').then((module) => module.default),
+    search: () => import('./commands/search').then((module) => module.default),
   },
 });
 

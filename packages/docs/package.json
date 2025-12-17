@@ -55,6 +55,7 @@
   "dependencies": {
     "citty": "^0.1.6",
     "flexsearch": "^0.8.212",
+    "mdast-util-from-markdown": "^2.0.2",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {

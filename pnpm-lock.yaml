@@ -89,6 +89,9 @@ importers:
       flexsearch:
         specifier: ^0.8.212
         version: 0.8.212
+      mdast-util-from-markdown:
+        specifier: ^2.0.2
+        version: 2.0.2
       sqlite3:
         specifier: ^5.1.7
         version: 5.1.7

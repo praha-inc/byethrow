@@ -22,7 +22,27 @@ npm install @praha/byethrow-docs
 
 ### CLI
 
-This package includes a CLI tool for searching documentation.
+This package includes a CLI tool for searching and listing documentation.
+
+#### `list` command
+
+List all available documentation organized by sections.
+
+```bash
+# List all documentation
+npx @praha/byethrow-docs list
+
+# List documentation with filter query
+npx @praha/byethrow-docs list --query "your query"
+```
+
+**Options:**
+
+- `--query <string>`: Filter documentation by keywords (optional)
+
+#### `search` command
+
+Search documentation and get matching results with highlighted snippets.
 
 ```bash
 # Search documentation
@@ -32,7 +52,9 @@ npx @praha/byethrow-docs search "your query"
 npx @praha/byethrow-docs search "your query" --limit 10
 ```
 
-The search command returns JSON output with matching documentation paths and highlighted snippets.
+**Options:**
+
+- `--limit <number>`: Maximum number of results to return (default: 5)
 
 ## 🤝 Contributing
 
