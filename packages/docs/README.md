@@ -52,9 +52,26 @@ npx @praha/byethrow-docs search "your query"
 npx @praha/byethrow-docs search "your query" --limit 10
 ```
 
+**Arguments:**
+
+- `query`: Search query string (required)
+
 **Options:**
 
 - `--limit <number>`: Maximum number of results to return (default: 5)
+
+#### `toc` command
+
+Display table of contents from a documentation file.
+
+```bash
+# Display table of contents from a markdown file
+npx @praha/byethrow-docs toc path/to/document.md
+```
+
+**Arguments:**
+
+- `path`: Path to the documentation file (required)
 
 ## 🤝 Contributing
 
