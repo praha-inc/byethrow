@@ -54,6 +54,7 @@
   },
   "dependencies": {
     "citty": "^0.1.6",
+    "find-up": "8.0.0",
     "flexsearch": "^0.8.212",
     "mdast-util-from-markdown": "^2.0.2",
     "mdast-util-to-string": "^4.0.0",

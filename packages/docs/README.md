@@ -24,6 +24,34 @@ npm install @praha/byethrow-docs
 
 This package includes a CLI tool for searching and listing documentation.
 
+#### `init` command
+
+Initialize AI agent configuration for byethrow documentation.
+
+```bash
+# Initialize Claude AI configuration
+npx @praha/byethrow-docs init claude
+
+# Initialize GitHub Copilot configuration
+npx @praha/byethrow-docs init copilot
+
+# Initialize Cursor AI configuration
+npx @praha/byethrow-docs init cursor
+```
+
+**Arguments:**
+
+- `agent`: AI agent to configure (claude, copilot, or cursor) (required)
+
+**Description:**
+
+This command creates an agent-specific configuration file that enables the AI to reference byethrow documentation automatically.
+The configuration file will be created in the appropriate directory:
+
+- Claude: `.claude/skills/byethrow/SKILL.md`
+- GitHub Copilot: `.github/skills/byethrow/SKILL.md`
+- Cursor: `.cursor/rules/byethrow/RULE.md`
+
 #### `list` command
 
 List all available documentation organized by sections.
