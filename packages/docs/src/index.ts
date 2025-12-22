@@ -1,3 +1,2 @@
-export * from './helpers/create-document';
-export * from './helpers/indexing-documents';
-export * from './helpers/read-index-manifest';
+export * from './exports/list-documents';
+export * from './exports/search-documents';

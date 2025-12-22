@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import url from 'node:url';
+
+import { docsPath, indexPath } from '../constants/path';
 
 import type { IndexManifest } from '../types/index-manifest';
 import type { Document, DocumentData } from 'flexsearch';
@@ -34,16 +35,14 @@ const readDocuments = async (directory: string): Promise<DocumentEntry[]> => {
 export const indexingDocuments = async (document: Document<DocumentData, false, Database>) => {
   await document.clear();
 
-  const documentsPath = path.join(url.fileURLToPath(import.meta.url), '../../../../docs');
-  for (const _document of await readDocuments(documentsPath)) {
+  for (const _document of await readDocuments(docsPath)) {
+    if (_document.path.endsWith('/index.md')) continue;
     document.add({ id: _document.path, content: _document.content });
   }
 
   await document.commit();
-  await fs.writeFile(
-    path.join(path.dirname((document as unknown as { index: Map<string, { db: { id: string } }> }).index.get('content')!.db.id), 'manifest.json'),
-    JSON.stringify({
-      version: BYETHROW_DOCS_VERSION,
-    } satisfies IndexManifest),
+  await fs.writeFile(path.join(indexPath, 'manifest.json'), JSON.stringify({
+    version: BYETHROW_DOCS_VERSION,
+  } satisfies IndexManifest),
   );
 };
