@@ -7,6 +7,7 @@ const main = defineCommand({
     description: 'Documentation CLI for @praha/byethrow',
   },
   subCommands: {
+    init: () => import('./commands/init').then((module) => module.default),
     list: () => import('./commands/list').then((module) => module.default),
     search: () => import('./commands/search').then((module) => module.default),
     toc: () => import('./commands/toc').then((module) => module.default),
