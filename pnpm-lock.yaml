@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
+  '@changesets/assemble-release-plan':
+    hash: d865b50df2b7d1d75b85dfe53af416c1cac7347353f508f844d605f2e3fdbdde
+    path: patches/@changesets__assemble-release-plan.patch
   '@rspress/core':
     hash: 962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509
     path: patches/@rspress__core.patch
@@ -4314,7 +4317,7 @@ snapshots:
       resolve-from: 5.0.0
       semver: 7.7.3
 
-  '@changesets/assemble-release-plan@6.0.9':
+  '@changesets/assemble-release-plan@6.0.9(patch_hash=d865b50df2b7d1d75b85dfe53af416c1cac7347353f508f844d605f2e3fdbdde)':
     dependencies:
       '@changesets/errors': 0.2.0
       '@changesets/get-dependents-graph': 2.1.3
@@ -4338,7 +4341,7 @@ snapshots:
   '@changesets/cli@2.29.8(@types/node@24.10.4)':
     dependencies:
       '@changesets/apply-release-plan': 7.0.14
-      '@changesets/assemble-release-plan': 6.0.9
+      '@changesets/assemble-release-plan': 6.0.9(patch_hash=d865b50df2b7d1d75b85dfe53af416c1cac7347353f508f844d605f2e3fdbdde)
       '@changesets/changelog-git': 0.2.1
       '@changesets/config': 3.1.2
       '@changesets/errors': 0.2.0
@@ -4398,7 +4401,7 @@ snapshots:
 
   '@changesets/get-release-plan@4.0.14':
     dependencies:
-      '@changesets/assemble-release-plan': 6.0.9
+      '@changesets/assemble-release-plan': 6.0.9(patch_hash=d865b50df2b7d1d75b85dfe53af416c1cac7347353f508f844d605f2e3fdbdde)
       '@changesets/config': 3.1.2
       '@changesets/pre': 2.0.2
       '@changesets/read': 0.6.6
