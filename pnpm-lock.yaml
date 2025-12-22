@@ -92,6 +92,9 @@ importers:
       mdast-util-from-markdown:
         specifier: ^2.0.2
         version: 2.0.2
+      mdast-util-to-string:
+        specifier: ^4.0.0
+        version: 4.0.0
       sqlite3:
         specifier: ^5.1.7
         version: 5.1.7

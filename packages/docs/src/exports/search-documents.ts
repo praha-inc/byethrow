@@ -3,17 +3,19 @@ import { createDocument } from '../internals/create-document';
 import { indexingDocuments } from '../internals/indexing-documents';
 import { readIndexManifest } from '../internals/read-index-manifest';
 
+export type HitNode = {
+  path: string;
+  highlight: string;
+  description: string;
+};
+
 export type SearchDocumentsOptions = {
   query: string;
   limit: number;
 };
 
 export type SearchDocumentsResult = {
-  hits: {
-    path: string;
-    highlight: string;
-    description: string;
-  }[];
+  hits: HitNode[];
 };
 
 export const searchDocuments = async (options: SearchDocumentsOptions): Promise<SearchDocumentsResult> => {

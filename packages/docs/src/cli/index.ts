@@ -9,6 +9,7 @@ const main = defineCommand({
   subCommands: {
     list: () => import('./commands/list').then((module) => module.default),
     search: () => import('./commands/search').then((module) => module.default),
+    toc: () => import('./commands/toc').then((module) => module.default),
   },
 });
 

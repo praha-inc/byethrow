@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 
 import { fromMarkdown } from 'mdast-util-from-markdown';
+import { toString } from 'mdast-util-to-string';
 
 import { docsPath } from '../constants/path';
 
@@ -16,7 +17,11 @@ export type DocumentSection = {
   documents: DocumentNode[];
 };
 
-export const listDocuments = async (): Promise<{ sections: DocumentSection[] }> => {
+export type ListDocumentsResult = {
+  sections: DocumentSection[];
+};
+
+export const listDocuments = async (): Promise<ListDocumentsResult> => {
   const content = await fs.readFile(path.join(docsPath, 'index.md'), { encoding: 'utf8' });
   const mdast = fromMarkdown(content);
 
@@ -44,13 +49,12 @@ export const listDocuments = async (): Promise<{ sections: DocumentSection[] }> 
         .map((listItem) => {
           const paragraph = listItem.children.find((child) => child.type === 'paragraph')!;
           const link = paragraph.children.find((child) => child.type === 'link')!;
-          const title = link.children.find((child) => child.type === 'text')!;
           const description = paragraph.children.find((child) => child.type === 'text')!;
 
           return {
             path: path.join(docsPath, link.url),
-            title: title.value,
-            description: description.value.replace(/^: /, ''),
+            title: toString(link),
+            description: toString(description).replace(/^: /, ''),
           };
         }),
     });
