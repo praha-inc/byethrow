@@ -19,7 +19,7 @@
   "devDependencies": {
     "@praha/byethrow": "workspace:*",
     "@praha/error-factory": "1.2.1",
-    "@rspress/plugin-llms": "2.0.0-rc.2",
+    "@rspress/plugin-llms": "2.0.0-rc.3",
     "@rspress/plugin-sitemap": "2.0.0-rc.2",
     "@rspress/plugin-twoslash": "2.0.0-rc.2",
     "@types/node": "24.10.4",
