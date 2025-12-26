@@ -189,8 +189,8 @@ importers:
         specifier: 2.0.0-rc.3
         version: 2.0.0-rc.3(@rspress/core@2.0.0-rc.3(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))
       '@rspress/plugin-sitemap':
-        specifier: 2.0.0-rc.2
-        version: 2.0.0-rc.2(@rspress/core@2.0.0-rc.3(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))
+        specifier: 2.0.0-rc.3
+        version: 2.0.0-rc.3(@rspress/core@2.0.0-rc.3(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))
       '@rspress/plugin-twoslash':
         specifier: 2.0.0-rc.2
         version: 2.0.0-rc.2(@rspress/core@2.0.0-rc.3(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))(react@19.2.3)(typescript@5.9.3)
@@ -1299,11 +1299,11 @@ packages:
     peerDependencies:
       '@rspress/core': ^2.0.0-rc.3
 
-  '@rspress/plugin-sitemap@2.0.0-rc.2':
-    resolution: {integrity: sha512-2bw6WbPtRQmYiBYhdez0H1gvF/WqB54r+h3vZTK18NWzBxHPdgRq+DnYNLkEfK4Q4uoJGidIJu41TzNrZts8gg==}
+  '@rspress/plugin-sitemap@2.0.0-rc.3':
+    resolution: {integrity: sha512-QUoeeWPLI/r8BPPf7smT3VxWR718wyMJutjvhRXyxCWtUtLwEvDKAlk2WFi5ZAkte2D3otNIGWqkpgeT8tEmpw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      '@rspress/core': ^2.0.0-rc.2
+      '@rspress/core': ^2.0.0-rc.3
 
   '@rspress/plugin-twoslash@2.0.0-rc.2':
     resolution: {integrity: sha512-etcqYMTf4eMP92J74v2hrZ0ZWTZ5/T85l1gqnFuK3aESM5/NpIAhi70vBT7Se8lMQsiAYj4af1lOc4BNMgRjgA==}
@@ -5285,7 +5285,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rspress/plugin-sitemap@2.0.0-rc.2(@rspress/core@2.0.0-rc.3(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))':
+  '@rspress/plugin-sitemap@2.0.0-rc.3(@rspress/core@2.0.0-rc.3(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))':
     dependencies:
       '@rspress/core': 2.0.0-rc.3(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7)
 
