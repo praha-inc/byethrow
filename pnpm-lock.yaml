@@ -167,8 +167,8 @@ importers:
   website:
     dependencies:
       '@rspress/core':
-        specifier: 2.0.0-rc.3
-        version: 2.0.0-rc.3(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7)
+        specifier: 2.0.0-rc.4
+        version: 2.0.0-rc.4(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7)
       '@stackblitz/sdk':
         specifier: 1.11.0
         version: 1.11.0
@@ -187,13 +187,13 @@ importers:
         version: 1.2.1
       '@rspress/plugin-llms':
         specifier: 2.0.0-rc.3
-        version: 2.0.0-rc.3(@rspress/core@2.0.0-rc.3(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))
+        version: 2.0.0-rc.3(@rspress/core@2.0.0-rc.4(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))
       '@rspress/plugin-sitemap':
         specifier: 2.0.0-rc.3
-        version: 2.0.0-rc.3(@rspress/core@2.0.0-rc.3(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))
+        version: 2.0.0-rc.3(@rspress/core@2.0.0-rc.4(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))
       '@rspress/plugin-twoslash':
         specifier: 2.0.0-rc.3
-        version: 2.0.0-rc.3(@rspress/core@2.0.0-rc.3(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))(react@19.2.3)(typescript@5.9.3)
+        version: 2.0.0-rc.3(@rspress/core@2.0.0-rc.4(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))(react@19.2.3)(typescript@5.9.3)
       '@types/node':
         specifier: 24.10.4
         version: 24.10.4
@@ -1254,9 +1254,9 @@ packages:
       webpack-hot-middleware:
         optional: true
 
-  '@rspress/core@2.0.0-rc.3':
-    resolution: {integrity: sha512-VsD0vvKaR3xFOr5r8XKDab6zqf8dHCtVg+NDMnefh2u0JpqXn3q5Zi/+N0DXLwIgi+Oy69MgFzNkZ4zkm8pXyw==}
-    engines: {node: '>=18.0.0'}
+  '@rspress/core@2.0.0-rc.4':
+    resolution: {integrity: sha512-EHJjbc8yA/La6sJN3bjZus24KhSCdh5lEIVtjt7EBEnLteDN+wULzO1sFKj8agH3BXYE0XOuz2W1HbTTGfcGJQ==}
+    engines: {node: '>=20.9.0'}
     hasBin: true
 
   '@rspress/mdx-rs-darwin-arm64@0.6.6':
@@ -1331,12 +1331,12 @@ packages:
       react: '>=18.0.0'
       typescript: ^5.8.2
 
-  '@rspress/runtime@2.0.0-rc.3':
-    resolution: {integrity: sha512-Q+DgtgGG+oB7uiHOBDGv/V9xruxMfgXWdrQ60qNb7ulJM3TL8sZlFG3GSxBBDmx19LdyR7xK0HRwPZu4xm+PtA==}
-    engines: {node: '>=18.0.0'}
+  '@rspress/runtime@2.0.0-rc.4':
+    resolution: {integrity: sha512-BcNs6zpIXcWfhXGCDS525HDwSgLXO+S+q2Ty6sQPmyYJzOg+V9tHIlulKTOfuBCyEhTZeTAJofP4+rG4EZBUgw==}
+    engines: {node: '>=20.9.0'}
 
-  '@rspress/shared@2.0.0-rc.3':
-    resolution: {integrity: sha512-qAVfoWK+DQ1U8XY3ZCw3IfuGr35PnVhvx7RKz5ae+ev5J6PatNlbOa3lmKS+KDcZbqlb8fM3JbZz78WxttC9Bg==}
+  '@rspress/shared@2.0.0-rc.4':
+    resolution: {integrity: sha512-46jTwxV8SRLMbe3euCEMWQudmdYE2Tf+EN/5l6EP10i6QICOXMIzUFFWfr0LOTr4aZCSTSJu7Tp6Xxml6JbheA==}
 
   '@sec-ant/readable-stream@0.4.1':
     resolution: {integrity: sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==}
@@ -1400,9 +1400,6 @@ packages:
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=9.0.0'
-
-  '@swc/helpers@0.5.17':
-    resolution: {integrity: sha512-5IKx/Y13RsYd+sauPb2x+U/xZikHjolzfuDgTAl/Tdf3Q8rslRvC19NKDLgAJQ6wsqADk10ntlv08nPFw/gO/A==}
 
   '@swc/helpers@0.5.18':
     resolution: {integrity: sha512-TXTnIcNJQEKwThMMqBXsZ4VGAza6bvN4pa41Rkqoio6QBKMvo+5lexeTMScGCIxtzgQJzElcvIltani+adC5PQ==}
@@ -5087,9 +5084,9 @@ snapshots:
 
   '@rsbuild/core@1.6.15':
     dependencies:
-      '@rspack/core': 1.6.8(@swc/helpers@0.5.17)
+      '@rspack/core': 1.6.8(@swc/helpers@0.5.18)
       '@rspack/lite-tapable': 1.1.0
-      '@swc/helpers': 0.5.17
+      '@swc/helpers': 0.5.18
       core-js: 3.47.0
       jiti: 2.6.1
 
@@ -5208,14 +5205,6 @@ snapshots:
       '@rspack/binding-win32-ia32-msvc': 1.7.0
       '@rspack/binding-win32-x64-msvc': 1.7.0
 
-  '@rspack/core@1.6.8(@swc/helpers@0.5.17)':
-    dependencies:
-      '@module-federation/runtime-tools': 0.21.6
-      '@rspack/binding': 1.6.8
-      '@rspack/lite-tapable': 1.1.0
-    optionalDependencies:
-      '@swc/helpers': 0.5.17
-
   '@rspack/core@1.6.8(@swc/helpers@0.5.18)':
     dependencies:
       '@module-federation/runtime-tools': 0.21.6
@@ -5240,15 +5229,15 @@ snapshots:
       html-entities: 2.6.0
       react-refresh: 0.18.0
 
-  '@rspress/core@2.0.0-rc.3(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7)':
+  '@rspress/core@2.0.0-rc.4(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7)':
     dependencies:
       '@mdx-js/mdx': 3.1.1
       '@mdx-js/react': 3.1.1(@types/react@19.2.7)(react@19.2.3)
       '@rsbuild/core': 1.6.15
       '@rsbuild/plugin-react': 1.4.2(@rsbuild/core@1.6.15)
       '@rspress/mdx-rs': 0.6.6
-      '@rspress/runtime': 2.0.0-rc.3
-      '@rspress/shared': 2.0.0-rc.3
+      '@rspress/runtime': 2.0.0-rc.4
+      '@rspress/shared': 2.0.0-rc.4
       '@shikijs/rehype': 3.20.0
       '@types/unist': 3.0.3
       '@unhead/react': 2.0.19(react@19.2.3)
@@ -5325,9 +5314,9 @@ snapshots:
       '@rspress/mdx-rs-win32-arm64-msvc': 0.6.6
       '@rspress/mdx-rs-win32-x64-msvc': 0.6.6
 
-  '@rspress/plugin-llms@2.0.0-rc.3(@rspress/core@2.0.0-rc.3(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))':
+  '@rspress/plugin-llms@2.0.0-rc.3(@rspress/core@2.0.0-rc.4(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))':
     dependencies:
-      '@rspress/core': 2.0.0-rc.3(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7)
+      '@rspress/core': 2.0.0-rc.4(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7)
       remark-mdx: 3.1.1
       remark-parse: 11.0.0
       remark-stringify: 11.0.0
@@ -5336,14 +5325,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rspress/plugin-sitemap@2.0.0-rc.3(@rspress/core@2.0.0-rc.3(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))':
+  '@rspress/plugin-sitemap@2.0.0-rc.3(@rspress/core@2.0.0-rc.4(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))':
     dependencies:
-      '@rspress/core': 2.0.0-rc.3(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7)
+      '@rspress/core': 2.0.0-rc.4(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7)
 
-  '@rspress/plugin-twoslash@2.0.0-rc.3(@rspress/core@2.0.0-rc.3(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))(react@19.2.3)(typescript@5.9.3)':
+  '@rspress/plugin-twoslash@2.0.0-rc.3(@rspress/core@2.0.0-rc.4(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))(react@19.2.3)(typescript@5.9.3)':
     dependencies:
       '@floating-ui/dom': 1.7.4
-      '@rspress/core': 2.0.0-rc.3(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7)
+      '@rspress/core': 2.0.0-rc.4(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7)
       '@shikijs/twoslash': 3.20.0(typescript@5.9.3)
       mdast-util-from-markdown: 2.0.2
       mdast-util-gfm: 3.1.0
@@ -5355,15 +5344,15 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rspress/runtime@2.0.0-rc.3':
+  '@rspress/runtime@2.0.0-rc.4':
     dependencies:
-      '@rspress/shared': 2.0.0-rc.3
+      '@rspress/shared': 2.0.0-rc.4
       '@unhead/react': 2.0.19(react@19.2.3)
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
       react-router-dom: 7.11.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
 
-  '@rspress/shared@2.0.0-rc.3':
+  '@rspress/shared@2.0.0-rc.4':
     dependencies:
       '@rsbuild/core': 1.6.15
       '@shikijs/rehype': 3.20.0
@@ -5462,10 +5451,6 @@ snapshots:
       espree: 10.4.0
       estraverse: 5.3.0
       picomatch: 4.0.3
-
-  '@swc/helpers@0.5.17':
-    dependencies:
-      tslib: 2.8.1
 
   '@swc/helpers@0.5.18':
     dependencies:
