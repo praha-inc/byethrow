@@ -186,8 +186,8 @@ importers:
         specifier: 1.2.1
         version: 1.2.1
       '@rspress/plugin-llms':
-        specifier: 2.0.0-rc.4
-        version: 2.0.0-rc.4(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))
+        specifier: 2.0.0-rc.5
+        version: 2.0.0-rc.5(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))
       '@rspress/plugin-sitemap':
         specifier: 2.0.0-rc.4
         version: 2.0.0-rc.4(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))
@@ -1288,11 +1288,11 @@ packages:
     resolution: {integrity: sha512-NpNhTKBIlV3O6ADhoZkgHvBFvXMW2TYlIWmIT1ysJESUBqDpaN9H3Teve5fugjU2pQ2ORBZO6SQGKliMw/8m/Q==}
     engines: {node: '>= 10'}
 
-  '@rspress/plugin-llms@2.0.0-rc.4':
-    resolution: {integrity: sha512-PSG8JOO2EOqCeViif48puAeiP2pBhe//v0sC8dm9wGmQsrq8xbx2rH1aiQElZIwcoximqukzHavrU6O3qPW2NA==}
+  '@rspress/plugin-llms@2.0.0-rc.5':
+    resolution: {integrity: sha512-7FevOhOsPBMAln/vgxY0gE0oQIIUdATE91d1zof5LgUuocV26od362KTlvAzOK0VsFKTwuJGEOgx2uDU6LzejA==}
     engines: {node: '>=20.9.0'}
     peerDependencies:
-      '@rspress/core': ^2.0.0-rc.4
+      '@rspress/core': ^2.0.0-rc.5
 
   '@rspress/plugin-sitemap@2.0.0-rc.4':
     resolution: {integrity: sha512-sr900krxs9ZVfbV+b/ig7t8mAPaMOonWz2Qj9zXg4TgEgnh+LnNtHQpHYeFbiTF5WAozVxdu5lJ1E36oh231pQ==}
@@ -5253,7 +5253,7 @@ snapshots:
       '@rspress/mdx-rs-win32-arm64-msvc': 0.6.6
       '@rspress/mdx-rs-win32-x64-msvc': 0.6.6
 
-  '@rspress/plugin-llms@2.0.0-rc.4(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))':
+  '@rspress/plugin-llms@2.0.0-rc.5(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))':
     dependencies:
       '@rspress/core': 2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7)
       remark-mdx: 3.1.1
