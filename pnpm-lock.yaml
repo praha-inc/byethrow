@@ -192,8 +192,8 @@ importers:
         specifier: 2.0.0-rc.5
         version: 2.0.0-rc.5(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))
       '@rspress/plugin-twoslash':
-        specifier: 2.0.0-rc.4
-        version: 2.0.0-rc.4(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))(react@19.2.3)(typescript@5.9.3)
+        specifier: 2.0.0-rc.5
+        version: 2.0.0-rc.5(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))(react@19.2.3)(typescript@5.9.3)
       '@types/node':
         specifier: 24.10.4
         version: 24.10.4
@@ -1300,11 +1300,11 @@ packages:
     peerDependencies:
       '@rspress/core': ^2.0.0-rc.5
 
-  '@rspress/plugin-twoslash@2.0.0-rc.4':
-    resolution: {integrity: sha512-NZvRkoCmz4B2+l7RTeFtjJgAAqn3+qNwxgMPzHEAztOFdtyLih1ISgx+VfFQ9dtO15yFiMWACV25cjRHZLDjJw==}
+  '@rspress/plugin-twoslash@2.0.0-rc.5':
+    resolution: {integrity: sha512-DNNrSUDPegLqHYEtBlfCMlI5FuetAy90GmTb9ELr/PfZtqs+xEHz02UZMldCjvgagnfSb5VXTihur7UA2wgn5g==}
     engines: {node: '>=20.9.0'}
     peerDependencies:
-      '@rspress/core': ^2.0.0-rc.4
+      '@rspress/core': ^2.0.0-rc.5
       react: '>=18.0.0'
       typescript: ^5.8.2
 
@@ -5268,7 +5268,7 @@ snapshots:
     dependencies:
       '@rspress/core': 2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7)
 
-  '@rspress/plugin-twoslash@2.0.0-rc.4(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))(react@19.2.3)(typescript@5.9.3)':
+  '@rspress/plugin-twoslash@2.0.0-rc.5(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))(react@19.2.3)(typescript@5.9.3)':
     dependencies:
       '@floating-ui/dom': 1.7.4
       '@rspress/core': 2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7)
