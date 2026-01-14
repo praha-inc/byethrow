@@ -168,7 +168,7 @@ importers:
     dependencies:
       '@rspress/core':
         specifier: 2.0.0-rc.5
-        version: 2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7)
+        version: 2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.8)
       '@stackblitz/sdk':
         specifier: 1.11.0
         version: 1.11.0
@@ -187,22 +187,22 @@ importers:
         version: 1.2.1
       '@rspress/plugin-llms':
         specifier: 2.0.0-rc.5
-        version: 2.0.0-rc.5(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))
+        version: 2.0.0-rc.5(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.8))
       '@rspress/plugin-sitemap':
         specifier: 2.0.0-rc.5
-        version: 2.0.0-rc.5(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))
+        version: 2.0.0-rc.5(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.8))
       '@rspress/plugin-twoslash':
         specifier: 2.0.0-rc.5
-        version: 2.0.0-rc.5(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))(react@19.2.3)(typescript@5.9.3)
+        version: 2.0.0-rc.5(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.8))(react@19.2.3)(typescript@5.9.3)
       '@types/node':
         specifier: 24.10.4
         version: 24.10.4
       '@types/react':
-        specifier: 19.2.7
-        version: 19.2.7
+        specifier: 19.2.8
+        version: 19.2.8
       '@types/react-dom':
         specifier: 19.2.3
-        version: 19.2.3(@types/react@19.2.7)
+        version: 19.2.3(@types/react@19.2.8)
       execa:
         specifier: 9.6.1
         version: 9.6.1
@@ -1428,8 +1428,8 @@ packages:
     peerDependencies:
       '@types/react': ^19.2.0
 
-  '@types/react@19.2.7':
-    resolution: {integrity: sha512-MWtvHrGZLFttgeEj28VXHxpmwYbor/ATPYbBfSFZEIRK0ecCFLl2Qo55z52Hss+UV9CRN7trSeq1zbgx7YDWWg==}
+  '@types/react@19.2.8':
+    resolution: {integrity: sha512-3MbSL37jEchWZz2p2mjntRZtPt837ij10ApxKfgmXCTuHWagYg7iA5bqPw6C8BMPfwidlvfPI/fxOc42HLhcyg==}
 
   '@types/unist@2.0.11':
     resolution: {integrity: sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==}
@@ -4727,10 +4727,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@mdx-js/react@3.1.1(@types/react@19.2.7)(react@19.2.3)':
+  '@mdx-js/react@3.1.1(@types/react@19.2.8)(react@19.2.3)':
     dependencies:
       '@types/mdx': 2.0.13
-      '@types/react': 19.2.7
+      '@types/react': 19.2.8
       react: 19.2.3
 
   '@modelcontextprotocol/sdk@1.25.2(hono@4.11.1)(zod@4.3.5)':
@@ -5169,10 +5169,10 @@ snapshots:
       html-entities: 2.6.0
       react-refresh: 0.18.0
 
-  '@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7)':
+  '@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.8)':
     dependencies:
       '@mdx-js/mdx': 3.1.1
-      '@mdx-js/react': 3.1.1(@types/react@19.2.7)(react@19.2.3)
+      '@mdx-js/react': 3.1.1(@types/react@19.2.8)(react@19.2.3)
       '@rsbuild/core': 1.7.1
       '@rsbuild/plugin-react': 1.4.2(@rsbuild/core@1.7.1)
       '@rspress/mdx-rs': 0.6.6
@@ -5253,9 +5253,9 @@ snapshots:
       '@rspress/mdx-rs-win32-arm64-msvc': 0.6.6
       '@rspress/mdx-rs-win32-x64-msvc': 0.6.6
 
-  '@rspress/plugin-llms@2.0.0-rc.5(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))':
+  '@rspress/plugin-llms@2.0.0-rc.5(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.8))':
     dependencies:
-      '@rspress/core': 2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7)
+      '@rspress/core': 2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.8)
       remark-mdx: 3.1.1
       remark-parse: 11.0.0
       remark-stringify: 11.0.0
@@ -5264,14 +5264,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rspress/plugin-sitemap@2.0.0-rc.5(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))':
+  '@rspress/plugin-sitemap@2.0.0-rc.5(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.8))':
     dependencies:
-      '@rspress/core': 2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7)
+      '@rspress/core': 2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.8)
 
-  '@rspress/plugin-twoslash@2.0.0-rc.5(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7))(react@19.2.3)(typescript@5.9.3)':
+  '@rspress/plugin-twoslash@2.0.0-rc.5(@rspress/core@2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.8))(react@19.2.3)(typescript@5.9.3)':
     dependencies:
       '@floating-ui/dom': 1.7.4
-      '@rspress/core': 2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.7)
+      '@rspress/core': 2.0.0-rc.5(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.8)
       '@shikijs/twoslash': 3.20.0(typescript@5.9.3)
       mdast-util-from-markdown: 2.0.2
       mdast-util-gfm: 3.1.0
@@ -5434,11 +5434,11 @@ snapshots:
     dependencies:
       undici-types: 7.16.0
 
-  '@types/react-dom@19.2.3(@types/react@19.2.7)':
+  '@types/react-dom@19.2.3(@types/react@19.2.8)':
     dependencies:
-      '@types/react': 19.2.7
+      '@types/react': 19.2.8
 
-  '@types/react@19.2.7':
+  '@types/react@19.2.8':
     dependencies:
       csstype: 3.2.3
 
