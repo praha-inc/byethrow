@@ -19,11 +19,11 @@ import type { InferFailure, InferSuccess, Result, ResultFor, ResultMaybeAsync } 
  * especially in validation or data-fetching pipelines.
  *
  * @function
- * @typeParam N - The key to assign the result of the `fn` computation.
+ * @typeParam N - The key to assign the result of the `fn` computation or direct result.
  * @typeParam R1 - The input {@link Result} or {@link ResultAsync}.
- * @typeParam R2 - The result type returned by `fn`.
+ * @typeParam R2 - The result type returned by `fn` or provided directly.
  *
- * @example Success Case
+ * @example Success Case with function
  * ```ts
  * import { Result } from '@praha/byethrow';
  *
@@ -32,6 +32,17 @@ import type { InferFailure, InferSuccess, Result, ResultFor, ResultMaybeAsync } 
  *   Result.bind('age', (user) => Result.succeed(20)),
  * );
  * // { type: 'Success', value: { name: 1, age: 20 } }
+ * ```
+ *
+ * @example Success Case with direct Result
+ * ```ts
+ * import { Result } from '@praha/byethrow';
+ *
+ * const result = Result.pipe(
+ *   Result.succeed({ name: 'Alice' }),
+ *   Result.bind('age', Result.succeed(20)),
+ * );
+ * // { type: 'Success', value: { name: 'Alice', age: 20 } }
  * ```
  *
  * @example Failure Case (input is a Failure)
@@ -56,18 +67,30 @@ import type { InferFailure, InferSuccess, Result, ResultFor, ResultMaybeAsync } 
  * // { type: 'Failure', error: 'error' }
  * ```
  *
+ * @example Failure Case (direct Result is a Failure)
+ * ```ts
+ * import { Result } from '@praha/byethrow';
+ *
+ * const result = Result.pipe(
+ *   Result.succeed({ name: 'Alice' }),
+ *   Result.bind('age', Result.fail('error')),
+ * );
+ * // { type: 'Failure', error: 'error' }
+ * ```
+ *
  * @see {@link pipe} - It is recommended to use this function with the {@link pipe} function for better readability and composability.
  *
  * @category Combinators
  */
 export const bind: {
+  <N extends string, R1 extends ResultMaybeAsync<any, any>, R2 extends ResultMaybeAsync<any, any>>(name: N, result: R2): (input: R1) => InferSuccess<R1> extends object ? ResultFor<R1 | R2, { [K in N | keyof InferSuccess<R1>]: K extends Exclude<keyof InferSuccess<R1>, N> ? InferSuccess<R1>[K] : InferSuccess<R2> }, InferFailure<R1> | InferFailure<R2>> : unknown;
   <N extends string, R1 extends ResultMaybeAsync<any, any>, R2 extends ResultMaybeAsync<any, any>>(name: N, fn: (a: InferSuccess<R1>) => R2): (result: R1) => InferSuccess<R1> extends object ? ResultFor<R1 | R2, { [K in N | keyof InferSuccess<R1>]: K extends Exclude<keyof InferSuccess<R1>, N> ? InferSuccess<R1>[K] : InferSuccess<R2> }, InferFailure<R1> | InferFailure<R2>> : unknown;
   <N extends string, F extends (a: any) => ResultMaybeAsync<any, any>>(name: N, fn: F): <R1 extends ResultMaybeAsync<Parameters<F>[0], any>>(result: R1) => Parameters<F>[0] extends object ? ResultFor<R1 | ReturnType<F>, { [K in N | keyof Parameters<F>[0]]: K extends Exclude<keyof Parameters<F>[0], N> ? Parameters<F>[0][K] : InferSuccess<F> }, InferFailure<R1> | InferFailure<F>> : unknown;
-} = <N extends string, T1 extends object, T2, E2>(name: N, fn: (a: T1) => ResultMaybeAsync<T2, E2>) => {
+} = <N extends string, T1 extends object, T2, E2>(name: N, fnOrResult: ((a: T1) => ResultMaybeAsync<T2, E2>) | ResultMaybeAsync<T2, E2>) => {
   return <E1>(result: ResultMaybeAsync<T1, E1>) => {
     const apply = (r: Result<T1, E1>) => {
       if (isFailure(r)) return r;
-      const fr = fn(r.value);
+      const fr = typeof fnOrResult === 'function' ? fnOrResult(r.value) : fnOrResult;
 
       const attach = (fr: Result<T2, E2>) => {
         return isFailure(fr) ? fr : succeed<unknown>({ ...r.value, [name]: fr.value });
