@@ -6,6 +6,11 @@
   },
   {
     "type": "dir",
+    "name": "tutorial",
+    "label": "Tutorial"
+  },
+  {
+    "type": "dir",
     "name": "best-practices",
     "label": "Best Practices"
   },

@@ -1,0 +1,12 @@
+[
+  {
+    "type": "file",
+    "name": "building-objects",
+    "label": "Building Objects"
+  },
+  {
+    "type": "file",
+    "name": "aggregating-results",
+    "label": "Aggregating Results"
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "type": "file",
+    "name": "result-type",
+    "label": "Result Type"
+  },
+  {
+    "type": "file",
+    "name": "creating-results",
+    "label": "Creating Results"
+  },
+  {
+    "type": "file",
+    "name": "checking-results",
+    "label": "Checking Results"
+  },
+  {
+    "type": "file",
+    "name": "wrapping-functions",
+    "label": "Wrapping Functions"
+  }
+]
