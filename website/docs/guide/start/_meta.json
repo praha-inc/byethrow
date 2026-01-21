@@ -13,10 +13,5 @@
     "type": "file",
     "name": "quick",
     "label": "Quick Start"
-  },
-  {
-    "type": "file",
-    "name": "importing-result",
-    "label": "Importing Result"
   }
 ]

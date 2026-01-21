@@ -1,0 +1,27 @@
+[
+  {
+    "type": "file",
+    "name": "pipe-basics",
+    "label": "Pipe Basics"
+  },
+  {
+    "type": "file",
+    "name": "mapping-results",
+    "label": "Mapping Results"
+  },
+  {
+    "type": "file",
+    "name": "chaining-results",
+    "label": "Chaining Results"
+  },
+  {
+    "type": "file",
+    "name": "validation-recovery",
+    "label": "Validation and Recovery"
+  },
+  {
+    "type": "file",
+    "name": "debugging",
+    "label": "Debugging"
+  }
+]
