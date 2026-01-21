@@ -3,17 +3,21 @@
 import { isSuccess } from './is-success';
 import { isPromise } from '../internals/helpers/is-promise';
 
-import type { Failure, InferFailure, Result, ResultAsync } from '../result';
+import type { HasPromise } from '../internals/types/has-promise';
+import type { Failure, InferFailure, Result, ResultMaybeAsync } from '../result';
 
 /**
  * Asserts that a {@link Result} or {@link ResultAsync} is a {@link Failure} and returns it.
- * If the result is a {@link Success}, throws an error.
+ * This function requires that the result's success type is `never`, meaning the result is
+ * guaranteed to be a {@link Failure} at the type level.
+ * If the result is a {@link Success} at runtime, throws an error.
  *
  * @function
- * @typeParam E - The type of the error value.
+ * @typeParam R - The result type that extends {@link ResultMaybeAsync} with `never` as the success type.
  * @param result - The {@link Result} or {@link ResultAsync} to assert as a {@link Failure}.
- * @returns The {@link Failure} result or a Promise of {@link Success} result.
- * @throws {Error} If the result is a {@link Success}.
+ *                 The success type must be `never`.
+ * @returns The {@link Failure} result or a Promise of {@link Failure} result.
+ * @throws {Error} If the result is a {@link Success} at runtime.
  *
  * @example
  * ```ts
@@ -24,24 +28,15 @@ import type { Failure, InferFailure, Result, ResultAsync } from '../result';
  * // failure: { type: 'Failure', error: 'error' }
  * ```
  *
- * @example Throws on Success
- * ```ts
- * // @errors: 2769
- * import { Result } from '@praha/byethrow';
- *
- * const result = Result.succeed(42);
- * Result.assertFailure(result); // throws Error
- * ```
- *
- * @example Safe unwrap with assertFailure
+ * @example Type-safe usage after narrowing success type
  * ```ts
  * import { Result } from '@praha/byethrow';
  *
  * const getResult = (): Result.Result<number, string> => Result.fail('error');
  * const value = Result.pipe(
  *   getResult(),
- *   Result.andThen(() => Result.fail('die')),
- *   Result.assertFailure,
+ *   Result.andThen(() => Result.fail('die')), // Success type becomes never
+ *   Result.assertFailure, // Type-safe: success type is now never
  *   Result.unwrapError(), // Safe unwrap after assertion
  * );
  * ```
@@ -50,16 +45,16 @@ import type { Failure, InferFailure, Result, ResultAsync } from '../result';
  *
  * @category Assertions
  */
-export const assertFailure: {
-  <R extends ResultAsync<never, any>>(result: R): Promise<Failure<InferFailure<R>>>;
-  <R extends Result<never, any>>(result: R): Failure<InferFailure<R>>;
-} = <E>(result: Result<never, E> | ResultAsync<never, E>): any => {
-  const apply = (r: Result<never, E>): Failure<E> => {
+export const assertFailure = <R extends ResultMaybeAsync<never, any>>(
+  result: R,
+): true extends HasPromise<R> ? Promise<Failure<InferFailure<R>>> : Failure<InferFailure<R>> => {
+  const apply = (r: Result<never, InferFailure<R>>): Failure<InferFailure<R>> => {
     if (isSuccess(r)) {
       throw new Error('Expected a Failure result, but received a Success');
     }
     return r;
   };
 
-  return isPromise(result) ? result.then(apply) : apply(result);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return (isPromise(result) ? result.then(apply) : apply(result)) as any;
 };
