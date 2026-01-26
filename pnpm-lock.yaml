@@ -186,8 +186,8 @@ importers:
         specifier: 1.2.1
         version: 1.2.1
       '@rspress/plugin-llms':
-        specifier: 2.0.0-rc.5
-        version: 2.0.0-rc.5(@rspress/core@2.0.0-rc.6(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.8))
+        specifier: 2.0.0-rc.6
+        version: 2.0.0-rc.6(@rspress/core@2.0.0-rc.6(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.8))
       '@rspress/plugin-sitemap':
         specifier: 2.0.0-rc.5
         version: 2.0.0-rc.5(@rspress/core@2.0.0-rc.6(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.8))
@@ -1175,11 +1175,11 @@ packages:
     engines: {node: '>=20.9.0'}
     hasBin: true
 
-  '@rspress/plugin-llms@2.0.0-rc.5':
-    resolution: {integrity: sha512-7FevOhOsPBMAln/vgxY0gE0oQIIUdATE91d1zof5LgUuocV26od362KTlvAzOK0VsFKTwuJGEOgx2uDU6LzejA==}
+  '@rspress/plugin-llms@2.0.0-rc.6':
+    resolution: {integrity: sha512-ruaIglvTFGpFJJTo62756hFkGSMsCfIKnlsN0UYtg9SbgbWc1lgYA4Qa+Ao7rTmcClmAMAJbC4kBVyiLGZt8fA==}
     engines: {node: '>=20.9.0'}
     peerDependencies:
-      '@rspress/core': ^2.0.0-rc.5
+      '@rspress/core': ^2.0.0-rc.6
 
   '@rspress/plugin-sitemap@2.0.0-rc.5':
     resolution: {integrity: sha512-jUPMiwoYMTozv3swMlo/n4vws9uoHpGJNz/T+C/EkVZpgFxO4h8qJDQrFczdxPKWnhKNnBPFoBHBfKTutb78Eg==}
@@ -5020,7 +5020,7 @@ snapshots:
       - supports-color
       - webpack-hot-middleware
 
-  '@rspress/plugin-llms@2.0.0-rc.5(@rspress/core@2.0.0-rc.6(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.8))':
+  '@rspress/plugin-llms@2.0.0-rc.6(@rspress/core@2.0.0-rc.6(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.8))':
     dependencies:
       '@rspress/core': 2.0.0-rc.6(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@types/react@19.2.8)
       remark-mdx: 3.1.1
