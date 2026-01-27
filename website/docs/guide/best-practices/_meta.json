@@ -6,6 +6,11 @@
   },
   {
     "type": "file",
+    "name": "importing-result",
+    "label": "Importing Result"
+  },
+  {
+    "type": "file",
     "name": "custom-error",
     "label": "Custom Error"
   },
