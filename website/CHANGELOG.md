@@ -1,5 +1,7 @@
 # @praha/byethrow-website
 
+## 0.10.0
+
 ## 0.9.0
 
 ## 0.8.2
