@@ -185,9 +185,6 @@ importers:
       '@praha/error-factory':
         specifier: 1.2.1
         version: 1.2.1
-      '@rspress/plugin-llms':
-        specifier: 2.0.0
-        version: 2.0.0(@rspress/core@2.0.0(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.9)(core-js@3.47.0))
       '@rspress/plugin-sitemap':
         specifier: 2.0.0
         version: 2.0.0(@rspress/core@2.0.0(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.9)(core-js@3.47.0))
@@ -1271,12 +1268,6 @@ packages:
     resolution: {integrity: sha512-aUW3qhrhZ/f9VQ8iDHAvVyWX+SDmk4h3CG7IIfonWQUtC26fw/CWwOtT8b2fpZPumo1du0eacHJKCtpy20MraQ==}
     engines: {node: '>=20.9.0'}
     hasBin: true
-
-  '@rspress/plugin-llms@2.0.0':
-    resolution: {integrity: sha512-cqunic9t+oE31zz1EAJyVuLj34jD2+iNC02wVVmz89mMIwQbET2LQNdry1UEGBcblnuDiOVU1poERcEvDv87mQ==}
-    engines: {node: '>=20.9.0'}
-    peerDependencies:
-      '@rspress/core': ^2.0.0
 
   '@rspress/plugin-sitemap@2.0.0':
     resolution: {integrity: sha512-upMblnPSgWV9jIAlcwHneRaDyoKdioFdLQ+v1Nv61wvmrDIazpospIp2d7BMHwTjBig5J0U/qrI35pn7hYGXRQ==}
@@ -5196,17 +5187,6 @@ snapshots:
       - core-js
       - supports-color
       - webpack-hot-middleware
-
-  '@rspress/plugin-llms@2.0.0(@rspress/core@2.0.0(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.9)(core-js@3.47.0))':
-    dependencies:
-      '@rspress/core': 2.0.0(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.9)(core-js@3.47.0)
-      remark-mdx: 3.1.1
-      remark-parse: 11.0.0
-      remark-stringify: 11.0.0
-      unified: 11.0.5
-      unist-util-visit: 5.0.0
-    transitivePeerDependencies:
-      - supports-color
 
   '@rspress/plugin-sitemap@2.0.0(@rspress/core@2.0.0(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.9)(core-js@3.47.0))':
     dependencies:
