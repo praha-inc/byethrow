@@ -1,0 +1,22 @@
+[
+  {
+    "type": "dir",
+    "name": "basics",
+    "label": "Basics"
+  },
+  {
+    "type": "dir",
+    "name": "chaining",
+    "label": "Chaining Operations"
+  },
+  {
+    "type": "dir",
+    "name": "combining",
+    "label": "Combining Results"
+  },
+  {
+    "type": "dir",
+    "name": "resolving",
+    "label": "Resolving Results"
+  }
+]
