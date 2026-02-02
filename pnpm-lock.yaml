@@ -189,8 +189,8 @@ importers:
         specifier: 2.0.0
         version: 2.0.0(@rspress/core@2.0.0(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.9)(core-js@3.47.0))
       '@rspress/plugin-sitemap':
-        specifier: 2.0.0-rc.7
-        version: 2.0.0-rc.7(@rspress/core@2.0.0(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.9)(core-js@3.47.0))
+        specifier: 2.0.0
+        version: 2.0.0(@rspress/core@2.0.0(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.9)(core-js@3.47.0))
       '@rspress/plugin-twoslash':
         specifier: 2.0.0-rc.7
         version: 2.0.0-rc.7(@rspress/core@2.0.0(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.9)(core-js@3.47.0))(react@19.2.3)(typescript@5.9.3)
@@ -1278,11 +1278,11 @@ packages:
     peerDependencies:
       '@rspress/core': ^2.0.0
 
-  '@rspress/plugin-sitemap@2.0.0-rc.7':
-    resolution: {integrity: sha512-gPhmnqR7PdaGEOTXF6ozgxkB4LomDkUf8wdfYV9CsyRQFhr0icMGWIrnB54/lsbYFECoxLIPoDLQoejlHXAFoA==}
+  '@rspress/plugin-sitemap@2.0.0':
+    resolution: {integrity: sha512-upMblnPSgWV9jIAlcwHneRaDyoKdioFdLQ+v1Nv61wvmrDIazpospIp2d7BMHwTjBig5J0U/qrI35pn7hYGXRQ==}
     engines: {node: '>=20.9.0'}
     peerDependencies:
-      '@rspress/core': ^2.0.0-rc.7
+      '@rspress/core': ^2.0.0
 
   '@rspress/plugin-twoslash@2.0.0-rc.7':
     resolution: {integrity: sha512-ry8ghLwSqYC7X48xo7FUweDCreN0gF400g8Pq1QTCpshQRZWiqAlKdtX4E/UASHIc3lWqSeAB17HIDlS6rIVBQ==}
@@ -5208,7 +5208,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rspress/plugin-sitemap@2.0.0-rc.7(@rspress/core@2.0.0(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.9)(core-js@3.47.0))':
+  '@rspress/plugin-sitemap@2.0.0(@rspress/core@2.0.0(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.9)(core-js@3.47.0))':
     dependencies:
       '@rspress/core': 2.0.0(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.9)(core-js@3.47.0)
 
