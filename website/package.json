@@ -20,7 +20,7 @@
     "@praha/byethrow": "workspace:*",
     "@praha/error-factory": "1.2.1",
     "@rspress/plugin-sitemap": "2.0.0",
-    "@rspress/plugin-twoslash": "2.0.0-rc.7",
+    "@rspress/plugin-twoslash": "2.0.0",
     "@types/node": "24.10.9",
     "@types/react": "19.2.9",
     "@types/react-dom": "19.2.3",
