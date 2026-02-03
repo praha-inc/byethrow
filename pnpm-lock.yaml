@@ -189,8 +189,8 @@ importers:
         specifier: 2.0.0
         version: 2.0.0(@rspress/core@2.0.0(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.9)(core-js@3.47.0))
       '@rspress/plugin-twoslash':
-        specifier: 2.0.0-rc.7
-        version: 2.0.0-rc.7(@rspress/core@2.0.0(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.9)(core-js@3.47.0))(react@19.2.3)(typescript@5.9.3)
+        specifier: 2.0.0
+        version: 2.0.0(@rspress/core@2.0.0(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.9)(core-js@3.47.0))(react@19.2.3)(typescript@5.9.3)
       '@types/node':
         specifier: 24.10.9
         version: 24.10.9
@@ -727,11 +727,11 @@ packages:
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
 
-  '@floating-ui/core@1.7.3':
-    resolution: {integrity: sha512-sGnvb5dmrJaKEZ+LDIpguvdX3bDlEllmv4/ClQ9awcmCZrlx5jQyyMWFM5kBI+EyNOCDDiKk8il0zeuX3Zlg/w==}
+  '@floating-ui/core@1.7.4':
+    resolution: {integrity: sha512-C3HlIdsBxszvm5McXlB8PeOEWfBhcGBTZGkGlWc2U0KFY5IwG5OQEuQ8rq52DZmcHDlPLd+YFBK+cZcytwIFWg==}
 
-  '@floating-ui/dom@1.7.4':
-    resolution: {integrity: sha512-OOchDgh4F2CchOX94cRVqhvy7b3AFb+/rQXyswmzmGakRfkMgoWVjfnLWkRirfLEfuD4ysVW16eXzwt3jHIzKA==}
+  '@floating-ui/dom@1.7.5':
+    resolution: {integrity: sha512-N0bD2kIPInNHUHehXhMke1rBGs1dwqvC9O9KYMyyjK7iXt7GAhnro7UlcuYcGdS/yYOlq0MAVgrow8IbWJwyqg==}
 
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
@@ -1275,11 +1275,11 @@ packages:
     peerDependencies:
       '@rspress/core': ^2.0.0
 
-  '@rspress/plugin-twoslash@2.0.0-rc.7':
-    resolution: {integrity: sha512-ry8ghLwSqYC7X48xo7FUweDCreN0gF400g8Pq1QTCpshQRZWiqAlKdtX4E/UASHIc3lWqSeAB17HIDlS6rIVBQ==}
+  '@rspress/plugin-twoslash@2.0.0':
+    resolution: {integrity: sha512-47sM/JvcotnbhWQxc2Fx0mFvgBHHygmbT6Wrbp44e9qoSlzk/pUmNkXB3vAzbE07DuQqhTuaNkRtPSiPl7GWbA==}
     engines: {node: '>=20.9.0'}
     peerDependencies:
-      '@rspress/core': ^2.0.0-rc.7
+      '@rspress/core': ^2.0.0
       react: '>=18.0.0'
       typescript: ^5.8.2
 
@@ -4579,13 +4579,13 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@floating-ui/core@1.7.3':
+  '@floating-ui/core@1.7.4':
     dependencies:
       '@floating-ui/utils': 0.2.10
 
-  '@floating-ui/dom@1.7.4':
+  '@floating-ui/dom@1.7.5':
     dependencies:
-      '@floating-ui/core': 1.7.3
+      '@floating-ui/core': 1.7.4
       '@floating-ui/utils': 0.2.10
 
   '@floating-ui/utils@0.2.10': {}
@@ -5192,9 +5192,9 @@ snapshots:
     dependencies:
       '@rspress/core': 2.0.0(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.9)(core-js@3.47.0)
 
-  '@rspress/plugin-twoslash@2.0.0-rc.7(@rspress/core@2.0.0(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.9)(core-js@3.47.0))(react@19.2.3)(typescript@5.9.3)':
+  '@rspress/plugin-twoslash@2.0.0(@rspress/core@2.0.0(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.9)(core-js@3.47.0))(react@19.2.3)(typescript@5.9.3)':
     dependencies:
-      '@floating-ui/dom': 1.7.4
+      '@floating-ui/dom': 1.7.5
       '@rspress/core': 2.0.0(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.9)(core-js@3.47.0)
       '@shikijs/twoslash': 3.21.0(typescript@5.9.3)
       mdast-util-from-markdown: 2.0.2
