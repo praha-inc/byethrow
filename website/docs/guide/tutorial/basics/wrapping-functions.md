@@ -1,3 +1,7 @@
+---
+description: Learn how to wrap throwing functions and convert exceptions into Result types using the try function in @praha/byethrow.
+---
+
 # Wrapping Functions
 
 Sometimes you need to work with code that throws exceptions—third-party libraries, built-in APIs, or legacy code. The `try` function wraps these potentially throwing operations and converts them into `Result` types.

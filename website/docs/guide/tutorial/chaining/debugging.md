@@ -1,3 +1,7 @@
+---
+description: Learn how to debug Result pipelines using inspect and inspectError functions in @praha/byethrow to peek at values.
+---
+
 # Debugging
 
 When debugging complex pipelines, you need to see what's happening at each step. The `inspect` and `inspectError` functions let you peek at values without affecting the flow.

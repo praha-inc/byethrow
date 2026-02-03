@@ -1,3 +1,7 @@
+---
+description: Learn how to chain Result computations using andThen and orElse functions in @praha/byethrow for sequential error handling.
+---
+
 # Chaining Results
 
 The `andThen` and `orElse` functions allow you to chain computations that may themselves return a `Result`. Unlike `map` and `mapError` which only transform values, these functions enable sequential operations where each step can succeed or fail.

@@ -1,3 +1,7 @@
+---
+description: Learn how to assert Result types at compile time using assertSuccess and assertFailure in @praha/byethrow for safe value extraction.
+---
+
 # Asserting Results
 
 When you've exhausted all possible errors through operations like `orElse` or `andThen`, you can use `assertSuccess` and `assertFailure` to assert the Result type at compile time. Combined with `unwrap` and `unwrapError`, this enables safe value extraction.

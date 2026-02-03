@@ -1,3 +1,7 @@
+---
+description: Learn how to safely check and narrow Result types using isSuccess and isFailure type guards in @praha/byethrow.
+---
+
 # Checking Results
 
 After creating or receiving a `Result`, you need to determine whether it's a success or failure before accessing its contents. This section covers the type guard functions that help you do this safely.

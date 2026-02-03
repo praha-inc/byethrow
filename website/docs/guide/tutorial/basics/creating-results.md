@@ -1,3 +1,7 @@
+---
+description: Learn how to create Result types using succeed and fail functions in @praha/byethrow, including async value handling.
+---
+
 # Creating Results
 
 Now that you understand the `Result` type, let's learn how to create them using the library's helper functions.

@@ -1,3 +1,7 @@
+---
+description: Learn what the Result type is in @praha/byethrow and understand how it represents success and failure outcomes in TypeScript.
+---
+
 # Result Type
 
 Before diving into the API, let's understand what the `Result` type is and why it's useful.

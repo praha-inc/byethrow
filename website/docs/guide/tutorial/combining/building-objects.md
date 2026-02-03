@@ -1,3 +1,7 @@
+---
+description: Learn how to build complex objects using the do/bind pattern in @praha/byethrow to accumulate successful Results into a growing object.
+---
+
 # Building Objects
 
 When building complex objects where each field depends on successful computation, the `do`/`bind` pattern provides an elegant solution. It lets you accumulate successful results into a growing object.

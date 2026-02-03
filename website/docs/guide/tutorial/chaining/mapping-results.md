@@ -1,3 +1,7 @@
+---
+description: Learn how to transform success and error values inside a Result using map and mapError functions in @praha/byethrow.
+---
+
 # Mapping Results
 
 The `map` and `mapError` functions allow you to transform the values inside a `Result` without changing its type (`Success` or `Failure`).

@@ -1,3 +1,7 @@
+---
+description: Learn how to use andThrough and orThrough functions in @praha/byethrow for validation and recovery while preserving the original result.
+---
+
 # Validation and Recovery
 
 The `andThrough` and `orThrough` functions allow you to run additional computations for validation or recovery while preserving the original result value.
