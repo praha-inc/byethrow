@@ -1,3 +1,7 @@
+---
+description: Learn how to aggregate multiple Results using collect and sequence functions in @praha/byethrow with different failure handling strategies.
+---
+
 # Aggregating Results
 
 When you have multiple Results that need to be combined, `collect` and `sequence` are your go-to functions. They both aggregate Results, but differ in how they handle failures.

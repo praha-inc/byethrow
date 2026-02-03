@@ -1,3 +1,7 @@
+---
+description: Learn how to use the pipe function in @praha/byethrow to chain operations together in a readable, left-to-right manner.
+---
+
 # Pipe Basics
 
 The `pipe` function is the heart of `@praha/byethrow`. It allows you to chain multiple operations together in a readable, left-to-right manner.

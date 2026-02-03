@@ -1,3 +1,7 @@
+---
+description: Learn how to extract values from Results using unwrap and unwrapError functions in @praha/byethrow with optional default values.
+---
+
 # Unwrapping Results
 
 Sometimes you need to extract the actual value from a `Result`, exiting the Result "world" back into plain values. The `unwrap` and `unwrapError` functions help with this.
