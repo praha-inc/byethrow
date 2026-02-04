@@ -13,8 +13,8 @@
   "dependencies": {
     "@rspress/core": "2.0.1",
     "@stackblitz/sdk": "1.11.0",
-    "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@praha/byethrow": "workspace:*",
@@ -22,7 +22,7 @@
     "@rspress/plugin-sitemap": "2.0.1",
     "@rspress/plugin-twoslash": "2.0.1",
     "@types/node": "24.10.9",
-    "@types/react": "19.2.9",
+    "@types/react": "19.2.10",
     "@types/react-dom": "19.2.3",
     "execa": "9.6.1",
     "ts-pattern": "5.9.0",
