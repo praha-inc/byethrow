@@ -1,8 +1,8 @@
 [
   {
     "type": "file",
-    "name": "mcp-server",
-    "label": "MCP Server"
+    "name": "llm-integration",
+    "label": "LLM Integration"
   },
   {
     "type": "file",
