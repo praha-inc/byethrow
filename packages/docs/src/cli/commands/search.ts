@@ -10,6 +10,7 @@ export default defineCommand({
   args: {
     query: {
       type: 'positional',
+      required: true,
       description: 'Search query',
     },
     limit: {

@@ -53,7 +53,7 @@
     "lint:type": "tsc --noEmit"
   },
   "dependencies": {
-    "citty": "^0.1.6",
+    "citty": "^0.2.0",
     "find-up": "8.0.0",
     "flexsearch": "^0.8.212",
     "mdast-util-from-markdown": "^2.0.2",
