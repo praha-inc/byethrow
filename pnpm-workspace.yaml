@@ -7,4 +7,4 @@ onlyBuiltDependencies:
 
 patchedDependencies:
   '@changesets/assemble-release-plan': patches/@changesets__assemble-release-plan.patch
-  '@rspress/core': patches/@rspress__core.patch
+  rspress-plugin-og: patches/rspress-plugin-og.patch

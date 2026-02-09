@@ -1,8 +1,12 @@
 import { defineConfig } from '@rspress/core';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
 import { pluginTwoslash } from '@rspress/plugin-twoslash';
+import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
+import pluginOg from 'rspress-plugin-og';
 
 import { pluginTypedoc } from './plugins/typedoc';
+
+const siteUrl = 'https://praha-inc.github.io/byethrow';
 
 export default defineConfig({
   title: 'byethrow',
@@ -13,9 +17,13 @@ export default defineConfig({
   logoText: 'byethrow',
   llms: true,
   plugins: [
-    pluginSitemap({ siteUrl: 'https://praha-inc.github.io/byethrow' }),
+    pluginSitemap({ siteUrl }),
     pluginTwoslash({ explicitTrigger: false }),
     pluginTypedoc(),
+    pluginOg({
+      domain: siteUrl,
+      maxTitleSizePerLine: 20,
+    }),
   ],
   route: {
     cleanUrls: true,
@@ -35,5 +43,15 @@ export default defineConfig({
     footer: {
       message: `© ${new Date().getFullYear()} PrAha, Inc.`,
     },
+  },
+  builderConfig: {
+    plugins: [
+      pluginOpenGraph({
+        url: siteUrl,
+        twitter: {
+          card: 'summary_large_image',
+        },
+      }),
+    ],
   },
 });

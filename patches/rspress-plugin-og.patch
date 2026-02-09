@@ -1,0 +1,99 @@
+diff --git a/dist/index.mjs b/dist/index.mjs
+index f2ceac176fd6fd30767f4f1795b100dabffce4f8..c4b0a89757f53322a11cf072a2bff4ee12d071df 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -1,6 +1,9 @@
+-import { dirname, join } from "node:path";
++import { dirname, join, relative } from "node:path";
++import { performance } from 'node:perf_hooks'
++import { cwd } from 'node:process'
+ import { Buffer } from "node:buffer";
+ import { existsSync, mkdirSync, readFileSync } from "node:fs";
++import { logger } from 'rslog'
+ import sharp from "sharp";
+ import { joinURL } from "ufo";
+ 
+@@ -53,7 +56,7 @@ async function generateOgImage({ title }, output, options) {
+ 	if (!templates.has(options.ogTemplate)) templates.set(options.ogTemplate, readFileSync(options.ogTemplate, "utf-8"));
+ 	const ogTemplate = templates.get(options.ogTemplate);
+ 	mkdirSync(dirname(output), { recursive: true });
+-	const lines = title.trim().split(new RegExp(`(.{0,${options.maxTitleSizePerLine}})(?:\\s|$)`, "g")).filter(Boolean);
++	const lines = title.trim().split(new RegExp(`((?:<[^>]+>|.){0,${options.maxTitleSizePerLine}})(?:\\s|$)`, "g")).filter(Boolean);
+ 	const data = {
+ 		line1: lines[0] ? escapeHtml(lines[0]) : "",
+ 		line2: lines[1] ? escapeHtml(lines[1]) : "",
+@@ -66,7 +69,7 @@ async function generateOgImage({ title }, output, options) {
+ //#endregion
+ //#region ../core/src/utils.ts
+ function slugifyPath(path) {
+-	return `${path.replace(/\//g, "-").replace(/\.md$/, "")}.png`;
++	return `${path.replace(/\//g, "-").replace(/\.mdx?$/, "")}.png`;
+ }
+ 
+ //#endregion
+@@ -81,6 +84,9 @@ function resolveOptions(userOptions) {
+ 	};
+ }
+ 
++const NAME = 'rspress-plugin-og'
++const LOG_PREFIX = `[${NAME}]`
++
+ //#endregion
+ //#region src/index.ts
+ function src_default(userOptions) {
+@@ -95,7 +101,7 @@ function src_default(userOptions) {
+ 		() => createOgImageTypeHead()
+ 	];
+ 	return {
+-		name: "rspress-plugin-og",
++		name: NAME,
+ 		config(config) {
+ 			config.head = [...config.head || [], ...headCreators.map((creator) => (route) => {
+ 				const imageInfo = images.get(route.routePath);
+@@ -106,7 +112,7 @@ function src_default(userOptions) {
+ 		},
+ 		extendPageData: (pageData) => {
+ 			if (!(pageData.frontmatter.title || pageData.title)) {
+-				console.warn(`[rspress-plugin-og] Cannot generate OG image for page without title: ${pageData._relativePath}`);
++				logger.warn(`${LOG_PREFIX} Cannot generate OG image for page without title: ${pageData._relativePath}`);
+ 				return;
+ 			}
+ 			const imageName = slugifyPath(pageData._relativePath);
+@@ -116,8 +122,18 @@ function src_default(userOptions) {
+ 				imageUrl: joinURL(options.domain, options.outDir, imageName)
+ 			});
+ 		},
+-		async beforeBuild(config) {
+-			await Promise.all(Array.from(images.entries()).map(([_, { title, imageName }]) => generateOgImage({ title }, join(config.root ?? "", options.outDir, imageName), options)));
++		async afterBuild(config) {
++			const outputFolder = join(cwd(), config.outDir ?? 'doc_build', options.outDir);
++			logger.info(`${LOG_PREFIX} Generating OG images to ${relative(cwd(), outputFolder)} ...`);
++			const start = performance.now();
++			await Promise.all(
++				Array.from(images.entries()).map(([_, { title, imageName }]) => {
++						return generateOgImage({ title }, join(outputFolder, imageName), options)
++					},
++				),
++			);
++			const duration = (performance.now() - start) / 1000;
++			logger.success(`${LOG_PREFIX} ${images.size} OG images generated in ${duration.toFixed(2)}s.`);
+ 		}
+ 	};
+ }
+diff --git a/package.json b/package.json
+index 9a87639ba237060d423f1d48790acd0b1449cfea..d3611a4d8fbcca08aad364bd10d763607c43c501 100644
+--- a/package.json
++++ b/package.json
+@@ -32,10 +32,10 @@
+     "node": ">=20"
+   },
+   "peerDependencies": {
+-    "@rspress/shared": "^1.46.1",
+-    "rspress": "^1.46.1"
++    "@rspress/core": "^2.0.0"
+   },
+   "dependencies": {
++    "rslog": "^1.3.2",
+     "sharp": "^0.34.5",
+     "ufo": "^1.6.1"
+   },
