@@ -13,6 +13,7 @@ export default defineCommand({
   args: {
     path: {
       type: 'positional',
+      required: true,
       description: 'Path to the documentation',
     },
   },

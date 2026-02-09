@@ -93,6 +93,7 @@ export default defineCommand({
   args: {
     agent: {
       type: 'positional',
+      required: true,
       description: `Choose an AI agent (${Object.values(agent).join(', ')})`,
     },
   },
