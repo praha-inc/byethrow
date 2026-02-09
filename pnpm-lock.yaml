@@ -186,8 +186,8 @@ importers:
         specifier: 1.2.1
         version: 1.2.1
       '@rspress/plugin-sitemap':
-        specifier: 2.0.1
-        version: 2.0.1(@rspress/core@2.0.2(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.10)(core-js@3.47.0))
+        specifier: 2.0.2
+        version: 2.0.2(@rspress/core@2.0.2(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.10)(core-js@3.47.0))
       '@rspress/plugin-twoslash':
         specifier: 2.0.1
         version: 2.0.1(@rspress/core@2.0.2(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.10)(core-js@3.47.0))(react@19.2.4)(typescript@5.9.3)
@@ -1265,11 +1265,11 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
-  '@rspress/plugin-sitemap@2.0.1':
-    resolution: {integrity: sha512-Xt+6ZciJpumA95x5QG+SElXtBvvN1oMOaGcr8v5zlXMIOwScw+/Uv0fw/Bvy8sMRC1C7XM2ptpPYqUiftrTmDg==}
+  '@rspress/plugin-sitemap@2.0.2':
+    resolution: {integrity: sha512-3E0yEif4Pj3RX+QVOsyWXW6IIjuhwh93bhVSmhShmTKi8opH5vnHcRVZZ1z7X/P3MHXFTrC925F8383Sl2qOEg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
-      '@rspress/core': ^2.0.1
+      '@rspress/core': ^2.0.2
 
   '@rspress/plugin-twoslash@2.0.1':
     resolution: {integrity: sha512-CALYcjF0z4JOUT2idO/p7imzdjY9Kr2uzjlg5vZUM3SANCV1pr2209mkcapuTvw60F8q19aC3wEnFIvUYg+VFQ==}
@@ -5176,7 +5176,7 @@ snapshots:
       - supports-color
       - webpack-hot-middleware
 
-  '@rspress/plugin-sitemap@2.0.1(@rspress/core@2.0.2(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.10)(core-js@3.47.0))':
+  '@rspress/plugin-sitemap@2.0.2(@rspress/core@2.0.2(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.10)(core-js@3.47.0))':
     dependencies:
       '@rspress/core': 2.0.2(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.10)(core-js@3.47.0)
 
