@@ -20,7 +20,7 @@ Add this to your VS Code MCP config file. See [VS Code MCP docs](https://code.vi
 {
   "mcp": {
     "servers": {
-      "@praha/byethrow": {
+      "byethrow": {
         "type": "stdio",
         "command": "npx",
         "args": ["-y", "@praha/byethrow-mcp"]
@@ -42,7 +42,7 @@ Pasting the following configuration into your Cursor `~/.cursor/mcp.json` file i
 ```json
 {
   "mcpServers": {
-    "@praha/byethrow": {
+    "byethrow": {
       "command": "npx",
       "args": ["-y", "@praha/byethrow-mcp"]
     }
@@ -60,7 +60,7 @@ Add this to your Roo Code MCP configuration file. See [Roo Code MCP docs](https:
 ```json
 {
   "mcpServers": {
-    "@praha/byethrow": {
+    "byethrow": {
       "command": "npx",
       "args": ["-y", "@praha/byethrow-mcp"]
     }
@@ -78,7 +78,7 @@ Add this to your Windsurf MCP config file. See [Windsurf MCP docs](https://docs.
 ```json
 {
   "mcpServers": {
-    "@praha/byethrow": {
+    "byethrow": {
       "command": "npx",
       "args": ["-y", "@praha/byethrow-mcp"]
     }
@@ -94,7 +94,7 @@ Add this to your Windsurf MCP config file. See [Windsurf MCP docs](https://docs.
 Run this command. See [Claude Code MCP docs](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/tutorials#set-up-model-context-protocol-mcp) for more info.
 
 ```sh
-claude mcp add @praha/byethrow -- npx -y @praha/byethrow-mcp
+claude mcp add byethrow -- npx -y @praha/byethrow-mcp
 ```
 
 </details>
@@ -107,7 +107,7 @@ Add this to your Claude Desktop `claude_desktop_config.json` file. See [Claude D
 ```json
 {
   "mcpServers": {
-    "@praha/byethrow": {
+    "byethrow": {
       "command": "npx",
       "args": ["-y", "@praha/byethrow-mcp"]
     }
