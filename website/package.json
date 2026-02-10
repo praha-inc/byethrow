@@ -25,6 +25,8 @@
     "@types/react": "19.2.13",
     "@types/react-dom": "19.2.3",
     "execa": "9.6.1",
+    "rsbuild-plugin-open-graph": "1.1.2",
+    "rspress-plugin-og": "0.0.5",
     "ts-pattern": "5.9.0",
     "typedoc": "0.28.16",
     "typedoc-plugin-frontmatter": "1.3.1",

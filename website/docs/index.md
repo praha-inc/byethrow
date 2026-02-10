@@ -1,6 +1,22 @@
 ---
 pageType: home
 titleSuffix: A lightweight Result type library
+head:
+  - - meta
+    - property: twitter:image
+      content: https://praha-inc.github.io/byethrow/og.png
+  - - meta
+    - property: og:image
+      content: https://praha-inc.github.io/byethrow/og.png
+  - - meta
+    - property: og:image:type
+      content: image/png
+  - - meta
+    - property: og:image:width
+      content: 1200
+  - - meta
+    - property: og:image:height
+      content: 630
 
 hero:
   name: byethrow

@@ -27,5 +27,22 @@
     "turbo": "2.8.3",
     "vitest": "4.0.18"
   },
-  "packageManager": "pnpm@10.28.2"
+  "packageManager": "pnpm@10.28.2",
+  "pnpm": {
+    "overrides": {
+      "rspress-plugin-og>@rspress/shared": "-",
+      "rspress-plugin-og>rspress": "-"
+    },
+    "packageExtensions": {
+      "rspress-plugin-og": {
+        "dependencies": {
+          "rslog": "^2.0.0"
+        }
+      }
+    },
+    "patchedDependencies": {
+      "@changesets/assemble-release-plan": "patches/@changesets__assemble-release-plan.patch",
+      "rspress-plugin-og": "patches/rspress-plugin-og.patch"
+    }
+  }
 }
