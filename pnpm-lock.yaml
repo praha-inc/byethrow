@@ -189,8 +189,8 @@ importers:
         specifier: 2.0.2
         version: 2.0.2(@rspress/core@2.0.2(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.10)(core-js@3.47.0))
       '@rspress/plugin-twoslash':
-        specifier: 2.0.1
-        version: 2.0.1(@rspress/core@2.0.2(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.10)(core-js@3.47.0))(react@19.2.4)(typescript@5.9.3)
+        specifier: 2.0.2
+        version: 2.0.2(@rspress/core@2.0.2(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.10)(core-js@3.47.0))(react@19.2.4)(typescript@5.9.3)
       '@types/node':
         specifier: 24.10.9
         version: 24.10.9
@@ -1271,11 +1271,11 @@ packages:
     peerDependencies:
       '@rspress/core': ^2.0.2
 
-  '@rspress/plugin-twoslash@2.0.1':
-    resolution: {integrity: sha512-CALYcjF0z4JOUT2idO/p7imzdjY9Kr2uzjlg5vZUM3SANCV1pr2209mkcapuTvw60F8q19aC3wEnFIvUYg+VFQ==}
+  '@rspress/plugin-twoslash@2.0.2':
+    resolution: {integrity: sha512-oXbBsyg6/wpR0EVvMhykcQ8xYAQ63uEn6seOrSb6YpEPrEXo+ow0ytA1dzgk4QDP5rFxG9HRe/l74zdP+IATTw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
-      '@rspress/core': ^2.0.1
+      '@rspress/core': ^2.0.2
       react: '>=18.0.0'
       typescript: ^5.8.2
 
@@ -5180,7 +5180,7 @@ snapshots:
     dependencies:
       '@rspress/core': 2.0.2(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.10)(core-js@3.47.0)
 
-  '@rspress/plugin-twoslash@2.0.1(@rspress/core@2.0.2(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.10)(core-js@3.47.0))(react@19.2.4)(typescript@5.9.3)':
+  '@rspress/plugin-twoslash@2.0.2(@rspress/core@2.0.2(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.10)(core-js@3.47.0))(react@19.2.4)(typescript@5.9.3)':
     dependencies:
       '@floating-ui/dom': 1.7.5
       '@rspress/core': 2.0.2(patch_hash=962beb3aceaab10542d6ff943b0e20ad8b2a989811a9e5d60ea409726d187509)(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.10)(core-js@3.47.0)
