@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@tsconfig/strictest": "2.0.8",
-    "@types/node": "24.10.9",
+    "@types/node": "24.10.11",
     "memfs": "4.56.10",
     "tsx": "4.21.0",
     "vitest": "4.0.18"
