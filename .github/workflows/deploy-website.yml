@@ -19,6 +19,7 @@ jobs:
       - name: Build
         working-directory: website
         run: |
+          sudo apt install fonts-inter
           pnpm run -w build --filter @praha/byethrow-website
           touch doc_build/.nojekyll
 
