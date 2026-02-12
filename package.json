@@ -27,7 +27,7 @@
     "turbo": "2.8.3",
     "vitest": "4.0.18"
   },
-  "packageManager": "pnpm@10.28.2",
+  "packageManager": "pnpm@10.29.1",
   "pnpm": {
     "overrides": {
       "rspress-plugin-og>@rspress/shared": "-",
