@@ -1,5 +1,15 @@
 # @praha/byethrow
 
+## 0.10.0
+
+### Minor Changes
+
+- [#484](https://github.com/praha-inc/byethrow/pull/484) [`29e5002`](https://github.com/praha-inc/byethrow/commit/29e5002400f2465af2f982de43a6af76fae66e03) Thanks [@Karibash](https://github.com/Karibash)! - Add a orThrough
+
+### Patch Changes
+
+- [#488](https://github.com/praha-inc/byethrow/pull/488) [`ef6bae0`](https://github.com/praha-inc/byethrow/commit/ef6bae0be327a88b32039197c0541f0f840367d2) Thanks [@Karibash](https://github.com/Karibash)! - Improve type safety of assertSuccess and assertFailure functions
+
 ## 0.9.0
 
 ## 0.8.2
