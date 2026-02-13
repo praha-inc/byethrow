@@ -20,7 +20,7 @@ head:
 
 hero:
   name: byethrow
-  text: A lightweight Result type library
+  text: A&nbsp;lightweight Result&nbsp;type&nbsp;package
   tagline: Tree-shakable error handling with functional programming approach
   image:
     src: /waving-hand.png
