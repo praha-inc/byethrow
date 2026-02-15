@@ -55,7 +55,7 @@ Use `Result.try` to wrap functions that might throw exceptions:
 ```ts
 import { Result } from '@praha/byethrow';
 
-const parseNumber = Result.try({
+const parseNumber = Result.fn({
   try: (input: string) => {
     const num = Number(input);
     if (Number.isNaN(num)) {
@@ -165,7 +165,7 @@ const validateId = (id: string) => {
   return Result.succeed(id);
 };
 
-const findUser = Result.try({
+const findUser = Result.fn({
   try: async (userId: string) => {
     const response = await fetch(`/api/users/${userId}`);
     return await response.json();

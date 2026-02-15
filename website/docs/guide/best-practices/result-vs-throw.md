@@ -91,7 +91,7 @@ const performDatabaseOperation = async (id: string): Promise<string> => Promise.
 import { Result } from '@praha/byethrow';
 
 // Wrap potentially throwing operations
-const safeDatabaseOperation = Result.try({
+const safeDatabaseOperation = Result.fn({
   try: (id: string) => {
     // This might throw database query errors, network errors, etc.
     return performDatabaseOperation(id);

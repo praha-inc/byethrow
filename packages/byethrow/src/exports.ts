@@ -7,6 +7,7 @@ export * from './functions/bind';
 export * from './functions/collect';
 export * from './functions/do';
 export * from './functions/fail';
+export * from './functions/fn';
 export * from './functions/inspect';
 export * from './functions/inspect-error';
 export * from './functions/is-failure';

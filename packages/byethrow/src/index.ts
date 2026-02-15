@@ -15,7 +15,7 @@
  *   return Result.succeed();
  * };
  *
- * const findUser = Result.try({
+ * const findUser = Result.fn({
  *   try: (id: string) => {
  *     return { id, name: 'John Doe' };
  *   },
@@ -44,7 +44,7 @@
  *   return R.succeed();
  * };
  *
- * const findUser = R.try({
+ * const findUser = R.fn({
  *   try: (id: string) => {
  *     return { id, name: 'John Doe' };
  *   },

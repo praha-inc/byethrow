@@ -200,7 +200,6 @@ const validateId = (id: string) => {
 
 const executeQuery = (sql: string) => {
   return Result.try({
-    immediate: true,
     try: () => database.query(sql),
     catch: (error) => new QueryError({ query: sql, cause: error }),
   });
@@ -260,7 +259,6 @@ const validateId = (id: string) => {
 
 const executeQuery = (sql: string) => {
   return Result.try({
-    immediate: true,
     try: () => database.query(sql),
     catch: (error) => new QueryError({ query: sql, cause: error }),
   });

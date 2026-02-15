@@ -7,7 +7,7 @@ import { isPromise } from '../internals/helpers/is-promise';
 import type { Result, ResultAsync } from '../result';
 
 /**
- * Executes a function that may throw and wraps the result in a {@link Result} or {@link ResultAsync}.
+ * Wraps a function that may throw and returns a new function that returns a {@link Result} or {@link ResultAsync}.
  *
  * You can use either a custom `catch` handler or rely on the `safe: true` option
  * to assume the function cannot throw.
@@ -15,80 +15,79 @@ import type { Result, ResultAsync } from '../result';
  * @function
  * @typeParam T - The function type to execute (sync or async) or a Promise type.
  * @typeParam E - The error type to return if `catch` is used.
- * @returns A {@link Result} or {@link ResultAsync} wrapping the function's return value or the caught error.
+ * @returns A new function that returns a {@link Result} or {@link ResultAsync} wrapping the original function's return value or the caught error.
  *
  * @example Sync try-catch
  * ```ts
  * import { Result } from '@praha/byethrow';
  *
- * const result = Result.try({
- *   try: () => {
- *     const x = Math.random() * 10 - 5;
+ * const fn = Result.fn({
+ *   try: (x: number) => {
  *     if (x < 0) throw new Error('Negative!');
  *     return x * 2;
  *   },
  *   catch: (error) => new Error('Oops!', { cause: error }),
  * });
  *
- * // result is Result<number, Error>
+ * const result = fn(5); // Result.Result<number, Error>
  * ```
  *
  * @example Sync safe
  * ```ts
  * import { Result } from '@praha/byethrow';
  *
- * const result = Result.try({
+ * const fn = Result.fn({
  *   safe: true,
- *   try: () => Math.random() + 1,
+ *   try: (x: number) => x + 1,
  * });
  *
- * // result is Result<number, never>
+ * const result = fn(1); // Result.Result<number, never>
  * ```
  *
  * @example Async try-catch
  * ```ts
  * import { Result } from '@praha/byethrow';
  *
- * const result = Result.try({
- *   try: () => fetch('/api/data'),
- *   catch: (error) => new Error('Fetch failed', { cause: error }),
+ * const fn = Result.fn({
+ *   try: async (id: string) => await fetch(`/api/data/${id}`),
+ *   catch: (error) => new Error('Oops!', { cause: error }),
  * });
  *
- * // result is ResultAsync<Response, Error>
+ * const result = await fn('abc'); // Result.ResultAsync<Response, Error>
  * ```
  *
  * @example Async safe
  * ```ts
  * import { Result } from '@praha/byethrow';
  *
- * const result = Result.try({
+ * const fn = Result.fn({
  *   safe: true,
- *   try: () => Promise.resolve('ok'),
+ *   try: async () => await Promise.resolve('ok'),
  * });
  *
- * // result is ResultAsync<string, never>
+ * const result = await fn(); // Result.ResultAsync<string, never>
  * ```
  *
  * @category Creators
  */
-const try_: {
-  <T extends () => Promise<any>, E>(
+const fn: {
+  <T extends (...args: readonly any[]) => Promise<any>, E>(
     options: { try: T; catch: (error: unknown) => E }
-  ): ResultAsync<Awaited<ReturnType<T>>, E>;
-  <T extends () => Promise<any>>(
+  ): (...args: Parameters<T>) => ResultAsync<Awaited<ReturnType<T>>, E>;
+  <T extends (...args: readonly any[]) => Promise<any>>(
     options: { safe: true; try: T }
-  ): ResultAsync<Awaited<ReturnType<T>>, never>;
-  <T extends () => any, E>(
+  ): (...args: Parameters<T>) => ResultAsync<Awaited<ReturnType<T>>, never>;
+  <T extends (...args: readonly any[]) => any, E>(
     options: { try: T; catch: (error: unknown) => E }
-  ): Result<ReturnType<T>, E>;
-  <T extends () => any>(
+  ): (...args: Parameters<T>) => Result<ReturnType<T>, E>;
+  <T extends (...args: readonly any[]) => any>(
     options: { safe: true; try: T }
-  ): Result<ReturnType<T>, never>;
+  ): (...args: Parameters<T>) => Result<ReturnType<T>, never>;
 } = (options: any) => {
-  const fn = (): any => {
+  const fn = (...args: any[]) => {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const output = options.try();
+      const output = options.try(...args);
       if (isPromise(output)) {
         const promise = succeed(output);
         if ('safe' in options && options.safe) return promise;
@@ -106,7 +105,7 @@ const try_: {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return fn();
+  return fn as any;
 };
 
-export { try_ as try };
+export { fn };
