@@ -67,7 +67,7 @@ if (R.isSuccess(result)) {
 import { R } from '@praha/byethrow';
 
 // Only these features are actually used
-const parseNumber = R.try({
+const parseNumber = R.fn({
   try: (input: string) => parseInt(input, 10),
   catch: () => new Error('Invalid number')
 });
