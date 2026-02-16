@@ -195,8 +195,8 @@ importers:
         specifier: 2.0.3
         version: 2.0.3(@rspress/core@2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.13)(core-js@3.47.0))
       '@rspress/plugin-twoslash':
-        specifier: 2.0.2
-        version: 2.0.2(@rspress/core@2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.13)(core-js@3.47.0))(react@19.2.4)(typescript@5.9.3)
+        specifier: 2.0.3
+        version: 2.0.3(@rspress/core@2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.13)(core-js@3.47.0))(react@19.2.4)(typescript@5.9.3)
       '@types/node':
         specifier: 24.10.12
         version: 24.10.12
@@ -1293,11 +1293,11 @@ packages:
     peerDependencies:
       '@rspress/core': ^2.0.3
 
-  '@rspress/plugin-twoslash@2.0.2':
-    resolution: {integrity: sha512-oXbBsyg6/wpR0EVvMhykcQ8xYAQ63uEn6seOrSb6YpEPrEXo+ow0ytA1dzgk4QDP5rFxG9HRe/l74zdP+IATTw==}
+  '@rspress/plugin-twoslash@2.0.3':
+    resolution: {integrity: sha512-TUA/11a5Q3niIOTMUFZ/GS7DaTi053WHoCogyXTqGJ8m5pGmXfiOx0rcvxIR+JpS5kv3PPWZwHe3d3AOT0LQGg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
-      '@rspress/core': ^2.0.2
+      '@rspress/core': ^2.0.3
       react: '>=18.0.0'
       typescript: ^5.8.2
 
@@ -5232,7 +5232,7 @@ snapshots:
     dependencies:
       '@rspress/core': 2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.13)(core-js@3.47.0)
 
-  '@rspress/plugin-twoslash@2.0.2(@rspress/core@2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.13)(core-js@3.47.0))(react@19.2.4)(typescript@5.9.3)':
+  '@rspress/plugin-twoslash@2.0.3(@rspress/core@2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.13)(core-js@3.47.0))(react@19.2.4)(typescript@5.9.3)':
     dependencies:
       '@floating-ui/dom': 1.7.5
       '@rspress/core': 2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.13)(core-js@3.47.0)
