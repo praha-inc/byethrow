@@ -1,0 +1,12 @@
+[
+  {
+    "type": "file",
+    "name": "llm-integration",
+    "label": "LLM 連携"
+  },
+  {
+    "type": "file",
+    "name": "eslint",
+    "label": "ESLint プラグイン"
+  }
+]

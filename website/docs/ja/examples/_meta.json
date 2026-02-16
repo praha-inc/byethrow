@@ -1,0 +1,16 @@
+[
+  {
+    "type": "section-header",
+    "label": "実装例"
+  },
+  {
+    "type": "file",
+    "name": "parse-package-json",
+    "label": "package.json を解析する"
+  },
+  {
+    "type": "file",
+    "name": "api-request-cli",
+    "label": "API を実行する CLI"
+  }
+]

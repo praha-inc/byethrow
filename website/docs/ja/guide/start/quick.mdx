@@ -1,0 +1,190 @@
+---
+description: '@praha/byethrowを使い始めるのは簡単です。Result型の基本と、成功・失敗ケースの扱い方を学びましょう。'
+---
+
+import { PackageManagerTabs } from '../../../../theme';
+
+# クイックスタート
+
+`@praha/byethrow` を使い始めるのは簡単です。
+
+このガイドでは、基本的なコンセプトと使用方法を説明します。
+
+## インストール
+
+お好みのパッケージマネージャーでパッケージをインストールしてください。
+
+<PackageManagerTabs command="install @praha/byethrow" />
+
+## 基本コンセプト
+
+`@praha/byethrow` は、失敗する可能性のある操作の結果を表す `Result` 型を提供します。
+例外を投げる代わりに、関数は以下のいずれかになる `Result` を返すようにします。
+
+- **Success（成功）**: 型 `T` の値を含む
+- **Failure（失敗）**: 型 `E` のエラーを含む
+
+このアプローチにより、エラーハンドリングが明示的で予測可能になります。
+
+## 最初の `Result`
+
+シンプルな例から始めましょう。
+
+```ts
+import { Result } from '@praha/byethrow';
+
+// 成功の Result を作成
+const success = Result.succeed('Hello, World!');
+
+// 失敗の Result を作成
+const failure = Result.fail(new Error('Something went wrong'));
+
+// Result をチェック
+if (Result.isSuccess(success)) {
+  console.log(success.value); // "Hello, World!"
+}
+
+if (Result.isFailure(failure)) {
+  console.log(failure.error.message); // "Something went wrong"
+}
+```
+
+## 失敗する可能性のある操作を扱う
+
+`Result.fn` を使って、例外を投げる可能性のある関数をラップできます。
+
+```ts
+import { Result } from '@praha/byethrow';
+
+const parseNumber = Result.fn({
+  try: (input: string) => {
+    const num = Number(input);
+    if (Number.isNaN(num)) {
+      throw new Error('Not a valid number');
+    }
+    return num;
+  },
+  catch: (error) => new Error('Failed to parse number', { cause: error }),
+});
+
+const result = parseNumber('42');
+if (Result.isSuccess(result)) {
+  console.log(result.value); // 42
+}
+```
+
+## 値の変換
+
+`Result.map` を使って成功した値を変換できます。
+
+```ts
+import { Result } from '@praha/byethrow';
+
+const double = (x: number) => x * 2;
+
+const result = Result.pipe(
+  Result.succeed(21),
+  Result.map(double)
+);
+
+if (Result.isSuccess(result)) {
+  console.log(result.value); // 42
+}
+```
+
+## 操作のチェーン
+
+最も強力な機能の一つは、`Result.pipe` を使って操作を連鎖させることです。
+
+```ts
+import { Result } from '@praha/byethrow';
+
+const validateId = (id: string) => {
+  if (!id.startsWith('u')) {
+    return Result.fail(new Error('Invalid ID format'));
+  }
+  return Result.succeed(id);
+};
+
+const findUser = (id: string) => {
+  // データベース検索をシミュレート
+  if (id === 'u123') {
+    return Result.succeed({ id, name: 'John Doe' });
+  }
+  return Result.fail(new Error('User not found'));
+};
+
+const toWelcome = (user: Result.InferSuccess<typeof findUser>) => {
+  return `Welcome, ${user.name}!`;
+};
+
+// 複数の操作を連鎖
+const result = Result.pipe(
+  Result.succeed('u123'),
+  Result.andThen(validateId),
+  Result.andThen(findUser),
+  Result.map(toWelcome)
+);
+
+if (Result.isSuccess(result)) {
+  console.log(result.value); // "Welcome, John Doe!"
+}
+```
+
+## エラーハンドリング
+
+`Result.orElse` を使ってエラーを簡単に処理できます。
+
+```ts
+import { Result } from '@praha/byethrow';
+
+const riskyOperation = () => Result.fail(new Error('Operation failed'));
+
+const fallback = () => Result.succeed('Default value');
+
+const result = Result.pipe(
+  riskyOperation(),
+  Result.orElse(fallback)
+);
+
+if (Result.isSuccess(result)) {
+  console.log(result.value); // "Default value"
+}
+```
+
+## 非同期操作を扱う
+
+`@praha/byethrow` は非同期操作ともシームレスに連携します。
+
+```ts
+import { Result } from '@praha/byethrow';
+
+const validateId = (id: string) => {
+  if (!id.startsWith('u')) {
+    return Result.fail(new Error('Invalid ID format'));
+  }
+  return Result.succeed(id);
+};
+
+const findUser = Result.fn({
+  try: async (userId: string) => {
+    const response = await fetch(`/api/users/${userId}`);
+    return await response.json();
+  },
+  catch: (error) => new Error('Failed to find user', { cause: error }),
+});
+
+const result = await Result.pipe(
+  Result.succeed('u123'),
+  Result.andThen(validateId),
+  Result.andThen(findUser),
+);
+
+if (Result.isSuccess(result)) {
+  console.log('User data:', result.value);
+}
+```
+
+---
+
+`@praha/byethrow` で楽しくコーディングしましょう！ 🚀

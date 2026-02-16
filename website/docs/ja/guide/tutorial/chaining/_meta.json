@@ -1,0 +1,27 @@
+[
+  {
+    "type": "file",
+    "name": "pipe-basics",
+    "label": "pipe 関数の扱い方"
+  },
+  {
+    "type": "file",
+    "name": "mapping-results",
+    "label": "Result を変換する"
+  },
+  {
+    "type": "file",
+    "name": "chaining-results",
+    "label": "関数を合成する"
+  },
+  {
+    "type": "file",
+    "name": "validation-recovery",
+    "label": "検証とエラーからの回復"
+  },
+  {
+    "type": "file",
+    "name": "debugging",
+    "label": "Result をデバッグする"
+  }
+]

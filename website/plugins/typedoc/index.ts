@@ -94,9 +94,13 @@ export const pluginTypedoc = (): RspressPlugin => {
   return {
     name: '@praha/typedoc',
     config: async (config) => {
-      const apiDirectory = path.join(config.root!, 'api');
-      await createApiDocument(apiDirectory);
-      await createMetaJson(apiDirectory);
+      await Promise.all(
+        config.locales!.map(async (locale) => {
+          const apiDirectory = path.join(config.root!, locale.lang, 'api');
+          await createApiDocument(apiDirectory);
+          await createMetaJson(apiDirectory);
+        }),
+      );
       return config;
     },
   };

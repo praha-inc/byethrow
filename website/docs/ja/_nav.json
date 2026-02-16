@@ -1,0 +1,17 @@
+[
+  {
+    "text": "ガイド",
+    "link": "/guide/start/introduction",
+    "activeMatch": "/guide/"
+  },
+  {
+    "text": "実装例",
+    "link": "/examples/parse-package-json",
+    "activeMatch": "/examples/"
+  },
+  {
+    "text": "APIリファレンス",
+    "link": "/api/modules/Result",
+    "activeMatch": "/api/"
+  }
+]

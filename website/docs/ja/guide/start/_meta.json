@@ -1,0 +1,17 @@
+[
+  {
+    "type": "file",
+    "name": "introduction",
+    "label": "はじめに"
+  },
+  {
+    "type": "file",
+    "name": "why",
+    "label": "byethrow を選ぶ理由"
+  },
+  {
+    "type": "file",
+    "name": "quick",
+    "label": "クイックスタート"
+  }
+]

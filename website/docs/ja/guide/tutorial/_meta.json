@@ -1,0 +1,22 @@
+[
+  {
+    "type": "dir",
+    "name": "basics",
+    "label": "基本を学ぶ"
+  },
+  {
+    "type": "dir",
+    "name": "chaining",
+    "label": "関数を合成する"
+  },
+  {
+    "type": "dir",
+    "name": "combining",
+    "label": "Result を合成する"
+  },
+  {
+    "type": "dir",
+    "name": "resolving",
+    "label": "Result を解決する"
+  }
+]
