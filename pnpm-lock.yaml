@@ -174,7 +174,7 @@ importers:
     dependencies:
       '@rspress/core':
         specifier: 2.0.3
-        version: 2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.13)(core-js@3.47.0)
+        version: 2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.14)(core-js@3.47.0)
       '@stackblitz/sdk':
         specifier: 1.11.0
         version: 1.11.0
@@ -193,19 +193,19 @@ importers:
         version: 1.3.1
       '@rspress/plugin-sitemap':
         specifier: 2.0.3
-        version: 2.0.3(@rspress/core@2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.13)(core-js@3.47.0))
+        version: 2.0.3(@rspress/core@2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.14)(core-js@3.47.0))
       '@rspress/plugin-twoslash':
         specifier: 2.0.3
-        version: 2.0.3(@rspress/core@2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.13)(core-js@3.47.0))(react@19.2.4)(typescript@5.9.3)
+        version: 2.0.3(@rspress/core@2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.14)(core-js@3.47.0))(react@19.2.4)(typescript@5.9.3)
       '@types/node':
         specifier: 24.10.13
         version: 24.10.13
       '@types/react':
-        specifier: 19.2.13
-        version: 19.2.13
+        specifier: 19.2.14
+        version: 19.2.14
       '@types/react-dom':
         specifier: 19.2.3
-        version: 19.2.3(@types/react@19.2.13)
+        version: 19.2.3(@types/react@19.2.14)
       execa:
         specifier: 9.6.1
         version: 9.6.1
@@ -1406,8 +1406,8 @@ packages:
     peerDependencies:
       '@types/react': ^19.2.0
 
-  '@types/react@19.2.13':
-    resolution: {integrity: sha512-KkiJeU6VbYbUOp5ITMIc7kBfqlYkKA5KhEHVrGMmUUMt7NeaZg65ojdPk+FtNrBAOXNVM5QM72jnADjM+XVRAQ==}
+  '@types/react@19.2.14':
+    resolution: {integrity: sha512-ilcTH/UniCkMdtexkoCN0bI7pMcJDvmQFPvuPvmEaYA/NSfFTAgdUSLAoVjaRJm7+6PvcM+q1zYOwS4wTYMF9w==}
 
   '@types/unist@2.0.11':
     resolution: {integrity: sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==}
@@ -4716,10 +4716,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@mdx-js/react@3.1.1(@types/react@19.2.13)(react@19.2.4)':
+  '@mdx-js/react@3.1.1(@types/react@19.2.14)(react@19.2.4)':
     dependencies:
       '@types/mdx': 2.0.13
-      '@types/react': 19.2.13
+      '@types/react': 19.2.14
       react: 19.2.4
 
   '@modelcontextprotocol/sdk@1.26.0(zod@4.3.6)':
@@ -5177,10 +5177,10 @@ snapshots:
       html-entities: 2.6.0
       react-refresh: 0.18.0
 
-  '@rspress/core@2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.13)(core-js@3.47.0)':
+  '@rspress/core@2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.14)(core-js@3.47.0)':
     dependencies:
       '@mdx-js/mdx': 3.1.1
-      '@mdx-js/react': 3.1.1(@types/react@19.2.13)(react@19.2.4)
+      '@mdx-js/react': 3.1.1(@types/react@19.2.14)(react@19.2.4)
       '@rsbuild/core': 2.0.0-beta.3(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0)
       '@rsbuild/plugin-react': 1.4.5(@rsbuild/core@2.0.0-beta.3(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0))
       '@rspress/shared': 2.0.3(@module-federation/runtime-tools@0.22.0)(core-js@3.47.0)
@@ -5228,14 +5228,14 @@ snapshots:
       - supports-color
       - webpack-hot-middleware
 
-  '@rspress/plugin-sitemap@2.0.3(@rspress/core@2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.13)(core-js@3.47.0))':
+  '@rspress/plugin-sitemap@2.0.3(@rspress/core@2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.14)(core-js@3.47.0))':
     dependencies:
-      '@rspress/core': 2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.13)(core-js@3.47.0)
+      '@rspress/core': 2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.14)(core-js@3.47.0)
 
-  '@rspress/plugin-twoslash@2.0.3(@rspress/core@2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.13)(core-js@3.47.0))(react@19.2.4)(typescript@5.9.3)':
+  '@rspress/plugin-twoslash@2.0.3(@rspress/core@2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.14)(core-js@3.47.0))(react@19.2.4)(typescript@5.9.3)':
     dependencies:
       '@floating-ui/dom': 1.7.5
-      '@rspress/core': 2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.13)(core-js@3.47.0)
+      '@rspress/core': 2.0.3(@module-federation/runtime-tools@0.22.0)(@types/react@19.2.14)(core-js@3.47.0)
       '@shikijs/twoslash': 3.22.0(typescript@5.9.3)
       mdast-util-from-markdown: 2.0.2
       mdast-util-gfm: 3.1.0
@@ -5378,11 +5378,11 @@ snapshots:
     dependencies:
       undici-types: 7.16.0
 
-  '@types/react-dom@19.2.3(@types/react@19.2.13)':
+  '@types/react-dom@19.2.3(@types/react@19.2.14)':
     dependencies:
-      '@types/react': 19.2.13
+      '@types/react': 19.2.14
 
-  '@types/react@19.2.13':
+  '@types/react@19.2.14':
     dependencies:
       csstype: 3.2.3
 
