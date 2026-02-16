@@ -1,0 +1,22 @@
+[
+  {
+    "type": "file",
+    "name": "result-vs-throw",
+    "label": "Result vs throw"
+  },
+  {
+    "type": "file",
+    "name": "importing-result",
+    "label": "Resultのインポート方法"
+  },
+  {
+    "type": "file",
+    "name": "custom-error",
+    "label": "カスタムエラー"
+  },
+  {
+    "type": "file",
+    "name": "pattern-matching",
+    "label": "パターンマッチング"
+  }
+]

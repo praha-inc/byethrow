@@ -1,0 +1,302 @@
+---
+description: '@praha/byethrowでResult型と共にカスタムエラーを作成・使用して、より良いエラーハンドリングとデバッグを実現する方法を学びましょう。'
+---
+
+import { PackageManagerTabs } from '../../../../theme';
+
+# カスタムエラー
+
+`Result.fail()` でエラーを作成する際、単純な文字列やジェネリックなErrorオブジェクトではなく、カスタムエラーの使用を強くお勧めします。
+このガイドでは、カスタムエラーとは何か、なぜ有益なのか、そして効果的に作成する方法を説明します。
+
+## カスタムエラーとは？
+
+カスタムエラーは、ジェネリックなErrorオブジェクトよりも多くの構造とコンテキストを提供する特殊化されたエラークラスです。
+一般的に採用されるカスタムエラーには主に2つの形式があります。
+
+### 1. カスタムエラークラス（推奨）
+
+カスタムエラークラスは組み込みの `Error` クラスを継承し、追加の機能を提供する方法です。
+
+```ts
+import { Result } from '@praha/byethrow';
+import { z } from 'zod';
+
+class ValidationError extends Error {
+  public override readonly name = 'ValidationError';
+
+  constructor(message: string, options?: ErrorOptions) {
+    super(message, options);
+  }
+}
+
+// Result.fail()での使用
+const validateEmail = (email: string): Result.Result<string, ValidationError> => {
+  return Result.pipe(
+    email,
+    Result.parse(z.string().email()),
+    Result.mapError((error) => new ValidationError('Invalid email format', { cause: error })),
+  );
+};
+```
+
+### 2. 識別可能なタグを持つオブジェクト
+
+プレーンなオブジェクトに識別可能なプロパティを持たせる事でエラー型として使用することもできます。
+
+```ts
+import { Result } from '@praha/byethrow';
+import { z } from 'zod';
+
+type ValidationError = {
+  type: 'ValidationError';
+  message: string;
+  value: string;
+};
+
+const validateEmail = (email: string): Result.Result<string, ValidationError> => {
+  return Result.pipe(
+    email,
+    Result.parse(z.string().email()),
+    Result.mapError((error) => ({
+      type: 'ValidationError',
+      message: 'Invalid email format',
+      value: email,
+    })),
+  );
+};
+```
+
+## なぜカスタムエラークラスを使うのか？
+
+どちらのアプローチでも機能しますが、以下の理由からカスタムErrorクラスの使用をお勧めします。
+
+### スタックトレースの利用可能性
+
+カスタムErrorクラスは自動的にスタックトレースをキャプチャするため、デバッグが非常に容易になります。
+
+```ts
+// @noErrors
+import { Result } from '@praha/byethrow';
+
+// ---cut-start---
+type User = { id: string; name: string };
+// ---cut-end---
+class DatabaseError extends Error {
+  public override readonly name = 'DatabaseError';
+
+  constructor(message: string, options?: ErrorOptions) {
+    super(message, options);
+  }
+}
+
+const fetchUser = (id: string): Result.Result<User, DatabaseError> => {
+  try {
+    // データベース操作...
+  } catch (error) {
+    // スタックトレースはエラーが発生した正確な場所を示します
+    return Result.fail(new DatabaseError('Failed to fetch user'));
+  }
+};
+```
+
+### `cause` オプションによるエラーチェイン
+
+カスタムErrorクラスは `cause` オプションをサポートしており、元のエラーコンテキストを保持できます。
+
+```ts
+// @noErrors
+import { Result } from '@praha/byethrow';
+
+// ---cut-start---
+type User = { id: string; name: string };
+// ---cut-end---
+class DatabaseError extends Error {
+  public override readonly name = 'DatabaseError';
+
+  constructor(message: string, options?: ErrorOptions) {
+    super(message, options);
+  }
+}
+
+const fetchUser = (id: string): Result.Result<User, DatabaseError> => {
+  try {
+    // データベース操作...
+  } catch (error) {
+    // 元のエラーをcauseとして保持
+    return Result.fail(new DatabaseError('Failed to fetch user', {
+      cause: error 
+    }));
+  }
+};
+```
+
+## 推奨：`@praha/error-factory` を使用する
+
+カスタムエラークラスを効率的に作成するために、`@praha/error-factory` の使用をお勧めします。
+このライブラリはボイラープレートコードを削減し、一貫したエラー構造を保証します。
+
+### インストール
+
+<PackageManagerTabs command="install @praha/error-factory" />
+
+### Resultとの基本的な使い方
+
+まず、必要なカスタムエラーを定義します。
+
+```ts
+import { ErrorFactory } from '@praha/error-factory';
+
+class ValidationError extends ErrorFactory({
+  name: 'ValidationError',
+  message: 'Invalid input provided',
+}) {}
+
+class QueryError extends ErrorFactory({
+  name: 'QueryError',
+  message: 'An error occurred while executing a query',
+  fields: ErrorFactory.fields<{ query: string }>(),
+}) {}
+
+class NotFoundError extends ErrorFactory({
+  name: 'NotFoundError',
+  message: 'Resource not found',
+}) {}
+```
+
+次に、先ほど定義したカスタムエラーと `Result` を一緒に返す関数を作成します。
+
+```ts
+import { ErrorFactory } from '@praha/error-factory';
+
+class ValidationError extends ErrorFactory({
+  name: 'ValidationError',
+  message: 'Invalid input provided',
+}) {}
+
+class QueryError extends ErrorFactory({
+  name: 'QueryError',
+  message: 'An error occurred while executing a query',
+  fields: ErrorFactory.fields<{ query: string }>(),
+}) {}
+
+class NotFoundError extends ErrorFactory({
+  name: 'NotFoundError',
+  message: 'Resource not found',
+}) {}
+
+type QueryResult = Record<string, string>;
+const database = { query: (sql: string): Promise<QueryResult> => Promise.resolve({}) };
+type User = { id: string; name: string };
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+import { z } from 'zod';
+
+// Result操作でカスタムエラーを使用
+const validateId = (id: string) => {
+  return Result.pipe(
+    id,
+    Result.parse(z.string().startsWith('u')),
+    Result.mapError((error) => new ValidationError({ cause: error })),
+  );
+};
+
+const executeQuery = (sql: string) => {
+  return Result.try({
+    try: () => database.query(sql),
+    catch: (error) => new QueryError({ query: sql, cause: error }),
+  });
+};
+
+// すべてを組み合わせる
+const findUser = (id: string) => {
+  return Result.pipe(
+    validateId(id),
+    Result.andThen((id) => executeQuery(`SELECT * FROM users WHERE id = '${id}'`)),
+    Result.andThen((row) => {
+      if (!row) {
+        return Result.fail(new NotFoundError());
+      }
+      return Result.succeed({ id: row.id, name: row.name });
+    }),
+  );
+};
+```
+
+最後に、関数を実行して適切にハンドリングします。
+
+```ts
+import { Result } from '@praha/byethrow';
+import { ErrorFactory } from '@praha/error-factory';
+import { z } from 'zod';
+
+type QueryResult = Record<string, string>;
+const database = { query: (sql: string): Promise<QueryResult> => Promise.resolve({}) };
+type User = { id: string; name: string };
+
+// カスタムエラーを定義
+class ValidationError extends ErrorFactory({
+  name: 'ValidationError',
+  message: 'Invalid input provided',
+}) {}
+
+class QueryError extends ErrorFactory({
+  name: 'QueryError',
+  message: 'An error occurred while executing a query',
+  fields: ErrorFactory.fields<{ query: string }>(),
+}) {}
+
+class NotFoundError extends ErrorFactory({
+  name: 'NotFoundError',
+  message: 'Resource not found',
+}) {}
+
+// Result操作でカスタムエラーを使用
+const validateId = (id: string) => {
+  return Result.pipe(
+    id,
+    Result.parse(z.string().startsWith('u')),
+    Result.mapError((error) => new ValidationError({ cause: error })),
+  );
+};
+
+const executeQuery = (sql: string) => {
+  return Result.try({
+    try: () => database.query(sql),
+    catch: (error) => new QueryError({ query: sql, cause: error }),
+  });
+};
+
+// すべてを組み合わせる
+const findUser = (id: string) => {
+  return Result.pipe(
+    validateId(id),
+    Result.andThen(() => executeQuery(`SELECT * FROM users WHERE id = '${id}'`)),
+    Result.andThen((row) => {
+      if (!row) {
+        return Result.fail(new NotFoundError());
+      }
+      return Result.succeed({ id: row.id, name: row.name });
+    }),
+  );
+};
+// ---cut-before---
+// 実行してエラーをハンドリング
+const result = await findUser('u123');
+if (Result.isSuccess(result)) {
+  console.log(result.value);
+} else {
+  // 各エラータイプを個別にハンドリング
+  switch (result.error.name) {
+    case 'ValidationError':
+      console.error('Validation error:', result.error.message);
+      break;
+    case 'QueryError':
+      console.error('Query error:', result.error.message, 'Query:', result.error.query);
+      break;
+    case 'NotFoundError':
+      console.error('Not found error:', result.error.message);
+      break;
+  }
+}
+```

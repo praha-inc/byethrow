@@ -46,7 +46,7 @@ const validateId = (id: string) => {
   return Result.succeed();
 };
 
-const findUser = Result.try({
+const findUser = Result.fn({
   try: (id: string) => {
     return { id, name: 'John Doe' };
   },

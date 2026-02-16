@@ -22,6 +22,7 @@ jobs:
         working-directory: website
         run: |
           sudo apt install fonts-inter
+          sudo apt install fonts-noto-cjk
           pnpm run -w build --filter @praha/byethrow-website
           touch doc_build/.nojekyll
 

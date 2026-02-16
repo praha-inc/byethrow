@@ -4,7 +4,7 @@ import url from 'node:url';
 
 import type { Dirent } from 'node:fs';
 
-const walkDirectory = (directory: string, callback: (dirent: Dirent<string>) => void): void => {
+const walkDirectory = (directory: string, callback: (dirent: Dirent) => void): void => {
   for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
     if (entry.isDirectory()) {
       if (entry.name === 'node_modules') continue;
@@ -15,7 +15,7 @@ const walkDirectory = (directory: string, callback: (dirent: Dirent<string>) => 
   }
 };
 
-const copyFiles = (source: string, destination: string, filter?: (dirent: Dirent<string>) => boolean): void => {
+const copyFiles = (source: string, destination: string, filter?: (dirent: Dirent) => boolean): void => {
   walkDirectory(source, (dirent) => {
     if (filter && !filter(dirent)) return;
     const sourcePath = path.join(dirent.parentPath, dirent.name);
@@ -94,7 +94,10 @@ if (fs.existsSync(distributionPath)) {
 console.groupEnd();
 
 console.group('Copying markdown files...');
-copyFiles(documentPath, distributionPath, (dirent) => dirent.name.endsWith('.md'));
+copyFiles(documentPath, distributionPath, (dirent) => {
+  if (dirent.parentPath.includes('doc_build/ja')) return false;
+  return dirent.name.endsWith('.md');
+});
 fs.copyFileSync(path.join(documentPath, 'llms.txt'), path.join(distributionPath, 'index.md'));
 console.groupEnd();
 

@@ -1,0 +1,22 @@
+[
+  {
+    "type": "dir",
+    "name": "start",
+    "label": "はじめに"
+  },
+  {
+    "type": "dir",
+    "name": "tutorial",
+    "label": "チュートリアル"
+  },
+  {
+    "type": "dir",
+    "name": "best-practices",
+    "label": "ベストプラクティス"
+  },
+  {
+    "type": "dir",
+    "name": "ecosystem",
+    "label": "ツールと連携"
+  }
+]

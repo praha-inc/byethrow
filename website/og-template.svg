@@ -39,11 +39,11 @@
     </g>
   </g>
   <g id="content">
-    <text fill="url('#title-gradient')" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="85" font-weight="bold" letter-spacing="0em"><tspan x="60" y="180">{{line1}}</tspan></text>
-    <text fill="url('#title-gradient')" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="85" font-weight="bold" letter-spacing="0em"><tspan x="60" y="285">{{line2}}</tspan></text>
-    <text fill="url('#title-gradient')" style="white-space: pre" xml:space="preserve" font-family="Inter" font-size="85" font-weight="bold" letter-spacing="0em"><tspan x="60" y="390">{{line3}}</tspan></text>
-    <text fill="url('#brand-gradient')" style="white-space: pre" font-family="Inter" font-size="64" font-weight="bold" letter-spacing="0em"><tspan x="40" y="540">byethrow</tspan></text>
-    <text fill="#fffff5a6" style="white-space: pre" font-family="Inter" font-size="28" letter-spacing="0em"><tspan x="40" y="590">A lightweight, tree-shakable Result type package</tspan></text>
+    <text fill="url('#title-gradient')" style="white-space: pre" xml:space="preserve" font-family="Inter, 'Noto Sans CJK JP'" font-size="85" font-weight="700" letter-spacing="0em"><tspan x="60" y="180">{{line1}}</tspan></text>
+    <text fill="url('#title-gradient')" style="white-space: pre" xml:space="preserve" font-family="Inter, 'Noto Sans CJK JP'" font-size="85" font-weight="700" letter-spacing="0em"><tspan x="60" y="285">{{line2}}</tspan></text>
+    <text fill="url('#title-gradient')" style="white-space: pre" xml:space="preserve" font-family="Inter, 'Noto Sans CJK JP'" font-size="85" font-weight="700" letter-spacing="0em"><tspan x="60" y="390">{{line3}}</tspan></text>
+    <text fill="url('#brand-gradient')" style="white-space: pre" font-family="Inter, 'Noto Sans CJK JP'" font-size="64" font-weight="700" letter-spacing="0em"><tspan x="40" y="540">byethrow</tspan></text>
+    <text fill="#fffff5a6" style="white-space: pre" font-family="Inter, 'Noto Sans CJK JP'" font-size="28" font-weight="300" letter-spacing="0em"><tspan x="40" y="590">A lightweight, tree-shakable Result type package</tspan></text>
   </g>
   <defs>
     <radialGradient id="bg-gradient1">

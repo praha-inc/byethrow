@@ -1,0 +1,22 @@
+[
+  {
+    "type": "file",
+    "name": "result-type",
+    "label": "Result 型について"
+  },
+  {
+    "type": "file",
+    "name": "creating-results",
+    "label": "Result を作成する"
+  },
+  {
+    "type": "file",
+    "name": "checking-results",
+    "label": "Result を確認する"
+  },
+  {
+    "type": "file",
+    "name": "wrapping-functions",
+    "label": "関数をラップする"
+  }
+]

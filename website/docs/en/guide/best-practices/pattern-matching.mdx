@@ -1,0 +1,242 @@
+---
+description: Master pattern matching techniques for handling union error types effectively with Result in @praha/byethrow.
+---
+
+import { PackageManagerTabs } from '../../../../theme';
+
+# Pattern Matching
+
+When working with `Result` types that have union error types, pattern matching becomes essential for handling different error scenarios effectively.
+This guide demonstrates how to use pattern matching to handle multiple error types gracefully.
+
+## Why Pattern Matching for Union Errors?
+
+When your `Result` can fail with multiple different error types, you need a systematic way to handle each error type appropriately.
+Pattern matching provides a clean, type-safe approach to handle all possible error cases.
+
+:::tip
+For more details about `@praha/error-factory`, see the [Custom Error](./custom-error.mdx#recommended-using-prahaerror-factory) page.
+:::
+
+```ts
+// @noErrors
+import { ErrorFactory } from '@praha/error-factory';
+import { Result } from '@praha/byethrow';
+
+class PostNotFoundError extends ErrorFactory({
+  name: 'PostNotFoundError',
+  message: 'The requested post was not found.',
+}) {}
+
+class PostPermissionError extends ErrorFactory({
+  name: 'PostPermissionError',
+  message: 'You do not have permission to perform this action.',
+}) {}
+
+class PostAlreadyDeletedError extends ErrorFactory({
+  name: 'PostAlreadyDeletedError',
+  message: 'This post has already been deleted.',
+}) {}
+
+// Example of a post deletion function
+type PostDeleteError = (
+  | PostNotFoundError
+  | PostPermissionError
+  | PostAlreadyDeletedError
+);
+
+// Function that can return multiple error types
+const deletePost = async (postId: string): Result.ResultAsync<void, PostDeleteError> => {
+  // Implementation that can return any of the error types
+};
+
+// Handling the result with pattern matching
+await Result.pipe(
+  deletePost('123'),
+  Result.map(() => 'Post deleted successfully!'),
+  Result.inspectError((error) => {
+    // Pattern matching to handle different error types
+  }),
+);
+```
+
+## Recommended: Using `ts-pattern`
+
+We strongly recommend using the [`ts-pattern`](https://github.com/gvergnaud/ts-pattern) for pattern matching.
+It provides excellent TypeScript support and ensures exhaustive matching.
+
+### Installation
+
+<PackageManagerTabs command="install ts-pattern" />
+
+### Pattern Matching with `ts-pattern`
+
+```ts
+// @filename: delete-post.ts
+import { ErrorFactory } from '@praha/error-factory';
+import { Result } from '@praha/byethrow';
+
+export class PostNotFoundError extends ErrorFactory({
+  name: 'PostNotFoundError',
+  message: 'The requested post was not found.',
+}) {}
+
+export class PostPermissionError extends ErrorFactory({
+  name: 'PostPermissionError',
+  message: 'You do not have permission to perform this action.',
+}) {}
+
+export class PostAlreadyDeletedError extends ErrorFactory({
+  name: 'PostAlreadyDeletedError',
+  message: 'This post has already been deleted.',
+}) {}
+
+export type PostDeleteError = (
+  | PostNotFoundError
+  | PostPermissionError
+  | PostAlreadyDeletedError
+);
+
+export const deletePost = async (postId: string): Result.ResultAsync<void, PostDeleteError> => {
+  return Result.succeed();
+};
+
+// @filename: index.ts
+import { deletePost } from './delete-post';
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+import { match } from 'ts-pattern';
+
+await Result.pipe(
+  deletePost('123'),
+  Result.inspectError((error) => {
+    match(error)
+      .with({ name: 'PostNotFoundError' }, () => {
+        console.error('The requested post was not found.');
+      })
+      .with({ name: 'PostPermissionError' }, () => {
+        console.error('You do not have permission to perform this action.');
+      })
+      .with({ name: 'PostAlreadyDeletedError' }, () => {
+        console.error('This post has already been deleted.');
+      })
+      .exhaustive(); // Ensures all cases are handled
+  }),
+);
+```
+
+## Alternative: Native TypeScript Pattern Matching
+
+If you prefer not to use external libraries, you can implement pattern matching using TypeScript's built-in features:
+
+### Using instanceof Checks
+
+```ts
+// @filename: delete-post.ts
+import { ErrorFactory } from '@praha/error-factory';
+import { Result } from '@praha/byethrow';
+
+export class PostNotFoundError extends ErrorFactory({
+  name: 'PostNotFoundError',
+  message: 'The requested post was not found.',
+}) {}
+
+export class PostPermissionError extends ErrorFactory({
+  name: 'PostPermissionError',
+  message: 'You do not have permission to perform this action.',
+}) {}
+
+export class PostAlreadyDeletedError extends ErrorFactory({
+  name: 'PostAlreadyDeletedError',
+  message: 'This post has already been deleted.',
+}) {}
+
+export type PostDeleteError = (
+  | PostNotFoundError
+  | PostPermissionError
+  | PostAlreadyDeletedError
+);
+
+export const deletePost = async (postId: string): Result.ResultAsync<void, PostDeleteError> => {
+  return Result.succeed();
+};
+
+// @filename: index.ts
+import { deletePost, PostNotFoundError, PostPermissionError, PostAlreadyDeletedError } from './delete-post';
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+
+await Result.pipe(
+  deletePost('123'),
+  Result.inspectError((error) => {
+    if (error instanceof PostNotFoundError) {
+      console.error('The requested post was not found.');
+    }
+    if (error instanceof PostPermissionError) {
+      console.error('You do not have permission to perform this action.');
+    }
+    if (error instanceof PostAlreadyDeletedError) {
+      console.error('This post has already been deleted.');
+    }
+  }),
+);
+```
+
+### Using Discriminated Unions
+
+```ts
+// @filename: delete-post.ts
+import { ErrorFactory } from '@praha/error-factory';
+import { Result } from '@praha/byethrow';
+
+export class PostNotFoundError extends ErrorFactory({
+  name: 'PostNotFoundError',
+  message: 'The requested post was not found.',
+}) {}
+
+export class PostPermissionError extends ErrorFactory({
+  name: 'PostPermissionError',
+  message: 'You do not have permission to perform this action.',
+}) {}
+
+export class PostAlreadyDeletedError extends ErrorFactory({
+  name: 'PostAlreadyDeletedError',
+  message: 'This post has already been deleted.',
+}) {}
+
+export type PostDeleteError = (
+  | PostNotFoundError
+  | PostPermissionError
+  | PostAlreadyDeletedError
+);
+
+export const deletePost = async (postId: string): Result.ResultAsync<void, PostDeleteError> => {
+  return Result.succeed();
+};
+
+// @filename: index.ts
+import { deletePost, PostNotFoundError, PostPermissionError, PostAlreadyDeletedError } from './delete-post';
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+
+await Result.pipe(
+  deletePost('123'),
+  Result.inspectError((error) => {
+    switch (error.name) {
+      case 'PostNotFoundError':
+        console.error('The requested post was not found.');
+        break;
+      case 'PostPermissionError':
+        console.error('You do not have permission to perform this action.');
+        break;
+      case 'PostAlreadyDeletedError':
+        console.error('This post has already been deleted.');
+        break;
+      default:
+        // This should never happen if all error types are covered
+        const _exhaustiveCheck: never = error;
+        throw new Error(`Unhandled error type: ${JSON.stringify(_exhaustiveCheck)}`);
+    }
+  }),
+);
+```

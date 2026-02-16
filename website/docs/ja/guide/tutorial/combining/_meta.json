@@ -1,0 +1,12 @@
+[
+  {
+    "type": "file",
+    "name": "building-objects",
+    "label": "オブジェクトを構築する"
+  },
+  {
+    "type": "file",
+    "name": "aggregating-results",
+    "label": "Result を集約する"
+  }
+]

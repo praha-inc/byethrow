@@ -11,7 +11,7 @@ const siteUrl = 'https://praha-inc.github.io/byethrow';
 export default defineConfig({
   title: 'byethrow',
   base: '/byethrow/',
-  description: 'A lightweight, tree-shakable Result type package with a simple, consistent API designed.',
+  description: 'A lightweight, tree-shakable Result type library for type-safe error handling in TypeScript.',
   icon: '/waving-hand.png',
   logo: '/waving-hand.png',
   logoText: 'byethrow',
@@ -24,6 +24,21 @@ export default defineConfig({
       domain: siteUrl,
       maxTitleSizePerLine: 20,
     }),
+  ],
+  lang: 'en',
+  languageParity: {
+    enabled: true,
+    exclude: ['api'],
+  },
+  locales: [
+    {
+      lang: 'en',
+      label: 'English',
+    },
+    {
+      lang: 'ja',
+      label: '日本語',
+    },
   ],
   route: {
     cleanUrls: true,

@@ -1,0 +1,242 @@
+---
+description: '@praha/byethrowでResultのユニオンエラー型を効果的に処理するためのパターンマッチング技法をマスターしましょう。'
+---
+
+import { PackageManagerTabs } from '../../../../theme';
+
+# パターンマッチング
+
+複数の異なるエラー型を持つ `Result` 型を扱う際、異なるエラーシナリオを効果的に処理するためにパターンマッチングは不可欠です。
+このガイドでは、複数のエラー型を適切に処理するためのパターンマッチングの使い方を示します。
+
+## なぜユニオンエラーにパターンマッチングが必要なのか？
+
+`Result` が複数の異なるエラー型で失敗する可能性がある場合、各エラー型を適切に処理する体系的な方法が必要です。
+パターンマッチングは、すべての可能なエラーケースを処理するためのクリーンで型安全なアプローチを提供します。
+
+:::tip
+`@praha/error-factory` の詳細については、[Custom Error](./custom-error.mdx#推奨prahaerror-factoryを使用する)ページを参照してください。
+:::
+
+```ts
+// @noErrors
+import { ErrorFactory } from '@praha/error-factory';
+import { Result } from '@praha/byethrow';
+
+class PostNotFoundError extends ErrorFactory({
+  name: 'PostNotFoundError',
+  message: 'The requested post was not found.',
+}) {}
+
+class PostPermissionError extends ErrorFactory({
+  name: 'PostPermissionError',
+  message: 'You do not have permission to perform this action.',
+}) {}
+
+class PostAlreadyDeletedError extends ErrorFactory({
+  name: 'PostAlreadyDeletedError',
+  message: 'This post has already been deleted.',
+}) {}
+
+// 投稿削除関数の例
+type PostDeleteError = (
+  | PostNotFoundError
+  | PostPermissionError
+  | PostAlreadyDeletedError
+);
+
+// 複数のエラー型を返す可能性がある関数
+const deletePost = async (postId: string): Result.ResultAsync<void, PostDeleteError> => {
+  // いずれかのエラー型を返す可能性のある実装
+};
+
+// パターンマッチングによる結果のハンドリング
+await Result.pipe(
+  deletePost('123'),
+  Result.map(() => 'Post deleted successfully!'),
+  Result.inspectError((error) => {
+    // 異なるエラー型を処理するためのパターンマッチング
+  }),
+);
+```
+
+## 推奨：`ts-pattern` を使用する
+
+パターンマッチングには[`ts-pattern`](https://github.com/gvergnaud/ts-pattern)の使用を強くお勧めします。
+優れたTypeScriptサポートを提供し、網羅的なマッチングを保証します。
+
+### インストール
+
+<PackageManagerTabs command="install ts-pattern" />
+
+### `ts-pattern` によるパターンマッチング
+
+```ts
+// @filename: delete-post.ts
+import { ErrorFactory } from '@praha/error-factory';
+import { Result } from '@praha/byethrow';
+
+export class PostNotFoundError extends ErrorFactory({
+  name: 'PostNotFoundError',
+  message: 'The requested post was not found.',
+}) {}
+
+export class PostPermissionError extends ErrorFactory({
+  name: 'PostPermissionError',
+  message: 'You do not have permission to perform this action.',
+}) {}
+
+export class PostAlreadyDeletedError extends ErrorFactory({
+  name: 'PostAlreadyDeletedError',
+  message: 'This post has already been deleted.',
+}) {}
+
+export type PostDeleteError = (
+  | PostNotFoundError
+  | PostPermissionError
+  | PostAlreadyDeletedError
+);
+
+export const deletePost = async (postId: string): Result.ResultAsync<void, PostDeleteError> => {
+  return Result.succeed();
+};
+
+// @filename: index.ts
+import { deletePost } from './delete-post';
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+import { match } from 'ts-pattern';
+
+await Result.pipe(
+  deletePost('123'),
+  Result.inspectError((error) => {
+    match(error)
+      .with({ name: 'PostNotFoundError' }, () => {
+        console.error('リクエストされた投稿が見つかりませんでした。');
+      })
+      .with({ name: 'PostPermissionError' }, () => {
+        console.error('このアクションを実行する権限がありません。');
+      })
+      .with({ name: 'PostAlreadyDeletedError' }, () => {
+        console.error('この投稿は既に削除されています。');
+      })
+      .exhaustive(); // すべてのケースが処理されることを保証する
+  }),
+);
+```
+
+## 代替案：TypeScriptネイティブなパターンマッチング
+
+外部ライブラリを使用したくない場合は、TypeScriptの組み込み機能を使用してパターンマッチングを実装できます。
+
+### `instanceof` を使用する
+
+```ts
+// @filename: delete-post.ts
+import { ErrorFactory } from '@praha/error-factory';
+import { Result } from '@praha/byethrow';
+
+export class PostNotFoundError extends ErrorFactory({
+  name: 'PostNotFoundError',
+  message: 'The requested post was not found.',
+}) {}
+
+export class PostPermissionError extends ErrorFactory({
+  name: 'PostPermissionError',
+  message: 'You do not have permission to perform this action.',
+}) {}
+
+export class PostAlreadyDeletedError extends ErrorFactory({
+  name: 'PostAlreadyDeletedError',
+  message: 'This post has already been deleted.',
+}) {}
+
+export type PostDeleteError = (
+  | PostNotFoundError
+  | PostPermissionError
+  | PostAlreadyDeletedError
+);
+
+export const deletePost = async (postId: string): Result.ResultAsync<void, PostDeleteError> => {
+  return Result.succeed();
+};
+
+// @filename: index.ts
+import { deletePost, PostNotFoundError, PostPermissionError, PostAlreadyDeletedError } from './delete-post';
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+
+await Result.pipe(
+  deletePost('123'),
+  Result.inspectError((error) => {
+    if (error instanceof PostNotFoundError) {
+      console.error('リクエストされた投稿が見つかりませんでした。');
+    }
+    if (error instanceof PostPermissionError) {
+      console.error('このアクションを実行する権限がありません。');
+    }
+    if (error instanceof PostAlreadyDeletedError) {
+      console.error('この投稿は既に削除されています。');
+    }
+  }),
+);
+```
+
+### 判別可能なユニオンを使用する
+
+```ts
+// @filename: delete-post.ts
+import { ErrorFactory } from '@praha/error-factory';
+import { Result } from '@praha/byethrow';
+
+export class PostNotFoundError extends ErrorFactory({
+  name: 'PostNotFoundError',
+  message: 'The requested post was not found.',
+}) {}
+
+export class PostPermissionError extends ErrorFactory({
+  name: 'PostPermissionError',
+  message: 'You do not have permission to perform this action.',
+}) {}
+
+export class PostAlreadyDeletedError extends ErrorFactory({
+  name: 'PostAlreadyDeletedError',
+  message: 'This post has already been deleted.',
+}) {}
+
+export type PostDeleteError = (
+  | PostNotFoundError
+  | PostPermissionError
+  | PostAlreadyDeletedError
+);
+
+export const deletePost = async (postId: string): Result.ResultAsync<void, PostDeleteError> => {
+  return Result.succeed();
+};
+
+// @filename: index.ts
+import { deletePost, PostNotFoundError, PostPermissionError, PostAlreadyDeletedError } from './delete-post';
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+
+await Result.pipe(
+  deletePost('123'),
+  Result.inspectError((error) => {
+    switch (error.name) {
+      case 'PostNotFoundError':
+        console.error('リクエストされた投稿が見つかりませんでした。');
+        break;
+      case 'PostPermissionError':
+        console.error('このアクションを実行する権限がありません。');
+        break;
+      case 'PostAlreadyDeletedError':
+        console.error('この投稿は既に削除されています。');
+        break;
+      default:
+        // すべてのエラー型がカバーされていれば、ここには到達しないはず
+        const _exhaustiveCheck: never = error;
+        throw new Error(`Unhandled error type: ${JSON.stringify(_exhaustiveCheck)}`);
+    }
+  }),
+);
+```
