@@ -1,0 +1,40 @@
+.float {
+  width: 360px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.logo:hover {
+  animation: swing 2s ease-in-out infinite;
+  transform-origin: right bottom;
+}
+
+@keyframes swing {
+  0% {
+    transform: rotate(0deg);
+    animation-timing-function: ease-out;
+  }
+  25% {
+    transform: rotate(6deg);
+    animation-timing-function: linear;
+  }
+  75% {
+    transform: rotate(-6deg);
+    animation-timing-function: ease-in;
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+

@@ -23,9 +23,6 @@ hero:
   name: byethrow
   text: A&nbsp;lightweight Result&nbsp;type&nbsp;package
   tagline: Say goodbye to throw, embrace type-safe results
-  image:
-    src: /waving-hand.png
-    alt: byethrow logo
   actions:
     - theme: brand
       text: Introduction

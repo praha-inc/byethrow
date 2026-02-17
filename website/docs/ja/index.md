@@ -23,9 +23,6 @@ hero:
   name: byethrow
   text: A&nbsp;lightweight Result&nbsp;type&nbsp;package
   tagline: throw にさよなら、型安全な Result へ
-  image:
-    src: /waving-hand.png
-    alt: byethrowのロゴ
   actions:
     - theme: brand
       text: はじめに
