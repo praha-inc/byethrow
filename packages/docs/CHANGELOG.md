@@ -1,5 +1,12 @@
 # @praha/byethrow-docs
 
+## 0.10.0
+
+### Patch Changes
+
+- Updated dependencies [[`3d5f437`](https://github.com/praha-inc/byethrow/commit/3d5f437c15b150ba4834ead7bd573aa811913b8b), [`29e5002`](https://github.com/praha-inc/byethrow/commit/29e5002400f2465af2f982de43a6af76fae66e03), [`ef6bae0`](https://github.com/praha-inc/byethrow/commit/ef6bae0be327a88b32039197c0541f0f840367d2)]:
+  - @praha/byethrow@0.10.0
+
 ## 0.9.0
 
 ### Minor Changes

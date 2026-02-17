@@ -1,5 +1,72 @@
 # @praha/byethrow
 
+## 0.10.0
+
+### Minor Changes
+
+- [#554](https://github.com/praha-inc/byethrow/pull/554) [`3d5f437`](https://github.com/praha-inc/byethrow/commit/3d5f437c15b150ba4834ead7bd573aa811913b8b) Thanks [@Karibash](https://github.com/Karibash)! - Add fn function to wrap throwing functions into Result
+
+  **BREAKING CHANGES:**
+
+  The `Result.try` function has been simplified to always execute immediately and return a `Result` or `ResultAsync` directly.
+  The previous behavior of returning a wrapped function has been moved to the new `Result.fn` function.
+
+  ### Changes to `Result.try`
+
+  - **Removed**: The `immediate` option is no longer needed and has been removed. `Result.try` now always executes immediately.
+  - **Changed**: The `try` callback no longer accepts arguments. It must be a zero-argument function `() => ...`.
+
+  ### New `Result.fn` function
+
+  A new `Result.fn` function has been added to handle the use case of wrapping a function that accepts arguments and returns a `Result`-returning function.
+
+  ## Migration Guide
+
+  ### If you were using `Result.try` with `immediate: true`
+
+  Simply remove the `immediate` option:
+
+  ```ts
+  // Before
+  const result = Result.try({
+    immediate: true,
+    try: () => JSON.parse(jsonString),
+    catch: (error) => new ParseError(error),
+  });
+
+  // After
+  const result = Result.try({
+    try: () => JSON.parse(jsonString),
+    catch: (error) => new ParseError(error),
+  });
+  ```
+
+  ### If you were using `Result.try` to create a reusable function
+
+  Use the new `Result.fn` function instead:
+
+  ```ts
+  // Before
+  const parseJson = Result.try({
+    try: (jsonString: string) => JSON.parse(jsonString),
+    catch: (error) => new ParseError(error),
+  });
+  const result = parseJson('{"key": "value"}');
+
+  // After
+  const parseJson = Result.fn({
+    try: (jsonString: string) => JSON.parse(jsonString),
+    catch: (error) => new ParseError(error),
+  });
+  const result = parseJson('{"key": "value"}');
+  ```
+
+- [#484](https://github.com/praha-inc/byethrow/pull/484) [`29e5002`](https://github.com/praha-inc/byethrow/commit/29e5002400f2465af2f982de43a6af76fae66e03) Thanks [@Karibash](https://github.com/Karibash)! - Add a orThrough
+
+### Patch Changes
+
+- [#488](https://github.com/praha-inc/byethrow/pull/488) [`ef6bae0`](https://github.com/praha-inc/byethrow/commit/ef6bae0be327a88b32039197c0541f0f840367d2) Thanks [@Karibash](https://github.com/Karibash)! - Improve type safety of assertSuccess and assertFailure functions
+
 ## 0.9.0
 
 ## 0.8.2

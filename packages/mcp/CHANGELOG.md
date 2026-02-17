@@ -1,5 +1,11 @@
 # @praha/byethrow-mcp
 
+## 0.10.0
+
+### Patch Changes
+
+- [#535](https://github.com/praha-inc/byethrow/pull/535) [`72ad5e2`](https://github.com/praha-inc/byethrow/commit/72ad5e20b2ef118d1e63572d852e45869222804a) Thanks [@Karibash](https://github.com/Karibash)! - Change mcp server name from "@praha/byethrow" to "byethrow"
+
 ## 0.9.0
 
 ## 0.8.2
