@@ -29,10 +29,10 @@ hero:
   actions:
     - theme: brand
       text: はじめに
-      link: /guide/start/introduction
+      link: ./guide/start/introduction
     - theme: alt
       text: クイックスタート
-      link: /guide/start/quick
+      link: ./guide/start/quick
 
 features:
   - title: '🌲 Tree Shaking対応'

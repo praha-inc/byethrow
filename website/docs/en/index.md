@@ -29,10 +29,10 @@ hero:
   actions:
     - theme: brand
       text: Introduction
-      link: /guide/start/introduction
+      link: ./guide/start/introduction
     - theme: alt
       text: Quick Start
-      link: /guide/start/quick
+      link: ./guide/start/quick
 
 features:
   - title: '🌲 Tree-shakable'
