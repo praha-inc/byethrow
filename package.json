@@ -24,7 +24,7 @@
     "@tsconfig/strictest": "2.0.8",
     "eslint": "9.39.2",
     "pkg-pr-new": "0.0.63",
-    "turbo": "2.8.9",
+    "turbo": "2.8.10",
     "vitest": "4.0.18"
   },
   "packageManager": "pnpm@10.29.3",
