@@ -48,7 +48,7 @@
     "@rslib/core": "0.19.6",
     "@rspack/core": "1.7.6",
     "@types/node": "24.10.13",
-    "eslint": "9.39.3",
+    "eslint": "10.0.2",
     "typedoc": "0.28.17",
     "typedoc-plugin-markdown": "4.10.0",
     "typescript": "5.9.3"
