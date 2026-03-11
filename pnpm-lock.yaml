@@ -189,8 +189,8 @@ importers:
         specifier: workspace:*
         version: link:../packages/byethrow
       '@praha/error-factory':
-        specifier: 1.3.1
-        version: 1.3.1
+        specifier: 1.4.0
+        version: 1.4.0
       '@rspress/plugin-sitemap':
         specifier: 2.0.4
         version: 2.0.4(@rspress/core@2.0.4(@types/react@19.2.14)(core-js@3.47.0))
@@ -914,8 +914,8 @@ packages:
     resolution: {integrity: sha512-QNqXyfVS2wm9hweSYD2O7F0G06uurj9kZ96TRQE5Y9hU7+tgdZwIkbAKc5Ocy1HxEY2kuDQa6cQ1WRs/O5LFKA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
 
-  '@praha/error-factory@1.3.1':
-    resolution: {integrity: sha512-vPAxuIq9iBuLqbKJYuwxgncjWYZBBNN/fzh5/yF1nRIuQKpOrmqLAwk1wm3f8CDRUco/16tk4H0U5yWcgNHGrw==}
+  '@praha/error-factory@1.4.0':
+    resolution: {integrity: sha512-Yb+dOngCP44RTzu37YsJI6CdO8/eLIy4r9yrZyxP9hiTZSA0FgfvnAe139wVChABbPJBeU0bbTY21EOswgOlLg==}
 
   '@praha/eslint-config-common@4.0.3':
     resolution: {integrity: sha512-Xb2gFVjZexCXEvZ8oGasa8OjSUznOyTO2XxyeMJibvRsk8A2xG5G0whISnYzz4wSPKcH3zReBuBsCLaE2WMrMQ==}
@@ -4898,7 +4898,7 @@ snapshots:
 
   '@pkgr/core@0.2.9': {}
 
-  '@praha/error-factory@1.3.1': {}
+  '@praha/error-factory@1.4.0': {}
 
   '@praha/eslint-config-common@4.0.3(eslint@9.39.4(jiti@2.6.1))':
     dependencies:
