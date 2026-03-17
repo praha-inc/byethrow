@@ -13,20 +13,6 @@ runs:
         node-version-file: .tool-versions
         cache: 'pnpm'
 
-    - name: Expose pnpm store path
-      id: pnpm_store_path
-      shell: bash
-      run: |
-        echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-    - name: Setup pnpm cache
-      uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
-      with:
-        path: ${{ steps.pnpm_store_path.outputs.STORE_PATH }}
-        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-        restore-keys: |
-          ${{ runner.os }}-pnpm-store-
-
     - name: Install dependencies
       shell: bash
       run: pnpm install --frozen-lockfile --prefer-offline
