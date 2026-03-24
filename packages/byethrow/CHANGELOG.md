@@ -1,5 +1,11 @@
 # @praha/byethrow
 
+## 0.10.1
+
+### Patch Changes
+
+- [#626](https://github.com/praha-inc/byethrow/pull/626) [`43f6dd3`](https://github.com/praha-inc/byethrow/commit/43f6dd338ddd681f5101a342de3d851e74af8650) Thanks [@Karibash](https://github.com/Karibash)! - Fix type narrowing for union Result types in isSuccess and isFailure
+
 ## 0.10.0
 
 ### Minor Changes
