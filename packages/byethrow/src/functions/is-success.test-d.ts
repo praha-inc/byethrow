@@ -20,4 +20,16 @@ describe('isSuccess', () => {
       expectTypeOf(result).toEqualTypeOf<Success<never>>();
     }
   });
+
+  it('should narrow the type to Failure when the error type is a union', () => {
+    // eslint-disable-next-line unicorn/consistent-function-scoping
+    const fn = () => {
+      return 0.5 < Math.random() ? succeed({ type: 'ok' }) : succeed('ok');
+    };
+
+    const result = fn();
+    if (isSuccess(result)) {
+      expectTypeOf(result).toEqualTypeOf<Success<'ok'> | Success<{ readonly type: 'ok' }>>();
+    }
+  });
 });
