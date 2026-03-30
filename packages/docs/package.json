@@ -49,7 +49,7 @@
   "scripts": {
     "generate": "tsx ./scripts/copy.ts",
     "build": "rslib build",
-    "lint:code": "eslint .",
+    "lint:code": "oxlint",
     "lint:type": "tsc --noEmit"
   },
   "dependencies": {
@@ -64,7 +64,7 @@
     "@praha/byethrow-website": "workspace:*",
     "@rslib/core": "0.20.1",
     "@types/node": "24.12.0",
-    "eslint": "9.39.4",
+    "oxlint": "1.57.0",
     "tsx": "4.21.0",
     "typescript": "5.9.3"
   },

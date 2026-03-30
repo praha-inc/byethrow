@@ -24,7 +24,6 @@ describe('assertFailure', () => {
           const input = succeed('value');
 
           // @ts-expect-error
-          // eslint-disable-next-line @typescript-eslint/no-floating-promises
           assertFailure(input);
         });
       });
@@ -45,7 +44,6 @@ describe('assertFailure', () => {
           const input = succeed(Promise.resolve('value'));
 
           // @ts-expect-error
-          // eslint-disable-next-line @typescript-eslint/no-floating-promises
           assertFailure(input);
         });
       });
@@ -67,11 +65,13 @@ describe('assertFailure', () => {
 
       describe('when input is a success', () => {
         it('should cause a type error', () => {
-          pipe(
+          const result = pipe(
             succeed('value'),
             // @ts-expect-error
             assertFailure,
           );
+
+          expectTypeOf(result).toEqualTypeOf<never>();
         });
       });
     });
@@ -90,11 +90,13 @@ describe('assertFailure', () => {
 
       describe('when input is a success', () => {
         it('should cause a type error', () => {
-          pipe(
+          const result = pipe(
             succeed(Promise.resolve('value')),
             // @ts-expect-error
             assertFailure,
           );
+
+          expectTypeOf(result).toEqualTypeOf<never>();
         });
       });
     });

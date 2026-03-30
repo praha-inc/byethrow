@@ -13,7 +13,6 @@ describe('unwrapError', () => {
         try {
           unwrapError(input);
         } catch (error) {
-          // eslint-disable-next-line vitest/no-conditional-expect
           expect(error).toBe(42);
         }
         expect.hasAssertions();

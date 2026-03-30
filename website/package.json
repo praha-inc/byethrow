@@ -7,7 +7,7 @@
     "dev": "rspress dev",
     "build": "rspress build",
     "preview": "rspress preview",
-    "lint:code": "eslint .",
+    "lint:code": "oxlint",
     "lint:type": "tsc --noEmit"
   },
   "dependencies": {
@@ -25,6 +25,7 @@
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "execa": "9.6.1",
+    "oxlint": "1.57.0",
     "rsbuild-plugin-open-graph": "1.1.2",
     "rspress-plugin-og": "0.0.5",
     "ts-pattern": "5.9.0",

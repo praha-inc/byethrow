@@ -22,7 +22,6 @@ describe('isSuccess', () => {
   });
 
   it('should narrow the type to Failure when the error type is a union', () => {
-    // eslint-disable-next-line unicorn/consistent-function-scoping
     const fn = () => {
       return 0.5 < Math.random() ? succeed({ type: 'ok' }) : succeed('ok');
     };

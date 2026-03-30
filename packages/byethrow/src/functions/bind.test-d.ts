@@ -15,7 +15,6 @@ describe('bind', () => {
           const input = succeed({ foo: 1 });
 
           describe('when output is a success', () => {
-            // eslint-disable-next-line unicorn/consistent-function-scoping
             const output = (x: InferSuccess<typeof input>) => succeed(x.foo.toString());
 
             it('should return a success result with both original and new values', () => {
@@ -32,7 +31,6 @@ describe('bind', () => {
           });
 
           describe('when output is a failure', () => {
-            // eslint-disable-next-line unicorn/consistent-function-scoping
             const output = (x: InferSuccess<typeof input>) => fail(x.foo.toString());
 
             it('should return a failure result with error type and updated value as never', () => {
@@ -71,7 +69,6 @@ describe('bind', () => {
         const input = succeed({ foo: 1 });
 
         describe('when output is a success', () => {
-          // eslint-disable-next-line unicorn/consistent-function-scoping
           const output = (x: InferSuccess<typeof input>) => succeed(Promise.resolve(x.foo.toString()));
 
           it('should return a ResultAsync with success containing resolved value', () => {
@@ -88,7 +85,6 @@ describe('bind', () => {
         });
 
         describe('when output is a failure', () => {
-          // eslint-disable-next-line unicorn/consistent-function-scoping
           const output = (x: InferSuccess<typeof input>) => fail(Promise.resolve(x.foo.toString()));
 
           it('should return a ResultAsync with failure containing resolved error', () => {
@@ -111,7 +107,6 @@ describe('bind', () => {
         const input = succeed(Promise.resolve({ foo: 1 }));
 
         describe('when output is a success', () => {
-          // eslint-disable-next-line unicorn/consistent-function-scoping
           const output = (x: InferSuccess<typeof input>) => succeed(x.foo.toString());
 
           it('should return a ResultAsync with success when input and output resolve successfully', () => {
@@ -128,7 +123,6 @@ describe('bind', () => {
         });
 
         describe('when output is a failure', () => {
-          // eslint-disable-next-line unicorn/consistent-function-scoping
           const output = (x: InferSuccess<typeof input>) => fail(x.foo.toString());
 
           it('should return a ResultAsync with failure when output fails after input success', () => {
@@ -166,7 +160,6 @@ describe('bind', () => {
         const input = succeed(Promise.resolve({ foo: 1 }));
 
         describe('when output is a success', () => {
-          // eslint-disable-next-line unicorn/consistent-function-scoping
           const output = (x: InferSuccess<typeof input>) => succeed(Promise.resolve(x.foo.toString()));
 
           it('should return a ResultAsync with nested resolved success values', () => {
@@ -183,7 +176,6 @@ describe('bind', () => {
         });
 
         describe('when output is a failure', () => {
-          // eslint-disable-next-line unicorn/consistent-function-scoping
           const output = (x: InferSuccess<typeof input>) => fail(Promise.resolve(x.foo.toString()));
 
           it('should return a ResultAsync with nested resolved failure values', () => {
