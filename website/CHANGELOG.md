@@ -1,5 +1,15 @@
 # @praha/byethrow-website
 
+## 0.11.0
+
+### Minor Changes
+
+- [#647](https://github.com/praha-inc/byethrow/pull/647) [`034d73d`](https://github.com/praha-inc/byethrow/commit/034d73d02376e05614001be82020fae3537687cb) Thanks [@Karibash](https://github.com/Karibash)! - Remove @praha/byethrow-mcp package
+
+### Patch Changes
+
+- [#649](https://github.com/praha-inc/byethrow/pull/649) [`806b4b2`](https://github.com/praha-inc/byethrow/commit/806b4b2346e5248877c66894262ff3c83af9c8b6) Thanks [@Karibash](https://github.com/Karibash)! - Update frontmatter descriptions
+
 ## 0.10.1
 
 ## 0.10.0
