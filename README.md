@@ -13,8 +13,8 @@
 |-----------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|-----------------------|---------------------------------------------|
 | [`@praha/byethrow`](packages/byethrow)        | [![npm version](https://badge.fury.io/js/@praha%2Fbyethrow.svg)](https://www.npmjs.com/package/@praha/byethrow)                 | Core package          | [CHANGELOG](packages/byethrow/CHANGELOG.md) |
 | [`@praha/byethrow-docs`](packages/docs)       | [![npm version](https://badge.fury.io/js/@praha%2Fbyethrow-docs.svg)](https://www.npmjs.com/package/@praha/byethrow-docs)       | Documentation package | [CHANGELOG](packages/docs/CHANGELOG.md)     |
+| [`@praha/byethrow-oxlint`](packages/oxlint)   | [![npm version](https://badge.fury.io/js/@praha%2Fbyethrow-oxlint.svg)](https://www.npmjs.com/package/@praha/byethrow-oxlint)   | Oxlint plugin package | [CHANGELOG](packages/oxlint/CHANGELOG.md)   |
 | [`@praha/byethrow-testing`](packages/testing) | [![npm version](https://badge.fury.io/js/@praha%2Fbyethrow-testing.svg)](https://www.npmjs.com/package/@praha/byethrow-testing) | Testing package       | [CHANGELOG](packages/testing/CHANGELOG.md)  |
-| `@praha/eslint-plugin-byethrow`               | 🚧                                                                                                                              | 🚧                    | 🚧                                          |
 
 ## 🤝 Contributing
 
