@@ -13,7 +13,6 @@
 |-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------|-------------------------|---------------------------------------------|
 | [`@praha/byethrow`](packages/byethrow)  | [![npm version](https://badge.fury.io/js/@praha%2Fbyethrow.svg)](https://www.npmjs.com/package/@praha/byethrow)           | Core package            | [CHANGELOG](packages/byethrow/CHANGELOG.md) |
 | [`@praha/byethrow-docs`](packages/docs) | [![npm version](https://badge.fury.io/js/@praha%2Fbyethrow-docs.svg)](https://www.npmjs.com/package/@praha/byethrow-docs) | Documentation package   | [CHANGELOG](packages/docs/CHANGELOG.md)     |
-| [`@praha/byethrow-mcp`](packages/mcp)   | [![npm version](https://badge.fury.io/js/@praha%2Fbyethrow-mcp.svg)](https://www.npmjs.com/package/@praha/byethrow-mcp)   | MCP server for byethrow | [CHANGELOG](packages/mcp/CHANGELOG.md)      |
 | `@praha/eslint-plugin-byethrow`         | 🚧                                                                                                                        | 🚧                      | 🚧                                          |
 
 ## 🤝 Contributing
