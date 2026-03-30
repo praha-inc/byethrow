@@ -195,8 +195,8 @@ importers:
         specifier: 2.0.7
         version: 2.0.7(@rspress/core@2.0.7(@types/mdast@4.0.4)(@types/react@19.2.14)(micromark-util-types@2.0.2)(micromark@4.0.2))
       '@rspress/plugin-twoslash':
-        specifier: 2.0.6
-        version: 2.0.6(@rspress/core@2.0.7(@types/mdast@4.0.4)(@types/react@19.2.14)(micromark-util-types@2.0.2)(micromark@4.0.2))(react@19.2.4)(typescript@5.9.3)
+        specifier: 2.0.7
+        version: 2.0.7(@rspress/core@2.0.7(@types/mdast@4.0.4)(@types/react@19.2.14)(micromark-util-types@2.0.2)(micromark@4.0.2))(react@19.2.4)(typescript@5.9.3)
       '@types/node':
         specifier: 24.12.0
         version: 24.12.0
@@ -1271,11 +1271,11 @@ packages:
     peerDependencies:
       '@rspress/core': ^2.0.7
 
-  '@rspress/plugin-twoslash@2.0.6':
-    resolution: {integrity: sha512-S9tI5/FcElLPv2MCptGF2smPWbDlCvGKJWvZiFF1zEvD8CbDp7nG+ISVUPUsYdVlLeZD47JoNhB+1vInERkORQ==}
+  '@rspress/plugin-twoslash@2.0.7':
+    resolution: {integrity: sha512-R5qS6x3Tcnt2ArNRKn6sajMYWTUNe7b5HqdDMLKHK+To14HSAjwskr1KkrE1etujvqmmutws1LOeMM8U/QdoOg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
-      '@rspress/core': ^2.0.6
+      '@rspress/core': ^2.0.7
       react: '>=18.0.0'
       typescript: ^5.8.2
 
@@ -5246,7 +5246,7 @@ snapshots:
     dependencies:
       '@rspress/core': 2.0.7(@types/mdast@4.0.4)(@types/react@19.2.14)(micromark-util-types@2.0.2)(micromark@4.0.2)
 
-  '@rspress/plugin-twoslash@2.0.6(@rspress/core@2.0.7(@types/mdast@4.0.4)(@types/react@19.2.14)(micromark-util-types@2.0.2)(micromark@4.0.2))(react@19.2.4)(typescript@5.9.3)':
+  '@rspress/plugin-twoslash@2.0.7(@rspress/core@2.0.7(@types/mdast@4.0.4)(@types/react@19.2.14)(micromark-util-types@2.0.2)(micromark@4.0.2))(react@19.2.4)(typescript@5.9.3)':
     dependencies:
       '@floating-ui/dom': 1.7.6
       '@rspress/core': 2.0.7(@types/mdast@4.0.4)(@types/react@19.2.14)(micromark-util-types@2.0.2)(micromark@4.0.2)
