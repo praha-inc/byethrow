@@ -1,5 +1,5 @@
 ---
-description: Learn how to build complex objects using the do/bind pattern in @praha/byethrow to accumulate successful Results into a growing object.
+description: Accumulating Result values into typed objects step by step using the Result.do and Result.bind pattern.
 ---
 
 # Building Objects

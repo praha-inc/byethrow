@@ -1,5 +1,5 @@
 ---
-description: Understand when to use Result types versus throw statements, and learn the philosophy of handling anticipated vs unexpected errors.
+description: When to use Result for anticipated business errors versus letting exceptions throw, and how Result.fn improves stack traces.
 ---
 
 # Result vs throw

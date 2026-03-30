@@ -1,5 +1,5 @@
 ---
-description: Configure AI assistants to understand @praha/byethrow using Skills.
+description: Integrate byethrow documentation into Claude, GitHub Copilot, and Cursor using the @praha/byethrow-docs CLI init command.
 ---
 
 # LLM Integration

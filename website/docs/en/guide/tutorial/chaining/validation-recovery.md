@@ -1,5 +1,5 @@
 ---
-description: Learn how to use andThrough and orThrough functions in @praha/byethrow for validation and recovery while preserving the original result.
+description: Running side-effect validations with andThrough and cleanup on failure with orThrough while preserving the original Result value.
 ---
 
 # Validation and Recovery

@@ -1,5 +1,5 @@
 ---
-description: '@praha/byethrowにおけるResult型とは何か、TypeScriptで成功と失敗の結果をどのように表現するかを学びましょう。'
+description: 'Result型の構造とSuccess・Failureのユニオン型、例外との違い、ResultAsyncによる同期・非同期の統一処理の仕組みを解説。'
 ---
 
 # Result 型について

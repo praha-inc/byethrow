@@ -1,5 +1,5 @@
 ---
-description: '@praha/byethrowのsucceedとfail関数を使用してResult型を作成する方法を学びましょう。'
+description: 'Result.succeed・Result.fail・Result.doを使ってSuccessやFailureのResult値を作成する方法と非同期対応の解説。'
 ---
 
 # Result を作成する

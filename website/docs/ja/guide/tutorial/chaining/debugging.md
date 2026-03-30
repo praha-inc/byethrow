@@ -1,5 +1,5 @@
 ---
-description: '@praha/byethrowのinspectとinspectError関数を使って、Resultパイプラインをデバッグし値を確認する方法を学びましょう。'
+description: 'Result.inspectとResult.inspectErrorを使ってパイプラインの各ステップで値を副作用なく確認するデバッグ手法。'
 ---
 
 # Result をデバッグする

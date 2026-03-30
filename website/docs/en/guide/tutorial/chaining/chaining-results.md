@@ -1,5 +1,5 @@
 ---
-description: Learn how to chain Result computations using andThen and orElse functions in @praha/byethrow for sequential error handling.
+description: Chaining Result computations with andThen for sequential success steps and orElse for error recovery and fallback strategies.
 ---
 
 # Chaining Results

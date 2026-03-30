@@ -1,5 +1,5 @@
 ---
-description: '@praha/byethrowのandThroughとorThrough関数を使って、元の結果を保持しながら検証と回復を行う方法を学びましょう。'
+description: 'andThroughで元の値を保持しながらバリデーションを実行し、orThroughで元のエラーを保持しながらクリーンアップ処理を行う方法。'
 ---
 
 # 検証とエラーからの回復

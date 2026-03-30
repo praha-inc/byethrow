@@ -1,5 +1,5 @@
 ---
-description: Learn how to use the pipe function in @praha/byethrow to chain operations together in a readable, left-to-right manner.
+description: How Result.pipe chains operations left-to-right, replacing nested calls and intermediate variables, with sync and async support.
 ---
 
 # Pipe Basics

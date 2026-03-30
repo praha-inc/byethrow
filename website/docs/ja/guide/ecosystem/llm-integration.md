@@ -1,5 +1,5 @@
 ---
-description: Skillsを使用して、AIアシスタントに@praha/byethrowを理解させる設定を行います。
+description: '@praha/byethrow-docsパッケージを使ってClaude・GitHub Copilot・CursorなどのAIアシスタントにbyethrowのドキュメントを連携する方法。'
 ---
 
 # LLM 連携

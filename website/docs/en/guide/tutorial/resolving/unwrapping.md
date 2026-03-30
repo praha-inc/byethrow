@@ -1,5 +1,5 @@
 ---
-description: Learn how to extract values from Results using unwrap and unwrapError functions in @praha/byethrow with optional default values.
+description: Extracting values from Result with unwrap and unwrapError, including default values, async support, and when to use them safely.
 ---
 
 # Unwrapping Results

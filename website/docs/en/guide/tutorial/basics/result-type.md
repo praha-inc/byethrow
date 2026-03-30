@@ -1,5 +1,5 @@
 ---
-description: Learn what the Result type is in @praha/byethrow and understand how it represents success and failure outcomes in TypeScript.
+description: The Result<T, E> union type structure — Success, Failure, ResultAsync — and why it beats exceptions for type-safe error handling.
 ---
 
 # Result Type

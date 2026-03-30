@@ -1,5 +1,5 @@
 ---
-description: Result型とthrow文をいつ使い分けるべきか、そして「予期されたエラー」と「予期しないエラー」の処理哲学を学びましょう。
+description: '予期されたビジネスエラーにはResultを、予期しないインフラエラーにはthrowを使い分けるハイブリッドアプローチの解説。'
 ---
 
 # Result vs throw

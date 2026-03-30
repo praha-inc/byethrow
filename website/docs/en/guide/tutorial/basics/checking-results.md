@@ -1,5 +1,5 @@
 ---
-description: Learn how to safely check and narrow Result types using isSuccess and isFailure type guards in @praha/byethrow.
+description: Using isSuccess, isFailure, and isResult type guards to safely inspect and narrow Result types in TypeScript.
 ---
 
 # Checking Results

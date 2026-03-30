@@ -1,5 +1,5 @@
 ---
-description: '@praha/byethrowのunwrapおよびunwrapError関数を使用して、オプションのデフォルト値を指定しながらResultから値を取り出す方法を学びましょう。'
+description: 'Result.unwrapで成功値を、Result.unwrapErrorでエラー値を取り出す方法。デフォルト値の指定とアプリケーション境界での適切な使い方。'
 ---
 
 # Result の値を取り出す

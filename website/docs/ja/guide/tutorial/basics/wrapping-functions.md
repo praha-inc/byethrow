@@ -1,5 +1,5 @@
 ---
-description: '@praha/byethrowのfnとtry関数を使用して、例外を投げる関数をラップし、Result型に変換する方法を学びましょう。'
+description: 'Result.fnとResult.tryを使って例外を投げる可能性のある関数をResult型にラップし、安全に扱う方法の解説。'
 ---
 
 # 関数をラップする

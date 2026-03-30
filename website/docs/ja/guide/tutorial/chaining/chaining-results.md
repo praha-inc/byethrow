@@ -1,5 +1,5 @@
 ---
-description: '@praha/byethrowのandThenとorElse関数を使って、Resultの計算を連結し、順次エラーハンドリングを行う方法を学びましょう。'
+description: 'andThenで成功時の計算を連結しorElseで失敗から回復する、Resultを使った順次処理とエラー回復パターンの解説。'
 ---
 
 # 関数を合成する
