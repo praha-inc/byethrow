@@ -1,5 +1,12 @@
 # @praha/byethrow-docs
 
+## 0.11.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @praha/byethrow@0.11.0
+
 ## 0.10.1
 
 ### Patch Changes
