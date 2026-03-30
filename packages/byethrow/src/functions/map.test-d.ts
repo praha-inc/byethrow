@@ -8,7 +8,6 @@ import type { Result, ResultAsync } from '../result';
 
 describe('map', () => {
   describe('when used without the pipe function', () => {
-    // eslint-disable-next-line unicorn/consistent-function-scoping
     const transform = (x: number) => x.toString();
 
     describe('when Result is synchronous', () => {

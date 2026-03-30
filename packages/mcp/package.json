@@ -34,7 +34,7 @@
   "scripts": {
     "generate": "typedoc",
     "build": "rslib build",
-    "lint:code": "eslint .",
+    "lint:code": "oxlint",
     "lint:type": "tsc --noEmit"
   },
   "dependencies": {
@@ -48,7 +48,7 @@
     "@rslib/core": "0.20.1",
     "@rspack/core": "1.7.10",
     "@types/node": "24.12.0",
-    "eslint": "9.39.4",
+    "oxlint": "1.57.0",
     "typedoc": "0.28.18",
     "typedoc-plugin-markdown": "4.11.0",
     "typescript": "5.9.3"

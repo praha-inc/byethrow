@@ -26,7 +26,6 @@ describe('orElse', () => {
           const input = fail('error');
 
           describe('when input is a success', () => {
-            // eslint-disable-next-line unicorn/consistent-function-scoping
             const transform = (x: string) => succeed(x.toUpperCase());
 
             it('should return a Result with transformed value', () => {
@@ -37,7 +36,6 @@ describe('orElse', () => {
           });
 
           describe('when input is a failure', () => {
-            // eslint-disable-next-line unicorn/consistent-function-scoping
             const transform = (x: string) => fail(x.toUpperCase());
 
             it('should return a Result with transformed value', () => {
@@ -65,7 +63,6 @@ describe('orElse', () => {
           const input = fail('error');
 
           describe('when input is a success', () => {
-            // eslint-disable-next-line unicorn/consistent-function-scoping
             const transform = (x: string) => succeed(Promise.resolve(x.toUpperCase()));
 
             it('should return a ResultAsync with transformed value', () => {
@@ -76,7 +73,6 @@ describe('orElse', () => {
           });
 
           describe('when input is a failure', () => {
-            // eslint-disable-next-line unicorn/consistent-function-scoping
             const transform = (x: string) => fail(Promise.resolve(x.toUpperCase()));
 
             it('should return a ResultAsync with transformed value', () => {
@@ -106,7 +102,6 @@ describe('orElse', () => {
           const input = fail(Promise.resolve('error'));
 
           describe('when input is a success', () => {
-            // eslint-disable-next-line unicorn/consistent-function-scoping
             const transform = (x: string) => succeed(x.toUpperCase());
 
             it('should return a ResultAsync with transformed value', () => {
@@ -117,7 +112,6 @@ describe('orElse', () => {
           });
 
           describe('when input is a failure', () => {
-            // eslint-disable-next-line unicorn/consistent-function-scoping
             const transform = (x: string) => fail(x.toUpperCase());
 
             it('should return a ResultAsync with transformed value', () => {
@@ -145,7 +139,6 @@ describe('orElse', () => {
           const input = fail(Promise.resolve('error'));
 
           describe('when input is a success', () => {
-            // eslint-disable-next-line unicorn/consistent-function-scoping
             const transform = (x: string) => succeed(Promise.resolve(x.toUpperCase()));
 
             it('should return a ResultAsync with transformed value', () => {
@@ -156,7 +149,6 @@ describe('orElse', () => {
           });
 
           describe('when input is a failure', () => {
-            // eslint-disable-next-line unicorn/consistent-function-scoping
             const transform = (x: string) => fail(Promise.resolve(x.toUpperCase()));
 
             it('should return a ResultAsync with transformed value', () => {

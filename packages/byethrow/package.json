@@ -45,7 +45,7 @@
     "build:doc": "typedoc",
     "test": "vitest run",
     "test:watch": "vitest watch --typecheck",
-    "lint:code": "eslint .",
+    "lint:code": "oxlint",
     "lint:type": "tsc --noEmit"
   },
   "dependencies": {
@@ -53,7 +53,7 @@
   },
   "devDependencies": {
     "@rslib/core": "0.20.1",
-    "eslint": "9.39.4",
+    "oxlint": "1.57.0",
     "typedoc": "0.28.18",
     "typedoc-plugin-markdown": "4.11.0",
     "typescript": "5.9.3",

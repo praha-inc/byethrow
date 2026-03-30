@@ -4,8 +4,10 @@
     "@tsconfig/strictest/tsconfig.json"
   ],
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "noEmit": true,
     "esModuleInterop": true,
     "target": "ES2022"
   }

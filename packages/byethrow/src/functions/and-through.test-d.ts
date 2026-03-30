@@ -12,7 +12,6 @@ describe('andThrough', () => {
     describe('when input is synchronous', () => {
       describe('when output is synchronous', () => {
         describe('when output is a success', () => {
-          // eslint-disable-next-line unicorn/consistent-function-scoping
           const transform = (x: number) => succeed(x.toString());
 
           describe('when input is a success', () => {
@@ -37,7 +36,6 @@ describe('andThrough', () => {
         });
 
         describe('when output is a failure', () => {
-          // eslint-disable-next-line unicorn/consistent-function-scoping
           const transform = (x: number) => fail(x.toString());
 
           describe('when input is a success', () => {
@@ -64,7 +62,6 @@ describe('andThrough', () => {
 
       describe('when output is asynchronous (Promise)', () => {
         describe('when output is a success', () => {
-          // eslint-disable-next-line unicorn/consistent-function-scoping
           const transform = (x: number) => succeed(Promise.resolve(x.toString()));
 
           describe('when input is a success', () => {
@@ -89,7 +86,6 @@ describe('andThrough', () => {
         });
 
         describe('when output is a failure', () => {
-          // eslint-disable-next-line unicorn/consistent-function-scoping
           const transform = (x: number) => fail(Promise.resolve(x.toString()));
 
           describe('when input is a success', () => {
@@ -118,7 +114,6 @@ describe('andThrough', () => {
     describe('when input is asynchronous (Promise)', () => {
       describe('when output is synchronous', () => {
         describe('when output is a success', () => {
-          // eslint-disable-next-line unicorn/consistent-function-scoping
           const transform = (x: number) => succeed(x.toString());
 
           describe('when input is a success', () => {
@@ -143,7 +138,6 @@ describe('andThrough', () => {
         });
 
         describe('when output is a failure', () => {
-          // eslint-disable-next-line unicorn/consistent-function-scoping
           const transform = (x: number) => fail(x.toString());
 
           describe('when input is a success', () => {
@@ -170,7 +164,6 @@ describe('andThrough', () => {
 
       describe('when output is asynchronous (Promise)', () => {
         describe('when output is a success', () => {
-          // eslint-disable-next-line unicorn/consistent-function-scoping
           const transform = (x: number) => succeed(Promise.resolve(x.toString()));
 
           describe('when input is a success', () => {
@@ -195,7 +188,6 @@ describe('andThrough', () => {
         });
 
         describe('when output is a failure', () => {
-          // eslint-disable-next-line unicorn/consistent-function-scoping
           const transform = (x: number) => fail(Promise.resolve(x.toString()));
 
           describe('when input is a success', () => {

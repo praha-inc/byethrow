@@ -1,4 +1,4 @@
-import type { Failure, Result } from '../result';
+import type { Result } from '../result';
 
 /**
  * Type guard to check if a {@link Result} is a {@link Failure}.

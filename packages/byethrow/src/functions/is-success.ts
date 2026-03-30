@@ -1,4 +1,4 @@
-import type { Result, Success } from '../result';
+import type { Result } from '../result';
 
 /**
  * Type guard to check if a {@link Result} is a {@link Success}.

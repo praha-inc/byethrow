@@ -11,7 +11,6 @@ describe('inspect', () => {
   describe('when used without the pipe function', () => {
     describe('when input is synchronous', () => {
       describe('when output is synchronous', () => {
-        // eslint-disable-next-line unicorn/consistent-function-scoping
         const sideEffect = (x: number) => x;
 
         describe('when input is a success', () => {
@@ -36,7 +35,6 @@ describe('inspect', () => {
       });
 
       describe('when output is asynchronous (Promise)', () => {
-        // eslint-disable-next-line unicorn/consistent-function-scoping
         const sideEffect = (x: number) => Promise.resolve(x);
 
         describe('when input is a success', () => {
@@ -63,7 +61,6 @@ describe('inspect', () => {
 
     describe('when input is asynchronous (Promise)', () => {
       describe('when output is synchronous', () => {
-        // eslint-disable-next-line unicorn/consistent-function-scoping
         const sideEffect = (x: number) => x;
 
         describe('when input is a success', () => {
@@ -88,7 +85,6 @@ describe('inspect', () => {
       });
 
       describe('when output is asynchronous (Promise)', () => {
-        // eslint-disable-next-line unicorn/consistent-function-scoping
         const sideEffect = (x: number) => Promise.resolve(x);
 
         describe('when input is a success', () => {

@@ -1,4 +1,4 @@
-/* eslint-disable unicorn/prevent-abbreviations */
+/* oxlint-disable unicorn-js/prevent-abbreviations */
 
 /**
  * Applies a sequence of functions to a value, from left to right.
