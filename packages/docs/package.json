@@ -62,7 +62,7 @@
   },
   "devDependencies": {
     "@praha/byethrow-website": "workspace:*",
-    "@rslib/core": "0.20.0",
+    "@rslib/core": "0.20.1",
     "@types/node": "24.12.0",
     "eslint": "9.39.4",
     "tsx": "4.21.0",
