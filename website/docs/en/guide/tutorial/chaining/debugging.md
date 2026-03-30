@@ -1,5 +1,5 @@
 ---
-description: Learn how to debug Result pipelines using inspect and inspectError functions in @praha/byethrow to peek at values.
+description: Using Result.inspect and Result.inspectError to log values at each pipeline step without altering the Result flow.
 ---
 
 # Debugging

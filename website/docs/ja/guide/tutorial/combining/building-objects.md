@@ -1,5 +1,5 @@
 ---
-description: '@praha/byethrowのdo/bindパターンを使用して、成功したResultを蓄積しながら複雑なオブジェクトを構築する方法を学びましょう。'
+description: 'Result.doとResult.bindを組み合わせたdo/bindパターンで、複数の依存した計算結果を蓄積しながらオブジェクトを構築する方法。'
 ---
 
 # オブジェクトを構築する

@@ -1,5 +1,5 @@
 ---
-description: Learn the two import methods for @praha/byethrow - namespace approach and direct imports - and how to optimize your bundle size.
+description: Two import styles for @praha/byethrow — the Result namespace and the R shorthand alias — with tree-shaking support explained.
 ---
 
 # Importing Result

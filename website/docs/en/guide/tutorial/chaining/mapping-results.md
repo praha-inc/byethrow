@@ -1,5 +1,5 @@
 ---
-description: Learn how to transform success and error values inside a Result using map and mapError functions in @praha/byethrow.
+description: Transforming Result values with Result.map for success and Result.mapError for errors, with practical HTTP and UI formatting examples.
 ---
 
 # Mapping Results

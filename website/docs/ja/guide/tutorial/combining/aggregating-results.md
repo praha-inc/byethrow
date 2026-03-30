@@ -1,5 +1,5 @@
 ---
-description: "@praha/byethrowのsequenceとcollect関数を使用して、複数のResultを集約する方法を学びましょう。"
+description: 'Result.sequenceで最初の失敗で停止し、Result.collectですべてのエラーを収集する複数Resultの集約方法と非同期動作の違い。'
 ---
 
 # Result を集約する

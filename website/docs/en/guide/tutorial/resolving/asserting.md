@@ -1,5 +1,5 @@
 ---
-description: Learn how to assert Result types at compile time using assertSuccess and assertFailure in @praha/byethrow for safe value extraction.
+description: Compile-time Result assertions with assertSuccess and assertFailure, requiring never error or success types for safe unwrapping.
 ---
 
 # Asserting Results

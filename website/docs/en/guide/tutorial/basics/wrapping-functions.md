@@ -1,5 +1,5 @@
 ---
-description: Learn how to wrap throwing functions and convert exceptions into Result types using the fn and try functions in @praha/byethrow.
+description: Wrapping throwing functions into Result types using Result.fn for reusable wrappers and Result.try for one-off executions.
 ---
 
 # Wrapping Functions

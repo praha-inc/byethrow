@@ -1,5 +1,5 @@
 ---
-description: '@praha/byethrowのpipe関数を使って、読みやすい左から右への方式で操作を連結する方法を学びましょう。'
+description: 'Result.pipe関数を使って複数の操作を左から右へ読みやすく連結する方法と、Resultや非同期処理との組み合わせ方。'
 ---
 
 # pipe 関数の扱い方

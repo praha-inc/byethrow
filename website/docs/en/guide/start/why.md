@@ -1,5 +1,5 @@
 ---
-description: Discover why @praha/byethrow is the sweet spot between simplicity and power for Result type error handling in TypeScript.
+description: Why @praha/byethrow over neverthrow, effect-ts, or try/catch — practical TypeScript error handling without functional programming overhead.
 ---
 
 # Why byethrow?

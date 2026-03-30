@@ -1,5 +1,5 @@
 ---
-description: '@praha/byethrowのmapとmapError関数を使って、Result内の成功値やエラー値を変換する方法を学びましょう。'
+description: 'Result.mapで成功値を変換し、Result.mapErrorでエラー値を変換する方法。ドメインエラーをHTTPレスポンスに変換する実例付き。'
 ---
 
 # Result を変換する

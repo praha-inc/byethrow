@@ -1,5 +1,5 @@
 ---
-description: '@praha/byethrowの2つのインポート方法（名前空間アプローチと直接インポート）を学び、バンドルサイズを最適化する方法を理解しましょう。'
+description: '@praha/byethrowのResultとRの2種類のインポート方法、Tree-shakingサポート、コードベースで統一すべき理由を解説。'
 ---
 
 # Resultのインポート方法

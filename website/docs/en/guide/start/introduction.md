@@ -1,5 +1,5 @@
 ---
-description: Introduction to @praha/byethrow - a lightweight, tree-shakable Result type library for elegant error handling in JavaScript and TypeScript.
+description: Overview of @praha/byethrow, a tree-shakable TypeScript Result type library for explicit, type-safe error handling.
 ---
 
 # Introduction

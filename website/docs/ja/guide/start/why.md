@@ -1,5 +1,5 @@
 ---
-description: '@praha/byethrowがTypeScriptでのResult型エラーハンドリングにおいて、シンプルさとパワーの最適なバランスを実現している理由をご紹介します。'
+description: 'neverthrowやeffect-ts・従来のtry/catchと比較しながら、byethrowが実践的な開発に最適な理由と設計思想を説明。'
 ---
 
 # byethrow を選ぶ理由

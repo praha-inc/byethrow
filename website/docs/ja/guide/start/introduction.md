@@ -1,5 +1,5 @@
 ---
-description: '@praha/byethrowの紹介 - JavaScriptとTypeScriptでエレガントなエラーハンドリングを実現する、軽量でツリーシェイク可能なResult型ライブラリ。'
+description: '@praha/byethrowの概要と特徴。Tree Shaking対応、同期・非同期統一処理、pipe関数による型安全なResult型ライブラリの紹介。'
 ---
 
 # はじめに

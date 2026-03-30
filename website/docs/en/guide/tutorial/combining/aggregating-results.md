@@ -1,5 +1,5 @@
 ---
-description: Learn how to aggregate multiple Results using sequence and collect functions in @praha/byethrow with different failure handling strategies.
+description: Combining multiple Results with Result.sequence (stop on first failure) and Result.collect (gather all errors, parallel async).
 ---
 
 # Aggregating Results

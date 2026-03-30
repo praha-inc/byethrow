@@ -1,5 +1,5 @@
 ---
-description: Learn how to create Result types using succeed and fail functions in @praha/byethrow, including async value handling.
+description: Creating Success and Failure results with Result.succeed, Result.fail, and Result.do, including async and void variants.
 ---
 
 # Creating Results

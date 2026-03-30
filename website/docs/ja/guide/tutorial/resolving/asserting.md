@@ -1,5 +1,5 @@
 ---
-description: '@praha/byethrowのassertSuccessとassertFailureを使用して、コンパイル時にResult型を検証し、安全に値を取り出す方法を学びましょう。'
+description: 'assertSuccessとassertFailureでコンパイル時にResult型を検証し、unwrapと組み合わせて型安全に値を取り出す方法。'
 ---
 
 # Result を検証する

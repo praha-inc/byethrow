@@ -1,5 +1,5 @@
 ---
-description: '@praha/byethrowのisSuccessとisFailure型ガードを使用して、Result型を安全にチェックして絞り込む方法を学びましょう。'
+description: 'isSuccess・isFailure・isResultの型ガード関数を使ってResultの状態を安全に判定し、TypeScriptの型を絞り込む方法。'
 ---
 
 # Result を確認する
