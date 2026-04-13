@@ -118,6 +118,24 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
+  packages/testing:
+    devDependencies:
+      '@praha/byethrow':
+        specifier: workspace:*
+        version: link:../byethrow
+      '@rslib/core':
+        specifier: 0.21.0
+        version: 0.21.0(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(typescript@5.9.3)
+      oxlint:
+        specifier: 1.59.0
+        version: 1.59.0(oxlint-tsgolint@0.20.0)
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: 4.1.4
+        version: 4.1.4(@types/node@24.12.2)(vite@8.0.8(@types/node@24.12.2)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.3))
+
   website:
     dependencies:
       '@rspress/core':
