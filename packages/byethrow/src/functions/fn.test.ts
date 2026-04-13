@@ -64,7 +64,7 @@ describe('fn', () => {
     describe('when catch handler is provided', () => {
       it('should return a Promise', () => {
         const result = fn({
-          // eslint-disable-next-line @typescript-eslint/require-await
+          // oxlint-disable-next-line @typescript-eslint/require-await
           try: async () => 'success',
           catch: String,
         })();
@@ -74,7 +74,7 @@ describe('fn', () => {
 
       it('should succeed when promise resolves', async () => {
         const result = await fn({
-          // eslint-disable-next-line @typescript-eslint/require-await
+          // oxlint-disable-next-line @typescript-eslint/require-await
           try: async () => 'success',
           catch: String,
         })();
@@ -84,7 +84,7 @@ describe('fn', () => {
 
       it('should fail when promise rejects', async () => {
         const result = await fn({
-          // eslint-disable-next-line @typescript-eslint/require-await
+          // oxlint-disable-next-line @typescript-eslint/require-await
           try: async () => {
             throw new Error('failure');
           },
@@ -96,7 +96,7 @@ describe('fn', () => {
 
       it('should pass arguments', async () => {
         const result = await fn({
-          // eslint-disable-next-line @typescript-eslint/require-await
+          // oxlint-disable-next-line @typescript-eslint/require-await
           try: async (a: string, b: string) => `${a} ${b}`,
           catch: String,
         })('Hello', 'World');
@@ -109,7 +109,7 @@ describe('fn', () => {
       it('should return a Promise', () => {
         const result = fn({
           safe: true,
-          // eslint-disable-next-line @typescript-eslint/require-await
+          // oxlint-disable-next-line @typescript-eslint/require-await
           try: async () => 'success',
         })();
 
@@ -119,7 +119,7 @@ describe('fn', () => {
       it('should succeed when promise resolves', async () => {
         const result = await fn({
           safe: true,
-          // eslint-disable-next-line @typescript-eslint/require-await
+          // oxlint-disable-next-line @typescript-eslint/require-await
           try: async () => 'success',
         })();
 
@@ -129,7 +129,7 @@ describe('fn', () => {
       it('should throw when promise rejects', async () => {
         await expect(() => fn({
           safe: true,
-          // eslint-disable-next-line @typescript-eslint/require-await
+          // oxlint-disable-next-line @typescript-eslint/require-await
           try: async () => {
             throw new Error('failure');
           },

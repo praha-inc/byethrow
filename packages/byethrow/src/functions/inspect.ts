@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* oxlint-disable @typescript-eslint/no-explicit-any */
 
 import { isSuccess } from './is-success';
 import { isPromise } from '../internals/helpers/is-promise';
@@ -57,7 +57,7 @@ export const inspect: {
       return r;
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    // oxlint-disable-next-line @typescript-eslint/no-unsafe-return
     return isPromise(result) ? result.then(apply) : apply(result);
   };
 };

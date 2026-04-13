@@ -1,4 +1,4 @@
-/* eslint-disable import-x/export */
+/* oxlint-disable import-x/export */
 export * from '@rspress/core/theme-original';
 
 export * from './components/stackblitz';

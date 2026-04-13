@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* oxlint-disable @typescript-eslint/no-explicit-any */
 
 import { fail } from './fail';
 import { isFailure } from './is-failure';
@@ -155,7 +155,7 @@ export const sequence: {
   } else {
     return reduce(
       Object.entries(value as Record<string, any>),
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      // oxlint-disable-next-line @typescript-eslint/no-unsafe-member-access
       (accumulator, value, [key]) => { accumulator[key] = value; },
       {} as Record<string, unknown>,
     );

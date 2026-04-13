@@ -15,10 +15,10 @@
   "devDependencies": {
     "@changesets/changelog-github": "0.6.0",
     "@changesets/cli": "2.30.0",
-    "@praha/oxlint-config-standard": "1.0.0-beta.1",
+    "@praha/oxlint-config-standard": "1.0.0-beta.3",
     "@tsconfig/strictest": "2.0.8",
-    "oxlint": "1.57.0",
-    "oxlint-tsgolint": "0.18.1",
+    "oxlint": "1.59.0",
+    "oxlint-tsgolint": "0.20.0",
     "pkg-pr-new": "0.0.66",
     "turbo": "2.9.5",
     "vitest": "4.1.4"

@@ -16,7 +16,7 @@ const agentSkillPath = {
   [agent.cursor]: '.cursor/rules/byethrow/RULE.md',
 };
 
-// eslint-disable-next-line func-style
+// oxlint-disable-next-line func-style
 function assertAgent(value: string): asserts value is (typeof agent)[keyof typeof agent] {
   if (!Object.values<string>(agent).includes(value)) {
     throw new Error(`Invalid agent: ${value}`);
