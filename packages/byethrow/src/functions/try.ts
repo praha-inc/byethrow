@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access */
+/* oxlint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access */
 
 import { fail } from './fail';
 import { succeed } from './succeed';
@@ -87,7 +87,7 @@ const try_: {
 } = (options: any) => {
   const fn = (): any => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      // oxlint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const output = options.try();
       if (isPromise(output)) {
         const promise = succeed(output);
@@ -105,7 +105,7 @@ const try_: {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  // oxlint-disable-next-line @typescript-eslint/no-unsafe-return
   return fn();
 };
 

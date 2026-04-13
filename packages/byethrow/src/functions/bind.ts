@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* oxlint-disable @typescript-eslint/no-explicit-any */
 
 import { isFailure } from './is-failure';
 import { succeed } from './succeed';
@@ -76,7 +76,7 @@ export const bind: {
       return isPromise(fr) ? fr.then(attach) : attach(fr);
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    // oxlint-disable-next-line @typescript-eslint/no-unsafe-return
     return (isPromise(result) ? result.then(apply) : apply(result)) as any;
   };
 };

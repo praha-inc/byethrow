@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* oxlint-disable @typescript-eslint/no-explicit-any */
 
 import { isFailure } from './is-failure';
 import { isPromise } from '../internals/helpers/is-promise';
@@ -55,6 +55,6 @@ export const assertSuccess = <R extends ResultMaybeAsync<any, never>>(
     return r;
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  // oxlint-disable-next-line @typescript-eslint/no-unsafe-return
   return (isPromise(result) ? result.then(apply) : apply(result)) as any;
 };

@@ -27,7 +27,7 @@ describe('isResult', () => {
     });
 
     it('should return false for undefined', () => {
-      // eslint-disable-next-line unicorn/no-useless-undefined
+      // oxlint-disable-next-line unicorn/no-useless-undefined
       expect(isResult(undefined)).toBe(false);
     });
 

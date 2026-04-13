@@ -1,7 +1,7 @@
 import { Result } from '@praha/byethrow';
 
 export const retry = (retries: number) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // oxlint-disable-next-line @typescript-eslint/no-explicit-any
   return <F extends (...args: any[]) => Result.ResultAsync<unknown, unknown>>(fn: F): F => {
     return ((...args: Parameters<F>) => {
       const execute = async (attempt: number): Promise<Result.Result<unknown, unknown>> => {

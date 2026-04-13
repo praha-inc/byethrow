@@ -55,7 +55,7 @@ describe('try', () => {
     describe('when catch handler is provided', () => {
       it('should succeed when promise resolves', async () => {
         const result = await try_({
-          // eslint-disable-next-line @typescript-eslint/require-await
+          // oxlint-disable-next-line @typescript-eslint/require-await
           try: async () => 'success',
           catch: String,
         });
@@ -65,7 +65,7 @@ describe('try', () => {
 
       it('should fail when promise rejects', async () => {
         const result = await try_({
-          // eslint-disable-next-line @typescript-eslint/require-await
+          // oxlint-disable-next-line @typescript-eslint/require-await
           try: async () => {
             throw new Error('failure');
           },
@@ -80,7 +80,7 @@ describe('try', () => {
       it('should succeed when promise resolves', async () => {
         const result = await try_({
           safe: true,
-          // eslint-disable-next-line @typescript-eslint/require-await
+          // oxlint-disable-next-line @typescript-eslint/require-await
           try: async () => 'success',
         });
 
@@ -90,7 +90,7 @@ describe('try', () => {
       it('should throw when promise rejects', async () => {
         await expect(() => try_({
           safe: true,
-          // eslint-disable-next-line @typescript-eslint/require-await
+          // oxlint-disable-next-line @typescript-eslint/require-await
           try: async () => {
             throw new Error('failure');
           },

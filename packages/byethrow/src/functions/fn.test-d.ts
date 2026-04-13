@@ -33,7 +33,7 @@ describe('try', () => {
     describe('when catch handler is provided', () => {
       it('should return a ResultAsync with inferred success and error types', () => {
         const result = fn({
-          // eslint-disable-next-line @typescript-eslint/require-await
+          // oxlint-disable-next-line @typescript-eslint/require-await
           try: async (message: string) => message,
           catch: String,
         });
@@ -46,7 +46,7 @@ describe('try', () => {
       it('should return a ResultAsync with inferred success type and never as error type', () => {
         const result = fn({
           safe: true,
-          // eslint-disable-next-line @typescript-eslint/require-await
+          // oxlint-disable-next-line @typescript-eslint/require-await
           try: async (message: string) => message,
         });
 

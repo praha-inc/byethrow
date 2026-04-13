@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* oxlint-disable @typescript-eslint/no-explicit-any */
 
 import { isSuccess } from './is-success';
 import { isPromise } from '../internals/helpers/is-promise';

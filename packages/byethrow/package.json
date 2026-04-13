@@ -53,7 +53,7 @@
   },
   "devDependencies": {
     "@rslib/core": "0.21.0",
-    "oxlint": "1.57.0",
+    "oxlint": "1.59.0",
     "typedoc": "0.28.18",
     "typedoc-plugin-markdown": "4.11.0",
     "typescript": "5.9.3",

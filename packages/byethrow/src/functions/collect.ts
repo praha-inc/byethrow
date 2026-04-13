@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* oxlint-disable @typescript-eslint/no-explicit-any */
 
 import { fail } from './fail';
 import { isFailure } from './is-failure';
@@ -113,6 +113,7 @@ export const collect: {
     const errors: unknown[] = [];
     const results = entries.map(([, entry]) => (fn ? fn(entry) : entry) as ResultMaybeAsync<unknown, unknown>);
     if (results.some(isPromise)) {
+      // oxlint-disable-next-line typescript/await-thenable
       return Promise.all(results).then((results): ResultMaybeAsync<T, unknown[]> => {
         const accumulator = initialValue;
         for (const [index, result] of results.entries()) {
@@ -154,7 +155,7 @@ export const collect: {
   } else {
     return reduce(
       Object.entries(value as Record<string, any>),
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      // oxlint-disable-next-line @typescript-eslint/no-unsafe-member-access
       (accumulator, value, [key]) => { accumulator[key] = value; },
       {} as Record<string, unknown>,
     );

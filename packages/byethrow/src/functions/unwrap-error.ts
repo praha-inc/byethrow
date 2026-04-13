@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* oxlint-disable @typescript-eslint/no-explicit-any */
 
 import { isResult } from './is-result';
 import { isSuccess } from './is-success';
@@ -58,7 +58,7 @@ export const unwrapError: {
   <R extends ResultMaybeAsync<any, any>>(): (result: R) => true extends HasPromise<R> ? Promise<InferFailure<R>> : InferFailure<R>;
   <R extends ResultMaybeAsync<any, any>, T>(defaultValue: T): (result: R) => true extends HasPromise<R> ? Promise<InferFailure<R> | T> : InferFailure<R> | T;
 } = <R extends ResultMaybeAsync<any, any>, T = never>(...args: any[]): any => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  // oxlint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const firstArgument = args[0];
 
   if (isResult<InferSuccess<R>, InferFailure<R>>(firstArgument) || isPromise(firstArgument)) {
@@ -69,7 +69,7 @@ export const unwrapError: {
     const apply = (r: Result<InferSuccess<R>, InferFailure<R>>): InferFailure<R> | T => {
       if (isSuccess(r)) {
         if (hasDefault) return defaultValue as T;
-        // eslint-disable-next-line @typescript-eslint/only-throw-error
+        // oxlint-disable-next-line @typescript-eslint/only-throw-error
         throw r.value;
       }
       return r.error;
@@ -85,7 +85,7 @@ export const unwrapError: {
     const apply = (r: Result<InferSuccess<R>, InferFailure<R>>): InferFailure<R> | T => {
       if (isSuccess(r)) {
         if (hasDefault) return defaultValue as T;
-        // eslint-disable-next-line @typescript-eslint/only-throw-error
+        // oxlint-disable-next-line @typescript-eslint/only-throw-error
         throw r.value;
       }
       return r.error;

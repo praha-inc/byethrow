@@ -1,7 +1,7 @@
 import { Result } from '@praha/byethrow';
 
 export const cache = (size: number) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // oxlint-disable-next-line @typescript-eslint/no-explicit-any
   return <F extends (...args: any[]) => Result.ResultAsync<unknown, unknown>>(fn: F): F => {
     const store = new Map<string, Result.Result<unknown, unknown>>();
     return (async (...args: Parameters<F>) => {
