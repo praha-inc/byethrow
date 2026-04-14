@@ -1,5 +1,32 @@
 # @praha/byethrow-website
 
+## 0.11.0
+
+### Minor Changes
+
+- [#647](https://github.com/praha-inc/byethrow/pull/647) [`034d73d`](https://github.com/praha-inc/byethrow/commit/034d73d02376e05614001be82020fae3537687cb) Thanks [@Karibash](https://github.com/Karibash)! - Remove @praha/byethrow-mcp package
+
+  **BREAKING CHANGES:**
+
+  The `@praha/byethrow-mcp` package has been removed. Please use the `init` command from `@praha/byethrow-docs` to configure Agent Skills instead.
+
+  ```bash
+  # Initialize Claude AI configuration
+  npx @praha/byethrow-docs init claude
+
+  # Initialize GitHub Copilot configuration
+  npx @praha/byethrow-docs init copilot
+
+  # Initialize Cursor AI configuration
+  npx @praha/byethrow-docs init cursor
+  ```
+
+### Patch Changes
+
+- [#649](https://github.com/praha-inc/byethrow/pull/649) [`806b4b2`](https://github.com/praha-inc/byethrow/commit/806b4b2346e5248877c66894262ff3c83af9c8b6) Thanks [@Karibash](https://github.com/Karibash)! - Update frontmatter descriptions
+
+- [#673](https://github.com/praha-inc/byethrow/pull/673) [`6670f5d`](https://github.com/praha-inc/byethrow/commit/6670f5d04085e3499d4fd5f899916e7cff77b852) Thanks [@Karibash](https://github.com/Karibash)! - Add @praha/byethrow-testing documentation
+
 ## 0.10.1
 
 ## 0.10.0
