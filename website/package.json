@@ -17,14 +17,18 @@
     "react-dom": "19.2.5"
   },
   "devDependencies": {
+    "@jest/globals": "30.3.0",
     "@praha/byethrow": "workspace:*",
+    "@praha/byethrow-testing": "workspace:*",
     "@praha/error-factory": "1.4.0",
     "@rspress/plugin-sitemap": "2.0.9",
     "@rspress/plugin-twoslash": "2.0.9",
+    "@rstest/core": "0.9.7",
     "@types/node": "24.12.2",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "execa": "9.6.1",
+    "expect": "30.3.0",
     "oxlint": "1.59.0",
     "rsbuild-plugin-open-graph": "1.1.2",
     "rspress-plugin-og": "0.0.5",

@@ -8,5 +8,10 @@
     "type": "file",
     "name": "eslint",
     "label": "ESLint プラグイン"
+  },
+  {
+    "type": "file",
+    "name": "testing",
+    "label": "テスト"
   }
 ]
