@@ -45,7 +45,7 @@ export const fail: {
   <const E>(error: E): ResultFor<E, never, Awaited<E>>;
 } = (...args: any[]) => {
   if (args.length <= 0) {
-    return { type: 'Failure' };
+    return { type: 'Failure', error: undefined };
   }
 
   const error = args[0];

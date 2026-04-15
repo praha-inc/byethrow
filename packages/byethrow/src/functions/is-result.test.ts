@@ -11,6 +11,14 @@ describe('isResult', () => {
     it('should return true for', () => {
       expect(isResult(input)).toBe(true);
     });
+
+    describe('when input is empty', () => {
+      const input = succeed();
+
+      it('should return true for', () => {
+        expect(isResult(input)).toBe(true);
+      });
+    });
   });
 
   describe('when input ia a failure', () => {
@@ -18,6 +26,14 @@ describe('isResult', () => {
 
     it('should return true for', () => {
       expect(isResult(input)).toBe(true);
+    });
+
+    describe('when input is empty', () => {
+      const input = fail();
+
+      it('should return true for', () => {
+        expect(isResult(input)).toBe(true);
+      });
     });
   });
 

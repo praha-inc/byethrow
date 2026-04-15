@@ -45,7 +45,7 @@ export const succeed: {
   <const T>(value: T): ResultFor<T, Awaited<T>, never>;
 } = (...args: any[]) => {
   if (args.length <= 0) {
-    return { type: 'Success' };
+    return { type: 'Success', value: undefined };
   }
 
   const value = args[0];
