@@ -1,5 +1,11 @@
 # @praha/byethrow
 
+## 0.11.1
+
+### Patch Changes
+
+- [#679](https://github.com/praha-inc/byethrow/pull/679) [`5968658`](https://github.com/praha-inc/byethrow/commit/5968658dfcd27f9b1061c9ef8460616bdc63571a) Thanks [@Karibash](https://github.com/Karibash)! - Fix isResult to recognize empty succeed() and fail() results
+
 ## 0.11.0
 
 ## 0.10.1

@@ -1,6 +1,6 @@
 {
   "name": "@praha/byethrow-testing",
-  "version": "0.11.0",
+  "version": "0.11.1",
   "description": "Custom test matchers for asserting @praha/byethrow Result types.",
   "keywords": [
     "javascript",
