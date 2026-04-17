@@ -7,7 +7,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@praha/byethrow": "0.10.1",
+    "@praha/byethrow": "0.11.0",
     "@praha/error-factory": "1.4.0",
     "citty": "0.2.2",
     "ts-pattern": "5.9.0",
