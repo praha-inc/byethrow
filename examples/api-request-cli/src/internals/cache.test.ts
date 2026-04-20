@@ -12,13 +12,17 @@ describe('cache', () => {
       .mockResolvedValueOnce(Result.succeed('result2'));
     const cachedFn = cache(2)(mockFn);
 
-    const result1 = await Result.unwrap(cachedFn('arg'));
-    expect(result1).toBe('result1');
+    const result1 = await cachedFn('arg');
     expect(mockFn).toHaveBeenCalledTimes(1);
+    expect(result1).toBeSuccess((value) => {
+      expect(value).toBe('result1');
+    });
 
-    const result2 = await Result.unwrap(cachedFn('arg'));
-    expect(result2).toBe('result1');
+    const result2 = await cachedFn('arg');
     expect(mockFn).toHaveBeenCalledTimes(1);
+    expect(result2).toBeSuccess((value) => {
+      expect(value).toBe('result1');
+    });
   });
 
   it('should not cache failed results', async () => {
@@ -27,13 +31,17 @@ describe('cache', () => {
       .mockResolvedValueOnce(Result.fail('result2'));
     const cachedFn = cache(2)(mockFn);
 
-    const result1 = await Result.unwrapError(cachedFn('arg'));
-    expect(result1).toBe('result1');
+    const result1 = await cachedFn('arg');
     expect(mockFn).toHaveBeenCalledTimes(1);
+    expect(result1).toBeFailure((error) => {
+      expect(error).toBe('result1');
+    });
 
-    const result2 = await Result.unwrapError(cachedFn('arg'));
-    expect(result2).toBe('result2');
+    const result2 = await cachedFn('arg');
     expect(mockFn).toHaveBeenCalledTimes(2);
+    expect(result2).toBeFailure((error) => {
+      expect(error).toBe('result2');
+    });
   });
 
   it('should cache results for different arguments separately', async () => {
@@ -42,19 +50,27 @@ describe('cache', () => {
       .mockResolvedValueOnce(Result.succeed('result2'));
     const cachedFn = cache(2)(mockFn);
 
-    const result1 = await Result.unwrap(cachedFn('arg1'));
-    const result2 = await Result.unwrap(cachedFn('arg2'));
+    const result1 = await cachedFn('arg1');
+    const result2 = await cachedFn('arg2');
 
-    expect(result1).toBe('result1');
-    expect(result2).toBe('result2');
     expect(mockFn).toHaveBeenCalledTimes(2);
+    expect(result1).toBeSuccess((value) => {
+      expect(value).toBe('result1');
+    });
+    expect(result2).toBeSuccess((value) => {
+      expect(value).toBe('result2');
+    });
 
-    const result1Cached = await Result.unwrap(cachedFn('arg1'));
-    const result2Cached = await Result.unwrap(cachedFn('arg2'));
+    const result1Cached = await cachedFn('arg1');
+    const result2Cached = await cachedFn('arg2');
 
-    expect(result1Cached).toBe('result1');
-    expect(result2Cached).toBe('result2');
     expect(mockFn).toHaveBeenCalledTimes(2);
+    expect(result1Cached).toBeSuccess((value) => {
+      expect(value).toBe('result1');
+    });
+    expect(result2Cached).toBeSuccess((value) => {
+      expect(value).toBe('result2');
+    });
   });
 
   it('should evict oldest cache entry when size limit is reached', async () => {
@@ -71,12 +87,16 @@ describe('cache', () => {
 
     expect(mockFn).toHaveBeenCalledTimes(3);
 
-    const result1 = await Result.unwrap(cachedFn('arg1'));
-    expect(result1).toBe('result4');
+    const result1 = await cachedFn('arg1');
     expect(mockFn).toHaveBeenCalledTimes(4);
+    expect(result1).toBeSuccess((value) => {
+      expect(value).toBe('result4');
+    });
 
-    const result3 = await Result.unwrap(cachedFn('arg3'));
-    expect(result3).toBe('result3');
+    const result3 = await cachedFn('arg3');
     expect(mockFn).toHaveBeenCalledTimes(4);
+    expect(result3).toBeSuccess((value) => {
+      expect(value).toBe('result3');
+    });
   });
 });

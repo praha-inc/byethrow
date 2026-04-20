@@ -1,4 +1,3 @@
-import { Result } from '@praha/byethrow';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { makeTimeout, TimeoutError } from './make-timeout.js';
@@ -17,9 +16,11 @@ describe('makeTimeout', () => {
     const timeout = makeTimeout(timeoutMs);
 
     vi.advanceTimersByTime(timeoutMs);
-    const result = await Result.unwrapError(timeout);
+    const result = await timeout;
 
-    expect(result).toBeInstanceOf(TimeoutError);
+    expect(result).toBeFailure((error) => {
+      expect(error).toBeInstanceOf(TimeoutError);
+    });
   });
 
   it('should not resolve before the specified timeout', async () => {
@@ -36,7 +37,10 @@ describe('makeTimeout', () => {
     expect(raceResult).toBe('not-resolved');
 
     vi.advanceTimersByTime(1);
-    const finalResult = await Result.unwrapError(timeout);
-    expect(finalResult).toBeInstanceOf(TimeoutError);
+    const finalResult = await timeout;
+
+    expect(finalResult).toBeFailure((error) => {
+      expect(error).toBeInstanceOf(TimeoutError);
+    });
   });
 });

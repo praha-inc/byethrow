@@ -10,10 +10,12 @@ describe('retry', () => {
     const mockFn = vi.fn<Fn>().mockResolvedValue(Result.succeed('success'));
     const retryFn = retry(2)(mockFn);
 
-    const result = await Result.unwrap(retryFn());
+    const result = await retryFn();
 
-    expect(result).toBe('success');
     expect(mockFn).toHaveBeenCalledTimes(1);
+    expect(result).toBeSuccess((value) => {
+      expect(value).toBe('success');
+    });
   });
 
   it('should retry when function fails and eventually succeed', async () => {
@@ -23,10 +25,12 @@ describe('retry', () => {
       .mockResolvedValueOnce(Result.succeed('success'));
     const retryFn = retry(2)(mockFn);
 
-    const result = await Result.unwrap(retryFn());
+    const result = await retryFn();
 
-    expect(result).toBe('success');
     expect(mockFn).toHaveBeenCalledTimes(3);
+    expect(result).toBeSuccess((value) => {
+      expect(value).toBe('success');
+    });
   });
 
   it('should stop retrying after maximum attempts and return last failure', async () => {

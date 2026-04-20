@@ -1,4 +1,3 @@
-import { Result } from '@praha/byethrow';
 import { describe, expect, it } from 'vitest';
 
 import { parsePackageJson, ParsePackageJsonError } from './parse-package-json';
@@ -9,12 +8,11 @@ describe('parsePackageJson', () => {
       const data = JSON.stringify({ name: 'example', version: '1.0.0' });
 
       it('should parse the JSON', () => {
-        const result = Result.pipe(
-          parsePackageJson(data),
-          Result.unwrap(),
-        );
+        const result = parsePackageJson(data);
 
-        expect(result).toEqual({ name: 'example', version: '1.0.0' });
+        expect(result).toBeSuccess((value) => {
+          expect(value).toEqual({ name: 'example', version: '1.0.0' });
+        });
       });
     });
 
@@ -22,12 +20,11 @@ describe('parsePackageJson', () => {
       const data = JSON.stringify({ invalid: true });
 
       it('should return a ParsePackageJsonError', () => {
-        const result = Result.pipe(
-          parsePackageJson(data),
-          Result.unwrapError(),
-        );
+        const result = parsePackageJson(data);
 
-        expect(result).toBeInstanceOf(ParsePackageJsonError);
+        expect(result).toBeFailure((error) => {
+          expect(error).toBeInstanceOf(ParsePackageJsonError);
+        });
       });
     });
   });
@@ -36,12 +33,11 @@ describe('parsePackageJson', () => {
     const data = '{ invalid json }';
 
     it('should return a ParsePackageJsonError', () => {
-      const result = Result.pipe(
-        parsePackageJson(data),
-        Result.unwrapError(),
-      );
+      const result = parsePackageJson(data);
 
-      expect(result).toBeInstanceOf(ParsePackageJsonError);
+      expect(result).toBeFailure((error) => {
+        expect(error).toBeInstanceOf(ParsePackageJsonError);
+      });
     });
   });
 });
