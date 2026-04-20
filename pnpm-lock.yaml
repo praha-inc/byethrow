@@ -161,8 +161,8 @@ importers:
         specifier: workspace:*
         version: link:../packages/testing
       '@praha/error-factory':
-        specifier: 1.4.0
-        version: 1.4.0
+        specifier: 1.4.1
+        version: 1.4.1
       '@rspress/plugin-sitemap':
         specifier: 2.0.9
         version: 2.0.9(@rspress/core@2.0.9(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/mdast@4.0.4)(@types/react@19.2.14)(micromark-util-types@2.0.2)(micromark@4.0.2))
@@ -1266,8 +1266,8 @@ packages:
     resolution: {integrity: sha512-QNqXyfVS2wm9hweSYD2O7F0G06uurj9kZ96TRQE5Y9hU7+tgdZwIkbAKc5Ocy1HxEY2kuDQa6cQ1WRs/O5LFKA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
 
-  '@praha/error-factory@1.4.0':
-    resolution: {integrity: sha512-Yb+dOngCP44RTzu37YsJI6CdO8/eLIy4r9yrZyxP9hiTZSA0FgfvnAe139wVChABbPJBeU0bbTY21EOswgOlLg==}
+  '@praha/error-factory@1.4.1':
+    resolution: {integrity: sha512-HA+y+xwmQIl9EPvZonRk1/hsSAvAlpDjlpruyW8kTAQ++Oq5Fi7hFV0Y84TLHXJ6SciYHlKGqrekrS5wzkD5+Q==}
 
   '@praha/oxlint-config-internal@1.0.0-beta.3':
     resolution: {integrity: sha512-o/9L4eUyDO00IU5X0pg01OpH7fmw9Mqf38ZcfKlkcVRRuCoSbIcPPHyIyFfem2oY3LCk5GS8pYb+nF+65PDTGg==}
@@ -5176,7 +5176,7 @@ snapshots:
 
   '@pkgr/core@0.2.9': {}
 
-  '@praha/error-factory@1.4.0': {}
+  '@praha/error-factory@1.4.1': {}
 
   '@praha/oxlint-config-internal@1.0.0-beta.3(oxlint-tsgolint@0.20.0)(oxlint@1.60.0(oxlint-tsgolint@0.20.0))':
     dependencies:
