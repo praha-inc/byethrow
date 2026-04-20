@@ -8,7 +8,7 @@ export class ReadFileError extends ErrorFactory({
   message: 'Failed to read file',
 }) {}
 
-export const readFile = Result.try({
+export const readFile = Result.fn({
   try: (path: string) => fs.readFile(path, 'utf8'),
   catch: (error) => new ReadFileError({ cause: error }),
 });

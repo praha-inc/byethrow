@@ -13,6 +13,7 @@ export const describe = defineCommand({
   args: {
     name: {
       type: 'positional',
+      required: true,
     },
   },
   run: async ({ args }) => {

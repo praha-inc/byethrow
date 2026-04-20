@@ -1,4 +1,3 @@
-import { Result } from '@praha/byethrow';
 import { afterEach, beforeEach, describe, vi, it, expect } from 'vitest';
 
 import { fetch, FetchHttpError, FetchNetworkError, FetchTimeoutError } from './fetch';
@@ -13,9 +12,11 @@ describe('fetch', () => {
     });
 
     it('should return a successful response for valid URL', async () => {
-      const result = await Result.unwrap(fetch('https://api.example.com/success'));
+      const result = await fetch('https://api.example.com/success');
 
-      expect(result).toEqual({ result: 'success' });
+      expect(result).toBeSuccess((value) => {
+        expect(value).toEqual({ result: 'success' });
+      });
     });
 
     it('should cache responses correctly', async () => {
@@ -35,10 +36,12 @@ describe('fetch', () => {
     });
 
     it('should return FetchHttpError for 404 response', async () => {
-      const result = await Result.unwrapError(fetch('https://api.example.com/notfound'));
+      const result = await fetch('https://api.example.com/notfound');
 
-      expect(result).toBeInstanceOf(FetchHttpError);
-      expect((result as FetchHttpError).status).toBe(404);
+      expect(result).toBeFailure((error) => {
+        expect(error).toBeInstanceOf(FetchHttpError);
+        expect((error as FetchHttpError).status).toBe(404);
+      });
       expect(globalThis.fetch).toHaveBeenCalledTimes(3);
     });
 
@@ -56,9 +59,11 @@ describe('fetch', () => {
     });
 
     it('should return FetchNetworkError for network failure', async () => {
-      const result = await Result.unwrapError(fetch('https://api.example.com/error'));
+      const result = await fetch('https://api.example.com/error');
 
-      expect(result).toBeInstanceOf(FetchNetworkError);
+      expect(result).toBeFailure((error) => {
+        expect(error).toBeInstanceOf(FetchNetworkError);
+      });
       expect(globalThis.fetch).toHaveBeenCalledTimes(3);
     });
 
@@ -87,9 +92,11 @@ describe('fetch', () => {
     it('should return FetchTimeoutError for slow responses', async () => {
       const resultPromise = fetch('https://api.example.com/slow');
       await vi.advanceTimersByTimeAsync(5000);
-      const result = await Result.unwrapError(resultPromise);
+      const result = await resultPromise;
 
-      expect(result).toBeInstanceOf(FetchTimeoutError);
+      expect(result).toBeFailure((error) => {
+        expect(error).toBeInstanceOf(FetchTimeoutError);
+      });
     });
   });
 });

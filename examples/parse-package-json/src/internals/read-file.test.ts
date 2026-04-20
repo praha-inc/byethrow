@@ -1,4 +1,3 @@
-import { Result } from '@praha/byethrow';
 import { vol } from 'memfs';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -31,12 +30,11 @@ describe('readFile', () => {
     });
 
     it('should read the content', async () => {
-      const result = await Result.pipe(
-        readFile(path),
-        Result.unwrap(),
-      );
+      const result = await readFile(path);
 
-      expect(result).toBe(content);
+      expect(result).toBeSuccess((value) => {
+        expect(value).toBe(content);
+      });
     });
   });
 
@@ -44,12 +42,11 @@ describe('readFile', () => {
     const path = './non-existent.txt';
 
     it('should return a ReadFileError', async () => {
-      const result = await Result.pipe(
-        readFile(path),
-        Result.unwrapError(),
-      );
+      const result = await readFile(path);
 
-      expect(result).toBeInstanceOf(ReadFileError);
+      expect(result).toBeFailure((error) => {
+        expect(error).toBeInstanceOf(ReadFileError);
+      });
     });
   });
 });

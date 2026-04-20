@@ -14,7 +14,6 @@ export class ParsePackageJsonError extends ErrorFactory({
 
 export const parsePackageJson = (data: string) => Result.pipe(
   Result.try({
-    immediate: true,
     try: () => JSON.parse(data) as unknown,
     catch: (error) => error,
   }),

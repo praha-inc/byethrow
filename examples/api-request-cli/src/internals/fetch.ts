@@ -42,7 +42,6 @@ export const fetch = Result.pipe(
           Result.mapError((error) => new FetchTimeoutError({ cause: error })),
         ),
         Result.try({
-          immediate: true,
           try: async () => globalThis.fetch(url),
           catch: (error) => new FetchNetworkError({ cause: error }),
         }),
@@ -53,7 +52,6 @@ export const fetch = Result.pipe(
       }),
       Result.andThen((response) => {
         return Result.try({
-          immediate: true,
           try: async () => await response.json() as unknown,
           catch: (error) => new FetchJsonParseError({ cause: error }),
         });
