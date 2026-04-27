@@ -170,8 +170,8 @@ importers:
         specifier: 2.0.9
         version: 2.0.9(@rspress/core@2.0.9(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/mdast@4.0.4)(@types/react@19.2.14)(micromark-util-types@2.0.2)(micromark@4.0.2))(react@19.2.5)(typescript@5.9.3)
       '@rstest/core':
-        specifier: 0.9.8
-        version: 0.9.8(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
+        specifier: 0.9.9
+        version: 0.9.9
       '@types/node':
         specifier: 24.12.2
         version: 24.12.2
@@ -1367,16 +1367,6 @@ packages:
       core-js:
         optional: true
 
-  '@rsbuild/core@2.0.0-rc.2':
-    resolution: {integrity: sha512-pZaJ8FBltCgOZEFMIixVY08GfbQ5qGyZvMX5pXyM05SQ6L0wzAoqytSAAU5oxMrcfNW6BmyRMqtq9OqG3vksAA==}
-    engines: {node: ^20.19.0 || >=22.12.0}
-    hasBin: true
-    peerDependencies:
-      core-js: '>= 3.0.0'
-    peerDependenciesMeta:
-      core-js:
-        optional: true
-
   '@rsbuild/core@2.0.1':
     resolution: {integrity: sha512-5TwUpb10Y+VYaYH8oLL/rfJGrhxrk16BiGzv101kzaMPT60MtOXgjEUTxztbjRuq0ifbtRJ/w7rsIZQ4VziWYg==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -1575,8 +1565,8 @@ packages:
   '@rspress/shared@2.0.9':
     resolution: {integrity: sha512-G48n3pC7AVAR58pLqwClUCYj5Nt7ZgYEStR8VTBGFuPgXtzb3+KPfo/gz0hb6wxdKJ1cL5ohPsZ6EXqllu6lew==}
 
-  '@rstest/core@0.9.8':
-    resolution: {integrity: sha512-teTuindQULqvjcYZeDULhrLcd6NDY9KSI7ck24YfZbZ2dm/zvEbBNB19V1l0UuJqRzjVsbw2DlIHNqQAt5ZLyw==}
+  '@rstest/core@0.9.9':
+    resolution: {integrity: sha512-AdlRgvyitoenjBTxlnYHr4rf71as96abmqVjmPXnfc0MyYk563AKMagHoWW5YMQKGCjRcrZx92dDRIUI0Z8Lyg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -5197,15 +5187,6 @@ snapshots:
       - '@emnapi/runtime'
       - '@module-federation/runtime-tools'
 
-  '@rsbuild/core@2.0.0-rc.2(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
-    dependencies:
-      '@rspack/core': 2.0.0-rc.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@swc/helpers@0.5.21)
-      '@swc/helpers': 0.5.21
-    transitivePeerDependencies:
-      - '@emnapi/core'
-      - '@emnapi/runtime'
-      - '@module-federation/runtime-tools'
-
   '@rsbuild/core@2.0.1':
     dependencies:
       '@rspack/core': 2.0.0(@swc/helpers@0.5.21)
@@ -5433,14 +5414,12 @@ snapshots:
       - '@module-federation/runtime-tools'
       - core-js
 
-  '@rstest/core@0.9.8(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
+  '@rstest/core@0.9.9':
     dependencies:
-      '@rsbuild/core': 2.0.0-rc.2(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
+      '@rsbuild/core': 2.0.1
       '@types/chai': 5.2.3
       tinypool: 2.1.0
     transitivePeerDependencies:
-      - '@emnapi/core'
-      - '@emnapi/runtime'
       - '@module-federation/runtime-tools'
       - core-js
 
