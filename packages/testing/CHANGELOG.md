@@ -1,5 +1,12 @@
 # @praha/byethrow-testing
 
+## 0.11.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @praha/byethrow@0.11.2
+
 ## 0.11.1
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @praha/byethrow-docs
 
+## 0.11.2
+
+### Patch Changes
+
+- [#690](https://github.com/praha-inc/byethrow/pull/690) [`5620f14`](https://github.com/praha-inc/byethrow/commit/5620f141505cb6a0ae0390cfcdd0d0683ab3de37) Thanks [@Karibash](https://github.com/Karibash)! - Update examples
+
+- Updated dependencies []:
+  - @praha/byethrow@0.11.2
+
 ## 0.11.1
 
 ### Patch Changes
