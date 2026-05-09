@@ -24,7 +24,7 @@
   "type": "module",
   "exports": {
     "require": {
-      "types": "./dist/cjs/index.d.ts",
+      "types": "./dist/cjs/index.d.cts",
       "default": "./dist/cjs/index.cjs"
     },
     "import": {
@@ -34,7 +34,7 @@
   },
   "main": "./dist/cjs/index.cjs",
   "module": "./dist/esm/index.js",
-  "types": "./dist/cjs/index.d.ts",
+  "types": "./dist/cjs/index.d.cts",
   "files": [
     "dist",
     "LICENSE",
