@@ -1,5 +1,16 @@
 # @praha/byethrow-docs
 
+## 0.11.2
+
+### Patch Changes
+
+- [#723](https://github.com/praha-inc/byethrow/pull/723) [`79a7d7f`](https://github.com/praha-inc/byethrow/commit/79a7d7fa7df4e3f90b75a7af491654402d983548) Thanks [@lppedd](https://github.com/lppedd)! - Fix `node` and `node16` module resolution for the CJS output.
+
+- [#690](https://github.com/praha-inc/byethrow/pull/690) [`5620f14`](https://github.com/praha-inc/byethrow/commit/5620f141505cb6a0ae0390cfcdd0d0683ab3de37) Thanks [@Karibash](https://github.com/Karibash)! - Update examples
+
+- Updated dependencies [[`79a7d7f`](https://github.com/praha-inc/byethrow/commit/79a7d7fa7df4e3f90b75a7af491654402d983548)]:
+  - @praha/byethrow@0.11.2
+
 ## 0.11.1
 
 ### Patch Changes
