@@ -57,8 +57,8 @@ importers:
         version: 1.1.0
     devDependencies:
       '@rslib/core':
-        specifier: 0.21.3
-        version: 0.21.3(typescript@5.9.3)
+        specifier: 0.21.4
+        version: 0.21.4(typescript@5.9.3)
       oxlint:
         specifier: 1.62.0
         version: 1.62.0(oxlint-tsgolint@0.22.1)
@@ -103,8 +103,8 @@ importers:
         specifier: workspace:*
         version: link:../../website
       '@rslib/core':
-        specifier: 0.21.3
-        version: 0.21.3(typescript@5.9.3)
+        specifier: 0.21.4
+        version: 0.21.4(typescript@5.9.3)
       '@types/node':
         specifier: 24.12.2
         version: 24.12.2
@@ -124,8 +124,8 @@ importers:
         specifier: workspace:*
         version: link:../byethrow
       '@rslib/core':
-        specifier: 0.21.3
-        version: 0.21.3(typescript@5.9.3)
+        specifier: 0.21.4
+        version: 0.21.4(typescript@5.9.3)
       oxlint:
         specifier: 1.62.0
         version: 1.62.0(oxlint-tsgolint@0.22.1)
@@ -1363,8 +1363,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  '@rslib/core@0.21.3':
-    resolution: {integrity: sha512-3kyF273GQWIky4rAGD+Nkewlc7OraRwM2rG6wMJ19cYeomN0OKokVbk0vvfLAcQu43mtEO+dnZk6BchUoRmQOg==}
+  '@rslib/core@0.21.4':
+    resolution: {integrity: sha512-lGQ3znngCmzYaIbPZcfEm4t+fGhSM4os1GKwXaLydUOB2mf3Q/MDffpEkuMtbzrW+PmAGJ8NIbjgipXd9mlcsg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -3443,8 +3443,8 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
-  rsbuild-plugin-dts@0.21.3:
-    resolution: {integrity: sha512-8E3/npwRp99gc/Bl5bE1KKN5eIS2TQ3fuA7fBEk67R1RF7V4OtFKVI7mhk3X8zoH/9cclV9v909dguegZDgncw==}
+  rsbuild-plugin-dts@0.21.4:
+    resolution: {integrity: sha512-hqXzk3pQFcbviCZNECxIZsH8ygyf9F9n3UZWHpjcAZmYeH5wLPsGqa6CyXWh4+EDXkO++7iXTVuIuw2x2hGn/w==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -5097,10 +5097,10 @@ snapshots:
     transitivePeerDependencies:
       - '@rspack/core'
 
-  '@rslib/core@0.21.3(typescript@5.9.3)':
+  '@rslib/core@0.21.4(typescript@5.9.3)':
     dependencies:
       '@rsbuild/core': 2.0.5
-      rsbuild-plugin-dts: 0.21.3(@rsbuild/core@2.0.5)(typescript@5.9.3)
+      rsbuild-plugin-dts: 0.21.4(@rsbuild/core@2.0.5)(typescript@5.9.3)
     optionalDependencies:
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -7632,7 +7632,7 @@ snapshots:
       '@rolldown/binding-win32-arm64-msvc': 1.0.0-rc.18
       '@rolldown/binding-win32-x64-msvc': 1.0.0-rc.18
 
-  rsbuild-plugin-dts@0.21.3(@rsbuild/core@2.0.5)(typescript@5.9.3):
+  rsbuild-plugin-dts@0.21.4(@rsbuild/core@2.0.5)(typescript@5.9.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
       '@rsbuild/core': 2.0.5
