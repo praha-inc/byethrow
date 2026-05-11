@@ -1,5 +1,11 @@
 # @praha/byethrow
 
+## 0.11.2
+
+### Patch Changes
+
+- [#723](https://github.com/praha-inc/byethrow/pull/723) [`79a7d7f`](https://github.com/praha-inc/byethrow/commit/79a7d7fa7df4e3f90b75a7af491654402d983548) Thanks [@lppedd](https://github.com/lppedd)! - Fix `node` and `node16` module resolution for the CJS output.
+
 ## 0.11.1
 
 ### Patch Changes
