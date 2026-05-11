@@ -5,7 +5,9 @@ import type { Format, LibConfig } from '@rslib/core';
 const createLibrary = (format: Format): LibConfig => ({
   format,
   bundle: false,
-  dts: true,
+  dts: {
+    autoExtension: true,
+  },
   redirect: {
     dts: {
       extension: true,
