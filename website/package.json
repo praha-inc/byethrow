@@ -17,7 +17,7 @@
     "react-dom": "19.2.6"
   },
   "devDependencies": {
-    "@jest/globals": "30.3.0",
+    "@jest/globals": "30.4.1",
     "@praha/byethrow": "workspace:*",
     "@praha/byethrow-testing": "workspace:*",
     "@praha/error-factory": "1.4.1",
@@ -28,7 +28,7 @@
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "execa": "9.6.1",
-    "expect": "30.3.0",
+    "expect": "30.4.1",
     "oxlint": "1.63.0",
     "rsbuild-plugin-open-graph": "1.1.2",
     "rspress-plugin-og": "0.0.5",
