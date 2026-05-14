@@ -13,7 +13,7 @@
     "zod": "4.4.3"
   },
   "devDependencies": {
-    "@praha/byethrow-testing": "0.11.1",
+    "@praha/byethrow-testing": "0.11.2",
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.12.3",
     "memfs": "4.57.2",
