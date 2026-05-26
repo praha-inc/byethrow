@@ -170,8 +170,8 @@ importers:
         specifier: 2.0.11
         version: 2.0.11(@rspress/core@2.0.12(@rspack/core@2.0.4(@swc/helpers@0.5.21))(@types/mdast@4.0.4)(@types/react@19.2.14)(micromark-util-types@2.0.2)(micromark@4.0.2))(react@19.2.6)(typescript@5.9.3)
       '@rstest/core':
-        specifier: 0.10.1
-        version: 0.10.1
+        specifier: 0.10.2
+        version: 0.10.2
       '@types/node':
         specifier: 24.12.4
         version: 24.12.4
@@ -1406,8 +1406,8 @@ packages:
   '@rspress/shared@2.0.12':
     resolution: {integrity: sha512-YTzaeMvxQRiMwCt5pk7CwkSBenp8HS+t1E82jFDhLwXPMChk7LHYazPGIuaNAoDMN1axW5EHtMUdZm7wVI8EdQ==}
 
-  '@rstest/core@0.10.1':
-    resolution: {integrity: sha512-nHp14J6/OAkRFF2Eq0aB0jZNQ0atjJsYNsKSgs84E+fv8gl5mxRZgCa9h80z4LWWFNU+ZKNlPpJDzE4Qk1j+cg==}
+  '@rstest/core@0.10.2':
+    resolution: {integrity: sha512-2nadZIrCBJL8AicSLcU0O0G2wo98QXmlsy3yX4ShiLFDlfQAzPgZJYzR6ssqQhVCMx/dIIFifyNiYsGWWWsrXg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -5009,7 +5009,7 @@ snapshots:
       - '@module-federation/runtime-tools'
       - core-js
 
-  '@rstest/core@0.10.1':
+  '@rstest/core@0.10.2':
     dependencies:
       '@rsbuild/core': 2.0.7
       '@types/chai': 5.2.3
