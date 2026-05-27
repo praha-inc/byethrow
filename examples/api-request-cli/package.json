@@ -19,6 +19,6 @@
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.12.4",
     "tsx": "4.22.2",
-    "vitest": "4.1.6"
+    "vitest": "4.1.7"
   }
 }
