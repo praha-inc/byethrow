@@ -18,7 +18,7 @@
     "@praha/byethrow-testing": "0.11.2",
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.12.4",
-    "tsx": "4.22.2",
+    "tsx": "4.22.3",
     "vitest": "4.1.7"
   }
 }
