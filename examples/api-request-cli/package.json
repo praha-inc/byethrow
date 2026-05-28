@@ -11,7 +11,7 @@
     "@praha/error-factory": "1.4.1",
     "citty": "0.2.2",
     "ts-pattern": "5.9.0",
-    "valibot": "1.4.0",
+    "valibot": "1.4.1",
     "zod": "4.4.3"
   },
   "devDependencies": {
