@@ -54,7 +54,7 @@
     "@rslib/core": "0.22.0",
     "oxlint": "1.67.0",
     "typescript": "5.9.3",
-    "vitest": "4.1.7"
+    "vitest": "4.1.8"
   },
   "peerDependencies": {
     "@praha/byethrow": "workspace:*"
