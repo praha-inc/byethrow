@@ -32,7 +32,6 @@ describe('succeed', () => {
   });
 
   it('should create a Success object with undefined value', () => {
-    // oxlint-disable-next-line unicorn/no-useless-undefined
     const result = succeed(undefined);
 
     expect(result).toEqual({

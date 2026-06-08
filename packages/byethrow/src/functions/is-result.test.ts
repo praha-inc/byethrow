@@ -43,7 +43,6 @@ describe('isResult', () => {
     });
 
     it('should return false for undefined', () => {
-      // oxlint-disable-next-line unicorn/no-useless-undefined
       expect(isResult(undefined)).toBe(false);
     });
 

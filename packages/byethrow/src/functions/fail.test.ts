@@ -32,7 +32,6 @@ describe('fail', () => {
   });
 
   it('should create a Failure object with undefined value', () => {
-    // oxlint-disable-next-line unicorn/no-useless-undefined
     const result = fail(undefined);
 
     expect(result).toEqual({
