@@ -1,5 +1,19 @@
 # @praha/byethrow-website
 
+## 0.12.0
+
+### Minor Changes
+
+- [#650](https://github.com/praha-inc/byethrow/pull/650) [`7db69c2`](https://github.com/praha-inc/byethrow/commit/7db69c2ff4ffdeecc515d4d49e50197b065b186a) Thanks [@Karibash](https://github.com/Karibash)! - Add documentation for @praha/byethrow-oxlint
+
+### Patch Changes
+
+- [#801](https://github.com/praha-inc/byethrow/pull/801) [`5216ac6`](https://github.com/praha-inc/byethrow/commit/5216ac6f8e735861fd2d86dc0614aafcf78b61f5) Thanks [@Karibash](https://github.com/Karibash)! - Add description frontmatter to linter docs
+
+- [#800](https://github.com/praha-inc/byethrow/pull/800) [`1b031f8`](https://github.com/praha-inc/byethrow/commit/1b031f81e7adc7984534a90d6e44ef071605c51f) Thanks [@Karibash](https://github.com/Karibash)! - Rename oxlint docs directory to linter
+
+- [#650](https://github.com/praha-inc/byethrow/pull/650) [`dc45a3b`](https://github.com/praha-inc/byethrow/commit/dc45a3b9d87ba261b8057600bd0c2a60b99ba211) Thanks [@Karibash](https://github.com/Karibash)! - Convert inline filename comments to title attributes in code block examples
+
 ## 0.11.2
 
 ## 0.11.1
