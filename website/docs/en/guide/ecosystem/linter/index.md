@@ -1,3 +1,7 @@
+---
+description: "@praha/byethrow-oxlint Oxlint plugin — installation, setup, settings, and rule list for enforcing byethrow best practices"
+---
+
 # Linter Plugin
 
 `@praha/byethrow-oxlint` is an [Oxlint](https://oxc.rs/docs/guide/usage/linter) plugin that enforces best practices when using `@praha/byethrow`.

@@ -1,3 +1,7 @@
+---
+description: Oxlint rule that enforces ResultMaybeAsync over the Result-or-ResultAsync union type, with auto-fix support
+---
+
 # prefer-result-maybe-async
 
 Enforces use of `ResultMaybeAsync<T, E>` instead of the union type `Result<T, E> | ResultAsync<T, E>`.

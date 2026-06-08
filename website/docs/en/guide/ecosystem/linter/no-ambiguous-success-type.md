@@ -1,3 +1,7 @@
+---
+description: Oxlint rule that disallows vague types such as unknown, any, or object in the success position of Result, ResultAsync, and ResultMaybeAsync
+---
+
 # no-ambiguous-success-type
 
 Disallows non-specific types in the success position of `Result`, `ResultAsync`, and `ResultMaybeAsync`.

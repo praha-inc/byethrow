@@ -1,3 +1,7 @@
+---
+description: Oxlint rule that enforces ResultAsync over Promise-wrapped Result for async byethrow values, with auto-fix support
+---
+
 # prefer-result-async
 
 Enforces use of `ResultAsync<T, E>` instead of `Promise<Result<T, E>>`.

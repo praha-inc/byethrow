@@ -1,3 +1,7 @@
+---
+description: Oxlint rule that enforces toBeSuccess() and toBeFailure() matchers over boolean isSuccess/isFailure assertions in tests, with auto-fix
+---
+
 # prefer-result-matchers
 
 Enforces use of `toBeSuccess()` / `toBeFailure()` from `@praha/byethrow-testing`.

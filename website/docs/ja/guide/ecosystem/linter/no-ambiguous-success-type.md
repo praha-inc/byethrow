@@ -1,6 +1,10 @@
+---
+description: Result/ResultAsync/ResultMaybeAsync の成功型に unknown・any・object などの曖昧な型を禁止するOxlintルール
+---
+
 # no-ambiguous-success-type
 
-`Result`/`ResultAsync`/`ResultMaybeAsync` の成功型に曖昧な型を使用することを禁止します。
+`Result` / `ResultAsync` / `ResultMaybeAsync` の成功型に曖昧な型を使用することを禁止します。
 
 ## ルールの詳細
 

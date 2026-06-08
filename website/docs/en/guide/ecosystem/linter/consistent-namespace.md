@@ -1,3 +1,7 @@
+---
+description: Oxlint rule that enforces a single namespace alias — Result or R — for @praha/byethrow imports, with auto-fix support
+---
+
 # consistent-namespace
 
 Enforces that imports from `@praha/byethrow` use a consistent namespace alias — either `Result` or `R`.

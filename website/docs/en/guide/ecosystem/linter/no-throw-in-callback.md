@@ -1,3 +1,7 @@
+---
+description: Oxlint rule that disallows throw statements inside @praha/byethrow callbacks — use Result.fail() to represent errors instead
+---
+
 # no-throw-in-callback
 
 Disallows `throw` statements inside callbacks passed to `@praha/byethrow` functions such as `Result.andThen`, `Result.map`, etc.

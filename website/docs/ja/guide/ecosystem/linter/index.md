@@ -1,3 +1,7 @@
+---
+description: "@praha/byethrow-oxlint は byethrow のベストプラクティスを強制するOxlintプラグイン — インストール、セットアップ、設定、全ルール一覧"
+---
+
 # Linter プラグイン
 
 `@praha/byethrow-oxlint` は、`@praha/byethrow` 使用時のベストプラクティスを強制する [Oxlint](https://oxc.rs/docs/guide/usage/linter) プラグインです。

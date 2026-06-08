@@ -1,3 +1,7 @@
+---
+description: Oxlint rule that disallows vague types such as unknown, any, or Error in the error position of Result, ResultAsync, and ResultMaybeAsync
+---
+
 # no-ambiguous-error-type
 
 Disallows non-specific types in the error position of `Result`, `ResultAsync`, and `ResultMaybeAsync`.

@@ -1,3 +1,7 @@
+---
+description: Oxlint rule that disallows the negation operator on Result.isSuccess() or Result.isFailure() — auto-fixes to the direct type guard equivalent
+---
+
 # no-negated-type-guards
 
 Disallows using the negation operator (`!`) on `Result.isSuccess()` or `Result.isFailure()`.

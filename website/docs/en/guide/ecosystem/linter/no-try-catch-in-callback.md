@@ -1,3 +1,7 @@
+---
+description: Oxlint rule that disallows try-catch blocks inside @praha/byethrow callbacks — use Result.fn() to wrap throwing code instead
+---
+
 # no-try-catch-in-callback
 
 Disallows `try-catch` blocks inside callbacks passed to `@praha/byethrow` functions such as `Result.andThen`, `Result.map`, etc.

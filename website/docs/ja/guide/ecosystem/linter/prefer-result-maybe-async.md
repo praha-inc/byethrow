@@ -1,3 +1,7 @@
+---
+description: Result と ResultAsync のユニオン型の代わりに ResultMaybeAsync の使用を強制するOxlintルール（自動修正対応）
+---
+
 # prefer-result-maybe-async
 
 `Result<T, E> | ResultAsync<T, E>` というユニオン型の代わりに `ResultMaybeAsync<T, E>` の使用を強制します。

@@ -1,3 +1,7 @@
+---
+description: "@praha/byethrow のインポートで Result または R の一貫した名前空間エイリアスを強制するOxlintルール（自動修正対応）"
+---
+
 # consistent-namespace
 
 `@praha/byethrow` から一貫したネームスペース（`Result` または `R`）でインポートを使用することを強制します。
