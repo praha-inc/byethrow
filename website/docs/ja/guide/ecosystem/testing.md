@@ -18,8 +18,7 @@ npm install -D @praha/byethrow-testing
 
 Jest のセットアップファイル（例: `jest.setup.ts`）に以下を追加してください。
 
-```ts
-// jest.setup.ts
+```ts title="jest.setup.ts"
 import { expect } from '@jest/globals';
 import { resultMatchers } from '@praha/byethrow-testing';
 
@@ -34,8 +33,7 @@ expect.extend(resultMatchers);
 
 次に、Jest の設定ファイルでセットアップファイルを参照します。
 
-```ts
-// jest.config.ts
+```ts title="jest.setup.ts"
 export default {
   setupFilesAfterEnv: ['./jest.setup.ts'],
 };
@@ -45,8 +43,7 @@ export default {
 
 Vitest のセットアップファイル（例: `vitest.setup.ts`）に以下を追加してください。
 
-```ts
-// vitest.setup.ts
+```ts title="vitest.setup.ts"
 import { resultMatchers } from '@praha/byethrow-testing';
 import { expect } from 'vitest';
 
@@ -61,8 +58,7 @@ expect.extend(resultMatchers);
 
 次に、Vitest の設定ファイルでセットアップファイルを参照します。
 
-```ts
-// vitest.config.ts
+```ts title="vitest.setup.ts"
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
@@ -76,8 +72,7 @@ export default defineConfig({
 
 Rstest のセットアップファイル（例: `rstest.setup.ts`）に以下を追加してください。
 
-```ts
-// rstest.setup.ts
+```ts title="rstest.setup.ts"
 import { resultMatchers } from '@praha/byethrow-testing';
 import { expect } from '@rstest/core';
 
@@ -92,8 +87,7 @@ expect.extend(resultMatchers);
 
 次に、Rstest の設定ファイルでセットアップファイルを参照します。
 
-```ts
-// rstest.config.ts
+```ts title="rstest.setup.ts"
 import { defineConfig } from '@rstest/core';
 
 export default defineConfig({
