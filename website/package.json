@@ -19,6 +19,7 @@
   "devDependencies": {
     "@jest/globals": "30.4.1",
     "@praha/byethrow": "workspace:*",
+    "@praha/byethrow-oxlint": "workspace:*",
     "@praha/byethrow-testing": "workspace:*",
     "@praha/error-factory": "1.4.1",
     "@rspress/plugin-sitemap": "2.0.13",

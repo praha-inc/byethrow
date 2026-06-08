@@ -2,21 +2,25 @@
   {
     "type": "dir",
     "name": "basics",
-    "label": "Basics"
+    "label": "Basics",
+    "collapsed": true
   },
   {
     "type": "dir",
     "name": "chaining",
-    "label": "Chaining Operations"
+    "label": "Chaining Operations",
+    "collapsed": true
   },
   {
     "type": "dir",
     "name": "combining",
-    "label": "Combining Results"
+    "label": "Combining Results",
+    "collapsed": true
   },
   {
     "type": "dir",
     "name": "resolving",
-    "label": "Resolving Results"
+    "label": "Resolving Results",
+    "collapsed": true
   }
 ]

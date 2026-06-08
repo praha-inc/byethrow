@@ -178,6 +178,9 @@ importers:
       '@praha/byethrow':
         specifier: workspace:*
         version: link:../packages/byethrow
+      '@praha/byethrow-oxlint':
+        specifier: workspace:*
+        version: link:../packages/oxlint
       '@praha/byethrow-testing':
         specifier: workspace:*
         version: link:../packages/testing
