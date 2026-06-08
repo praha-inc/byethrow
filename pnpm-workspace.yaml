@@ -2,8 +2,22 @@ packages:
   - packages/*
   - website
 
-onlyBuiltDependencies:
-  - sqlite3
+allowBuilds:
+  '@parcel/watcher': false
+  core-js: false
+  esbuild: false
+  sharp: false
+  sqlite3: false
+  unrs-resolver: false
+
+overrides:
+  'rspress-plugin-og>@rspress/shared': '-'
+  'rspress-plugin-og>rspress': '-'
+
+packageExtensions:
+  'rspress-plugin-og':
+    dependencies:
+      rslog: '^2.0.0'
 
 patchedDependencies:
   '@changesets/assemble-release-plan': patches/@changesets__assemble-release-plan.patch
