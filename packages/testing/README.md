@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/@praha%2Fbyethrow-testing.svg)](https://www.npmjs.com/package/@praha/byethrow-testing)
 [![npm download](https://img.shields.io/npm/dm/@praha/byethrow-testing.svg)](https://www.npmjs.com/package/@praha/byethrow-testing)
-[![license](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/praha-inc/byethrow/blob/main/packages/byethrow-testing/LICENSE)
+[![license](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/praha-inc/byethrow/blob/main/packages/testing/LICENSE)
 [![Github](https://img.shields.io/github/followers/praha-inc?label=Follow&logo=github&style=social)](https://github.com/orgs/praha-inc/followers)
 
 Custom test matchers for asserting @praha/byethrow Result types.
@@ -176,4 +176,4 @@ Feel free to check [issues page](https://github.com/praha-inc/byethrow/issues) i
 
 Copyright © [PrAha, Inc.](https://www.praha-inc.com/)
 
-This project is [```MIT```](https://github.com/praha-inc/byethrow/blob/main/packages/byethrow/LICENSE) licensed.
+This project is [```MIT```](https://github.com/praha-inc/byethrow/blob/main/packages/testing/LICENSE) licensed.
