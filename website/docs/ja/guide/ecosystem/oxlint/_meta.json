@@ -1,0 +1,47 @@
+[
+  {
+    "type": "file",
+    "name": "consistent-namespace",
+    "label": "consistent-namespace"
+  },
+  {
+    "type": "file",
+    "name": "no-ambiguous-error-type",
+    "label": "no-ambiguous-error-type"
+  },
+  {
+    "type": "file",
+    "name": "no-ambiguous-success-type",
+    "label": "no-ambiguous-success-type"
+  },
+  {
+    "type": "file",
+    "name": "no-negated-type-guards",
+    "label": "no-negated-type-guards"
+  },
+  {
+    "type": "file",
+    "name": "no-throw-in-callback",
+    "label": "no-throw-in-callback"
+  },
+  {
+    "type": "file",
+    "name": "no-try-catch-in-callback",
+    "label": "no-try-catch-in-callback"
+  },
+  {
+    "type": "file",
+    "name": "prefer-result-async",
+    "label": "prefer-result-async"
+  },
+  {
+    "type": "file",
+    "name": "prefer-result-matchers",
+    "label": "prefer-result-matchers"
+  },
+  {
+    "type": "file",
+    "name": "prefer-result-maybe-async",
+    "label": "prefer-result-maybe-async"
+  }
+]

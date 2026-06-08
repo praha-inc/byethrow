@@ -18,8 +18,7 @@ npm install -D @praha/byethrow-testing
 
 Add the following to your Jest setup file (e.g. `jest.setup.ts`):
 
-```ts
-// jest.setup.ts
+```ts title="jest.setup.ts"
 import { expect } from '@jest/globals';
 import { resultMatchers } from '@praha/byethrow-testing';
 
@@ -34,8 +33,7 @@ expect.extend(resultMatchers);
 
 Then reference the setup file in your Jest config:
 
-```ts
-// jest.config.ts
+```ts title="jest.setup.ts"
 export default {
   setupFilesAfterEnv: ['./jest.setup.ts'],
 };
@@ -45,8 +43,7 @@ export default {
 
 Add the following to your Vitest setup file (e.g. `vitest.setup.ts`):
 
-```ts
-// vitest.setup.ts
+```ts title="vitest.setup.ts"
 import { resultMatchers } from '@praha/byethrow-testing';
 import { expect } from 'vitest';
 
@@ -61,8 +58,7 @@ expect.extend(resultMatchers);
 
 Then reference the setup file in your Vitest config:
 
-```ts
-// vitest.config.ts
+```ts title="vitest.setup.ts"
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
@@ -76,8 +72,7 @@ export default defineConfig({
 
 Add the following to your Rstest setup file (e.g. `rstest.setup.ts`):
 
-```ts
-// rstest.setup.ts
+```ts title="rstest.setup.ts"
 import { resultMatchers } from '@praha/byethrow-testing';
 import { expect } from '@rstest/core';
 
@@ -92,8 +87,7 @@ expect.extend(resultMatchers);
 
 Then reference the setup file in your Rstest config:
 
-```ts
-// rstest.config.ts
+```ts title="rstest.setup.ts"
 import { defineConfig } from '@rstest/core';
 
 export default defineConfig({

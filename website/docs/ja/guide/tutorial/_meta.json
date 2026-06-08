@@ -2,21 +2,25 @@
   {
     "type": "dir",
     "name": "basics",
-    "label": "基本を学ぶ"
+    "label": "基本を学ぶ",
+    "collapsed": true
   },
   {
     "type": "dir",
     "name": "chaining",
-    "label": "関数を合成する"
+    "label": "関数を合成する",
+    "collapsed": true
   },
   {
     "type": "dir",
     "name": "combining",
-    "label": "Result を合成する"
+    "label": "Result を合成する",
+    "collapsed": true
   },
   {
     "type": "dir",
     "name": "resolving",
-    "label": "Result を解決する"
+    "label": "Result を解決する",
+    "collapsed": true
   }
 ]
