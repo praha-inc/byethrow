@@ -1,3 +1,7 @@
+---
+description: Promise でラップした Result の代わりに ResultAsync の使用を強制するOxlintルール（自動修正対応）
+---
+
 # prefer-result-async
 
 `Promise<Result<T, E>>` の代わりに `ResultAsync<T, E>` の使用を強制します。

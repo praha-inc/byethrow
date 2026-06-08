@@ -1,6 +1,10 @@
+---
+description: "@praha/byethrow のコールバック内での throw 文を禁止し、Result.fail() の使用を促すOxlintルール"
+---
+
 # no-throw-in-callback
 
-`Result.andThen`・`Result.map` などの `@praha/byethrow` の関数に渡すコールバック内での `throw` 文を禁止します。
+`Result.andThen` / `Result.map` などの `@praha/byethrow` の関数に渡すコールバック内での `throw` 文を禁止します。
 
 ## ルールの詳細
 

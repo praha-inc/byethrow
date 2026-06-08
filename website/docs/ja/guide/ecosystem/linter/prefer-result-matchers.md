@@ -1,3 +1,7 @@
+---
+description: isSuccess/isFailure のboolean assertの代わりに toBeSuccess()/toBeFailure() マッチャーの使用を強制するOxlintルール（自動修正対応）
+---
+
 # prefer-result-matchers
 
 テスト内で `@praha/byethrow-testing` の `toBeSuccess()` / `toBeFailure()` を使用することを強制します。

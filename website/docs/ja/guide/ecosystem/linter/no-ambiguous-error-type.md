@@ -1,6 +1,10 @@
+---
+description: Result/ResultAsync/ResultMaybeAsync のエラー型に unknown・any・Error などの曖昧な型を禁止するOxlintルール
+---
+
 # no-ambiguous-error-type
 
-`Result`/`ResultAsync`/`ResultMaybeAsync` のエラー型に曖昧な型を使用することを禁止します。
+`Result` / `ResultAsync` / `ResultMaybeAsync` のエラー型に曖昧な型を使用することを禁止します。
 
 ## ルールの詳細
 

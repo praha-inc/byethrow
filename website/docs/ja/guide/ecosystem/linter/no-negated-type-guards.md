@@ -1,3 +1,7 @@
+---
+description: Result.isSuccess() や Result.isFailure() への否定演算子の使用を禁止し、直接の型ガードに自動修正するOxlintルール
+---
+
 # no-negated-type-guards
 
 `Result.isSuccess()` または `Result.isFailure()` に否定演算子（`!`）を使用することを禁止します。
