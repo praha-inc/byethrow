@@ -22,7 +22,7 @@
     "@praha/byethrow-testing": "workspace:*",
     "@praha/error-factory": "1.4.1",
     "@rspress/plugin-sitemap": "2.0.13",
-    "@rspress/plugin-twoslash": "2.0.11",
+    "@rspress/plugin-twoslash": "2.0.13",
     "@rstest/core": "0.10.3",
     "@types/node": "24.13.0",
     "@types/react": "19.2.16",
