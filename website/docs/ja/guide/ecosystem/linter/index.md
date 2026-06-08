@@ -1,4 +1,4 @@
-# Oxlint プラグイン
+# Linter プラグイン
 
 `@praha/byethrow-oxlint` は、`@praha/byethrow` 使用時のベストプラクティスを強制する [Oxlint](https://oxc.rs/docs/guide/usage/linter) プラグインです。
 

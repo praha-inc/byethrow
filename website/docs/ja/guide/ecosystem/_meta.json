@@ -11,8 +11,8 @@
   },
   {
     "type": "dir",
-    "name": "oxlint",
-    "label": "Oxlint プラグイン",
+    "name": "linter",
+    "label": "Linter プラグイン",
     "collapsed": true
   }
 ]
