@@ -11,8 +11,8 @@
   },
   {
     "type": "dir",
-    "name": "oxlint",
-    "label": "Oxlint Plugin",
+    "name": "linter",
+    "label": "Linter Plugin",
     "collapsed": true
   }
 ]

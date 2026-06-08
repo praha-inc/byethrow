@@ -1,4 +1,4 @@
-# Oxlint Plugin
+# Linter Plugin
 
 `@praha/byethrow-oxlint` is an [Oxlint](https://oxc.rs/docs/guide/usage/linter) plugin that enforces best practices when using `@praha/byethrow`.
 
