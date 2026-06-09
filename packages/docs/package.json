@@ -63,7 +63,7 @@
   "devDependencies": {
     "@praha/byethrow-website": "workspace:*",
     "@rslib/core": "0.22.0",
-    "@types/node": "24.13.0",
+    "@types/node": "24.13.1",
     "oxlint": "1.68.0",
     "tsx": "4.22.4",
     "typescript": "6.0.3"
