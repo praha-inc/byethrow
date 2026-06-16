@@ -53,8 +53,8 @@ importers:
         version: 1.1.0
     devDependencies:
       '@rslib/core':
-        specifier: 0.22.0
-        version: 0.22.0(typescript@6.0.3)
+        specifier: 0.22.1
+        version: 0.22.1(typescript@6.0.3)
       oxlint:
         specifier: 1.68.0
         version: 1.68.0(oxlint-tsgolint@0.23.0)
@@ -99,8 +99,8 @@ importers:
         specifier: workspace:*
         version: link:../../website
       '@rslib/core':
-        specifier: 0.22.0
-        version: 0.22.0(typescript@6.0.3)
+        specifier: 0.22.1
+        version: 0.22.1(typescript@6.0.3)
       '@types/node':
         specifier: 24.13.2
         version: 24.13.2
@@ -124,8 +124,8 @@ importers:
         version: link:../byethrow
     devDependencies:
       '@rslib/core':
-        specifier: 0.22.0
-        version: 0.22.0(typescript@6.0.3)
+        specifier: 0.22.1
+        version: 0.22.1(typescript@6.0.3)
       dedent:
         specifier: 1.7.2
         version: 1.7.2
@@ -145,8 +145,8 @@ importers:
         specifier: workspace:*
         version: link:../byethrow
       '@rslib/core':
-        specifier: 0.22.0
-        version: 0.22.0(typescript@6.0.3)
+        specifier: 0.22.1
+        version: 0.22.1(typescript@6.0.3)
       oxlint:
         specifier: 1.68.0
         version: 1.68.0(oxlint-tsgolint@0.23.0)
@@ -1334,8 +1334,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  '@rslib/core@0.22.0':
-    resolution: {integrity: sha512-DGTMBDTSdILac0SmeBWvdYf/ZDn09vXgbJQ3/N1J7i6vBpFGWCCKjARoz1R5jYqr1Z9tLJ1OfOVZktbNY/XXuA==}
+  '@rslib/core@0.22.1':
+    resolution: {integrity: sha512-RaqTITHFkpMDJG9fmD7Hu6FLE64hwctCo46asHOD2DipzQJWawg6K0pFGimTAyutYEZysIUfYgCwSYkbctDudg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -3395,13 +3395,13 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
-  rsbuild-plugin-dts@0.22.0:
-    resolution: {integrity: sha512-Oyiu5oJDHWOnBv7yRr8eAGfoEddwxfPqUbAX6HvcJxrnR/h6Zd0VgTBWVTgqALYhLcL2ZdyZ2vwnqfhan4krwA==}
+  rsbuild-plugin-dts@0.22.1:
+    resolution: {integrity: sha512-6vBfXgwK4j6GkjSRH13tuceBavc6qwSE5IVSoVCZ/wRuM0ZL7dIjdk+yGSWKJt5lNMfc4XwQoTErGIC9zhgztQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@microsoft/api-extractor': ^7
       '@rsbuild/core': ^1.0.0 || ^2.0.0-0
-      '@typescript/native-preview': 7.x
+      '@typescript/native-preview': ^7.0.0-0
       typescript: ^5 || ^6
     peerDependenciesMeta:
       '@microsoft/api-extractor':
@@ -4926,10 +4926,10 @@ snapshots:
     transitivePeerDependencies:
       - '@rspack/core'
 
-  '@rslib/core@0.22.0(typescript@6.0.3)':
+  '@rslib/core@0.22.1(typescript@6.0.3)':
     dependencies:
       '@rsbuild/core': 2.0.13
-      rsbuild-plugin-dts: 0.22.0(@rsbuild/core@2.0.13)(typescript@6.0.3)
+      rsbuild-plugin-dts: 0.22.1(@rsbuild/core@2.0.13)(typescript@6.0.3)
     optionalDependencies:
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -7426,7 +7426,7 @@ snapshots:
       '@rolldown/binding-win32-arm64-msvc': 1.0.3
       '@rolldown/binding-win32-x64-msvc': 1.0.3
 
-  rsbuild-plugin-dts@0.22.0(@rsbuild/core@2.0.13)(typescript@6.0.3):
+  rsbuild-plugin-dts@0.22.1(@rsbuild/core@2.0.13)(typescript@6.0.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
       '@rsbuild/core': 2.0.13
