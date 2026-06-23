@@ -2,7 +2,7 @@
 
 import { isPromise } from '../internals/helpers/is-promise';
 
-import type { ResultFor } from '../result';
+import type { Result, ResultAsync } from '../result';
 
 /**
  * Creates a {@link Failure} result from a given error.
@@ -41,8 +41,9 @@ import type { ResultFor } from '../result';
  * @category Creators
  */
 export const fail: {
-  (): ResultFor<never, never, void>;
-  <const E>(error: E): ResultFor<E, never, Awaited<E>>;
+  (): Result<never, void>;
+  <const E extends Promise<any>>(value: E): ResultAsync<never, Awaited<E>>;
+  <const E>(value: E): Result<never, E>;
 } = (...args: any[]) => {
   if (args.length <= 0) {
     return { type: 'Failure', error: undefined };

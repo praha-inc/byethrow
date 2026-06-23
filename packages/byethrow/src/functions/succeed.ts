@@ -2,7 +2,7 @@
 
 import { isPromise } from '../internals/helpers/is-promise';
 
-import type { ResultFor } from '../result';
+import type { Result, ResultAsync } from '../result';
 
 /**
  * Creates a {@link Success} result from a given value.
@@ -41,8 +41,9 @@ import type { ResultFor } from '../result';
  * @category Creators
  */
 export const succeed: {
-  (): ResultFor<never, void, never>;
-  <const T>(value: T): ResultFor<T, Awaited<T>, never>;
+  (): Result<void, never>;
+  <const T extends Promise<any>>(value: T): ResultAsync<Awaited<T>, never>;
+  <const T>(value: T): Result<T, never>;
 } = (...args: any[]) => {
   if (args.length <= 0) {
     return { type: 'Success', value: undefined };
