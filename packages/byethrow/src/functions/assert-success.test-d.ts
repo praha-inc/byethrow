@@ -20,6 +20,7 @@ describe('assertSuccess', () => {
       });
 
       describe('when input is a failure', () => {
+        // oxlint-disable-next-line vitest/expect-expect
         it('should cause a type error', () => {
           const input = fail('error');
 
@@ -40,6 +41,7 @@ describe('assertSuccess', () => {
       });
 
       describe('when input is a failure', () => {
+        // oxlint-disable-next-line vitest/expect-expect
         it('should cause a type error', () => {
           const input = Promise.resolve(fail('error'));
 
