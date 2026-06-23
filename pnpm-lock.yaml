@@ -25,8 +25,8 @@ importers:
         specifier: 2.31.0
         version: 2.31.0(@types/node@24.13.2)
       '@praha/oxlint-config-standard':
-        specifier: 1.0.0-beta.6
-        version: 1.0.0-beta.6(eslint@10.5.0)(oxlint-tsgolint@0.23.0)(oxlint@1.70.0(oxlint-tsgolint@0.23.0))
+        specifier: 1.0.0-beta.7
+        version: 1.0.0-beta.7(@praha/byethrow@0.12.0(typescript@6.0.3))(eslint@10.5.0)(oxlint-tsgolint@0.23.0)(oxlint@1.70.0(oxlint-tsgolint@0.23.0))
       '@tsconfig/strictest':
         specifier: 2.0.8
         version: 2.0.8
@@ -1203,17 +1203,28 @@ packages:
     resolution: {integrity: sha512-SEeaJLb3qBNF/OaXnaR1NmmBbFYk1zC0ZH/52fATcRPLFg/p791YrcyFFy44Bo9sLaGuSuLp5Q6axbb/O+v/RA==}
     engines: {node: ^14.18.0 || >=16.0.0}
 
+  '@praha/byethrow-oxlint@0.12.0':
+    resolution: {integrity: sha512-zdg/oa50/N+a62FsCVHz/J+9RnuaIWZVzwo9frIXZdyPuNNHRYBCee9AwCnfYinOQ6dLOzFmOS9lATnw/MDGdQ==}
+    peerDependencies:
+      '@praha/byethrow': 0.12.0
+      oxlint: ^1.0.0
+
+  '@praha/byethrow@0.12.0':
+    resolution: {integrity: sha512-Q3dRHW8aGqYbEe/W5YKrik6GbtfLGdCrCVcDcP/YJe4uhhbbrkEw9XoRuPZhfMb4uLrUXk27h4phK3I8+cAdRw==}
+    peerDependencies:
+      typescript: '>=5.0.0'
+
   '@praha/error-factory@1.4.1':
     resolution: {integrity: sha512-HA+y+xwmQIl9EPvZonRk1/hsSAvAlpDjlpruyW8kTAQ++Oq5Fi7hFV0Y84TLHXJ6SciYHlKGqrekrS5wzkD5+Q==}
 
-  '@praha/oxlint-config-internal@1.0.0-beta.6':
-    resolution: {integrity: sha512-AMFrzjaLpEyeu+/n2YmszO+4IFZKUO8otG4Gitifd9ZBVjx9DKIOiv8a1CgrX091qbdy7ScUOzVfLDd0U1H+tg==}
+  '@praha/oxlint-config-internal@1.0.0-beta.7':
+    resolution: {integrity: sha512-qjjAldizWDSRcxdawA9zlpQpOXBraJK65HDtdpBdowgppRE9wgxQoOGYWFX46HKI4hyglf2RqMioP8GeRf6+Vw==}
     peerDependencies:
       oxlint: ^1.0.0
       oxlint-tsgolint: '>=0.20.0'
 
-  '@praha/oxlint-config-standard@1.0.0-beta.6':
-    resolution: {integrity: sha512-a+iHql2ozHPBfPnTIhLEmJG7Z1QhSqo83oRtIFXNm9eFLGPhT0OodxLjsqN1WdM001NIdZWj1rnV8EYS3f9zHQ==}
+  '@praha/oxlint-config-standard@1.0.0-beta.7':
+    resolution: {integrity: sha512-CbaSU8m2xooxf/aov0kbAaZuD/0wJXCnla1dO6ZUNOPYnogpfo3tyb92uJ7rw/uekDwKhkz6rXDzSH2TrrZp4g==}
     peerDependencies:
       oxlint: ^1.0.0
       oxlint-tsgolint: '>=0.20.0'
@@ -4852,16 +4863,28 @@ snapshots:
 
   '@pkgr/core@0.3.6': {}
 
+  '@praha/byethrow-oxlint@0.12.0(@praha/byethrow@0.12.0(typescript@6.0.3))(oxlint@1.70.0(oxlint-tsgolint@0.23.0))':
+    dependencies:
+      '@oxlint/plugins': 1.70.0
+      '@praha/byethrow': 0.12.0(typescript@6.0.3)
+      oxlint: 1.70.0(oxlint-tsgolint@0.23.0)
+
+  '@praha/byethrow@0.12.0(typescript@6.0.3)':
+    dependencies:
+      '@standard-schema/spec': 1.1.0
+      typescript: 6.0.3
+
   '@praha/error-factory@1.4.1': {}
 
-  '@praha/oxlint-config-internal@1.0.0-beta.6(oxlint-tsgolint@0.23.0)(oxlint@1.70.0(oxlint-tsgolint@0.23.0))':
+  '@praha/oxlint-config-internal@1.0.0-beta.7(oxlint-tsgolint@0.23.0)(oxlint@1.70.0(oxlint-tsgolint@0.23.0))':
     dependencies:
       oxlint: 1.70.0(oxlint-tsgolint@0.23.0)
       oxlint-tsgolint: 0.23.0
 
-  '@praha/oxlint-config-standard@1.0.0-beta.6(eslint@10.5.0)(oxlint-tsgolint@0.23.0)(oxlint@1.70.0(oxlint-tsgolint@0.23.0))':
+  '@praha/oxlint-config-standard@1.0.0-beta.7(@praha/byethrow@0.12.0(typescript@6.0.3))(eslint@10.5.0)(oxlint-tsgolint@0.23.0)(oxlint@1.70.0(oxlint-tsgolint@0.23.0))':
     dependencies:
-      '@praha/oxlint-config-internal': 1.0.0-beta.6(oxlint-tsgolint@0.23.0)(oxlint@1.70.0(oxlint-tsgolint@0.23.0))
+      '@praha/byethrow-oxlint': 0.12.0(@praha/byethrow@0.12.0(typescript@6.0.3))(oxlint@1.70.0(oxlint-tsgolint@0.23.0))
+      '@praha/oxlint-config-internal': 1.0.0-beta.7(oxlint-tsgolint@0.23.0)(oxlint@1.70.0(oxlint-tsgolint@0.23.0))
       '@stylistic/eslint-plugin': 5.10.0(eslint@10.5.0)
       eslint-plugin-import-x: 4.16.2(eslint@10.5.0)
       eslint-plugin-unicorn: 64.0.0(eslint@10.5.0)
@@ -4869,6 +4892,7 @@ snapshots:
       oxlint: 1.70.0(oxlint-tsgolint@0.23.0)
       oxlint-tsgolint: 0.23.0
     transitivePeerDependencies:
+      - '@praha/byethrow'
       - '@typescript-eslint/utils'
       - eslint
       - eslint-import-resolver-node
