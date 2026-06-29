@@ -160,8 +160,8 @@ importers:
   website:
     dependencies:
       '@rspress/core':
-        specifier: 2.0.14
-        version: 2.0.14(@rspack/core@2.1.1(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2)
+        specifier: 2.0.15
+        version: 2.0.15(@rspack/core@2.1.1(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2)
       '@stackblitz/sdk':
         specifier: 1.11.0
         version: 1.11.0
@@ -189,10 +189,10 @@ importers:
         version: 1.4.1
       '@rspress/plugin-sitemap':
         specifier: 2.0.14
-        version: 2.0.14(@rspress/core@2.0.14(@rspack/core@2.1.1(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2))
+        version: 2.0.14(@rspress/core@2.0.15(@rspack/core@2.1.1(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2))
       '@rspress/plugin-twoslash':
         specifier: 2.0.14
-        version: 2.0.14(@rspress/core@2.0.14(@rspack/core@2.1.1(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2))(react@19.2.7)(typescript@6.0.3)
+        version: 2.0.14(@rspress/core@2.0.15(@rspack/core@2.1.1(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2))(react@19.2.7)(typescript@6.0.3)
       '@rstest/core':
         specifier: 0.10.6
         version: 0.10.6
@@ -1534,8 +1534,8 @@ packages:
       '@rspack/core':
         optional: true
 
-  '@rspress/core@2.0.14':
-    resolution: {integrity: sha512-k59i08zwBGgHrjHw8CK1m4CeTrKPvZRmV54bxubQl6AdDdmhJK6WrNg3UthwWmd38scKtqF40ATXDE8RMiNcNA==}
+  '@rspress/core@2.0.15':
+    resolution: {integrity: sha512-epLmUXYscNRw/GtQZx2oknoBE9wKbCrUGEOrQEDI4Qq8X32GdM4d7itzuHsliY7q3IbffKx8rMVbvlmygEocTQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
@@ -1553,8 +1553,8 @@ packages:
       react: '>=18.0.0'
       typescript: ^6.0.3
 
-  '@rspress/shared@2.0.14':
-    resolution: {integrity: sha512-sCe9tAo+s9tR4DmFSjMyHOxQvhzTSYXkkMUfVEo5w+uMCNXXGAIC6D0xAVDMHq1jIFF9ix47VxzlCo+CYNS14g==}
+  '@rspress/shared@2.0.15':
+    resolution: {integrity: sha512-o8aYwEzNuTmWnmKe91ntPv+34u3RbtAe+rcK9XC5MANOlgncwOaCs3bUa8/B1/llwyLoNgrpi+VB9bEiU11ZRQ==}
 
   '@rstest/core@0.10.6':
     resolution: {integrity: sha512-nX61dw2Tnxfwy/jGZEuNbh2tzapgaH6Iwj4Aw5d2wxUwxptUL3ddUxFF5M1ZSWoLEVG30VaPg3ITzrSo5sdbTg==}
@@ -5225,13 +5225,13 @@ snapshots:
     optionalDependencies:
       '@rspack/core': 2.1.1(@swc/helpers@0.5.23)
 
-  '@rspress/core@2.0.14(@rspack/core@2.1.1(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2)':
+  '@rspress/core@2.0.15(@rspack/core@2.1.1(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2)':
     dependencies:
       '@mdx-js/mdx': 3.1.1
       '@mdx-js/react': 3.1.1(@types/react@19.2.17)(react@19.2.7)
       '@rsbuild/core': 2.1.1
       '@rsbuild/plugin-react': 2.0.1(@rsbuild/core@2.1.1)(@rspack/core@2.1.1(@swc/helpers@0.5.23))
-      '@rspress/shared': 2.0.14
+      '@rspress/shared': 2.0.15
       '@shikijs/rehype': 4.3.0
       '@types/unist': 3.0.3
       '@unhead/react': 2.1.15(react@19.2.7)
@@ -5275,14 +5275,14 @@ snapshots:
       - micromark-util-types
       - supports-color
 
-  '@rspress/plugin-sitemap@2.0.14(@rspress/core@2.0.14(@rspack/core@2.1.1(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2))':
+  '@rspress/plugin-sitemap@2.0.14(@rspress/core@2.0.15(@rspack/core@2.1.1(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2))':
     dependencies:
-      '@rspress/core': 2.0.14(@rspack/core@2.1.1(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2)
+      '@rspress/core': 2.0.15(@rspack/core@2.1.1(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2)
 
-  '@rspress/plugin-twoslash@2.0.14(@rspress/core@2.0.14(@rspack/core@2.1.1(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2))(react@19.2.7)(typescript@6.0.3)':
+  '@rspress/plugin-twoslash@2.0.14(@rspress/core@2.0.15(@rspack/core@2.1.1(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2))(react@19.2.7)(typescript@6.0.3)':
     dependencies:
       '@floating-ui/dom': 1.7.6
-      '@rspress/core': 2.0.14(@rspack/core@2.1.1(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2)
+      '@rspress/core': 2.0.15(@rspack/core@2.1.1(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2)
       '@shikijs/twoslash': 4.3.0(typescript@6.0.3)
       mdast-util-from-markdown: 2.0.3
       mdast-util-gfm: 3.1.0
@@ -5294,7 +5294,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rspress/shared@2.0.14':
+  '@rspress/shared@2.0.15':
     dependencies:
       '@rsbuild/core': 2.1.1
       '@shikijs/rehype': 4.3.0
