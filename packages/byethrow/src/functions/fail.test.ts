@@ -13,16 +13,6 @@ describe('fail', () => {
     });
   });
 
-  it('should create a Failure object with a Promise error', async () => {
-    const error = Promise.resolve(new Error('Test promise error'));
-    const result = await fail(error);
-
-    expect(result).toEqual({
-      type: 'Failure',
-      error: new Error('Test promise error'),
-    });
-  });
-
   it('should create a Failure object with a no value', () => {
     const result = fail();
 

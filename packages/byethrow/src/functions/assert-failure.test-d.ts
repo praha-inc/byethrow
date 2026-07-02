@@ -32,7 +32,8 @@ describe('assertFailure', () => {
     describe('when input is asynchronous (Promise)', () => {
       describe('when input is a failure', () => {
         it('should infer failure type', () => {
-          const input = fail(Promise.resolve('error'));
+          const error: string = 'error';
+          const input = Promise.resolve(fail(error));
           const result = assertFailure(input);
 
           expectTypeOf(result).toEqualTypeOf<Promise<Failure<string>>>();
@@ -41,7 +42,7 @@ describe('assertFailure', () => {
 
       describe('when input is a success', () => {
         it('should cause a type error', () => {
-          const input = succeed(Promise.resolve('value'));
+          const input = Promise.resolve(succeed('value'));
 
           // @ts-expect-error
           assertFailure(input);
@@ -79,8 +80,9 @@ describe('assertFailure', () => {
     describe('when input is asynchronous (Promise)', () => {
       describe('when input is a failure', () => {
         it('should infer failure type', () => {
+          const error: string = 'error';
           const result = pipe(
-            fail(Promise.resolve('error')),
+            Promise.resolve(fail(error)),
             assertFailure,
           );
 
@@ -91,7 +93,7 @@ describe('assertFailure', () => {
       describe('when input is a success', () => {
         it('should cause a type error', () => {
           const result = pipe(
-            succeed(Promise.resolve('value')),
+            Promise.resolve(succeed('value')),
             // @ts-expect-error
             assertFailure,
           );
