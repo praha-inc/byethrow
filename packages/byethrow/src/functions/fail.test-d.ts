@@ -2,7 +2,7 @@ import { describe, expectTypeOf, it } from 'vitest';
 
 import { fail } from './fail';
 
-import type { Result, ResultAsync } from '../result';
+import type { Result } from '../result';
 
 describe('fail', () => {
   it('should return a Result when given a plain error', () => {
@@ -11,11 +11,10 @@ describe('fail', () => {
     expectTypeOf(result).toEqualTypeOf<Result<never, 'error'>>();
   });
 
-  it('should return a ResultAsync when given a Promise of error', () => {
-    const error = Promise.resolve('error' as const);
-    const result = fail(error);
+  it('should return never when given a Promise of error', () => {
+    const result = fail(Promise.resolve('error'));
 
-    expectTypeOf(result).toEqualTypeOf<ResultAsync<never, 'error'>>();
+    expectTypeOf(result).toEqualTypeOf<never>();
   });
 
   it('should return a Result with a no value', () => {

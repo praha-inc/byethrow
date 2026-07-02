@@ -62,7 +62,7 @@ describe('orThrough', () => {
 
       describe('when output is asynchronous (Promise)', () => {
         describe('when output is a success', () => {
-          const transform = (error: string) => succeed(Promise.resolve(error.toUpperCase()));
+          const transform = (error: string) => Promise.resolve(succeed(error.toUpperCase()));
 
           describe('when input is a success', () => {
             const input = succeed(2);
@@ -86,7 +86,7 @@ describe('orThrough', () => {
         });
 
         describe('when output is a failure', () => {
-          const transform = (error: string) => fail(Promise.resolve(error.toUpperCase()));
+          const transform = (error: string) => Promise.resolve(fail(error.toUpperCase()));
 
           describe('when input is a success', () => {
             const input = succeed(2);
@@ -117,7 +117,8 @@ describe('orThrough', () => {
           const transform = (error: string) => succeed(error.toUpperCase());
 
           describe('when input is a success', () => {
-            const input = succeed(Promise.resolve(2));
+            const value: number = 2;
+            const input = Promise.resolve(succeed(value));
 
             it('should return a ResultAsync with original value', () => {
               const result = orThrough(transform)(input);
@@ -127,7 +128,8 @@ describe('orThrough', () => {
           });
 
           describe('when input is a failure', () => {
-            const input = fail(Promise.resolve('error'));
+            const error: string = 'error';
+            const input = Promise.resolve(fail(error));
 
             it('should return a ResultAsync with original error when function returns success', () => {
               const result = orThrough(transform)(input);
@@ -141,7 +143,8 @@ describe('orThrough', () => {
           const transform = (error: string) => fail(error.toUpperCase());
 
           describe('when input is a success', () => {
-            const input = succeed(Promise.resolve(2));
+            const value: number = 2;
+            const input = Promise.resolve(succeed(value));
 
             it('should return a ResultAsync with original value', () => {
               const result = orThrough(transform)(input);
@@ -151,7 +154,8 @@ describe('orThrough', () => {
           });
 
           describe('when input is a failure', () => {
-            const input = fail(Promise.resolve('error'));
+            const error: string = 'error';
+            const input = Promise.resolve(fail(error));
 
             it('should return a ResultAsync with original error when function returns success', () => {
               const result = orThrough(transform)(input);
@@ -164,10 +168,11 @@ describe('orThrough', () => {
 
       describe('when output is asynchronous (Promise)', () => {
         describe('when output is a success', () => {
-          const transform = (error: string) => succeed(Promise.resolve(error.toUpperCase()));
+          const transform = (error: string) => Promise.resolve(succeed(error.toUpperCase()));
 
           describe('when input is a success', () => {
-            const input = succeed(Promise.resolve(2));
+            const value: number = 2;
+            const input = Promise.resolve(succeed(value));
 
             it('should return a ResultAsync with original value', () => {
               const result = orThrough(transform)(input);
@@ -177,7 +182,8 @@ describe('orThrough', () => {
           });
 
           describe('when input is a failure', () => {
-            const input = fail(Promise.resolve('error'));
+            const error: string = 'error';
+            const input = Promise.resolve(fail(error));
 
             it('should return a ResultAsync with original error when function returns success', () => {
               const result = orThrough(transform)(input);
@@ -188,10 +194,11 @@ describe('orThrough', () => {
         });
 
         describe('when output is a failure', () => {
-          const transform = (error: string) => fail(Promise.resolve(error.toUpperCase()));
+          const transform = (error: string) => Promise.resolve(fail(error.toUpperCase()));
 
           describe('when input is a success', () => {
-            const input = succeed(Promise.resolve(2));
+            const value: number = 2;
+            const input = Promise.resolve(succeed(value));
 
             it('should return a ResultAsync with original value', () => {
               const result = orThrough(transform)(input);
@@ -201,7 +208,8 @@ describe('orThrough', () => {
           });
 
           describe('when input is a failure', () => {
-            const input = fail(Promise.resolve('error'));
+            const error: string = 'error';
+            const input = Promise.resolve(fail(error));
 
             it('should return a ResultAsync with original error when function returns success', () => {
               const result = orThrough(transform)(input);
@@ -282,7 +290,7 @@ describe('orThrough', () => {
             it('should return a ResultAsync with original value', () => {
               const result = pipe(
                 input,
-                orThrough((error: string) => succeed(Promise.resolve(error.length))),
+                orThrough((error: string) => Promise.resolve(succeed(error.length))),
               );
 
               expectTypeOf(result).toEqualTypeOf<ResultAsync<2, never>>();
@@ -295,7 +303,7 @@ describe('orThrough', () => {
             it('should return a ResultAsync with original error when function returns success', () => {
               const result = pipe(
                 input,
-                orThrough((error) => succeed(Promise.resolve(error.toUpperCase()))),
+                orThrough((error) => Promise.resolve(succeed(error.toUpperCase()))),
               );
 
               expectTypeOf(result).toEqualTypeOf<ResultAsync<number, string>>();
@@ -310,7 +318,7 @@ describe('orThrough', () => {
             it('should return a ResultAsync with original value', () => {
               const result = pipe(
                 input,
-                orThrough((error: string) => fail(Promise.resolve(error.length))),
+                orThrough((error: string) => Promise.resolve(fail(error.length))),
               );
 
               expectTypeOf(result).toEqualTypeOf<ResultAsync<2, number>>();
@@ -323,7 +331,7 @@ describe('orThrough', () => {
             it('should return a ResultAsync with original error when function returns success', () => {
               const result = pipe(
                 input,
-                orThrough((error) => fail(Promise.resolve(error.toUpperCase()))),
+                orThrough((error) => Promise.resolve(fail(error.toUpperCase()))),
               );
 
               expectTypeOf(result).toEqualTypeOf<ResultAsync<number, string>>();
@@ -337,7 +345,8 @@ describe('orThrough', () => {
       describe('when output is synchronous', () => {
         describe('when output is a success', () => {
           describe('when input is a success', () => {
-            const input = succeed(Promise.resolve(2));
+            const value: number = 2;
+            const input = Promise.resolve(succeed(value));
 
             it('should return a ResultAsync with original value', () => {
               const result = pipe(
@@ -350,7 +359,7 @@ describe('orThrough', () => {
           });
 
           describe('when input is a failure', () => {
-            const input: ResultAsync<number, string> = fail(Promise.resolve('error'));
+            const input: ResultAsync<number, string> = Promise.resolve(fail('error'));
 
             it('should return a ResultAsync with original error when function returns success', () => {
               const result = pipe(
@@ -365,7 +374,8 @@ describe('orThrough', () => {
 
         describe('when output is a failure', () => {
           describe('when input is a success', () => {
-            const input = succeed(Promise.resolve(2));
+            const value: number = 2;
+            const input = Promise.resolve(succeed(value));
 
             it('should return a ResultAsync with original value', () => {
               const result = pipe(
@@ -378,7 +388,7 @@ describe('orThrough', () => {
           });
 
           describe('when input is a failure', () => {
-            const input: ResultAsync<number, string> = fail(Promise.resolve('error'));
+            const input: ResultAsync<number, string> = Promise.resolve(fail('error'));
 
             it('should return a ResultAsync with original error when function returns success', () => {
               const result = pipe(
@@ -395,12 +405,13 @@ describe('orThrough', () => {
       describe('when output is asynchronous (Promise)', () => {
         describe('when output is a success', () => {
           describe('when input is a success', () => {
-            const input = succeed(Promise.resolve(2));
+            const value: number = 2;
+            const input = Promise.resolve(succeed(value));
 
             it('should return a ResultAsync with original value', () => {
               const result = pipe(
                 input,
-                orThrough((error: string) => succeed(Promise.resolve(error.length))),
+                orThrough((error: string) => Promise.resolve(succeed(error.length))),
               );
 
               expectTypeOf(result).toEqualTypeOf<ResultAsync<number, never>>();
@@ -408,12 +419,12 @@ describe('orThrough', () => {
           });
 
           describe('when input is a failure', () => {
-            const input: ResultAsync<number, string> = fail(Promise.resolve('error'));
+            const input: ResultAsync<number, string> = Promise.resolve(fail('error'));
 
             it('should return a ResultAsync with original error when function returns success', () => {
               const result = pipe(
                 input,
-                orThrough((error) => succeed(Promise.resolve(error.toUpperCase()))),
+                orThrough((error) => Promise.resolve(succeed(error.toUpperCase()))),
               );
 
               expectTypeOf(result).toEqualTypeOf<ResultAsync<number, string>>();
@@ -423,12 +434,13 @@ describe('orThrough', () => {
 
         describe('when output is a failure', () => {
           describe('when input is a success', () => {
-            const input = succeed(Promise.resolve(2));
+            const value: number = 2;
+            const input = Promise.resolve(succeed(value));
 
             it('should return a ResultAsync with original value', () => {
               const result = pipe(
                 input,
-                orThrough((error: string) => fail(Promise.resolve(error.length))),
+                orThrough((error: string) => Promise.resolve(fail(error.length))),
               );
 
               expectTypeOf(result).toEqualTypeOf<ResultAsync<number, number>>();
@@ -436,12 +448,12 @@ describe('orThrough', () => {
           });
 
           describe('when input is a failure', () => {
-            const input: ResultAsync<number, string> = fail(Promise.resolve('error'));
+            const input: ResultAsync<number, string> = Promise.resolve(fail('error'));
 
             it('should return a ResultAsync with original error when function returns success', () => {
               const result = pipe(
                 input,
-                orThrough((error) => fail(Promise.resolve(error.toUpperCase()))),
+                orThrough((error) => Promise.resolve(fail(error.toUpperCase()))),
               );
 
               expectTypeOf(result).toEqualTypeOf<ResultAsync<number, string>>();

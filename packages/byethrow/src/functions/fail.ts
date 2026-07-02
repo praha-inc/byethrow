@@ -1,16 +1,15 @@
 /* oxlint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-assignment */
 
-import { isPromise } from '../internals/helpers/is-promise';
-
-import type { ResultFor } from '../result';
+import type { Result } from '../result';
 
 /**
  * Creates a {@link Failure} result from a given error.
- * Automatically wraps the error in a `Promise` if it is asynchronous.
+ *
+ * Passing a `Promise` is a type error — `await` it before passing to `fail`.
  *
  * @function
  * @typeParam E - The type of the error to wrap.
- * @returns A {@link Result} or {@link ResultAsync} depending on whether the input is a promise.
+ * @returns A {@link Result} containing the given error.
  *
  * @example Synchronous Usage
  * ```ts
@@ -24,8 +23,9 @@ import type { ResultFor } from '../result';
  * ```ts
  * import { Result } from '@praha/byethrow';
  *
- * const result = Result.fail(Promise.resolve('Async error'));
- * // Result.ResultAsync<never, string>
+ * const error = await Promise.resolve('Async error');
+ * const result = Result.fail(error);
+ * // Result.Result<never, string>
  * ```
  *
  * @example With No Value
@@ -41,16 +41,12 @@ import type { ResultFor } from '../result';
  * @category Creators
  */
 export const fail: {
-  (): ResultFor<never, never, void>;
-  <const E>(error: E): ResultFor<E, never, Awaited<E>>;
-} = (...args: any[]) => {
+  (): Result<never, void>;
+  <const E>(error: E): [E] extends [Promise<any>] ? never : Result<never, E>;
+} = ((...args: any[]) => {
   if (args.length <= 0) {
     return { type: 'Failure', error: undefined };
   }
 
-  const error = args[0];
-  if (isPromise(error)) {
-    return error.then((error) => ({ type: 'Failure', error: error }));
-  }
-  return { type: 'Failure', error } as any;
-};
+  return { type: 'Failure', error: args[0] };
+}) as any;

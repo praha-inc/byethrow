@@ -30,7 +30,7 @@ describe('assertSuccess', () => {
   describe('when input is asynchronous (Promise)', () => {
     describe('when input is a success', () => {
       it('should return the success', async () => {
-        const input = succeed(Promise.resolve('value'));
+        const input = Promise.resolve(succeed('value'));
 
         const result = await assertSuccess(input);
 
@@ -40,7 +40,7 @@ describe('assertSuccess', () => {
 
     describe('when input is a failure', () => {
       it('should throw an error', async () => {
-        const input = fail(Promise.resolve('error')) as ResultAsync<number, never>;
+        const input = Promise.resolve(fail('error')) as ResultAsync<number, never>;
 
         await expect(assertSuccess(input)).rejects.toThrow('Expected a Success result, but received a Failure');
       });

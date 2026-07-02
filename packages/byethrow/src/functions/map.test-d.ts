@@ -21,7 +21,7 @@ describe('map', () => {
 
     describe('when Result is asynchronous (Promise)', () => {
       it('should transform the value type in an asynchronous ResultAsync', () => {
-        const input = succeed(Promise.resolve(2));
+        const input = Promise.resolve(succeed(2));
         const result = map(transform)(input);
 
         expectTypeOf(result).toEqualTypeOf<ResultAsync<string, never>>();
@@ -44,7 +44,7 @@ describe('map', () => {
 
     describe('when Result is asynchronous (Promise)', () => {
       it('should transform the value type in an asynchronous ResultAsync', () => {
-        const input = succeed(Promise.resolve(2));
+        const input = Promise.resolve(succeed(2));
         const result = pipe(
           input,
           map((x) => x.toString()),
