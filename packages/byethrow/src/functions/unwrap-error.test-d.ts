@@ -43,7 +43,7 @@ describe('unwrapError', () => {
 
     describe('when input is asynchronous (Promise)', () => {
       describe('when input is a success', () => {
-        const input = succeed(Promise.resolve(42));
+        const input = Promise.resolve(succeed(42));
 
         it('should infer correct return type for async success without default', () => {
           const value = unwrapError(input);
@@ -59,7 +59,7 @@ describe('unwrapError', () => {
       });
 
       describe('when input is a failure', () => {
-        const input = fail(Promise.resolve('error'));
+        const input = Promise.resolve(fail('error'));
 
         it('should infer correct return type for async failure without default', () => {
           const value = unwrapError(input);
@@ -125,7 +125,7 @@ describe('unwrapError', () => {
 
     describe('when input is asynchronous (Promise)', () => {
       describe('when input is a success', () => {
-        const input = succeed(Promise.resolve(42));
+        const input = Promise.resolve(succeed(42));
 
         it('should infer correct return type for async success without default', () => {
           const value = pipe(
@@ -147,7 +147,7 @@ describe('unwrapError', () => {
       });
 
       describe('when input is a failure', () => {
-        const input = fail(Promise.resolve('error'));
+        const input = Promise.resolve(fail('error'));
 
         it('should infer correct return type for async failure without default', () => {
           const value = pipe(

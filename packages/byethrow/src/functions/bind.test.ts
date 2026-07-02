@@ -73,7 +73,7 @@ describe('bind', () => {
       const input = succeed({ foo: 1 });
 
       describe('when output is a success', () => {
-        const output = vi.fn((x: InferSuccess<typeof input>) => succeed(Promise.resolve(x.foo.toString())));
+        const output = vi.fn((x: InferSuccess<typeof input>) => Promise.resolve(succeed(x.foo.toString())));
 
         it('should merge the results', async () => {
           const result = await bind('bar', output)(input);
@@ -95,7 +95,7 @@ describe('bind', () => {
       });
 
       describe('when output is a failure', () => {
-        const output = vi.fn((x: InferSuccess<typeof input>) => fail(Promise.resolve(x.foo.toString())));
+        const output = vi.fn((x: InferSuccess<typeof input>) => Promise.resolve(fail(x.foo.toString())));
 
         it('should return the failure', async () => {
           const result = await bind('bar', output)(input);
@@ -114,7 +114,7 @@ describe('bind', () => {
 
   describe('when input is asynchronous (Promise)', () => {
     describe('when output is synchronous', () => {
-      const input = succeed(Promise.resolve({ foo: 1 }));
+      const input = Promise.resolve(succeed({ foo: 1 }));
 
       describe('when output is a success', () => {
         const output = vi.fn((x: InferSuccess<typeof input>) => succeed(x.foo.toString()));
@@ -155,7 +155,7 @@ describe('bind', () => {
       });
 
       describe('when input is a failure', () => {
-        const input: ResultAsync<{ foo: number }, string> = fail(Promise.resolve('error'));
+        const input: ResultAsync<{ foo: number }, string> = Promise.resolve(fail('error'));
         const output = vi.fn((x: InferSuccess<typeof input>) => succeed(x.foo.toString()));
 
         it('should return the failure', async () => {
@@ -173,10 +173,10 @@ describe('bind', () => {
     });
 
     describe('when output is asynchronous (Promise)', () => {
-      const input = succeed(Promise.resolve({ foo: 1 }));
+      const input = Promise.resolve(succeed({ foo: 1 }));
 
       describe('when output is a success', () => {
-        const output = vi.fn((x: InferSuccess<typeof input>) => succeed(Promise.resolve(x.foo.toString())));
+        const output = vi.fn((x: InferSuccess<typeof input>) => Promise.resolve(succeed(x.foo.toString())));
 
         it('should merge the results', async () => {
           const result = await bind('bar', output)(input);
@@ -198,7 +198,7 @@ describe('bind', () => {
       });
 
       describe('when output is a failure', () => {
-        const output = vi.fn((x: InferSuccess<typeof input>) => fail(Promise.resolve(x.foo.toString())));
+        const output = vi.fn((x: InferSuccess<typeof input>) => Promise.resolve(fail(x.foo.toString())));
 
         it('should return the failure', async () => {
           const result = await bind('bar', output)(input);

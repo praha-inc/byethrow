@@ -43,7 +43,7 @@ describe('map', () => {
 
   describe('when input is asynchronous (Promise)', () => {
     describe('when input is a success', () => {
-      const input = succeed(Promise.resolve(2));
+      const input = Promise.resolve(succeed(2));
 
       it('should apply the function to the input', async () => {
         const result = await map(transform)(input);
@@ -59,7 +59,7 @@ describe('map', () => {
     });
 
     describe('when input is a failure', () => {
-      const input = fail(Promise.resolve('error'));
+      const input = Promise.resolve(fail('error'));
 
       it('should return the same failure', async () => {
         const result = await map(transform)(input);

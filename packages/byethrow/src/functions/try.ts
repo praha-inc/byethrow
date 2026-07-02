@@ -90,9 +90,9 @@ const try_: {
       // oxlint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const output = options.try();
       if (isPromise(output)) {
-        const promise = succeed(output);
+        const promise = output.then((value: any) => succeed(value));
         if ('safe' in options && options.safe) return promise;
-        return promise.catch((error) => fail(options.catch(error)));
+        return promise.catch((error: any) => fail(options.catch(error)));
       }
 
       return succeed(output);

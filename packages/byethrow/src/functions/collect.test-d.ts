@@ -31,20 +31,20 @@ describe('collect', () => {
     describe('when some Results are asynchronous', () => {
       it('should return a ResultAsync with object of values', () => {
         const result = collect({
-          name: succeed(Promise.resolve('Alice')),
+          name: Promise.resolve(succeed('Alice')),
           age: succeed(20),
         });
 
-        expectTypeOf(result).toEqualTypeOf<ResultAsync<{ name: string; age: 20 }, never[]>>();
+        expectTypeOf(result).toEqualTypeOf<ResultAsync<{ name: 'Alice'; age: 20 }, never[]>>();
       });
 
       it('should return a ResultAsync with error array when some fail', () => {
         const result = collect({
-          name: succeed(Promise.resolve('Alice')),
+          name: Promise.resolve(succeed('Alice')),
           age: fail('Invalid age'),
         });
 
-        expectTypeOf(result).toEqualTypeOf<ResultAsync<{ name: string; age: never }, 'Invalid age'[]>>();
+        expectTypeOf(result).toEqualTypeOf<ResultAsync<{ name: 'Alice'; age: never }, 'Invalid age'[]>>();
       });
     });
   });
@@ -75,22 +75,22 @@ describe('collect', () => {
     describe('when some Results are asynchronous', () => {
       it('should return a ResultAsync with array of values', () => {
         const result = collect([
-          succeed(Promise.resolve(1)),
+          Promise.resolve(succeed(1)),
           succeed(2),
           succeed(3),
         ]);
 
-        expectTypeOf(result).toEqualTypeOf<ResultAsync<[number, 2, 3], never[]>>();
+        expectTypeOf(result).toEqualTypeOf<ResultAsync<[1, 2, 3], never[]>>();
       });
 
       it('should return a ResultAsync with error array when some fail', () => {
         const result = collect([
-          succeed(Promise.resolve(1)),
+          Promise.resolve(succeed(1)),
           fail('error1'),
           fail('error2'),
         ]);
 
-        expectTypeOf(result).toEqualTypeOf<ResultAsync<[number, never, never], ('error1' | 'error2')[]>>();
+        expectTypeOf(result).toEqualTypeOf<ResultAsync<[1, never, never], ('error1' | 'error2')[]>>();
       });
     });
   });
@@ -112,13 +112,13 @@ describe('collect', () => {
 
     describe('when the mapping function returns asynchronous Results', () => {
       it('should return a ResultAsync with array of mapped values', () => {
-        const result = collect([1, 2, 3], (x) => succeed(Promise.resolve(x.toString())));
+        const result = collect([1, 2, 3], (x) => Promise.resolve(succeed(x.toString())));
 
         expectTypeOf(result).toEqualTypeOf<ResultAsync<[string, string, string], never[]>>();
       });
 
       it('should return a ResultAsync with error array when some fail', () => {
-        const result = collect([1, 2, 3], (x) => x > 1 ? fail(Promise.resolve(x.toString())) : succeed(Promise.resolve(x.toString())));
+        const result = collect([1, 2, 3], (x) => x > 1 ? Promise.resolve(fail(x.toString())) : Promise.resolve(succeed(x.toString())));
 
         expectTypeOf(result).toEqualTypeOf<ResultAsync<[string, string, string], string[]>>();
       });

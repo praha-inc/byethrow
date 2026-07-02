@@ -64,22 +64,22 @@ describe('inspect', () => {
         const sideEffect = (x: number) => x;
 
         describe('when input is a success', () => {
-          const input = succeed(Promise.resolve(42));
+          const input = Promise.resolve(succeed(42));
 
           it('should preserve the original ResultAsync type', () => {
             const result = inspect(sideEffect)(input);
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<number, never>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<42, never>>();
           });
         });
 
         describe('when input is a failure', () => {
-          const input = fail(Promise.resolve('error'));
+          const input = Promise.resolve(fail('error'));
 
           it('should preserve the original ResultAsync type', () => {
             const result = inspect(sideEffect)(input);
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<never, string>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<never, 'error'>>();
           });
         });
       });
@@ -88,22 +88,22 @@ describe('inspect', () => {
         const sideEffect = (x: number) => Promise.resolve(x);
 
         describe('when input is a success', () => {
-          const input = succeed(Promise.resolve(42));
+          const input = Promise.resolve(succeed(42));
 
           it('should preserve the original ResultAsync type', () => {
             const result = inspect(sideEffect)(input);
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<number, never>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<42, never>>();
           });
         });
 
         describe('when input is a failure', () => {
-          const input = fail(Promise.resolve('error'));
+          const input = Promise.resolve(fail('error'));
 
           it('should preserve the original ResultAsync type', () => {
             const result = inspect(sideEffect)(input);
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<never, string>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<never, 'error'>>();
           });
         });
       });
@@ -172,7 +172,7 @@ describe('inspect', () => {
     describe('when input is asynchronous (Promise)', () => {
       describe('when output is synchronous', () => {
         describe('when input is a success', () => {
-          const input = succeed(Promise.resolve(42));
+          const input = Promise.resolve(succeed(42));
 
           it('should preserve the original ResultAsync type', () => {
             const result = pipe(
@@ -180,12 +180,12 @@ describe('inspect', () => {
               inspect((x) => x),
             );
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<number, never>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<42, never>>();
           });
         });
 
         describe('when input is a failure', () => {
-          const input = fail(Promise.resolve('error'));
+          const input = Promise.resolve(fail('error'));
 
           it('should preserve the original ResultAsync type', () => {
             const result = pipe(
@@ -193,14 +193,14 @@ describe('inspect', () => {
               inspect((x) => x),
             );
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<never, string>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<never, 'error'>>();
           });
         });
       });
 
       describe('when output is asynchronous (Promise)', () => {
         describe('when input is a success', () => {
-          const input = succeed(Promise.resolve(42));
+          const input = Promise.resolve(succeed(42));
 
           it('should preserve the original ResultAsync type', () => {
             const result = pipe(
@@ -208,12 +208,12 @@ describe('inspect', () => {
               inspect((x) => Promise.resolve(x)),
             );
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<number, never>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<42, never>>();
           });
         });
 
         describe('when input is a failure', () => {
-          const input = fail(Promise.resolve('error'));
+          const input = Promise.resolve(fail('error'));
 
           it('should preserve the original ResultAsync type', () => {
             const result = pipe(
@@ -221,7 +221,7 @@ describe('inspect', () => {
               inspect((x: number) => Promise.resolve(x)),
             );
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<never, string>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<never, 'error'>>();
           });
         });
       });

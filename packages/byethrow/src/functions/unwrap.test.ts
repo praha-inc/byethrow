@@ -44,7 +44,7 @@ describe('unwrap', () => {
 
   describe('when input is asynchronous (Promise)', () => {
     describe('when input is a success', () => {
-      const input = succeed(Promise.resolve(42));
+      const input = Promise.resolve(succeed(42));
 
       it('should return the success value', async () => {
         const result = await unwrap(input);
@@ -60,7 +60,7 @@ describe('unwrap', () => {
     });
 
     describe('when input is a failure', () => {
-      const input = fail(Promise.resolve('error'));
+      const input = Promise.resolve(fail('error'));
 
       it('should throw the error when no default is provided', async () => {
         await expect(unwrap(input)).rejects.toBe('error');

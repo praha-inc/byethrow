@@ -82,7 +82,7 @@ describe('andThrough', () => {
 
     describe('when output is asynchronous (Promise)', () => {
       describe('when output is a success', () => {
-        const transform = vi.fn((x: number) => succeed(Promise.resolve(x.toString())));
+        const transform = vi.fn((x: number) => Promise.resolve(succeed(x.toString())));
 
         describe('when input is a success', () => {
           const input = succeed(2);
@@ -118,7 +118,7 @@ describe('andThrough', () => {
       });
 
       describe('when output is a failure', () => {
-        const transform = vi.fn((x: number) => fail(Promise.resolve(x.toString())));
+        const transform = vi.fn((x: number) => Promise.resolve(fail(x.toString())));
 
         describe('when input is a success', () => {
           const input = succeed(2);
@@ -161,7 +161,7 @@ describe('andThrough', () => {
         const transform = vi.fn((x: number) => succeed(x.toString()));
 
         describe('when input is a success', () => {
-          const input = succeed(Promise.resolve(2));
+          const input = Promise.resolve(succeed(2));
 
           it('should not apply the function to the input', async () => {
             const result = await andThrough(transform)(input);
@@ -177,7 +177,7 @@ describe('andThrough', () => {
         });
 
         describe('when input is a failure', () => {
-          const input = fail(Promise.resolve('error'));
+          const input = Promise.resolve(fail('error'));
 
           it('should return the same failure', async () => {
             const result = await andThrough(transform)(input);
@@ -197,7 +197,7 @@ describe('andThrough', () => {
         const transform = vi.fn((x: number) => fail(x.toString()));
 
         describe('when input is a success', () => {
-          const input = succeed(Promise.resolve(2));
+          const input = Promise.resolve(succeed(2));
 
           it('should not apply the function to the input', async () => {
             const result = await andThrough(transform)(input);
@@ -213,7 +213,7 @@ describe('andThrough', () => {
         });
 
         describe('when input is a failure', () => {
-          const input = fail(Promise.resolve('error'));
+          const input = Promise.resolve(fail('error'));
 
           it('should return the same failure', async () => {
             const result = await andThrough(transform)(input);
@@ -232,10 +232,10 @@ describe('andThrough', () => {
 
     describe('when output is asynchronous (Promise)', () => {
       describe('when output is a success', () => {
-        const transform = vi.fn((x: number) => succeed(Promise.resolve(x.toString())));
+        const transform = vi.fn((x: number) => Promise.resolve(succeed(x.toString())));
 
         describe('when input is a success', () => {
-          const input = succeed(Promise.resolve(2));
+          const input = Promise.resolve(succeed(2));
 
           it('should not apply the function to the input', async () => {
             const result = await andThrough(transform)(input);
@@ -251,7 +251,7 @@ describe('andThrough', () => {
         });
 
         describe('when input is a failure', () => {
-          const input = fail(Promise.resolve('error'));
+          const input = Promise.resolve(fail('error'));
 
           it('should return the same failure', async () => {
             const result = await andThrough(transform)(input);
@@ -268,10 +268,10 @@ describe('andThrough', () => {
       });
 
       describe('when output is a failure', () => {
-        const transform = vi.fn((x: number) => fail(Promise.resolve(x.toString())));
+        const transform = vi.fn((x: number) => Promise.resolve(fail(x.toString())));
 
         describe('when input is a success', () => {
-          const input = succeed(Promise.resolve(2));
+          const input = Promise.resolve(succeed(2));
 
           it('should not apply the function to the input', async () => {
             const result = await andThrough(transform)(input);
@@ -287,7 +287,7 @@ describe('andThrough', () => {
         });
 
         describe('when input is a failure', () => {
-          const input = fail(Promise.resolve('error'));
+          const input = Promise.resolve(fail('error'));
 
           it('should return the same failure', async () => {
             const result = await andThrough(transform)(input);
