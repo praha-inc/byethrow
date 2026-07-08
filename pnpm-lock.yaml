@@ -191,8 +191,8 @@ importers:
         specifier: 2.0.16
         version: 2.0.16(@rspress/core@2.0.16(@rspack/core@2.1.2(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2))
       '@rspress/plugin-twoslash':
-        specifier: 2.0.15
-        version: 2.0.15(@rspress/core@2.0.16(@rspack/core@2.1.2(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2))(react@19.2.7)(typescript@6.0.3)
+        specifier: 2.0.16
+        version: 2.0.16(@rspress/core@2.0.16(@rspack/core@2.1.2(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2))(react@19.2.7)(typescript@6.0.3)
       '@rstest/core':
         specifier: 0.10.6
         version: 0.10.6
@@ -1539,8 +1539,8 @@ packages:
     peerDependencies:
       '@rspress/core': ^2.0.10
 
-  '@rspress/plugin-twoslash@2.0.15':
-    resolution: {integrity: sha512-pfcAmszsMmsJ/fjL7y/9AIDtiIsYqVmSVc5/Xp+7+CB1Za+cE12qcGcdJr8s+2mgmE9o6wWiMM8fbc9+xqEOJg==}
+  '@rspress/plugin-twoslash@2.0.16':
+    resolution: {integrity: sha512-tgstViNbdd7NpjY/7pCKv5QVBSIw+5jYdU9r/BShsaaRZHL9SsXlzwx/YsZ3ZtJn3mpaX1hIpgxT0Lo9GZaJRw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@rspress/core': ^2.0.10
@@ -5270,7 +5270,7 @@ snapshots:
     dependencies:
       '@rspress/core': 2.0.16(@rspack/core@2.1.2(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2)
 
-  '@rspress/plugin-twoslash@2.0.15(@rspress/core@2.0.16(@rspack/core@2.1.2(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2))(react@19.2.7)(typescript@6.0.3)':
+  '@rspress/plugin-twoslash@2.0.16(@rspress/core@2.0.16(@rspack/core@2.1.2(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2))(react@19.2.7)(typescript@6.0.3)':
     dependencies:
       '@floating-ui/dom': 1.7.6
       '@rspress/core': 2.0.16(@rspack/core@2.1.2(@swc/helpers@0.5.23))(@types/mdast@4.0.4)(@types/react@19.2.17)(micromark-util-types@2.0.2)(micromark@4.0.2)
