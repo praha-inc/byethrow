@@ -153,11 +153,11 @@ export const collect: {
       [] as unknown[],
     );
   } else {
-    return reduce(
+    return reduce<Record<string, unknown>>(
       Object.entries(value as Record<string, any>),
       // oxlint-disable-next-line @typescript-eslint/no-unsafe-member-access
       (accumulator, value, [key]) => { accumulator[key] = value; },
-      {} as Record<string, unknown>,
+      {},
     );
   }
 };

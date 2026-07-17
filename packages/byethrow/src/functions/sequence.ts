@@ -126,6 +126,7 @@ export const sequence: {
             }
             callback(accumulator, result.value, entry);
           }
+          // oxlint-disable-next-line typescript/no-unnecessary-type-assertion
           return succeed(accumulator) as Result<T, unknown>;
         });
       }
@@ -153,11 +154,11 @@ export const sequence: {
       [] as unknown[],
     );
   } else {
-    return reduce(
+    return reduce<Record<string, unknown>>(
       Object.entries(value as Record<string, any>),
       // oxlint-disable-next-line @typescript-eslint/no-unsafe-member-access
       (accumulator, value, [key]) => { accumulator[key] = value; },
-      {} as Record<string, unknown>,
+      {},
     );
   }
 };

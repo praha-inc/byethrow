@@ -58,7 +58,7 @@ const traverseStatements = (
   visitor: Visitor,
 ): void => {
   for (const node of statements) {
-    traverseNode(node as ESTree.Statement, visitor);
+    traverseNode(node, visitor);
   }
 };
 
