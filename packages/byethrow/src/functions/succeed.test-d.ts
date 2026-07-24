@@ -2,7 +2,7 @@ import { describe, expectTypeOf, it } from 'vitest';
 
 import { succeed } from './succeed';
 
-import type { Result, ResultAsync } from '../result';
+import type { Result } from '../result';
 
 describe('succeed', () => {
   it('should return a Result when given a plain value', () => {
@@ -11,10 +11,10 @@ describe('succeed', () => {
     expectTypeOf(result).toEqualTypeOf<Result<{ readonly id: '123'; readonly name: 'Alice' }, never>>();
   });
 
-  it('should return a ResultAsync when given a Promise', () => {
-    const result = succeed(Promise.resolve({ id: '123', name: 'Alice' } as const));
+  it('should return never when given a Promise', () => {
+    const result = succeed(Promise.resolve(42));
 
-    expectTypeOf(result).toEqualTypeOf<ResultAsync<{ readonly id: '123'; readonly name: 'Alice' }, never>>();
+    expectTypeOf(result).toEqualTypeOf<never>();
   });
 
   it('should return a Result with a no value', () => {

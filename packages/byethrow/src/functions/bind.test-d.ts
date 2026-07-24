@@ -69,7 +69,7 @@ describe('bind', () => {
         const input = succeed({ foo: 1 });
 
         describe('when output is a success', () => {
-          const output = (x: InferSuccess<typeof input>) => succeed(Promise.resolve(x.foo.toString()));
+          const output = (x: InferSuccess<typeof input>) => Promise.resolve(succeed(x.foo.toString()));
 
           it('should return a ResultAsync with success containing resolved value', () => {
             const result = bind('bar', output)(input);
@@ -85,7 +85,7 @@ describe('bind', () => {
         });
 
         describe('when output is a failure', () => {
-          const output = (x: InferSuccess<typeof input>) => fail(Promise.resolve(x.foo.toString()));
+          const output = (x: InferSuccess<typeof input>) => Promise.resolve(fail(x.foo.toString()));
 
           it('should return a ResultAsync with failure containing resolved error', () => {
             const result = bind('bar', output)(input);
@@ -104,7 +104,8 @@ describe('bind', () => {
 
     describe('when input is asynchronous (Promise)', () => {
       describe('when output is synchronous', () => {
-        const input = succeed(Promise.resolve({ foo: 1 }));
+        const foo: { foo: number } = { foo: 1 };
+        const input = Promise.resolve(succeed(foo));
 
         describe('when output is a success', () => {
           const output = (x: InferSuccess<typeof input>) => succeed(x.foo.toString());
@@ -139,7 +140,7 @@ describe('bind', () => {
         });
 
         describe('when input is a failure', () => {
-          const input: ResultAsync<{ foo: number }, string> = fail(Promise.resolve('error'));
+          const input: ResultAsync<{ foo: number }, string> = Promise.resolve(fail('error'));
           const output = (x: InferSuccess<typeof input>) => succeed(x.foo.toString());
 
           it('should propagate the async failure without invoking output function', () => {
@@ -157,10 +158,11 @@ describe('bind', () => {
       });
 
       describe('when output is asynchronous (Promise)', () => {
-        const input = succeed(Promise.resolve({ foo: 1 }));
+        const foo: { foo: number } = { foo: 1 };
+        const input = Promise.resolve(succeed(foo));
 
         describe('when output is a success', () => {
-          const output = (x: InferSuccess<typeof input>) => succeed(Promise.resolve(x.foo.toString()));
+          const output = (x: InferSuccess<typeof input>) => Promise.resolve(succeed(x.foo.toString()));
 
           it('should return a ResultAsync with nested resolved success values', () => {
             const result = bind('bar', output)(input);
@@ -176,7 +178,7 @@ describe('bind', () => {
         });
 
         describe('when output is a failure', () => {
-          const output = (x: InferSuccess<typeof input>) => fail(Promise.resolve(x.foo.toString()));
+          const output = (x: InferSuccess<typeof input>) => Promise.resolve(fail(x.foo.toString()));
 
           it('should return a ResultAsync with nested resolved failure values', () => {
             const result = bind('bar', output)(input);
@@ -271,7 +273,7 @@ describe('bind', () => {
           it('should return a ResultAsync with success containing resolved value', () => {
             const result = pipe(
               input,
-              bind('bar', (x) => succeed(Promise.resolve(x.foo.toString()))),
+              bind('bar', (x) => Promise.resolve(succeed(x.foo.toString()))),
             );
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: 1; bar: string }, never>>();
@@ -280,7 +282,7 @@ describe('bind', () => {
           it('should allow binding to an existing key, overwriting the value', () => {
             const result = pipe(
               input,
-              bind('foo', (x) => succeed(Promise.resolve(x.foo.toString()))),
+              bind('foo', (x) => Promise.resolve(succeed(x.foo.toString()))),
             );
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: string }, never>>();
@@ -291,7 +293,7 @@ describe('bind', () => {
           it('should return a ResultAsync with failure containing resolved error', () => {
             const result = pipe(
               input,
-              bind('bar', (x) => fail(Promise.resolve(x.foo.toString()))),
+              bind('bar', (x) => Promise.resolve(fail(x.foo.toString()))),
             );
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: 1; bar: never }, string>>();
@@ -300,7 +302,7 @@ describe('bind', () => {
           it('should allow binding to an existing key, overwriting the value', () => {
             const result = pipe(
               input,
-              bind('foo', (x) => fail(Promise.resolve(x.foo.toString()))),
+              bind('foo', (x) => Promise.resolve(fail(x.foo.toString()))),
             );
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: never }, string>>();
@@ -311,7 +313,8 @@ describe('bind', () => {
 
     describe('when input is asynchronous (Promise)', () => {
       describe('when output is synchronous', () => {
-        const input = succeed(Promise.resolve({ foo: 1 }));
+        const foo: { foo: number } = { foo: 1 };
+        const input = Promise.resolve(succeed(foo));
 
         describe('when output is a success', () => {
           it('should return a ResultAsync with success when input and output resolve successfully', () => {
@@ -354,7 +357,7 @@ describe('bind', () => {
         });
 
         describe('when input is a failure', () => {
-          const input: ResultAsync<{ foo: number }, string> = fail(Promise.resolve('error'));
+          const input: ResultAsync<{ foo: number }, string> = Promise.resolve(fail('error'));
 
           it('should propagate the async failure without invoking output function', () => {
             const result = pipe(
@@ -377,13 +380,14 @@ describe('bind', () => {
       });
 
       describe('when output is asynchronous (Promise)', () => {
-        const input = succeed(Promise.resolve({ foo: 1 }));
+        const foo: { foo: number } = { foo: 1 };
+        const input = Promise.resolve(succeed(foo));
 
         describe('when output is a success', () => {
           it('should return a ResultAsync with nested resolved success values', () => {
             const result = pipe(
               input,
-              bind('bar', (x) => succeed(Promise.resolve(x.foo.toString()))),
+              bind('bar', (x) => Promise.resolve(succeed(x.foo.toString()))),
             );
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: number; bar: string }, never>>();
@@ -392,7 +396,7 @@ describe('bind', () => {
           it('should allow binding to an existing key, overwriting the value', () => {
             const result = pipe(
               input,
-              bind('foo', (x) => succeed(Promise.resolve(x.foo.toString()))),
+              bind('foo', (x) => Promise.resolve(succeed(x.foo.toString()))),
             );
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: string }, never>>();
@@ -403,7 +407,7 @@ describe('bind', () => {
           it('should return a ResultAsync with nested resolved failure values', () => {
             const result = pipe(
               input,
-              bind('bar', (x) => fail(Promise.resolve(x.foo.toString()))),
+              bind('bar', (x) => Promise.resolve(fail(x.foo.toString()))),
             );
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: number; bar: never }, string>>();
@@ -412,7 +416,7 @@ describe('bind', () => {
           it('should allow binding to an existing key, overwriting the value', () => {
             const result = pipe(
               input,
-              bind('foo', (x) => fail(Promise.resolve(x.foo.toString()))),
+              bind('foo', (x) => Promise.resolve(fail(x.foo.toString()))),
             );
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<{ foo: never }, string>>();

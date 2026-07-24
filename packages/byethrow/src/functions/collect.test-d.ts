@@ -30,8 +30,9 @@ describe('collect', () => {
 
     describe('when some Results are asynchronous', () => {
       it('should return a ResultAsync with object of values', () => {
+        const alice: string = 'Alice';
         const result = collect({
-          name: succeed(Promise.resolve('Alice')),
+          name: Promise.resolve(succeed(alice)),
           age: succeed(20),
         });
 
@@ -39,8 +40,9 @@ describe('collect', () => {
       });
 
       it('should return a ResultAsync with error array when some fail', () => {
+        const alice: string = 'Alice';
         const result = collect({
-          name: succeed(Promise.resolve('Alice')),
+          name: Promise.resolve(succeed(alice)),
           age: fail('Invalid age'),
         });
 
@@ -74,8 +76,9 @@ describe('collect', () => {
 
     describe('when some Results are asynchronous', () => {
       it('should return a ResultAsync with array of values', () => {
+        const one: number = 1;
         const result = collect([
-          succeed(Promise.resolve(1)),
+          Promise.resolve(succeed(one)),
           succeed(2),
           succeed(3),
         ]);
@@ -84,8 +87,9 @@ describe('collect', () => {
       });
 
       it('should return a ResultAsync with error array when some fail', () => {
+        const one: number = 1;
         const result = collect([
-          succeed(Promise.resolve(1)),
+          Promise.resolve(succeed(one)),
           fail('error1'),
           fail('error2'),
         ]);
@@ -112,13 +116,13 @@ describe('collect', () => {
 
     describe('when the mapping function returns asynchronous Results', () => {
       it('should return a ResultAsync with array of mapped values', () => {
-        const result = collect([1, 2, 3], (x) => succeed(Promise.resolve(x.toString())));
+        const result = collect([1, 2, 3], (x) => Promise.resolve(succeed(x.toString())));
 
         expectTypeOf(result).toEqualTypeOf<ResultAsync<[string, string, string], never[]>>();
       });
 
       it('should return a ResultAsync with error array when some fail', () => {
-        const result = collect([1, 2, 3], (x) => x > 1 ? fail(Promise.resolve(x.toString())) : succeed(Promise.resolve(x.toString())));
+        const result = collect([1, 2, 3], (x) => x > 1 ? Promise.resolve(fail(x.toString())) : Promise.resolve(succeed(x.toString())));
 
         expectTypeOf(result).toEqualTypeOf<ResultAsync<[string, string, string], string[]>>();
       });

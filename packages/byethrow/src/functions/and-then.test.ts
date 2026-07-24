@@ -43,7 +43,7 @@ describe('andThen', () => {
     });
 
     describe('when output is asynchronous (Promise)', () => {
-      const transform = vi.fn((x: number) => succeed(Promise.resolve(x.toString())));
+      const transform = vi.fn((x: number) => Promise.resolve(succeed(x.toString())));
 
       describe('when input is a success', () => {
         const input = succeed(2);
@@ -84,7 +84,7 @@ describe('andThen', () => {
       const transform = vi.fn((x: number) => succeed(x.toString()));
 
       describe('when input is a success', () => {
-        const input = succeed(Promise.resolve(2));
+        const input = Promise.resolve(succeed(2));
 
         it('should apply the function to the input', async () => {
           const result = await andThen(transform)(input);
@@ -100,7 +100,7 @@ describe('andThen', () => {
       });
 
       describe('when input is a failure', () => {
-        const input = fail(Promise.resolve('error'));
+        const input = Promise.resolve(fail('error'));
 
         it('should return the same failure', async () => {
           const result = await andThen(transform)(input);
@@ -117,10 +117,10 @@ describe('andThen', () => {
     });
 
     describe('when output is asynchronous (Promise)', () => {
-      const transform = vi.fn((x: number) => succeed(Promise.resolve(x.toString())));
+      const transform = vi.fn((x: number) => Promise.resolve(succeed(x.toString())));
 
       describe('when input is a success', () => {
-        const input = succeed(Promise.resolve(2));
+        const input = Promise.resolve(succeed(2));
 
         it('should apply the function to the input', async () => {
           const result = await andThen(transform)(input);
@@ -136,7 +136,7 @@ describe('andThen', () => {
       });
 
       describe('when input is a failure', () => {
-        const input = fail(Promise.resolve('error'));
+        const input = Promise.resolve(fail('error'));
 
         it('should return the same failure', async () => {
           const result = await andThen(transform)(input);
