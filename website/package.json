@@ -13,8 +13,8 @@
   "dependencies": {
     "@rspress/core": "2.0.18",
     "@stackblitz/sdk": "1.11.1",
-    "react": "19.2.7",
-    "react-dom": "19.2.7"
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
     "@jest/globals": "30.4.1",
