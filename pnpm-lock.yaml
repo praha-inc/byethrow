@@ -37,8 +37,8 @@ importers:
         specifier: 0.25.0
         version: 0.25.0
       pkg-pr-new:
-        specifier: 0.0.79
-        version: 0.0.79
+        specifier: 0.0.80
+        version: 0.0.80
       turbo:
         specifier: 2.10.6
         version: 2.10.6
@@ -3227,8 +3227,8 @@ packages:
     resolution: {integrity: sha512-TfySrs/5nm8fQJDcBDuUng3VOUKsd7S+zqvbOTiGXHfxX4wK31ard+hoNuvkicM/2YFzlpDgABOevKSsB4G/FA==}
     engines: {node: '>= 6'}
 
-  pkg-pr-new@0.0.79:
-    resolution: {integrity: sha512-ip74NzaakGZha5s/X1T7j+Ez9/bRNDhzxQZTfnzAzoI7zO9JnMRdoiIfCLyy+ZzxxXg8WXRW2WcdvdORI0O30w==}
+  pkg-pr-new@0.0.80:
+    resolution: {integrity: sha512-a6Ie3sxNVrIkx5TQhe5+nbPbyLQg0jnrMNDYoXQpDXBaELxdDgwUVmlVThOSj7oKB3kEIrji5xyhSvWAWf5ABQ==}
     hasBin: true
 
   pluralize@8.0.0:
@@ -7275,7 +7275,7 @@ snapshots:
 
   pirates@4.0.7: {}
 
-  pkg-pr-new@0.0.79: {}
+  pkg-pr-new@0.0.80: {}
 
   pluralize@8.0.0: {}
 
