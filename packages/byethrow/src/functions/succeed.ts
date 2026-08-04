@@ -1,4 +1,4 @@
-/* oxlint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-assignment */
+/* oxlint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-assignment */
 
 import type { Result } from '../result';
 
