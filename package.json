@@ -20,7 +20,7 @@
     "oxlint": "1.75.0",
     "oxlint-tsgolint": "0.25.0",
     "pkg-pr-new": "0.0.86",
-    "turbo": "2.10.7",
+    "turbo": "2.10.8",
     "vitest": "4.1.10"
   },
   "packageManager": "pnpm@11.17.0"
