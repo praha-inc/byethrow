@@ -64,7 +64,8 @@ describe('inspect', () => {
         const sideEffect = (x: number) => x;
 
         describe('when input is a success', () => {
-          const input = succeed(Promise.resolve(42));
+          const value: number = 42;
+          const input = Promise.resolve(succeed(value));
 
           it('should preserve the original ResultAsync type', () => {
             const result = inspect(sideEffect)(input);
@@ -74,7 +75,8 @@ describe('inspect', () => {
         });
 
         describe('when input is a failure', () => {
-          const input = fail(Promise.resolve('error'));
+          const error: string = 'error';
+          const input = Promise.resolve(fail(error));
 
           it('should preserve the original ResultAsync type', () => {
             const result = inspect(sideEffect)(input);
@@ -88,7 +90,8 @@ describe('inspect', () => {
         const sideEffect = (x: number) => Promise.resolve(x);
 
         describe('when input is a success', () => {
-          const input = succeed(Promise.resolve(42));
+          const value: number = 42;
+          const input = Promise.resolve(succeed(value));
 
           it('should preserve the original ResultAsync type', () => {
             const result = inspect(sideEffect)(input);
@@ -98,7 +101,8 @@ describe('inspect', () => {
         });
 
         describe('when input is a failure', () => {
-          const input = fail(Promise.resolve('error'));
+          const error: string = 'error';
+          const input = Promise.resolve(fail(error));
 
           it('should preserve the original ResultAsync type', () => {
             const result = inspect(sideEffect)(input);
@@ -172,7 +176,8 @@ describe('inspect', () => {
     describe('when input is asynchronous (Promise)', () => {
       describe('when output is synchronous', () => {
         describe('when input is a success', () => {
-          const input = succeed(Promise.resolve(42));
+          const value: number = 42;
+          const input = Promise.resolve(succeed(value));
 
           it('should preserve the original ResultAsync type', () => {
             const result = pipe(
@@ -185,7 +190,8 @@ describe('inspect', () => {
         });
 
         describe('when input is a failure', () => {
-          const input = fail(Promise.resolve('error'));
+          const error: string = 'error';
+          const input = Promise.resolve(fail(error));
 
           it('should preserve the original ResultAsync type', () => {
             const result = pipe(
@@ -200,7 +206,8 @@ describe('inspect', () => {
 
       describe('when output is asynchronous (Promise)', () => {
         describe('when input is a success', () => {
-          const input = succeed(Promise.resolve(42));
+          const value: number = 42;
+          const input = Promise.resolve(succeed(value));
 
           it('should preserve the original ResultAsync type', () => {
             const result = pipe(
@@ -213,7 +220,8 @@ describe('inspect', () => {
         });
 
         describe('when input is a failure', () => {
-          const input = fail(Promise.resolve('error'));
+          const error: string = 'error';
+          const input = Promise.resolve(fail(error));
 
           it('should preserve the original ResultAsync type', () => {
             const result = pipe(

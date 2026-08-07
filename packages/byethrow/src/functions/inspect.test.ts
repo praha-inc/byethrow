@@ -86,7 +86,7 @@ describe('inspect', () => {
       const sideEffect = vi.fn((x: number) => x);
 
       describe('when input is a success', () => {
-        const input = succeed(Promise.resolve(42));
+        const input = Promise.resolve(succeed(42));
 
         it('should return the original success result unchanged', async () => {
           const result = await inspect(sideEffect)(input);
@@ -103,7 +103,7 @@ describe('inspect', () => {
       });
 
       describe('when input is a failure', () => {
-        const input = fail(Promise.resolve('async error'));
+        const input = Promise.resolve(fail('async error'));
 
         it('should return the original failure result unchanged', async () => {
           const result = await inspect(sideEffect)(input);
@@ -123,7 +123,7 @@ describe('inspect', () => {
       const sideEffect = vi.fn((x: number) => Promise.resolve(x));
 
       describe('when input is a success', () => {
-        const input = succeed(Promise.resolve(42));
+        const input = Promise.resolve(succeed(42));
 
         it('should return the original success result unchanged', async () => {
           const result = await inspect(sideEffect)(input);
@@ -140,7 +140,7 @@ describe('inspect', () => {
       });
 
       describe('when input is a failure', () => {
-        const input = fail(Promise.resolve('async error'));
+        const input = Promise.resolve(fail('async error'));
 
         it('should return the original failure result unchanged', async () => {
           const result = await inspect(sideEffect)(input);

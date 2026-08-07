@@ -64,7 +64,7 @@ describe('orElse', () => {
     describe('when output is asynchronous (Promise)', () => {
       describe('when input is a success', () => {
         const input = succeed(42);
-        const transform = vi.fn((x: string) => succeed(Promise.resolve(x.toUpperCase())));
+        const transform = vi.fn((x: string) => Promise.resolve(succeed(x.toUpperCase())));
 
         it('should return the same success', async () => {
           const result = await orElse(transform)(input);
@@ -83,7 +83,7 @@ describe('orElse', () => {
         const input = fail('error');
 
         describe('when output is a success', () => {
-          const transform = vi.fn((x: string) => succeed(Promise.resolve(x.toUpperCase())));
+          const transform = vi.fn((x: string) => Promise.resolve(succeed(x.toUpperCase())));
 
           it('should apply the function to the error', async () => {
             const result = await orElse(transform)(input);
@@ -99,7 +99,7 @@ describe('orElse', () => {
         });
 
         describe('when output is a failure', () => {
-          const transform = vi.fn((x: string) => fail(Promise.resolve(x.toUpperCase())));
+          const transform = vi.fn((x: string) => Promise.resolve(fail(x.toUpperCase())));
 
           it('should apply the function to the error', async () => {
             const result = await orElse(transform)(input);
@@ -120,7 +120,7 @@ describe('orElse', () => {
   describe('when input is asynchronous (Promise)', () => {
     describe('when output is synchronous', () => {
       describe('when input is a success', () => {
-        const input = succeed(Promise.resolve(42));
+        const input = Promise.resolve(succeed(42));
         const transform = vi.fn((x: string) => succeed(x.toUpperCase()));
 
         it('should return the same success', async () => {
@@ -137,7 +137,7 @@ describe('orElse', () => {
       });
 
       describe('when input is a failure', () => {
-        const input = fail(Promise.resolve('error'));
+        const input = Promise.resolve(fail('error'));
 
         describe('when output is a success', () => {
           const transform = vi.fn((x: string) => succeed(x.toUpperCase()));
@@ -175,8 +175,8 @@ describe('orElse', () => {
 
     describe('when output is asynchronous (Promise)', () => {
       describe('when input is a success', () => {
-        const input = succeed(Promise.resolve(42));
-        const transform = vi.fn((x: string) => succeed(Promise.resolve(x.toUpperCase())));
+        const input = Promise.resolve(succeed(42));
+        const transform = vi.fn((x: string) => Promise.resolve(succeed(x.toUpperCase())));
 
         it('should return the same success', async () => {
           const result = await orElse(transform)(input);
@@ -192,10 +192,10 @@ describe('orElse', () => {
       });
 
       describe('when input is a failure', () => {
-        const input = fail(Promise.resolve('error'));
+        const input = Promise.resolve(fail('error'));
 
         describe('when output is a success', () => {
-          const transform = vi.fn((x: string) => succeed(Promise.resolve(x.toUpperCase())));
+          const transform = vi.fn((x: string) => Promise.resolve(succeed(x.toUpperCase())));
 
           it('should apply the function to the error', async () => {
             const result = await orElse(transform)(input);
@@ -211,7 +211,7 @@ describe('orElse', () => {
         });
 
         describe('when output is a failure', () => {
-          const transform = vi.fn((x: string) => fail(Promise.resolve(x.toUpperCase())));
+          const transform = vi.fn((x: string) => Promise.resolve(fail(x.toUpperCase())));
 
           it('should apply the function to the error', async () => {
             const result = await orElse(transform)(input);
