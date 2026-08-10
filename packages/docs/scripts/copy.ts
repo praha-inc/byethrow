@@ -81,7 +81,7 @@ const checkDeadLinks = (documentPath: string) => {
   }
 };
 
-const documentPath = path.dirname(url.fileURLToPath(import.meta.resolve('@praha/byethrow-website/doc_build')));
+const documentPath = path.join(path.dirname(url.fileURLToPath(import.meta.resolve('@praha/byethrow-website/package.json'))), 'doc_build');
 const distributionPath = path.join(import.meta.dirname, '../docs');
 
 console.group('Cleaning distribution directory...');
