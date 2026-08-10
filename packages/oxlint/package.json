@@ -50,12 +50,12 @@
     "lint:type": "tsc --noEmit"
   },
   "dependencies": {
-    "@oxlint/plugins": "^1.68.0"
+    "@oxlint/plugins": "^1.77.0"
   },
   "devDependencies": {
     "@rslib/core": "0.23.2",
     "dedent": "1.7.2",
-    "oxlint": "1.75.0",
+    "oxlint": "1.77.0",
     "typescript": "6.0.3",
     "vitest": "4.1.10"
   },

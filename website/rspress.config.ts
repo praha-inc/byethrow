@@ -25,6 +25,11 @@ export default defineConfig({
       maxTitleSizePerLine: 20,
     }),
   ],
+  markdown: {
+    shiki: {
+      langs: ['tsx', 'ts', 'js', 'json'],
+    },
+  },
   lang: 'en',
   languageParity: {
     enabled: true,
