@@ -247,10 +247,10 @@ parseNumbers(['1', 'abc', 'xyz']);
 import { Result } from '@praha/byethrow';
 
 const fetchUser = (id: string): Result.ResultAsync<string, string> =>
-  Result.succeed(Promise.resolve(`User ${id}`));
+  Promise.resolve(Result.succeed(`User ${id}`));
 
 const fetchOrder = (id: string): Result.ResultAsync<string, string> =>
-  Result.succeed(Promise.resolve(`Order ${id}`));
+  Promise.resolve(Result.succeed(`Order ${id}`));
 
 // 操作は順次実行される：fetchUserが完了してからfetchOrderが開始
 const result = await Result.sequence({
@@ -269,10 +269,10 @@ const result = await Result.sequence({
 import { Result } from '@praha/byethrow';
 
 const fetchUser = (id: string): Result.ResultAsync<string, string> =>
-  Result.succeed(Promise.resolve(`User ${id}`));
+  Promise.resolve(Result.succeed(`User ${id}`));
 
 const fetchOrder = (id: string): Result.ResultAsync<string, string> =>
-  Result.succeed(Promise.resolve(`Order ${id}`));
+  Promise.resolve(Result.succeed(`Order ${id}`));
 
 // 操作は並列で実行される：両方が同時に開始
 const result = await Result.collect({

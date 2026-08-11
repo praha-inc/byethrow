@@ -242,10 +242,10 @@ When working with `ResultAsync` (asynchronous Results), `sequence` and `collect`
 import { Result } from '@praha/byethrow';
 
 const fetchUser = (id: string): Result.ResultAsync<string, string> =>
-  Result.succeed(Promise.resolve(`User ${id}`));
+  Promise.resolve(Result.succeed(`User ${id}`));
 
 const fetchOrder = (id: string): Result.ResultAsync<string, string> =>
-  Result.succeed(Promise.resolve(`Order ${id}`));
+  Promise.resolve(Result.succeed(`Order ${id}`));
 
 // Operations are executed sequentially: fetchUser completes, then fetchOrder starts
 const result = await Result.sequence({
@@ -263,10 +263,10 @@ const result = await Result.sequence({
 import { Result } from '@praha/byethrow';
 
 const fetchUser = (id: string): Result.ResultAsync<string, string> =>
-  Result.succeed(Promise.resolve(`User ${id}`));
+  Promise.resolve(Result.succeed(`User ${id}`));
 
 const fetchOrder = (id: string): Result.ResultAsync<string, string> =>
-  Result.succeed(Promise.resolve(`Order ${id}`));
+  Promise.resolve(Result.succeed(`Order ${id}`));
 
 // Operations are executed in parallel: both start at the same time
 const result = await Result.collect({

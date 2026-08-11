@@ -155,13 +155,11 @@ Asynchronous `Result` is a type alias `ResultAsync<T, E>`, representing `Promise
 ```ts
 import { Result } from '@praha/byethrow';
 
-// ResultAsync is just Promise<Result<T, E>>
-type ResultAsync<T, E> = Promise<Result.Result<T, E>>;
-
-// The library handles both sync and async seamlessly
-const asyncResult = Result.succeed(Promise.resolve(42));
+// The library provides ResultAsync<T, E> as an alias for Promise<Result<T, E>>
+const asyncResult: Result.ResultAsync<number, never> = Promise.resolve(Result.succeed(42));
 // Type: Result.ResultAsync<number, never>
 
+// ResultAsync is just Promise<Result<T, E>>, so it can be resolved with await
 const resolved = await asyncResult;
 // Type: Result.Result<number, never>
 ```

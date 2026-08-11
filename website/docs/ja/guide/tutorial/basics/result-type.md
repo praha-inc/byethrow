@@ -156,13 +156,11 @@ const result = Result.pipe(
 ```ts
 import { Result } from '@praha/byethrow';
 
-// ResultAsync は単に Promise<Result<T, E>> です
-type ResultAsync<T, E> = Promise<Result.Result<T, E>>;
-
-// ライブラリは同期と非同期の両方をシームレスに扱います
-const asyncResult = Result.succeed(Promise.resolve(42));
+// ライブラリは Promise<Result<T, E>> のエイリアスとして ResultAsync<T, E> を提供しています
+const asyncResult: Result.ResultAsync<number, never> = Promise.resolve(Result.succeed(42));
 // 型: Result.ResultAsync<number, never>
 
+// ResultAsync は Promise<Result<T, E>> なので、await で解決できます
 const resolved = await asyncResult;
 // 型: Result.Result<number, never>
 ```

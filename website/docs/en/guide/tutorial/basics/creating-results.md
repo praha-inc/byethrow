@@ -24,15 +24,12 @@ const voidSuccess = Result.succeed();
 
 ### With Async Values
 
-If you pass a `Promise`, `succeed` automatically returns a `ResultAsync`:
+`succeed` does not automatically await a `Promise`. Await the value yourself before passing it in:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const asyncSuccess = Result.succeed(Promise.resolve('hello'));
-// Type: Result.ResultAsync<string, never>
-
-const resolved = await asyncSuccess;
+const asyncSuccess = Result.succeed(await Promise.resolve('hello'));
 // Type: Result.Result<string, never>
 ```
 
@@ -54,15 +51,12 @@ const voidFailure = Result.fail();
 
 ### With Async Errors
 
-Like `succeed`, if you pass a `Promise`, `fail` returns a `ResultAsync`:
+Like `succeed`, `fail` does not automatically await a `Promise`. Await the error yourself before passing it in:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const asyncFailure = Result.fail(Promise.resolve('async error'));
-// Type: Result.ResultAsync<never, string>
-
-const resolved = await asyncFailure;
+const asyncFailure = Result.fail(await Promise.resolve('async error'));
 // Type: Result.Result<never, string>
 ```
 
