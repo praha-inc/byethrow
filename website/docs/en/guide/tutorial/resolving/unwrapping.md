@@ -101,7 +101,7 @@ Both `unwrap` and `unwrapError` work with `ResultAsync`:
 ```ts
 import { Result } from '@praha/byethrow';
 
-const asyncResult = Result.succeed(Promise.resolve(42));
+const asyncResult = Promise.resolve(Result.succeed(42));
 
 // Returns a Promise
 const value = await Result.unwrap(asyncResult);
@@ -113,7 +113,7 @@ With default:
 ```ts
 import { Result } from '@praha/byethrow';
 
-const asyncResult = Result.fail(Promise.resolve('error'));
+const asyncResult = Promise.resolve(Result.fail('error'));
 const value = await Result.unwrap(asyncResult, 0);
 // value: 0
 ```

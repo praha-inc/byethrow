@@ -24,15 +24,12 @@ const voidSuccess = Result.succeed();
 
 ### 非同期値の場合
 
-`Promise` を渡すと、`succeed` は自動的に `ResultAsync` を返します。
+`succeed` は `Promise` を自動的には await しません。渡す前に自分で await してください。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const asyncSuccess = Result.succeed(Promise.resolve('hello'));
-// 型: Result.ResultAsync<string, never>
-
-const resolved = await asyncSuccess;
+const asyncSuccess = Result.succeed(await Promise.resolve('hello'));
 // 型: Result.Result<string, never>
 ```
 
@@ -54,15 +51,12 @@ const voidFailure = Result.fail();
 
 ### 非同期エラーの場合
 
-`succeed` と同様に、`Promise` を渡すと `fail` は `ResultAsync` を返します。
+`succeed` と同様に、`fail` も `Promise` を自動的には await しません。渡す前に自分で await してください。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const asyncFailure = Result.fail(Promise.resolve('async error'));
-// 型: Result.ResultAsync<never, string>
-
-const resolved = await asyncFailure;
+const asyncFailure = Result.fail(await Promise.resolve('async error'));
 // 型: Result.Result<never, string>
 ```
 

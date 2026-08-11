@@ -103,7 +103,7 @@ const error = Result.unwrapError(failure, 'No error');
 ```ts
 import { Result } from '@praha/byethrow';
 
-const asyncResult = Result.succeed(Promise.resolve(42));
+const asyncResult = Promise.resolve(Result.succeed(42));
 
 // Promise を返す
 const value = await Result.unwrap(asyncResult);
@@ -115,7 +115,7 @@ const value = await Result.unwrap(asyncResult);
 ```ts
 import { Result } from '@praha/byethrow';
 
-const asyncResult = Result.fail(Promise.resolve('error'));
+const asyncResult = Promise.resolve(Result.fail('error'));
 const value = await Result.unwrap(asyncResult, 0);
 // value: 0
 ```

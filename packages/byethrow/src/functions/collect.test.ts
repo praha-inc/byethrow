@@ -53,9 +53,9 @@ describe('collect', () => {
     describe('when some Results are asynchronous', () => {
       it('should handle async successful results', async () => {
         const result = await collect({
-          a: succeed(Promise.resolve(1)),
-          b: succeed(Promise.resolve('hello')),
-          c: succeed(Promise.resolve(true)),
+          a: Promise.resolve(succeed(1)),
+          b: Promise.resolve(succeed('hello')),
+          c: Promise.resolve(succeed(true)),
         });
 
         expect(result).toEqual(succeed({ a: 1, b: 'hello', c: true }));
@@ -64,7 +64,7 @@ describe('collect', () => {
       it('should handle mixed sync and async successful results', async () => {
         const result = await collect({
           a: succeed(1),
-          b: succeed(Promise.resolve('hello')),
+          b: Promise.resolve(succeed('hello')),
           c: succeed(true),
         });
 
@@ -73,9 +73,9 @@ describe('collect', () => {
 
       it('should handle async failures', async () => {
         const result = await collect({
-          a: succeed(Promise.resolve(1)),
-          b: fail(Promise.resolve('error1')),
-          c: fail(Promise.resolve('error2')),
+          a: Promise.resolve(succeed(1)),
+          b: Promise.resolve(fail('error1')),
+          c: Promise.resolve(fail('error2')),
         });
 
         expect(result).toEqual(fail(['error1', 'error2']));
@@ -131,9 +131,9 @@ describe('collect', () => {
     describe('when some Results are asynchronous', () => {
       it('should handle async successful results', async () => {
         const result = await collect([
-          succeed(Promise.resolve(1)),
-          succeed(Promise.resolve(2)),
-          succeed(Promise.resolve(3)),
+          Promise.resolve(succeed(1)),
+          Promise.resolve(succeed(2)),
+          Promise.resolve(succeed(3)),
         ]);
 
         expect(result).toEqual(succeed([1, 2, 3]));
@@ -142,7 +142,7 @@ describe('collect', () => {
       it('should handle mixed sync and async successful results', async () => {
         const result = await collect([
           succeed(1),
-          succeed(Promise.resolve(2)),
+          Promise.resolve(succeed(2)),
           succeed(3),
         ]);
 
@@ -151,9 +151,9 @@ describe('collect', () => {
 
       it('should handle async failures', async () => {
         const result = await collect([
-          succeed(Promise.resolve(1)),
-          fail(Promise.resolve('error1')),
-          fail(Promise.resolve('error2')),
+          Promise.resolve(succeed(1)),
+          Promise.resolve(fail('error1')),
+          Promise.resolve(fail('error2')),
         ]);
 
         expect(result).toEqual(fail(['error1', 'error2']));
@@ -193,8 +193,8 @@ describe('collect', () => {
         const result = await collect(['1', '2', '3'], (value) => {
           const number = Number(value);
           return Number.isNaN(number)
-            ? fail(Promise.resolve(`Invalid number: ${value}`))
-            : succeed(Promise.resolve(number));
+            ? Promise.resolve(fail(`Invalid number: ${value}`))
+            : Promise.resolve(succeed(number));
         });
 
         expect(result).toEqual(succeed([1, 2, 3]));
@@ -204,8 +204,8 @@ describe('collect', () => {
         const result = await collect(['1', 'invalid', '3'], (value) => {
           const number = Number(value);
           return Number.isNaN(number)
-            ? fail(Promise.resolve(`Invalid number: ${value}`))
-            : succeed(Promise.resolve(number));
+            ? Promise.resolve(fail(`Invalid number: ${value}`))
+            : Promise.resolve(succeed(number));
         });
 
         expect(result).toEqual(fail(['Invalid number: invalid']));

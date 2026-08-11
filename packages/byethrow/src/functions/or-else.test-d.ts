@@ -50,7 +50,7 @@ describe('orElse', () => {
       describe('when output is asynchronous (Promise)', () => {
         describe('when input is a success', () => {
           const input = succeed(42);
-          const transform = (x: string) => succeed(Promise.resolve(x.toUpperCase()));
+          const transform = (x: string) => Promise.resolve(succeed(x.toUpperCase()));
 
           it('should return a ResultAsync with original value', () => {
             const result = orElse(transform)(input);
@@ -63,7 +63,7 @@ describe('orElse', () => {
           const input = fail('error');
 
           describe('when input is a success', () => {
-            const transform = (x: string) => succeed(Promise.resolve(x.toUpperCase()));
+            const transform = (x: string) => Promise.resolve(succeed(x.toUpperCase()));
 
             it('should return a ResultAsync with transformed value', () => {
               const result = orElse(transform)(input);
@@ -73,7 +73,7 @@ describe('orElse', () => {
           });
 
           describe('when input is a failure', () => {
-            const transform = (x: string) => fail(Promise.resolve(x.toUpperCase()));
+            const transform = (x: string) => Promise.resolve(fail(x.toUpperCase()));
 
             it('should return a ResultAsync with transformed value', () => {
               const result = orElse(transform)(input);
@@ -88,18 +88,18 @@ describe('orElse', () => {
     describe('when input is asynchronous (Promise)', () => {
       describe('when output is synchronous', () => {
         describe('when input is a success', () => {
-          const input = succeed(Promise.resolve(42));
+          const input = Promise.resolve(succeed(42));
           const transform = (x: string) => succeed(x.toUpperCase());
 
           it('should return a ResultAsync with original value', () => {
             const result = orElse(transform)(input);
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<number | string, never>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<42 | string, never>>();
           });
         });
 
         describe('when input is a failure', () => {
-          const input = fail(Promise.resolve('error'));
+          const input = Promise.resolve(fail('error'));
 
           describe('when input is a success', () => {
             const transform = (x: string) => succeed(x.toUpperCase());
@@ -125,21 +125,21 @@ describe('orElse', () => {
 
       describe('when output is asynchronous (Promise)', () => {
         describe('when input is a success', () => {
-          const input = succeed(Promise.resolve(42));
-          const transform = (x: string) => succeed(Promise.resolve(x.toUpperCase()));
+          const input = Promise.resolve(succeed(42));
+          const transform = (x: string) => Promise.resolve(succeed(x.toUpperCase()));
 
           it('should return a ResultAsync with original value', () => {
             const result = orElse(transform)(input);
 
-            expectTypeOf(result).toEqualTypeOf<ResultAsync<number | string, never>>();
+            expectTypeOf(result).toEqualTypeOf<ResultAsync<42 | string, never>>();
           });
         });
 
         describe('when input is a failure', () => {
-          const input = fail(Promise.resolve('error'));
+          const input = Promise.resolve(fail('error'));
 
           describe('when input is a success', () => {
-            const transform = (x: string) => succeed(Promise.resolve(x.toUpperCase()));
+            const transform = (x: string) => Promise.resolve(succeed(x.toUpperCase()));
 
             it('should return a ResultAsync with transformed value', () => {
               const result = orElse(transform)(input);
@@ -149,7 +149,7 @@ describe('orElse', () => {
           });
 
           describe('when input is a failure', () => {
-            const transform = (x: string) => fail(Promise.resolve(x.toUpperCase()));
+            const transform = (x: string) => Promise.resolve(fail(x.toUpperCase()));
 
             it('should return a ResultAsync with transformed value', () => {
               const result = orElse(transform)(input);
@@ -212,7 +212,7 @@ describe('orElse', () => {
           it('should return a ResultAsync with original value', () => {
             const result = pipe(
               input,
-              orElse((x: string) => succeed(Promise.resolve(x.toUpperCase()))),
+              orElse((x: string) => Promise.resolve(succeed(x.toUpperCase()))),
             );
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<42 | string, never>>();
@@ -226,7 +226,7 @@ describe('orElse', () => {
             it('should return a ResultAsync with transformed value', () => {
               const result = pipe(
                 input,
-                orElse((x) => succeed(Promise.resolve(x.toUpperCase()))),
+                orElse((x) => Promise.resolve(succeed(x.toUpperCase()))),
               );
 
               expectTypeOf(result).toEqualTypeOf<ResultAsync<number | string, never>>();
@@ -237,7 +237,7 @@ describe('orElse', () => {
             it('should return a ResultAsync with transformed value', () => {
               const result = pipe(
                 input,
-                orElse((x) => fail(Promise.resolve(x.toUpperCase()))),
+                orElse((x) => Promise.resolve(fail(x.toUpperCase()))),
               );
 
               expectTypeOf(result).toEqualTypeOf<ResultAsync<number, string>>();
@@ -250,7 +250,7 @@ describe('orElse', () => {
     describe('when input is asynchronous (Promise)', () => {
       describe('when output is synchronous', () => {
         describe('when input is a success', () => {
-          const input: ResultAsync<number, string> = succeed(Promise.resolve(42));
+          const input: ResultAsync<number, string> = Promise.resolve(succeed(42));
 
           it('should return a ResultAsync with original value', () => {
             const result = pipe(
@@ -263,7 +263,7 @@ describe('orElse', () => {
         });
 
         describe('when input is a failure', () => {
-          const input: ResultAsync<number, string> = fail(Promise.resolve('error'));
+          const input: ResultAsync<number, string> = Promise.resolve(fail('error'));
 
           describe('when input is a success', () => {
             it('should return a ResultAsync with transformed value', () => {
@@ -291,12 +291,12 @@ describe('orElse', () => {
 
       describe('when output is asynchronous (Promise)', () => {
         describe('when input is a success', () => {
-          const input: ResultAsync<number, string> = succeed(Promise.resolve(42));
+          const input: ResultAsync<number, string> = Promise.resolve(succeed(42));
 
           it('should return a ResultAsync with original value', () => {
             const result = pipe(
               input,
-              orElse((x: string) => succeed(Promise.resolve(x.toUpperCase()))),
+              orElse((x: string) => Promise.resolve(succeed(x.toUpperCase()))),
             );
 
             expectTypeOf(result).toEqualTypeOf<ResultAsync<number | string, never>>();
@@ -304,13 +304,13 @@ describe('orElse', () => {
         });
 
         describe('when input is a failure', () => {
-          const input: ResultAsync<number, string> = fail(Promise.resolve('error'));
+          const input: ResultAsync<number, string> = Promise.resolve(fail('error'));
 
           describe('when input is a success', () => {
             it('should return a ResultAsync with transformed value', () => {
               const result = pipe(
                 input,
-                orElse((x) => succeed(Promise.resolve(x.toUpperCase()))),
+                orElse((x) => Promise.resolve(succeed(x.toUpperCase()))),
               );
 
               expectTypeOf(result).toEqualTypeOf<ResultAsync<number | string, never>>();
@@ -321,7 +321,7 @@ describe('orElse', () => {
             it('should return a ResultAsync with transformed value', () => {
               const result = pipe(
                 input,
-                orElse((x) => fail(Promise.resolve(x.toUpperCase()))),
+                orElse((x) => Promise.resolve(fail(x.toUpperCase()))),
               );
 
               expectTypeOf(result).toEqualTypeOf<ResultAsync<number, string>>();

@@ -21,7 +21,7 @@ describe('mapError', () => {
 
     describe('when Result is asynchronous (Promise)', () => {
       it('should transform the error type in an asynchronous ResultAsync', () => {
-        const input = fail(Promise.resolve('error'));
+        const input = Promise.resolve(fail('error'));
         const result = mapError(transform)(input);
 
         expectTypeOf(result).toEqualTypeOf<ResultAsync<never, number>>();
@@ -44,7 +44,7 @@ describe('mapError', () => {
 
     describe('when Result is asynchronous (Promise)', () => {
       it('should transform the error type in an asynchronous ResultAsync', () => {
-        const input = fail(Promise.resolve('error'));
+        const input = Promise.resolve(fail('error'));
         const result = pipe(
           input,
           mapError((x) => x.length),
