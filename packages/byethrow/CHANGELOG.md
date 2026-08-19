@@ -1,5 +1,15 @@
 # @praha/byethrow
 
+## 0.13.0
+
+### Minor Changes
+
+- [#842](https://github.com/praha-inc/byethrow/pull/842) [`ae57dc7`](https://github.com/praha-inc/byethrow/commit/ae57dc74cf937a1b359eebadf6c9e360b5ab5aa9) Thanks [@iwasa-kosui](https://github.com/iwasa-kosui)! - Remove Promise auto-await from succeed/fail
+
+  **BREAKING CHANGES:**
+
+  `succeed` and `fail` no longer detect and auto-await `Promise` arguments. Passing a `Promise` now flows straight through as the wrapped value/error instead of resolving into a `ResultAsync`. Await the `Promise` yourself before calling `succeed`/`fail`, e.g. `succeed(await promise)` instead of `succeed(promise)`.
+
 ## 0.12.0
 
 ## 0.11.2
