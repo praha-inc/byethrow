@@ -118,7 +118,7 @@ importers:
     dependencies:
       '@oxlint/plugins':
         specifier: ^1.77.0
-        version: 1.78.0
+        version: 1.79.0
       '@praha/byethrow':
         specifier: workspace:*
         version: link:../byethrow
@@ -1201,6 +1201,10 @@ packages:
 
   '@oxlint/plugins@1.78.0':
     resolution: {integrity: sha512-Ypt8KeRYw+4jUtlPirfcHWMrn5ms12VrrFPD+Mds477/7tJxG1Kcz2Yrg2nVcTQEUx/GdlhS+BUg1kmxNm04Ug==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  '@oxlint/plugins@1.79.0':
+    resolution: {integrity: sha512-S0uyoxakDINJ4DPgqxGlEEvrdSMeQb7Z2lKVjxoY2gwsbZbfg2Xr8Klfeo5ZeraHmmdBCELFUHkSe6KEmBpMvg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
   '@pkgr/core@0.3.6':
@@ -4895,6 +4899,8 @@ snapshots:
     optional: true
 
   '@oxlint/plugins@1.78.0': {}
+
+  '@oxlint/plugins@1.79.0': {}
 
   '@pkgr/core@0.3.6': {}
 
