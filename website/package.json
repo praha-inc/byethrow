@@ -24,7 +24,7 @@
     "@praha/error-factory": "1.4.1",
     "@rspress/plugin-sitemap": "2.0.21",
     "@rspress/plugin-twoslash": "2.0.21",
-    "@rstest/core": "0.11.9",
+    "@rstest/core": "0.11.10",
     "@types/node": "24.13.3",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.5",
