@@ -17,7 +17,7 @@
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.13.3",
     "memfs": "4.68.2",
-    "tsx": "4.23.12",
+    "tsx": "4.23.13",
     "vitest": "4.1.11"
   }
 }
