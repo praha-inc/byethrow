@@ -27,7 +27,7 @@
     "@rstest/core": "0.11.12",
     "@types/node": "24.13.3",
     "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.5",
+    "@types/react-dom": "19.2.7",
     "execa": "10.0.1",
     "expect": "30.5.1",
     "oxlint": "1.80.0",
