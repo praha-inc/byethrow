@@ -52,7 +52,7 @@
     "@standard-schema/spec": "^1.0.0"
   },
   "devDependencies": {
-    "@rslib/core": "0.23.2",
+    "@rslib/core": "1.0.0",
     "oxlint": "1.81.0",
     "typedoc": "0.28.20",
     "typedoc-plugin-markdown": "4.13.0",
