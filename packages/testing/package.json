@@ -52,7 +52,7 @@
   "devDependencies": {
     "@praha/byethrow": "workspace:*",
     "@rslib/core": "1.0.0",
-    "oxlint": "1.81.0",
+    "oxlint": "1.82.0",
     "typescript": "6.0.3",
     "vitest": "4.1.11"
   },
