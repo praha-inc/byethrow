@@ -324,11 +324,11 @@ importers:
         specifier: 1.11.1
         version: 1.11.1
       react:
-        specifier: 19.2.8
-        version: 19.2.8
+        specifier: 19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: 19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: 19.3.0
+        version: 19.3.0(react@19.3.0)
     devDependencies:
       '@jest/globals':
         specifier: 30.5.1
@@ -350,7 +350,7 @@ importers:
         version: 2.0.21(@rspress/core@2.0.21(@rspack/core@2.2.3(@swc/helpers@0.5.23))(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@8.1.1))(supports-color@8.1.1))
       '@rspress/plugin-twoslash':
         specifier: 2.0.21
-        version: 2.0.21(@rspress/core@2.0.21(@rspack/core@2.2.3(@swc/helpers@0.5.23))(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@8.1.1))(supports-color@8.1.1))(react@19.2.8)(supports-color@8.1.1)(typescript@6.0.3)
+        version: 2.0.21(@rspress/core@2.0.21(@rspack/core@2.2.3(@swc/helpers@0.5.23))(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@8.1.1))(supports-color@8.1.1))(react@19.3.0)(supports-color@8.1.1)(typescript@6.0.3)
       '@rstest/core':
         specifier: 0.11.12
         version: 0.11.12
@@ -358,11 +358,11 @@ importers:
         specifier: 24.13.4
         version: 24.13.4
       '@types/react':
-        specifier: 19.2.18
-        version: 19.2.18
+        specifier: 19.3.0
+        version: 19.3.0
       '@types/react-dom':
-        specifier: 19.2.7
-        version: 19.2.7(@types/react@19.2.18)
+        specifier: 19.3.0
+        version: 19.3.0(@types/react@19.3.0)
       execa:
         specifier: 10.0.1
         version: 10.0.1
@@ -1933,13 +1933,13 @@ packages:
   '@types/node@24.13.4':
     resolution: {integrity: sha512-YJ7EqCstVTzIr0fMr7qul/977en+pQHrfmuKIo6Zr9i75Be21dr3MovcfvGtyvi2HAUrRerWps5sMO9I7WaxDw==}
 
-  '@types/react-dom@19.2.7':
-    resolution: {integrity: sha512-I8bPpDLcHBv1qiIiXDCy71Rt8eQDKJP0sMSWJphDdAcdqiJ1sGpZamavoEIRZmYzjia9LuEb2HlYdDpmoENpvQ==}
+  '@types/react-dom@19.3.0':
+    resolution: {integrity: sha512-ZI7bU42mZXXKHn/qNLEw2IrbiINU7X5+vfgdixBHkCNpYWXjKgfQ/P+uyGb5CjOLB9UcnTeg3rylQtV2hym44Q==}
     peerDependencies:
-      '@types/react': ^19.2.0
+      '@types/react': ^19.3.0
 
-  '@types/react@19.2.18':
-    resolution: {integrity: sha512-AnzbBERsrLKtk2XSfTbYRLjQPdy116Sty4q+T+Bp3IC4l6jNBvreVPAHmpq9qhXQM7CXZPjLVmGMw9sy+hxQ3w==}
+  '@types/react@19.3.0':
+    resolution: {integrity: sha512-N0rFCuH9YoxG9/m61l9MfpJKfmLOVU0em7ipIz6TRgSSkvReLB9vL85GB+yr8Bs5leqpvg96JSwF4ZS1s4viQg==}
 
   '@types/stack-utils@2.0.3':
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
@@ -3606,10 +3606,10 @@ packages:
     resolution: {integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==}
     hasBin: true
 
-  react-dom@19.2.8:
-    resolution: {integrity: sha512-rVprimfGBG3DR+Tq0IQG2DT5PxKth1WIGDmj5yPmlzr4YBe7uyE+Du4oVqTDXZSHGGGXRtTJEGSSePyQCMBglQ==}
+  react-dom@19.3.0:
+    resolution: {integrity: sha512-JDk8dgif51OjFoDE70+OT9ICyYr+69HlmihNwp1+Nsfbna3t5sIiCa9ZJktDmQ4/1b/rn26hIAR2uYXDMr5r0Q==}
     peerDependencies:
-      react: ^19.2.8
+      react: ^19.3.0
 
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
@@ -3652,8 +3652,8 @@ packages:
       react-dom:
         optional: true
 
-  react@19.2.8:
-    resolution: {integrity: sha512-PWaYA1L/q9u2u7xYQi+Y3L3Yfnie7XyLeaJICV1MGD6LprsBxcAqGjYyr0eY3p+QdsA+x/Irkt4Qif8D63+Sbw==}
+  react@19.3.0:
+    resolution: {integrity: sha512-E8LUcbtBWt20bbl2YoHfx4ZDBdxVTfOKtCZn9cDSJ4l6/nuoApcpIBcj47t2wZoVX8g2ZHuMHbiShgCR1T5Sog==}
     engines: {node: '>=0.10.0'}
 
   read-yaml-file@1.1.0:
@@ -3795,6 +3795,9 @@ packages:
 
   scheduler@0.27.0:
     resolution: {integrity: sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q==}
+
+  scheduler@0.28.0:
+    resolution: {integrity: sha512-juorfCmIkIw8tT+p5BXSm6PJjQF/ycEYmKyzURCIt/RaZIhL+PulbQ9Yu2z1HdOJDdqDTlxA1+xKBmHXJsczAw==}
 
   scroll-into-view-if-needed@3.1.0:
     resolution: {integrity: sha512-49oNpRjWRvnU8NyGVmUaYG4jtTkNonFZI86MmGRDqBphEK2EXT9gdEUoQPZhuBM8yWHxCWbobltqYO5M4XrUvQ==}
@@ -5137,11 +5140,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@mdx-js/react@3.1.1(@types/react@19.2.18)(react@19.2.8)':
+  '@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.0)':
     dependencies:
       '@types/mdx': 2.0.14
-      '@types/react': 19.2.18
-      react: 19.2.8
+      '@types/react': 19.3.0
+      react: 19.3.0
 
   '@napi-rs/wasm-runtime@1.1.6(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)':
     dependencies:
@@ -5495,14 +5498,14 @@ snapshots:
   '@rspress/core@2.0.21(@rspack/core@2.2.3(@swc/helpers@0.5.23))(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@8.1.1))(supports-color@8.1.1)':
     dependencies:
       '@mdx-js/mdx': 3.1.1(supports-color@8.1.1)
-      '@mdx-js/react': 3.1.1(@types/react@19.2.18)(react@19.2.8)
+      '@mdx-js/react': 3.1.1(@types/react@19.3.0)(react@19.3.0)
       '@rsbuild/core': 2.2.5
       '@rsbuild/plugin-react': 2.1.0(@rsbuild/core@2.2.5)(@rspack/core@2.2.3(@swc/helpers@0.5.23))
       '@rspress/shared': 2.0.21(supports-color@8.1.1)
       '@shikijs/rehype': 4.4.3
       '@types/mdast': 4.0.4
-      '@types/react': 19.2.18
-      '@unhead/react': 2.1.17(react@19.2.8)
+      '@types/react': 19.3.0
+      '@unhead/react': 2.1.17(react@19.3.0)
       body-scroll-lock: 4.0.0-beta.0
       clsx: 2.1.1
       copy-to-clipboard: 3.3.3
@@ -5513,11 +5516,11 @@ snapshots:
       mdast-util-mdxjs-esm: 2.0.1(supports-color@8.1.1)
       medium-zoom: 1.1.0
       nprogress: 0.2.0
-      react: 19.2.8
-      react-dom: 19.2.8(react@19.2.8)
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
       react-lazy-with-preload: 2.2.1
-      react-render-to-markdown: 19.1.0(react@19.2.8)
-      react-router-dom: 7.18.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      react-render-to-markdown: 19.1.0(react@19.3.0)
+      react-router-dom: 7.18.3(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       rehype-external-links: 3.0.0
       rehype-raw: 7.0.0
       remark-cjk-friendly: 2.3.1(@types/mdast@4.0.4)(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@8.1.1))(unified@11.0.5)
@@ -5544,7 +5547,7 @@ snapshots:
     dependencies:
       '@rspress/core': 2.0.21(@rspack/core@2.2.3(@swc/helpers@0.5.23))(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@8.1.1))(supports-color@8.1.1)
 
-  '@rspress/plugin-twoslash@2.0.21(@rspress/core@2.0.21(@rspack/core@2.2.3(@swc/helpers@0.5.23))(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@8.1.1))(supports-color@8.1.1))(react@19.2.8)(supports-color@8.1.1)(typescript@6.0.3)':
+  '@rspress/plugin-twoslash@2.0.21(@rspress/core@2.0.21(@rspack/core@2.2.3(@swc/helpers@0.5.23))(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@8.1.1))(supports-color@8.1.1))(react@19.3.0)(supports-color@8.1.1)(typescript@6.0.3)':
     dependencies:
       '@floating-ui/dom': 1.8.0
       '@rspress/core': 2.0.21(@rspack/core@2.2.3(@swc/helpers@0.5.23))(micromark-util-types@2.0.2)(micromark@4.0.2(supports-color@8.1.1))(supports-color@8.1.1)
@@ -5553,7 +5556,7 @@ snapshots:
       mdast-util-gfm: 3.1.0(supports-color@8.1.1)
       mdast-util-to-hast: 13.2.1
       picocolors: 1.1.1
-      react: 19.2.8
+      react: 19.3.0
       twoslash: 0.3.9(supports-color@8.1.1)(typescript@6.0.3)
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -5563,7 +5566,7 @@ snapshots:
     dependencies:
       '@rsbuild/core': 2.2.5
       '@shikijs/rehype': 4.4.3
-      '@types/react': 19.2.18
+      '@types/react': 19.3.0
       mdast-util-mdx-jsx: 3.2.0(supports-color@8.1.1)
       unified: 11.0.5
     transitivePeerDependencies:
@@ -5765,11 +5768,11 @@ snapshots:
     dependencies:
       undici-types: 7.18.2
 
-  '@types/react-dom@19.2.7(@types/react@19.2.18)':
+  '@types/react-dom@19.3.0(@types/react@19.3.0)':
     dependencies:
-      '@types/react': 19.2.18
+      '@types/react': 19.3.0
 
-  '@types/react@19.2.18':
+  '@types/react@19.3.0':
     dependencies:
       csstype: 3.2.3
 
@@ -5796,9 +5799,9 @@ snapshots:
 
   '@ungap/structured-clone@1.4.0': {}
 
-  '@unhead/react@2.1.17(react@19.2.8)':
+  '@unhead/react@2.1.17(react@19.3.0)':
     dependencies:
-      react: 19.2.8
+      react: 19.3.0
       unhead: 2.1.17
 
   '@unrs/resolver-binding-android-arm-eabi@1.12.2':
@@ -7775,10 +7778,10 @@ snapshots:
       minimist: 1.2.8
       strip-json-comments: 2.0.1
 
-  react-dom@19.2.8(react@19.2.8):
+  react-dom@19.3.0(react@19.3.0):
     dependencies:
-      react: 19.2.8
-      scheduler: 0.27.0
+      react: 19.3.0
+      scheduler: 0.28.0
 
   react-is@18.3.1: {}
 
@@ -7786,33 +7789,33 @@ snapshots:
 
   react-lazy-with-preload@2.2.1: {}
 
-  react-reconciler@0.33.0(react@19.2.8):
+  react-reconciler@0.33.0(react@19.3.0):
     dependencies:
-      react: 19.2.8
+      react: 19.3.0
       scheduler: 0.27.0
 
   react-refresh@0.18.0: {}
 
-  react-render-to-markdown@19.1.0(react@19.2.8):
+  react-render-to-markdown@19.1.0(react@19.3.0):
     dependencies:
-      react: 19.2.8
-      react-reconciler: 0.33.0(react@19.2.8)
+      react: 19.3.0
+      react-reconciler: 0.33.0(react@19.3.0)
 
-  react-router-dom@7.18.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
+  react-router-dom@7.18.3(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
     dependencies:
-      react: 19.2.8
-      react-dom: 19.2.8(react@19.2.8)
-      react-router: 7.18.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
+      react-router: 7.18.3(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
 
-  react-router@7.18.3(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
+  react-router@7.18.3(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
     dependencies:
       cookie: 1.1.1
-      react: 19.2.8
+      react: 19.3.0
       set-cookie-parser: 2.7.2
     optionalDependencies:
-      react-dom: 19.2.8(react@19.2.8)
+      react-dom: 19.3.0(react@19.3.0)
 
-  react@19.2.8: {}
+  react@19.3.0: {}
 
   read-yaml-file@1.1.0:
     dependencies:
@@ -8014,6 +8017,8 @@ snapshots:
   safer-buffer@2.1.2: {}
 
   scheduler@0.27.0: {}
+
+  scheduler@0.28.0: {}
 
   scroll-into-view-if-needed@3.1.0:
     dependencies:
