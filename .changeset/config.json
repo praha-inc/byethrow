@@ -1,16 +1,7 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config@3.0.5/schema.json",
-  "changelog": [
-    "@changesets/changelog-github",
-    {
-      "repo": "praha-inc/byethrow"
-    }
-  ],
+  "$schema": "https://unpkg.com/@changesets/config@4.0.0/schema.json",
+  "changelog": "@changesets/changelog-github",
   "commit": false,
-  "fixed": [["@praha/byethrow*"]],
-  "linked": [],
   "access": "public",
-  "baseBranch": "main",
-  "updateInternalDependencies": "patch",
-  "ignore": []
+  "baseBranch": "main"
 }
