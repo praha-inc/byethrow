@@ -3,5 +3,6 @@
   "changelog": "@changesets/changelog-github",
   "commit": false,
   "access": "public",
-  "baseBranch": "main"
+  "baseBranch": "main",
+  "fixed": [["@praha/byethrow*"]]
 }
