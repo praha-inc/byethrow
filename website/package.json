@@ -13,8 +13,8 @@
   "dependencies": {
     "@rspress/core": "2.0.21",
     "@stackblitz/sdk": "1.11.1",
-    "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
   },
   "devDependencies": {
     "@jest/globals": "30.5.1",
@@ -26,8 +26,8 @@
     "@rspress/plugin-twoslash": "2.0.21",
     "@rstest/core": "0.11.12",
     "@types/node": "24.13.4",
-    "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.7",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
     "execa": "10.0.1",
     "expect": "30.5.1",
     "oxlint": "1.82.0",
