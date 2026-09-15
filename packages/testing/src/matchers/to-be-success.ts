@@ -2,7 +2,7 @@ import { R } from '@praha/byethrow';
 
 import type { MatcherReturnType, MatcherState } from '../types/matcher';
 
-export type ToBeSuccess<T> = (callback?: (value: [R.InferSuccess<T>] extends [never] ? unknown : R.InferSuccess<T>) => void) => void;
+export type ToBeSuccess<R, T> = (callback?: (value: [R.InferSuccess<T>] extends [never] ? unknown : R.InferSuccess<T>) => void) => R;
 
 // oxlint-disable-next-line func-style
 export function toBeSuccess(this: MatcherState, received: unknown, callback?: (value: unknown) => void): MatcherReturnType {

@@ -29,7 +29,7 @@ import { resultMatchers } from '@praha/byethrow-testing';
 import type { ResultMatchers } from '@praha/byethrow-testing';
 
 declare module 'expect' {
-  interface Matchers<R> extends ResultMatchers<R> {}
+  interface Matchers<R, T> extends ResultMatchers<R, T> {}
 }
 
 expect.extend(resultMatchers);
@@ -56,7 +56,7 @@ import { expect } from 'vitest';
 import type { ResultMatchers } from '@praha/byethrow-testing';
 
 declare module 'vitest' {
-  interface Matchers<T> extends ResultMatchers<T> {}
+  interface Matchers<R, T> extends ResultMatchers<R, T> {}
 }
 
 expect.extend(resultMatchers);
@@ -87,7 +87,7 @@ import { expect } from '@rstest/core';
 import type { ResultMatchers } from '@praha/byethrow-testing';
 
 declare module '@rstest/core' {
-  interface Matchers<T> extends ResultMatchers<T> {}
+  interface Matchers<T> extends ResultMatchers<void, T> {}
 }
 
 expect.extend(resultMatchers);

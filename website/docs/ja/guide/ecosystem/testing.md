@@ -25,7 +25,7 @@ import { resultMatchers } from '@praha/byethrow-testing';
 import type { ResultMatchers } from '@praha/byethrow-testing';
 
 declare module 'expect' {
-  interface Matchers<R> extends ResultMatchers<R> {}
+  interface Matchers<R, T> extends ResultMatchers<R, T> {}
 }
 
 expect.extend(resultMatchers);
@@ -50,7 +50,7 @@ import { expect } from 'vitest';
 import type { ResultMatchers } from '@praha/byethrow-testing';
 
 declare module 'vitest' {
-  interface Matchers<T> extends ResultMatchers<T> {}
+  interface Matchers<R, T> extends ResultMatchers<R, T> {}
 }
 
 expect.extend(resultMatchers);
@@ -79,7 +79,7 @@ import { expect } from '@rstest/core';
 import type { ResultMatchers } from '@praha/byethrow-testing';
 
 declare module '@rstest/core' {
-  interface Matchers<T> extends ResultMatchers<T> {}
+  interface Matchers<T> extends ResultMatchers<void, T> {}
 }
 
 expect.extend(resultMatchers);
@@ -107,7 +107,7 @@ export default defineConfig({
 import type { ResultMatchers } from '@praha/byethrow-testing';
 
 declare module 'vitest' {
-  interface Matchers<T> extends ResultMatchers<T> {}
+  interface Matchers<R, T> extends ResultMatchers<R, T> {}
 }
 // ---cut-before---
 import { Result } from '@praha/byethrow';
@@ -126,7 +126,7 @@ test('result is success', () => {
 import type { ResultMatchers } from '@praha/byethrow-testing';
 
 declare module 'vitest' {
-  interface Matchers<T> extends ResultMatchers<T> {}
+  interface Matchers<R, T> extends ResultMatchers<R, T> {}
 }
 // ---cut-before---
 import { Result } from '@praha/byethrow';
@@ -151,7 +151,7 @@ test('result is success with value', () => {
 import type { ResultMatchers } from '@praha/byethrow-testing';
 
 declare module 'vitest' {
-  interface Matchers<T> extends ResultMatchers<T> {}
+  interface Matchers<R, T> extends ResultMatchers<R, T> {}
 }
 // ---cut-before---
 import { Result } from '@praha/byethrow';
@@ -170,7 +170,7 @@ test('result is failure', () => {
 import type { ResultMatchers } from '@praha/byethrow-testing';
 
 declare module 'vitest' {
-  interface Matchers<T> extends ResultMatchers<T> {}
+  interface Matchers<R, T> extends ResultMatchers<R, T> {}
 }
 // ---cut-before---
 import { Result } from '@praha/byethrow';
