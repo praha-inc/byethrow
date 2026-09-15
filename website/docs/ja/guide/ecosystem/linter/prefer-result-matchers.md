@@ -32,7 +32,7 @@ expect(Result.isSuccess(result)).not.toBe(false);
 import type { ResultMatchers } from '@praha/byethrow-testing';
 
 declare module 'vitest' {
-  interface Matchers<T> extends ResultMatchers<T> {}
+  interface Matchers<R, T> extends ResultMatchers<R, T> {}
 }
 // ---cut-before---
 import { Result } from '@praha/byethrow';
@@ -51,7 +51,7 @@ expect(result).toBeFailure();
 import type { ResultMatchers } from '@praha/byethrow-testing';
 
 declare module 'vitest' {
-  interface Matchers<T> extends ResultMatchers<T> {}
+  interface Matchers<R, T> extends ResultMatchers<R, T> {}
 }
 // ---cut-before---
 import { Result } from '@praha/byethrow';
