@@ -1,0 +1,22 @@
+```ts
+type User = { id: string; name: string };
+type Post = { id: string; title: string };
+type Settings = { theme: 'light' | 'dark' };
+declare const fetchUser: (id: string) => Result.ResultAsync<User, 'UserNotFound'>;
+declare const fetchPosts: (id: string) => Result.ResultAsync<Post[], 'PostsUnavailable'>;
+declare const fetchSettings: (id: string) => Result.ResultAsync<Settings, 'SettingsUnavailable'>;
+// ---cut---
+import { Result } from '@praha/byethrow';
+
+// Waits for every request and keeps all failures, not just the first
+const result = await Result.collect({
+  user: fetchUser('u_123'),
+  posts: fetchPosts('u_123'),
+  settings: fetchSettings('u_123'),
+});
+
+if (Result.isFailure(result)) {
+  const errors = result.error;
+  //    ^?
+}
+```

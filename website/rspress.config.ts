@@ -1,3 +1,5 @@
+import path from 'node:path';
+
 import { defineConfig } from '@rspress/core';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
 import { pluginTwoslash } from '@rspress/plugin-twoslash';
@@ -16,13 +18,14 @@ export default defineConfig({
   logo: '/waving-hand.png',
   logoText: 'byethrow',
   llms: true,
+  globalStyles: path.join(import.meta.dirname, 'theme/index.css'),
   plugins: [
     pluginSitemap({ siteUrl }),
     pluginTwoslash({ explicitTrigger: false }),
     pluginTypedoc(),
     pluginOg({
       domain: siteUrl,
-      maxTitleSizePerLine: 20,
+      maxTitleSizePerLine: 25,
     }),
   ],
   markdown: {

@@ -1,0 +1,262 @@
+{
+  "features.eyebrow": {
+    "en": "Why byethrow",
+    "ja": "Why byethrow"
+  },
+  "features.title": {
+    "en": "Error handling that the compiler understands",
+    "ja": "コンパイラが理解できるエラーハンドリング"
+  },
+  "features.description": {
+    "en": "Every failure becomes a value. No hidden throws, no forgotten catches, no surprises in production.",
+    "ja": "失敗は値として表現されます。見えない throw も、忘れられた catch も、本番環境での驚きもありません。"
+  },
+  "features.learnMore": {
+    "en": "Learn more",
+    "ja": "詳しく見る"
+  },
+  "features.result.title": {
+    "en": "Errors are values",
+    "ja": "エラーは値になる"
+  },
+  "features.result.description": {
+    "en": "Functions return Result<T, E> instead of throwing. Success carries the value, Failure carries the error, and the type checker makes sure you handle both.",
+    "ja": "関数は throw する代わりに Result<T, E> を返します。Success は値を、Failure はエラーを持ち、型検査が両方を処理していることを保証します。"
+  },
+  "features.objects.title": {
+    "en": "Just plain objects",
+    "ja": "ただのプレーンオブジェクト"
+  },
+  "features.objects.description": {
+    "en": "No classes, no instanceof, no hidden state. Log it, serialize it, send it across the wire as it is.",
+    "ja": "クラスも instanceof も隠れた状態もありません。ログに出す、シリアライズする、通信で送る、すべてそのままできます。"
+  },
+  "features.pipeline.title": {
+    "en": "Composable by design",
+    "ja": "合成を前提にした設計"
+  },
+  "features.pipeline.description": {
+    "en": "Chain steps with pipe. Each function only runs on success, and a failure flows straight through to the end.",
+    "ja": "pipe で処理をつなげます。各関数は成功時だけ実行され、失敗はそのまま末尾まで流れていきます。"
+  },
+  "features.pipeline.caption": {
+    "en": "a failure skips every remaining step",
+    "ja": "失敗すると残りのステップはすべてスキップされます"
+  },
+  "features.async.title": {
+    "en": "Sync and async, one API",
+    "ja": "同期も非同期も同じ API"
+  },
+  "features.async.description": {
+    "en": "Every function accepts both Result and Promise<Result>. There is no second API to learn.",
+    "ja": "すべての関数が Result と Promise<Result> の両方を受け付けます。覚える API はひとつだけです。"
+  },
+  "features.treeshake.title": {
+    "en": "Ship only what you use",
+    "ja": "使う分だけをバンドル"
+  },
+  "features.treeshake.description": {
+    "en": "Each function is an independent export, so bundlers drop everything you never call.",
+    "ja": "各関数は独立したエクスポートなので、呼ばれない関数はバンドラーが取り除きます。"
+  },
+  "features.treeshake.bundled": {
+    "en": "in your bundle",
+    "ja": "バンドルに含まれる"
+  },
+  "features.treeshake.dropped": {
+    "en": "tree-shaken away",
+    "ja": "取り除かれる"
+  },
+  "features.ecosystem.title": {
+    "en": "Batteries included",
+    "ja": "周辺ツールも揃っています"
+  },
+  "features.ecosystem.description": {
+    "en": "A linter plugin, test matchers and documentation for AI assistants keep the whole team on the same patterns.",
+    "ja": "Lint プラグイン、テストマッチャー、AI アシスタント向けドキュメントで、チーム全体が同じパターンを保てます。"
+  },
+  "features.ecosystem.lint": {
+    "en": "Linter plugin",
+    "ja": "Lint プラグイン"
+  },
+  "features.ecosystem.test": {
+    "en": "Test matchers",
+    "ja": "テストマッチャー"
+  },
+  "features.ecosystem.ai": {
+    "en": "Docs for AI assistants",
+    "ja": "AI アシスタント向けドキュメント"
+  },
+  "hero.copy": {
+    "en": "Copy install command",
+    "ja": "インストールコマンドをコピー"
+  },
+  "hero.copied": {
+    "en": "Copied",
+    "ja": "コピーしました"
+  },
+  "hero.managers": {
+    "en": "Package manager",
+    "ja": "パッケージマネージャー"
+  },
+  "hero.before.output": {
+    "en": "errors never show up in the type",
+    "ja": "エラーが型に現れません"
+  },
+  "cta.eyebrow": {
+    "en": "Get started",
+    "ja": "はじめよう"
+  },
+  "cta.title": {
+    "en": "Say goodbye to throw.",
+    "ja": "throw に、さよならを。"
+  },
+  "cta.description": {
+    "en": "Install the package and turn your first function into one that returns a Result. It takes about a minute.",
+    "ja": "パッケージをインストールして、最初の関数を Result を返す形に書き換えてみましょう。1 分もかかりません。"
+  },
+  "cta.primary": {
+    "en": "Read the guide",
+    "ja": "ガイドを読む"
+  },
+  "cta.secondary": {
+    "en": "Browse the API",
+    "ja": "API を見る"
+  },
+  "hero.tabs": {
+    "en": "Compare code",
+    "ja": "コードを比較"
+  },
+  "examples.eyebrow": {
+    "en": "In practice",
+    "ja": "In practice"
+  },
+  "examples.title": {
+    "en": "Every failure path, visible in the types",
+    "ja": "すべての失敗が、型に現れる"
+  },
+  "examples.description": {
+    "en": "These snippets are type-checked on every docs build. Hover over any identifier to see what the compiler sees.",
+    "ja": "これらのコードはドキュメントのビルドごとに型検査されています。識別子にカーソルを合わせると、コンパイラが推論した型を確認できます。"
+  },
+  "examples.tabs": {
+    "en": "Examples",
+    "ja": "コード例"
+  },
+  "examples.hint": {
+    "en": "Hover to inspect types",
+    "ja": "ホバーで型を確認"
+  },
+  "examples.copy": {
+    "en": "Copy code",
+    "ja": "コードをコピー"
+  },
+  "examples.copied": {
+    "en": "Copied",
+    "ja": "コピーしました"
+  },
+  "examples.guide": {
+    "en": "Read the guide",
+    "ja": "ガイドを読む"
+  },
+  "examples.wrap.title": {
+    "en": "Wrap code that throws",
+    "ja": "throw するコードを包む"
+  },
+  "examples.wrap.description": {
+    "en": "Result.fn turns a throwing or async function into one that returns a Result.",
+    "ja": "Result.fn で、throw する関数や非同期関数を Result を返す関数に変換します。"
+  },
+  "examples.validate.title": {
+    "en": "Validate unknown input",
+    "ja": "未知の入力を検証する"
+  },
+  "examples.validate.description": {
+    "en": "Result.parse accepts any Standard Schema, such as Zod, Valibot or ArkType.",
+    "ja": "Result.parse は Zod、Valibot、ArkType など Standard Schema 準拠のスキーマを受け付けます。"
+  },
+  "examples.compose.title": {
+    "en": "Compose steps with pipe",
+    "ja": "pipe で処理をつなぐ"
+  },
+  "examples.compose.description": {
+    "en": "Each step runs only on success, and every possible error adds up in the type.",
+    "ja": "各ステップは成功時だけ実行され、起こりうるエラーはすべて型に積み重なります。"
+  },
+  "examples.combine.title": {
+    "en": "Combine independent results",
+    "ja": "独立した Result をまとめる"
+  },
+  "examples.combine.description": {
+    "en": "Result.collect waits for all of them and reports every failure, not just the first.",
+    "ja": "Result.collect はすべての完了を待ち、最初の失敗だけでなくすべての失敗を返します。"
+  },
+  "examples.handle.title": {
+    "en": "Handle every error case",
+    "ja": "すべてのエラーを処理する"
+  },
+  "examples.handle.description": {
+    "en": "Pair it with ts-pattern for exhaustive matching, so a new error type fails to compile.",
+    "ja": "ts-pattern と組み合わせて網羅的にマッチングすれば、新しいエラー型の追加がコンパイルエラーになります。"
+  },
+  "footer.tagline": {
+    "en": "A lightweight, tree-shakable Result type for type-safe error handling in TypeScript.",
+    "ja": "TypeScript で型安全なエラーハンドリングを実現する、軽量で Tree Shaking に対応した Result 型ライブラリ。"
+  },
+  "footer.docs": {
+    "en": "Documentation",
+    "ja": "ドキュメント"
+  },
+  "footer.introduction": {
+    "en": "Introduction",
+    "ja": "はじめに"
+  },
+  "footer.quickStart": {
+    "en": "Quick Start",
+    "ja": "クイックスタート"
+  },
+  "footer.examples": {
+    "en": "Examples",
+    "ja": "実装例"
+  },
+  "footer.api": {
+    "en": "API Reference",
+    "ja": "API リファレンス"
+  },
+  "footer.ecosystem": {
+    "en": "Ecosystem",
+    "ja": "エコシステム"
+  },
+  "footer.linter": {
+    "en": "Linter plugin",
+    "ja": "Lint プラグイン"
+  },
+  "footer.testing": {
+    "en": "Test matchers",
+    "ja": "テストマッチャー"
+  },
+  "footer.llm": {
+    "en": "LLM integration",
+    "ja": "LLM 連携"
+  },
+  "footer.community": {
+    "en": "Community",
+    "ja": "コミュニティ"
+  },
+  "footer.releases": {
+    "en": "Releases",
+    "ja": "リリース"
+  },
+  "footer.issues": {
+    "en": "Issues",
+    "ja": "Issues"
+  },
+  "footer.license": {
+    "en": "MIT License",
+    "ja": "MIT ライセンス"
+  },
+  "stackblitz.open": {
+    "en": "Open in StackBlitz",
+    "ja": "StackBlitz で開く"
+  }
+}

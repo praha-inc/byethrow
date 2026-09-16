@@ -1,0 +1,73 @@
+.hand {
+  display: block;
+  overflow: visible;
+}
+
+/* Swings from the wrist, like the emoji itself. */
+.palm {
+  transform-box: fill-box;
+  transform-origin: 72% 92%;
+}
+
+.palm[data-waving='true'] {
+  animation: wave 1.8s ease-in-out;
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  15% {
+    transform: rotate(16deg);
+  }
+
+  30% {
+    transform: rotate(-6deg);
+  }
+
+  45% {
+    transform: rotate(16deg);
+  }
+
+  60% {
+    transform: rotate(-4deg);
+  }
+
+  75% {
+    transform: rotate(10deg);
+  }
+}
+
+.lines {
+  fill: #94a3b8;
+  opacity: 0.5;
+}
+
+:global(.dark) .lines {
+  fill: #b0bec5;
+}
+
+.lines[data-waving='true'] {
+  animation: lines 1.8s ease-in-out;
+}
+
+@keyframes lines {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  15%,
+  75% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .palm[data-waving='true'],
+  .lines[data-waving='true'] {
+    animation: none;
+  }
+}

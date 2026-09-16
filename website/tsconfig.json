@@ -4,7 +4,11 @@
     "../tsconfig.json"
   ],
   "compilerOptions": {
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "resolveJsonModule": true,
+    "paths": {
+      "i18n": ["./i18n.json"]
+    }
   },
   "mdx": {
     "checkMdx": true

@@ -1,0 +1,27 @@
+.wordmark {
+  font-family: var(--bt-font-display);
+  font-weight: 800;
+  font-stretch: 115%;
+  letter-spacing: -0.02em;
+  color: var(--rp-c-text-1);
+}
+
+/* Same "throw" we say goodbye to as the hero title, without the animation. */
+.wordmark em {
+  position: relative;
+  font-style: normal;
+  color: var(--bt-err);
+}
+
+.wordmark em::after {
+  content: '';
+  position: absolute;
+  left: -0.04em;
+  right: -0.04em;
+  top: 50%;
+  height: 0.09em;
+  border-radius: 999px;
+  background: var(--rp-c-text-1);
+  box-shadow: 0 0 0 1px var(--rp-c-bg);
+  transform: rotate(-5deg);
+}

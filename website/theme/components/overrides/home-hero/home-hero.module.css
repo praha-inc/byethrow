@@ -1,0 +1,267 @@
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 4rem;
+  width: 100%;
+  max-width: 76rem;
+  min-height: min(800px, calc(100svh - var(--rp-nav-height, 64px)));
+  margin: 0 auto;
+  overflow-x: clip;
+  padding: clamp(3rem, 9vh, 6rem) 32px 4rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+  padding: 0.3125rem 0.75rem 0.3125rem 0.625rem;
+  border-radius: 999px;
+  border: 1px solid var(--bt-line-strong);
+  background: var(--bt-surface);
+  backdrop-filter: blur(12px);
+  color: var(--rp-c-text-2);
+  font-family: var(--rp-font-family-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.01em;
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--bt-ok);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--bt-ok) 22%, transparent);
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--bt-font-display);
+  font-size: clamp(3.5rem, 7.5vw, 5.75rem);
+  font-weight: 800;
+  font-stretch: 115%;
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+  color: var(--rp-c-text-1);
+  animation: rise 0.8s 0.05s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* `<em>` inside the name is rendered as the "throw" we say goodbye to. */
+.title em {
+  position: relative;
+  font-style: normal;
+  color: var(--bt-err);
+}
+
+.title em::after {
+  content: '';
+  position: absolute;
+  left: -0.04em;
+  right: -0.04em;
+  top: 50%;
+  height: 0.06em;
+  border-radius: 999px;
+  background: var(--rp-c-text-1);
+  box-shadow: 0 0 0 0.02em var(--rp-c-bg);
+  transform: rotate(-5deg) scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Struck through once the code card lands on byethrow. */
+.title[data-struck='true'] em::after {
+  transform: rotate(-5deg) scaleX(1);
+  transition-duration: 0.5s;
+  transition-delay: 0.15s;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: clamp(1.625rem, 3.2vw, 2.375rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+  word-break: auto-phrase;
+  color: var(--rp-c-text-1);
+  animation: rise 0.8s 0.12s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.tagline {
+  max-width: 30rem;
+  margin: 1.25rem 0 0;
+  font-size: clamp(1rem, 1.5vw, 1.1875rem);
+  line-height: 1.6;
+  text-wrap: pretty;
+  word-break: auto-phrase;
+  color: var(--rp-c-text-2);
+  animation: rise 0.8s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2.25rem;
+  animation: rise 0.8s 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.after-actions {
+  width: 100%;
+  margin-top: 1.25rem;
+  animation: rise 0.8s 0.36s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.visual {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  max-width: 580px;
+}
+
+/* Sits on the bottom-right corner of the code card and waves when "throw" is struck through. */
+.hand {
+  position: absolute;
+  right: -28px;
+  bottom: -40px;
+  z-index: 1;
+  width: 112px;
+  transform-origin: 70% 90%;
+  animation: hand-enter 0.7s 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes hand-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.6) rotate(-12deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.visual-glow {
+  position: absolute;
+  inset: 0 -8%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(40% 45% at 30% 35%, color-mix(in srgb, var(--bt-ok) 40%, transparent), transparent 70%),
+    radial-gradient(35% 40% at 75% 70%, color-mix(in srgb, var(--bt-err) 30%, transparent), transparent 70%);
+  filter: blur(48px);
+  opacity: 0.45;
+  animation: glow 10s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    transform: translate3d(-3%, -2%, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(3%, 3%, 0) scale(1.06);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (width <= 1000px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3.5rem;
+    min-height: 0;
+    padding-top: 3.5rem;
+    text-align: center;
+  }
+
+  .container {
+    align-items: center;
+  }
+
+  .tagline {
+    margin-inline: auto;
+  }
+
+  .actions {
+    justify-content: center;
+  }
+
+  .after-actions {
+    display: flex;
+    justify-content: center;
+  }
+
+  .visual {
+    justify-content: center;
+  }
+}
+
+@media (width <= 600px) {
+  .hero {
+    padding: 2.5rem 16px 3rem;
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+
+  /* The output row is too narrow to share, so move up to the tab bar, which hides its type badge here. */
+  .hand {
+    top: -36px;
+    right: -6px;
+    bottom: auto;
+    width: 68px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .badge,
+  .title,
+  .subtitle,
+  .tagline,
+  .actions,
+  .after-actions,
+  .hand,
+  .visual-glow {
+    animation: none;
+  }
+
+  .title em::after {
+    transition: none;
+  }
+}

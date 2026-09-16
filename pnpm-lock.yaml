@@ -322,6 +322,9 @@ importers:
       '@stackblitz/sdk':
         specifier: 1.11.1
         version: 1.11.1
+      ogl:
+        specifier: 1.0.11
+        version: 1.0.11
       react:
         specifier: 19.3.0
         version: 19.3.0
@@ -3312,6 +3315,9 @@ packages:
   obug@2.2.1:
     resolution: {integrity: sha512-XrsrhT5sybtKI6wakr2SPOlGZWWYbUXZ7a0jT8/QOeAPau+1X/bSegNe5YR75oJmEZQbKningirmGOEJCIk61Q==}
     engines: {node: '>=12.20.0'}
+
+  ogl@1.0.11:
+    resolution: {integrity: sha512-kUpC154AFfxi16pmZUK4jk3J+8zxwTWGPo03EoYA8QPbzikHoaC82n6pNTbd+oEaJonaE8aPWBlX7ad9zrqLsA==}
 
   once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
@@ -7243,6 +7249,8 @@ snapshots:
   nprogress@0.2.0: {}
 
   obug@2.2.1: {}
+
+  ogl@1.0.11: {}
 
   once@1.4.0:
     dependencies:

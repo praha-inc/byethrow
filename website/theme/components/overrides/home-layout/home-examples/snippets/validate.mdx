@@ -1,0 +1,14 @@
+```ts
+declare const request: Request;
+// ---cut---
+import { Result } from '@praha/byethrow';
+import { z } from 'zod';
+
+const SignUp = z.object({
+  name: z.string().min(1),
+  email: z.email(),
+});
+
+const result = Result.parse(SignUp, await request.json());
+//    ^?
+```
