@@ -22,7 +22,7 @@
     "@praha/byethrow-oxlint": "workspace:*",
     "@praha/byethrow-testing": "workspace:*",
     "@praha/error-factory": "1.4.1",
-    "@rspress/plugin-sitemap": "2.0.21",
+    "@rspress/plugin-sitemap": "2.0.22",
     "@rspress/plugin-twoslash": "2.0.21",
     "@rstest/core": "0.11.12",
     "@types/node": "24.13.4",
