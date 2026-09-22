@@ -25,7 +25,7 @@
     "@rspress/plugin-sitemap": "2.0.22",
     "@rspress/plugin-twoslash": "2.0.22",
     "@rstest/core": "0.11.12",
-    "@types/node": "24.13.4",
+    "@types/node": "24.13.6",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "execa": "10.0.1",
