@@ -65,7 +65,7 @@
     "@rslib/core": "1.0.1",
     "@types/node": "24.13.6",
     "oxlint": "1.83.0",
-    "tsx": "4.23.13",
+    "tsx": "4.23.15",
     "typescript": "6.0.3"
   },
   "peerDependencies": {
