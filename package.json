@@ -21,7 +21,7 @@
     "oxlint-tsgolint": "7.0.2002",
     "pkg-pr-new": "0.0.88",
     "turbo": "2.10.13",
-    "vitest": "5.0.0"
+    "vitest": "5.0.1"
   },
   "packageManager": "pnpm@12.4.1"
 }
