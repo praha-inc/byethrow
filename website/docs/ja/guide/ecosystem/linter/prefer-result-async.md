@@ -1,29 +1,42 @@
 ---
-description: Promise でラップした Result の代わりに ResultAsync の使用を強制するOxlintルール（自動修正対応）
+description: Promise<Result> の代わりに型エイリアス ResultAsync を使うことを強制する Oxlint ルール。自動修正に対応しています。
 ---
 
 # prefer-result-async
 
-`Promise<Result<T, E>>` の代わりに `ResultAsync<T, E>` の使用を強制します。
+`Promise<Result<T, E>>` の代わりに `ResultAsync<T, E>` を使うことを強制します。
+
+このルールは自動修正に対応しています。
 
 ## ルールの詳細
 
-`ResultAsync<T, E>` は `Promise<Result<T, E>>` のエイリアスです。専用のエイリアスはより短く、関数が `Result` でラップされた非同期値を返すことを明確に示します。このルールは自動修正に対応しています。
+`ResultAsync<T, E>` は `Promise<Result<T, E>>` のエイリアスです。
+エイリアスのほうが短く、関数が非同期の `Result` を返すことがひと目でわかります。
 
-### 誤り
-
-```ts
-import { Result } from '@praha/byethrow';
-
-// ❌ Promise<Result<...>>を使用
-type Result = Promise<Result.Result<string, Error>>;
-```
-
-### 正しい
+### 誤った例
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-// ✅ ResultAsyncを使用
-type Result = Result.ResultAsync<string, Error>;
+class UserNotFoundError extends Error {}
+type User = { id: string; name: string };
+
+// ❌ Promise<Result<...>>
+declare const findUser: (id: string) => Promise<Result.Result<User, UserNotFoundError>>;
 ```
+
+### 正しい例
+
+```ts
+import { Result } from '@praha/byethrow';
+
+class UserNotFoundError extends Error {}
+type User = { id: string; name: string };
+
+// ✅ ResultAsync
+declare const findUser: (id: string) => Result.ResultAsync<User, UserNotFoundError>;
+```
+
+## オプション
+
+このルールにオプションはありません。

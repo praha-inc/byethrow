@@ -1,41 +1,44 @@
 ---
-description: Result.isSuccess() や Result.isFailure() への否定演算子の使用を禁止し、直接の型ガードに自動修正するOxlintルール
+description: Result.isSuccess() や Result.isFailure() を ! 演算子で否定することを禁止し、反対の型ガードに自動修正する Oxlint ルール。
 ---
 
 # no-negated-type-guards
 
-`Result.isSuccess()` または `Result.isFailure()` に否定演算子（`!`）を使用することを禁止します。
+`Result.isSuccess()` や `Result.isFailure()` に否定演算子（`!`）を使うことを禁止します。
+
+このルールは自動修正に対応しています。修正時には、否定された呼び出しが反対の型ガードに置き換えられます。
 
 ## ルールの詳細
 
-`!Result.isSuccess(result)` は `Result.isFailure(result)` と同等ですが、否定形は可読性が低く、読み手に余分な認知負荷をかけます。このルールは自動修正に対応しています。
+`!Result.isSuccess(result)` は `Result.isFailure(result)` と同じ意味ですが、否定形は読むときに一手間余計にかかります。
+`Result` は常に成功か失敗のどちらかなので、否定の代わりに使える型ガードが必ず存在します。
 
-### 誤り
+### 誤った例
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result: Result.Result<string, Error> = Result.succeed('hello');
+declare const result: Result.Result<string, Error>;
 
-// ❌ isSuccessを否定
+// ❌ isSuccess を否定している
 if (!Result.isSuccess(result)) {
   // 失敗時の処理
 }
 
-// ❌ isFailureを否定
+// ❌ isFailure を否定している
 if (!Result.isFailure(result)) {
   // 成功時の処理
 }
 ```
 
-### 正しい
+### 正しい例
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result: Result.Result<string, Error> = Result.succeed('hello');
+declare const result: Result.Result<string, Error>;
 
-// ✅ 直接の型ガードを使用
+// ✅ 型ガードを直接使っている
 if (Result.isFailure(result)) {
   // 失敗時の処理
 }
@@ -44,3 +47,7 @@ if (Result.isSuccess(result)) {
   // 成功時の処理
 }
 ```
+
+## オプション
+
+このルールにオプションはありません。

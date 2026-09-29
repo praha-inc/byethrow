@@ -1,22 +1,18 @@
 ---
-description: 'Resultの複数エラー型をts-patternやinstanceof、判別可能なユニオンで型安全にパターンマッチングする方法。'
+description: '複数のエラー型で失敗しうる Result の処理方法。ts-pattern による網羅的なマッチング、エラーの name に対する switch 文、instanceof による判定。'
 ---
 
 import { PackageManagerTabs } from '../../../../theme';
 
 # パターンマッチング
 
-複数の異なるエラー型を持つ `Result` 型を扱う際、異なるエラーシナリオを効果的に処理するためにパターンマッチングは不可欠です。
-このガイドでは、複数のエラー型を適切に処理するためのパターンマッチングの使い方を示します。
+`Result` のエラー型は、処理が失敗しうるパターンごとに 1 つずつ、ユニオン型になっていることがよくあります。
+このページでは、エラー型ごとに適切に処理する方法と、処理漏れを防ぐ方法を紹介します。
 
-## なぜユニオンエラーにパターンマッチングが必要なのか？
+## 例
 
-`Result` が複数の異なるエラー型で失敗する可能性がある場合、各エラー型を適切に処理する体系的な方法が必要です。
-パターンマッチングは、すべての可能なエラーケースを処理するためのクリーンで型安全なアプローチを提供します。
-
-:::tip
-`@praha/error-factory` の詳細については、[Custom Error](./custom-error.mdx#推奨prahaerror-factoryを使用する)ページを参照してください。
-:::
+このページの例では、投稿を削除する関数を使います。この関数は 3 通りの理由で失敗する可能性があります。
+[カスタムエラー](./custom-error)で推奨しているとおり、各エラーは一意な `name` を持つクラスです。
 
 ```ts
 // @noErrors
@@ -38,38 +34,27 @@ class PostAlreadyDeletedError extends ErrorFactory({
   message: 'This post has already been deleted.',
 }) {}
 
-// 投稿削除関数の例
 type PostDeleteError = (
   | PostNotFoundError
   | PostPermissionError
   | PostAlreadyDeletedError
 );
 
-// 複数のエラー型を返す可能性がある関数
 const deletePost = async (postId: string): Result.ResultAsync<void, PostDeleteError> => {
-  // いずれかのエラー型を返す可能性のある実装
+  // 失敗時には上記のいずれかのエラーを返す
 };
-
-// パターンマッチングによる結果のハンドリング
-await Result.pipe(
-  deletePost('123'),
-  Result.map(() => 'Post deleted successfully!'),
-  Result.inspectError((error) => {
-    // 異なるエラー型を処理するためのパターンマッチング
-  }),
-);
 ```
 
-## 推奨：`ts-pattern` を使用する
+## 推奨：`ts-pattern` を使う
 
-パターンマッチングには[`ts-pattern`](https://github.com/gvergnaud/ts-pattern)の使用を強くお勧めします。
-優れたTypeScriptサポートを提供し、網羅的なマッチングを保証します。
+パターンマッチングには [`ts-pattern`](https://github.com/gvergnaud/ts-pattern) をおすすめします。
+TypeScript のサポートが優れており、処理されていないエラー型があれば `.exhaustive()` がコンパイルエラーを報告します。
 
 ### インストール
 
 <PackageManagerTabs command="install ts-pattern" />
 
-### `ts-pattern` によるパターンマッチング
+### エラーをマッチングする
 
 ```ts
 // @filename: delete-post.ts
@@ -112,24 +97,88 @@ await Result.pipe(
   Result.inspectError((error) => {
     match(error)
       .with({ name: 'PostNotFoundError' }, () => {
-        console.error('リクエストされた投稿が見つかりませんでした。');
+        console.error('The requested post was not found.');
       })
       .with({ name: 'PostPermissionError' }, () => {
-        console.error('このアクションを実行する権限がありません。');
+        console.error('You do not have permission to perform this action.');
       })
       .with({ name: 'PostAlreadyDeletedError' }, () => {
-        console.error('この投稿は既に削除されています。');
+        console.error('This post has already been deleted.');
       })
-      .exhaustive(); // すべてのケースが処理されることを保証する
+      .exhaustive(); // 処理漏れがあるとコンパイルエラーになる
   }),
 );
 ```
 
-## 代替案：TypeScriptネイティブなパターンマッチング
+## 代替案：TypeScript の標準機能
 
-外部ライブラリを使用したくない場合は、TypeScriptの組み込み機能を使用してパターンマッチングを実装できます。
+依存関係を増やしたくない場合は、TypeScript の組み込み機能でも同じことができます。
 
-### `instanceof` を使用する
+### `switch` 文を使う
+
+各エラーはリテラル型の `name` を持つため、`switch` 文の各 `case` でエラーの型が絞り込まれます。
+`default` で `satisfies never` を書いておくと、`ts-pattern` と同じ網羅性チェックが得られます。
+
+```ts
+// @filename: delete-post.ts
+import { ErrorFactory } from '@praha/error-factory';
+import { Result } from '@praha/byethrow';
+
+export class PostNotFoundError extends ErrorFactory({
+  name: 'PostNotFoundError',
+  message: 'The requested post was not found.',
+}) {}
+
+export class PostPermissionError extends ErrorFactory({
+  name: 'PostPermissionError',
+  message: 'You do not have permission to perform this action.',
+}) {}
+
+export class PostAlreadyDeletedError extends ErrorFactory({
+  name: 'PostAlreadyDeletedError',
+  message: 'This post has already been deleted.',
+}) {}
+
+export type PostDeleteError = (
+  | PostNotFoundError
+  | PostPermissionError
+  | PostAlreadyDeletedError
+);
+
+export const deletePost = async (postId: string): Result.ResultAsync<void, PostDeleteError> => {
+  return Result.succeed();
+};
+
+// @filename: index.ts
+import { deletePost } from './delete-post';
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+
+await Result.pipe(
+  deletePost('123'),
+  Result.inspectError((error) => {
+    switch (error.name) {
+      case 'PostNotFoundError':
+        console.error('The requested post was not found.');
+        break;
+      case 'PostPermissionError':
+        console.error('You do not have permission to perform this action.');
+        break;
+      case 'PostAlreadyDeletedError':
+        console.error('This post has already been deleted.');
+        break;
+      default:
+        // 処理漏れがあるとコンパイルエラーになる
+        error satisfies never;
+    }
+  }),
+);
+```
+
+### `instanceof` を使う
+
+`instanceof` による判定でもエラーの型を絞り込めます。
+ただし網羅性チェックは行われないため、新しく追加されたエラー型に気づかない可能性がある点に注意してください。
 
 ```ts
 // @filename: delete-post.ts
@@ -170,73 +219,23 @@ await Result.pipe(
   deletePost('123'),
   Result.inspectError((error) => {
     if (error instanceof PostNotFoundError) {
-      console.error('リクエストされた投稿が見つかりませんでした。');
+      console.error('The requested post was not found.');
     }
     if (error instanceof PostPermissionError) {
-      console.error('このアクションを実行する権限がありません。');
+      console.error('You do not have permission to perform this action.');
     }
     if (error instanceof PostAlreadyDeletedError) {
-      console.error('この投稿は既に削除されています。');
+      console.error('This post has already been deleted.');
     }
   }),
 );
 ```
 
-### 判別可能なユニオンを使用する
+## どこでマッチングするか
 
-```ts
-// @filename: delete-post.ts
-import { ErrorFactory } from '@praha/error-factory';
-import { Result } from '@praha/byethrow';
+上の例では `inspectError` を使い、エラーごとに副作用を実行しています。
+同じテクニックは、エラーを受け取るどの関数でも使えます。
 
-export class PostNotFoundError extends ErrorFactory({
-  name: 'PostNotFoundError',
-  message: 'The requested post was not found.',
-}) {}
-
-export class PostPermissionError extends ErrorFactory({
-  name: 'PostPermissionError',
-  message: 'You do not have permission to perform this action.',
-}) {}
-
-export class PostAlreadyDeletedError extends ErrorFactory({
-  name: 'PostAlreadyDeletedError',
-  message: 'This post has already been deleted.',
-}) {}
-
-export type PostDeleteError = (
-  | PostNotFoundError
-  | PostPermissionError
-  | PostAlreadyDeletedError
-);
-
-export const deletePost = async (postId: string): Result.ResultAsync<void, PostDeleteError> => {
-  return Result.succeed();
-};
-
-// @filename: index.ts
-import { deletePost, PostNotFoundError, PostPermissionError, PostAlreadyDeletedError } from './delete-post';
-// ---cut-before---
-import { Result } from '@praha/byethrow';
-
-await Result.pipe(
-  deletePost('123'),
-  Result.inspectError((error) => {
-    switch (error.name) {
-      case 'PostNotFoundError':
-        console.error('リクエストされた投稿が見つかりませんでした。');
-        break;
-      case 'PostPermissionError':
-        console.error('このアクションを実行する権限がありません。');
-        break;
-      case 'PostAlreadyDeletedError':
-        console.error('この投稿は既に削除されています。');
-        break;
-      default:
-        // すべてのエラー型がカバーされていれば、ここには到達しないはず
-        const _exhaustiveCheck: never = error;
-        throw new Error(`Unhandled error type: ${JSON.stringify(_exhaustiveCheck)}`);
-    }
-  }),
-);
-```
+- [`inspectError`](../tutorial/chaining/debugging)：ログ出力やメッセージの表示などの副作用を実行する。
+- [`mapError`](../tutorial/chaining/mapping-results)：HTTP レスポンスなど、各エラーを別の値に変換する。
+- [`orElse`](../tutorial/chaining/chaining-results)：一部のエラーから回復し、それ以外はそのまま後続に渡す。

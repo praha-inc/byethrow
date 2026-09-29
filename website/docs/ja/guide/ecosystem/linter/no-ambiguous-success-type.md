@@ -1,38 +1,56 @@
 ---
-description: Result/ResultAsync/ResultMaybeAsync の成功型に unknown・any・object などの曖昧な型を禁止するOxlintルール
+description: Result・ResultAsync・ResultMaybeAsync の型注釈で、unknown・any・object・{} などの曖昧な成功型を禁止する Oxlint ルール。
 ---
 
 # no-ambiguous-success-type
 
-`Result` / `ResultAsync` / `ResultMaybeAsync` の成功型に曖昧な型を使用することを禁止します。
+`Result`、`ResultAsync`、`ResultMaybeAsync` の成功型の位置に、具体的でない型を使うことを禁止します。
 
 ## ルールの詳細
 
-`unknown`・`any`・`object`・`{}` などの曖昧な型を成功型に使用すると、呼び出し元が受け取る値の情報が隠されます。具体的な型を使用することで、成功時に何を受け取るかを明確にできます。
+`Result` の成功型が曖昧だと、呼び出し側は成功時に何を受け取るのかわからず、自分で値をチェックしたりキャストしたりする必要があります。
+代わりに具体的な型を使ってください。
 
-### 誤り
+成功型の位置で `unknown`、`any`、`object`、`{}` が使われていると報告されます。
+値を返さない処理のための `void` は許可されています。
 
-```ts
-import { Result } from '@praha/byethrow';
+このルールは `Result.Result<T, E>` のような明示的な型注釈をチェックします。TypeScript が推論した型はチェックされません。
 
-// ❌ unknownを使用
-type Result1 = Result.Result<unknown, Error>;
-
-// ❌ anyを使用
-type Result2 = Result.Result<any, Error>;
-
-// ❌ objectを使用
-type Result3 = Result.Result<object, Error>;
-```
-
-### 正しい
+### 誤った例
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-// ✅ 具体的な型を使用
-type Result1 = Result.Result<{ id: string }, Error>;
+class FetchError extends Error {}
 
-// ✅ 値を返さない処理ではvoidを使用
-type Result2 = Result.Result<void, Error>;
+// ❌ unknown
+type FetchResult1 = Result.Result<unknown, FetchError>;
+
+// ❌ any
+type FetchResult2 = Result.Result<any, FetchError>;
+
+// ❌ object
+type FetchResult3 = Result.Result<object, FetchError>;
 ```
+
+### 正しい例
+
+```ts
+import { Result } from '@praha/byethrow';
+
+class FetchError extends Error {}
+
+// ✅ 具体的な型
+type FetchResult = Result.Result<{ id: string }, FetchError>;
+
+// ✅ 値を返さない処理には void
+type DeleteResult = Result.Result<void, FetchError>;
+```
+
+:::tip
+パースした JSON のボディのように値が本当に不明な場合は、[`Result.parse`](../../tutorial/basics/parsing-values) で検証して具体的な型を得てください。
+:::
+
+## オプション
+
+このルールにオプションはありません。

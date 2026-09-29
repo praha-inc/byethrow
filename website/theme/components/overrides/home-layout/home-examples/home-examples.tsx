@@ -27,7 +27,7 @@ export type Example = {
 
 const EXAMPLES: readonly Example[] = [
   { key: 'wrap', file: 'fetch-user.ts', apis: ['fn'], guide: './guide/tutorial/basics/wrapping-functions', Snippet: Wrap },
-  { key: 'validate', file: 'sign-up.ts', apis: ['parse'], guide: './api/functions/Result.parse', Snippet: Validate },
+  { key: 'validate', file: 'sign-up.ts', apis: ['parse'], guide: './guide/tutorial/basics/parsing-values', Snippet: Validate },
   { key: 'compose', file: 'welcome.ts', apis: ['pipe', 'andThen', 'andThrough', 'map'], guide: './guide/tutorial/chaining/pipe-basics', Snippet: Compose },
   { key: 'combine', file: 'dashboard.ts', apis: ['collect', 'isFailure'], guide: './guide/tutorial/combining/aggregating-results', Snippet: Combine },
   { key: 'handle', file: 'delete-post.ts', apis: ['inspect', 'inspectError'], guide: './guide/best-practices/pattern-matching', Snippet: Handle },

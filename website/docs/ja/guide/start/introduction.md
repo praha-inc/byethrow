@@ -1,30 +1,85 @@
 ---
-description: '@praha/byethrowの概要と特徴。Tree Shaking対応、同期・非同期統一処理、pipe関数による型安全なResult型ライブラリの紹介。'
+description: '@praha/byethrowの概要。TypeScriptで明示的かつ型安全なエラーハンドリングを実現する、軽量でツリーシェイキング可能なResult型ライブラリの紹介。'
 ---
 
 # はじめに
 
-`@praha/byethrow` へようこそ。このライブラリは、JavaScript と TypeScript で失敗する可能性のある操作をエレガントかつシンプルに扱うために設計された、軽量でツリーシェイク可能な Result 型ライブラリです。
+`@praha/byethrow` は、JavaScript と TypeScript に `Result` 型をもたらす、軽量でツリーシェイキング可能なライブラリです。
+関数は例外を投げる代わりに、成功または失敗のどちらかを表す値を返します。
+失敗の可能性が型の一部になるため、それが処理されていることをコンパイラが保証できます。
+
+## ひと目でわかる byethrow
+
+`throw` を使う場合、関数のシグネチャからはその関数がどのように失敗するのかがわかりません。
+
+```ts
+// @noErrors
+type User = { id: string; name: string };
+// ---cut-before---
+// 例外を投げる？どんなエラー？シグネチャからはわからない
+const findUser = async (id: string): Promise<User> => {
+  // ...
+};
+```
+
+byethrow を使うと、想定されるすべての失敗が戻り値の型に現れ、`try/catch` を使わずに `Result` を一歩ずつ組み合わせられます。
+
+```ts
+type User = { id: string; name: string };
+declare const db: { findUser: (id: string) => Promise<User | undefined> };
+class InvalidIdError extends Error { override readonly name = 'InvalidIdError'; }
+class UserNotFoundError extends Error { override readonly name = 'UserNotFoundError'; }
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+
+const validateId = (id: string) => {
+  if (!id.startsWith('u')) {
+    return Result.fail(new InvalidIdError());
+  }
+  return Result.succeed(id);
+};
+
+const findUser = async (id: string): Result.ResultAsync<User, UserNotFoundError> => {
+  const user = await db.findUser(id);
+  if (!user) {
+    return Result.fail(new UserNotFoundError());
+  }
+  return Result.succeed(user);
+};
+
+const result = await Result.pipe(
+  Result.succeed('u123'),
+  Result.andThen(validateId),
+  Result.andThen(findUser),
+);
+// 型: Result.Result<User, InvalidIdError | UserNotFoundError>
+```
 
 ## 特徴
 
-- 🌲 Tree Shaking対応: 実際に使用する関数のみをバンドルできます。モダンな JavaScript バンドラーを念頭に設計されています。
-- 🧱 軽量＆オブジェクトベース: クラスや複雑な継承構造はありません。理解しやすくデバッグも簡単なプレーンオブジェクトだけです。
-- 🔄 同期/非同期の統一処理: 同期の `Result<T, E>` と非同期の `Promise<Result<T, E>>` の両方をシームレスに扱えます。
-- 🎯 Resultを中心とした機能: 不必要なエイリアスや紛らわしい機能はありません。Result を中心とした機能で設計されています。
-- 🔗 合成可能な関数群: 強力な `pipe` 関数と、`andThen`、`andThrough` などのチェーン可能な関数でシームレスに実装できます。
-- 🛡️ 完全に型安全: 全ての関数で型テストを実施しています。型エラーに悩まされることはありません。
+- **ツリーシェイキング対応**：すべての関数が独立したエクスポートなので、バンドルには実際に使う関数だけが含まれます。
+- **プレーンオブジェクト**：`Result` はクラスのインスタンスではなく、ただのプレーンオブジェクトです。ログ出力、シリアライズ、デバッグが簡単です。
+- **同期と非同期で同じ API**：すべての関数が `Result<T, E>` と `Promise<Result<T, E>>` の両方を受け付けます。
+- **合成しやすい設計**：`pipe` と、`map`・`andThen`・`andThrough` などの関数を組み合わせて、読みやすいパイプラインを構築できます。
+- **機能を絞った API**：エイリアスや紛らわしいバリエーションのない、Result を中心とした少数の関数で構成されています。
+- **完全に型安全**：すべての関数に型テストがあり、成功値とエラーの型が正確に推論されます。
 
-## byethrow を使うべき場面
+## byethrow が役立つ場面
 
-このライブラリは以下のような場面に最適です。
+byethrow は、アプリケーションの通常の動作の一部として起こる失敗に最も適しています。例えば次のような場面です。
 
-- **API 呼び出し**: ネットワークの問題で失敗する可能性がある場合
-- **データバリデーション**: 複数のエラーを蓄積または処理する必要がある場合
-- **ファイル操作**: 権限やI/Oエラーに遭遇する可能性がある場合
-- **パーサーの実装**: 無効な入力をグレースフルに処理すべき場合
-- **ビジネスロジック**: エラーが予想され、明示的に処理すべき場合
+- **API 呼び出し**：ネットワークエラーやサーバーエラーで失敗する可能性がある場合
+- **入力のバリデーション**：問題点を 1 つ、またはすべてユーザーに伝えたい場合
+- **ファイル操作**：ファイルが存在しない、権限がないなどの理由で失敗する可能性がある場合
+- **パーサー**：不正な入力を適切に拒否する必要がある場合
+- **ビジネスルール**：「投稿はすでに削除されている」「ユーザーに権限がない」といったルールを扱う場合
 
----
+起こり得るすべてのエラーを `Result` で包む必要はありません。
+データベース接続の切断のような本当に想定外のエラーは、これまで通り throw して、インフラ側で処理できます。
+その線引きについては [Result vs throw](../best-practices/result-vs-throw) を参照してください。
 
-*明示的なエラーハンドリングを活用して楽しくコーディングしましょう！ 🎉*
+## 次のステップ
+
+- [byethrow を選ぶ理由](./why)：byethrow が解決する課題と、他のアプローチとの比較
+- [クイックスタート](./quick)：パッケージをインストールして、`Result` を使った最初のコードを書く
+- [チュートリアル](../tutorial/basics/result-type)：すべての関数を一歩ずつ学ぶ
