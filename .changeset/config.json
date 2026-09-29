@@ -4,5 +4,9 @@
   "commit": false,
   "access": "public",
   "baseBranch": "main",
-  "fixed": [["@praha/byethrow*"]]
+  "fixed": [["@praha/byethrow*"]],
+  "privatePackages": {
+    "version": true,
+    "tag": true
+  }
 }

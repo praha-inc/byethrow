@@ -1,0 +1,285 @@
+.card {
+  --accent: var(--bt-ok);
+
+  position: relative;
+  text-align: left;
+  width: 100%;
+  max-width: 580px;
+  border-radius: var(--bt-radius-lg);
+  border: 1px solid var(--bt-line-strong);
+  background: var(--bt-surface);
+  backdrop-filter: blur(24px) saturate(1.3);
+  box-shadow: var(--bt-shadow);
+  overflow: hidden;
+  font-family: var(--rp-font-family-mono);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  animation: card-enter 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.card[data-tab='before'] {
+  --accent: var(--bt-err);
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- bar ---------- */
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem 0.5rem 0.5rem;
+  border-bottom: 1px solid var(--bt-line);
+}
+
+.tabs {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--rp-c-text-1) 5%, transparent);
+}
+
+.tab {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.375rem;
+  font-family: inherit;
+  font-size: 0.75rem;
+  color: var(--rp-c-text-3);
+  transition: color 0.2s, background-color 0.2s, box-shadow 0.2s;
+}
+
+.tab:hover {
+  color: var(--rp-c-text-1);
+}
+
+.tab[aria-selected='true'] {
+  color: var(--rp-c-text-1);
+  background: var(--bt-surface-solid);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 0 0 1px var(--bt-line);
+}
+
+.tab-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.4;
+}
+
+.tab[aria-selected='true'][data-kind='before'] .tab-dot {
+  background: var(--bt-err);
+  opacity: 1;
+}
+
+.tab[aria-selected='true'][data-kind='after'] .tab-dot {
+  background: var(--bt-ok);
+  opacity: 1;
+}
+
+.type {
+  margin-left: auto;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.6875rem;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+}
+
+/* ---------- code ---------- */
+
+/* Both panes share one grid cell so the card keeps the height of the taller one. */
+.panes {
+  display: grid;
+}
+
+.code {
+  grid-area: 1 / 1;
+  margin: 0;
+  padding: 1.125rem 0;
+  overflow-x: auto;
+  color: var(--rp-code-block-color);
+  tab-size: 2;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity 0.2s, transform 0.2s, visibility 0s 0.2s;
+}
+
+/* Fades in after the outgoing pane has mostly faded out, so the two don't blur together. */
+.code[data-active='true'] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.3s 0.15s, transform 0.3s 0.15s;
+}
+
+.code code {
+  display: block;
+  min-width: max-content;
+}
+
+.line {
+  display: flex;
+  padding: 0 1.25rem 0 0;
+  white-space: pre;
+}
+
+.line-number {
+  flex: 0 0 2.75rem;
+  padding-right: 1rem;
+  text-align: right;
+  color: var(--rp-c-text-4);
+  user-select: none;
+}
+
+.line-content {
+  flex: 1;
+}
+
+/* ---------- output ---------- */
+
+.output {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--bt-line);
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+  animation: output-enter 0.4s ease-out both;
+}
+
+@keyframes output-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.output-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: none;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+}
+
+.output-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+  }
+
+  50% {
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 6%, transparent);
+  }
+}
+
+.output-value {
+  min-width: 0;
+  color: var(--rp-c-text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tokens map to the Shiki palette so they match the docs in light and dark mode. */
+.tk-kw {
+  color: var(--shiki-token-keyword);
+}
+
+.tk-fn {
+  color: var(--shiki-token-function);
+}
+
+.tk-str {
+  color: var(--shiki-token-string);
+}
+
+.tk-const {
+  color: var(--shiki-token-constant);
+}
+
+.tk-cm {
+  color: var(--shiki-token-comment);
+  font-style: italic;
+}
+
+.tk-warn {
+  color: var(--bt-err);
+  font-style: italic;
+}
+
+.tk-pn {
+  color: var(--shiki-token-punctuation);
+}
+
+.tk-param {
+  color: var(--shiki-token-parameter);
+}
+
+.tk-type {
+  color: var(--shiki-token-constant);
+}
+
+@media (width <= 600px) {
+  .card {
+    font-size: 0.75rem;
+  }
+
+  .type {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .output,
+  .output-dot {
+    animation: none;
+  }
+
+  .code,
+  .code[data-active='true'] {
+    transform: none;
+    transition: none;
+  }
+}

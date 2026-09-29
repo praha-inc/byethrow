@@ -1,0 +1,8 @@
+/* The original NavTitle sizes `.rspress-logo` in its own stylesheet, which is dropped along with it in production builds. */
+.logo {
+  height: 1.6rem;
+}
+
+.wordmark {
+  font-size: 1.125rem;
+}

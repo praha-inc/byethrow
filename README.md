@@ -1,7 +1,19 @@
-# byethrow 👋
+<div align="center">
+
+<a href="https://praha-inc.github.io/byethrow/">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./.github/assets/banner-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./.github/assets/banner-light.svg">
+    <img alt="byethrow: A lightweight Result type package. Say goodbye to throw, embrace type-safe results." src="./.github/assets/banner-light.svg" width="100%">
+  </picture>
+</a>
 
 [![license](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/praha-inc/byethrow/blob/main/LICENSE)
 [![Github](https://img.shields.io/github/followers/praha-inc?label=Follow&logo=github&style=social)](https://github.com/orgs/praha-inc/followers)
+
+[Documentation](https://praha-inc.github.io/byethrow/) · [Quick Start](https://praha-inc.github.io/byethrow/guide/start/quick) · [Examples](https://praha-inc.github.io/byethrow/examples/parse-package-json) · [API Reference](https://praha-inc.github.io/byethrow/api/modules/Result)
+
+</div>
 
 ## Introduction
 

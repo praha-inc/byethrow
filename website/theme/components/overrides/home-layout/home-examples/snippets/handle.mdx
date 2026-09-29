@@ -1,0 +1,23 @@
+```ts
+import { ErrorFactory } from '@praha/error-factory';
+
+class PostNotFoundError extends ErrorFactory({ name: 'PostNotFoundError', message: 'Post not found.' }) {}
+class PostPermissionError extends ErrorFactory({ name: 'PostPermissionError', message: 'Permission denied.' }) {}
+declare const deletePost: (id: string) => Result.ResultAsync<void, PostNotFoundError | PostPermissionError>;
+declare const toast: Record<'success' | 'info' | 'error', (message: string) => void>;
+// ---cut---
+import { Result } from '@praha/byethrow';
+import { match } from 'ts-pattern';
+
+await Result.pipe(
+  deletePost('post_1'),
+  Result.inspect(() => toast.success('Post deleted')),
+  Result.inspectError((error) =>
+    match(error)
+      .with({ name: 'PostNotFoundError' }, () => toast.info('Already deleted'))
+      .with({ name: 'PostPermissionError' }, () => toast.error('Not allowed'))
+      // Adding a new error type turns this line into a compile error
+      .exhaustive(),
+  ),
+);
+```

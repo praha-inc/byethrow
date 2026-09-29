@@ -1,0 +1,26 @@
+```ts
+import { ErrorFactory } from '@praha/error-factory';
+
+type User = { id: string; name: string };
+class InvalidIdError extends ErrorFactory({ name: 'InvalidIdError', message: 'Invalid user ID.' }) {}
+class UserNotFoundError extends ErrorFactory({ name: 'UserNotFoundError', message: 'User not found.' }) {}
+class MailDeliveryError extends ErrorFactory({ name: 'MailDeliveryError', message: 'Could not send mail.' }) {}
+declare const validateId: (id: string) => Result.Result<string, InvalidIdError>;
+declare const findUser: (id: string) => Result.ResultAsync<User, UserNotFoundError>;
+declare const sendWelcomeMail: (user: User) => Result.ResultAsync<void, MailDeliveryError>;
+// ---cut---
+import { Result } from '@praha/byethrow';
+
+const result = await Result.pipe(
+  Result.succeed('u_123'),
+  Result.andThen(validateId),
+  Result.andThen(findUser),
+  Result.andThrough(sendWelcomeMail),
+  Result.map((user) => `Welcome, ${user.name}!`),
+);
+
+if (Result.isFailure(result)) {
+  const { error } = result;
+  //      ^?
+}
+```

@@ -1,0 +1,205 @@
+/*
+ * byethrow theme
+ *
+ * Palette is derived from the Result duality:
+ *   - Success (Ok)  → emerald / teal   → brand colour
+ *   - Failure (Err) → rose             → accent colour
+ */
+
+/* Display font for the byethrow wordmark (hero title and navbar) */
+@import url('https://fonts.googleapis.com/css2?family=Mona+Sans:wdth,wght@115,800&display=swap');
+
+:root {
+  /* Semantic palette */
+  --bt-ok: #10b981;
+  --bt-ok-light: #34d399;
+  --bt-ok-dark: #059669;
+  --bt-teal: #14b8a6;
+  --bt-sky: #0ea5e9;
+  --bt-err: #f43f5e;
+  --bt-err-light: #fb7185;
+  --bt-err-dark: #e11d48;
+
+  /* Rspress brand variables */
+  --rp-c-brand: #059669;
+  --rp-c-brand-light: #10b981;
+  --rp-c-brand-lighter: #a7f3d0;
+  --rp-c-brand-dark: #047857;
+  --rp-c-brand-darker: #065f46;
+  --rp-c-brand-tint: rgba(16, 185, 129, 0.12);
+
+  --rp-radius: 0.625rem;
+  --rp-radius-small: 0.375rem;
+  --rp-radius-large: 0.875rem;
+
+  /* byethrow surfaces */
+  --bt-radius-sm: 0.5rem;
+  --bt-radius-md: 0.75rem;
+  --bt-radius-lg: 1rem;
+  --bt-line: rgba(15, 23, 42, 0.1);
+  --bt-line-strong: rgba(15, 23, 42, 0.18);
+  --bt-surface: rgba(255, 255, 255, 0.72);
+  --bt-surface-solid: #ffffff;
+  --bt-stage: rgba(248, 250, 252, 0.8);
+  --bt-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 12px 32px -16px rgba(15, 23, 42, 0.18);
+  --bt-button-fg: #ffffff;
+
+  /* Typography */
+  --bt-font-display: 'Mona Sans', var(--rp-font-family-base);
+
+  /* Home */
+  --rp-home-hero-secondary-color: var(--bt-teal);
+  --rp-home-hero-title-bg: linear-gradient(100deg, #059669 0%, #0d9488 55%, #0284c7 100%);
+  --rp-home-background-bg:
+    radial-gradient(48% 60% at 100% 0%, rgba(20, 184, 166, 0.16) 0%, rgba(255, 255, 255, 0) 100%),
+    radial-gradient(42% 80% at 52% 0%, rgba(16, 185, 129, 0.2) 0%, rgba(255, 255, 255, 0) 100%),
+    radial-gradient(70% 58% at 0% 0%, rgba(244, 63, 94, 0.12) 0%, rgba(255, 255, 255, 0) 100%),
+    #fff;
+  --rp-home-feature-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+
+  /* Inline code: tint towards the brand */
+  --rp-c-text-code: #0f766e;
+  --rp-c-text-code-bg: rgba(16, 185, 129, 0.08);
+  --rp-c-text-code-border: rgba(16, 185, 129, 0.16);
+}
+
+.dark {
+  --rp-c-brand: #34d399;
+  --rp-c-brand-light: #6ee7b7;
+  --rp-c-brand-lighter: #1b4d3f;
+  --rp-c-brand-dark: #10b981;
+  --rp-c-brand-darker: #059669;
+  --rp-c-brand-tint: rgba(52, 211, 153, 0.14);
+
+  /* Deep teal-black surfaces */
+  --rp-c-bg: #0b1113;
+  --rp-c-bg-soft: #10191c;
+  --rp-c-bg-mute: #172327;
+  --rp-c-bg-alt: #070b0c;
+  --rp-c-divider: rgba(148, 163, 184, 0.24);
+  --rp-c-divider-light: rgba(148, 163, 184, 0.14);
+
+  --rp-code-title-bg: #0f1719;
+
+  --bt-line: rgba(255, 255, 255, 0.08);
+  --bt-line-strong: rgba(255, 255, 255, 0.16);
+  --bt-surface: rgba(13, 20, 23, 0.72);
+  --bt-surface-solid: #0e1618;
+  --bt-stage: rgba(255, 255, 255, 0.02);
+  --bt-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 24px 60px -30px rgba(0, 0, 0, 0.8);
+  --bt-button-fg: #03271c;
+
+  --rp-home-hero-title-bg: linear-gradient(100deg, #6ee7b7 0%, #2dd4bf 55%, #38bdf8 100%);
+  --rp-home-background-bg:
+    radial-gradient(48% 60% at 100% 0%, rgba(20, 184, 166, 0.22) 0%, rgba(11, 17, 19, 0) 100%),
+    radial-gradient(42% 80% at 52% 0%, rgba(16, 185, 129, 0.16) 0%, rgba(11, 17, 19, 0) 100%),
+    radial-gradient(70% 58% at 0% 0%, rgba(244, 63, 94, 0.18) 0%, rgba(11, 17, 19, 0) 100%),
+    #0b1113;
+  --rp-home-feature-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.06));
+
+  --rp-c-text-code: #7ee7c7;
+  --rp-c-text-code-bg: rgba(52, 211, 153, 0.1);
+  --rp-c-text-code-border: rgba(52, 211, 153, 0.18);
+}
+
+/* ------------------------------------------------------------------ */
+/* Buttons                                                             */
+/*                                                                     */
+/* `.bt-button` is used by the home page; `.rp-button` is restyled to  */
+/* match so that buttons elsewhere in the docs look the same.          */
+/* ------------------------------------------------------------------ */
+
+.bt-button,
+.rp-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 44px;
+  min-width: 0;
+  padding: 0 1.125rem;
+  border-radius: var(--bt-radius-sm);
+  border: 1px solid transparent;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s,
+    color 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s;
+}
+
+.bt-button:active,
+.rp-button:active {
+  transform: translateY(1px);
+}
+
+.bt-button:focus-visible,
+.rp-button:focus-visible {
+  outline: 2px solid var(--rp-c-brand);
+  outline-offset: 2px;
+}
+
+.bt-button--brand,
+.rp-button--brand {
+  color: var(--bt-button-fg);
+  background: var(--rp-c-brand);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 1px 2px rgba(0, 0, 0, 0.1),
+    0 8px 20px -10px var(--rp-c-brand);
+}
+
+.bt-button--brand:hover,
+.rp-button--brand:hover {
+  opacity: 1;
+  color: var(--bt-button-fg);
+  background: var(--rp-c-brand-light);
+}
+
+.bt-button--alt,
+.rp-button--alt {
+  color: var(--rp-c-text-1);
+  background: var(--bt-surface);
+  border-color: var(--bt-line-strong);
+  backdrop-filter: blur(12px);
+}
+
+.dark .rp-button--alt {
+  color: var(--rp-c-text-1);
+  background: var(--bt-surface);
+  border-color: var(--bt-line-strong);
+}
+
+.bt-button--alt:hover,
+.rp-button--alt:hover {
+  opacity: 1;
+  color: var(--rp-c-text-1);
+  border-color: color-mix(in srgb, var(--rp-c-text-1) 35%, transparent);
+  background: var(--bt-surface-solid);
+}
+
+.bt-button__icon {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  transition: transform 0.2s;
+}
+
+.bt-button:hover .bt-button__icon {
+  transform: translateX(2px);
+}
+
+/* ------------------------------------------------------------------ */
+/* Home: background                                                    */
+/* ------------------------------------------------------------------ */
+
+.rp-home-background {
+  filter: none;
+  height: 1200px;
+}

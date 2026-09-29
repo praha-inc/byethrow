@@ -1,0 +1,17 @@
+```ts
+import { Result } from '@praha/byethrow';
+
+type User = { id: string; name: string };
+
+const fetchUser = Result.fn({
+  try: async (id: string): Promise<User> => {
+    const response = await fetch(`/api/users/${id}`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
+  },
+  catch: (error) => new Error('Failed to fetch user', { cause: error }),
+});
+
+const result = await fetchUser('u_123');
+//    ^?
+```

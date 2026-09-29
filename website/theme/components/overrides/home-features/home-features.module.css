@@ -1,0 +1,184 @@
+.section {
+  width: 100%;
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 5rem 32px 4rem;
+}
+
+/* ---------- grid ---------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--bt-radius-lg);
+  border: 1px solid var(--bt-line-strong);
+  background: var(--bt-surface);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--bt-shadow);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s;
+}
+
+.card[data-reveal='visible'] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card:hover {
+  border-color: color-mix(in srgb, var(--rp-c-brand) 45%, var(--bt-line-strong));
+}
+
+.card--wide {
+  grid-column: span 2;
+}
+
+/* ---------- stage (visual) ---------- */
+
+.stage {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  padding: 1.75rem 1.5rem;
+  border-bottom: 1px solid var(--bt-line);
+  background-color: var(--bt-stage);
+  background-image: radial-gradient(color-mix(in srgb, var(--rp-c-text-1) 10%, transparent) 1px, transparent 1px);
+  background-size: 16px 16px;
+  background-position: center;
+}
+
+/* Soft vignette so the dot pattern fades towards the edges. */
+.stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(70% 70% at 50% 50%, transparent 40%, var(--bt-surface-solid) 100%);
+  opacity: 0.85;
+}
+
+.stage-inner {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.card--wide .stage-inner {
+  max-width: 560px;
+}
+
+/* ---------- text ---------- */
+
+.card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.card-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.625rem;
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+  color: var(--rp-c-text-1);
+}
+
+.index {
+  font-family: var(--rp-font-family-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--rp-c-text-4);
+  transition: color 0.3s;
+}
+
+.card:hover .index {
+  color: var(--rp-c-brand);
+}
+
+.card-description {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--rp-c-text-2);
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  width: fit-content;
+  margin-top: 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--rp-c-brand);
+  text-decoration: none;
+}
+
+.more-arrow {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.25s;
+}
+
+.more:hover .more-arrow {
+  transform: translateX(3px);
+}
+
+/* ---------- responsive ---------- */
+
+@media (width <= 1000px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (width <= 640px) {
+  .section {
+    padding: 3.5rem 16px 3rem;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .card--wide {
+    grid-column: span 1;
+  }
+
+  .stage {
+    min-height: 180px;
+    padding: 1.25rem 1rem;
+  }
+
+  .card-text {
+    padding: 1.125rem 1.25rem 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    opacity: 1;
+    transform: none;
+    transition: border-color 0.3s;
+  }
+}
