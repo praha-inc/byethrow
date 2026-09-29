@@ -1,22 +1,28 @@
 ---
-description: Oxlint rule that enforces ResultMaybeAsync over the Result-or-ResultAsync union type, with auto-fix support
+description: Oxlint rule that enforces the ResultMaybeAsync type alias over the union of Result and ResultAsync, with auto-fix support.
 ---
 
 # prefer-result-maybe-async
 
-Enforces use of `ResultMaybeAsync<T, E>` instead of the union type `Result<T, E> | ResultAsync<T, E>`.
+Enforces the use of `ResultMaybeAsync<T, E>` instead of the union `Result<T, E> | ResultAsync<T, E>`.
 
-## Rule details
+This rule is auto-fixable.
 
-`ResultMaybeAsync<T, E>` is an alias for `Result<T, E> | ResultAsync<T, E>`. Using the dedicated alias is shorter and more expressive. This rule auto-fixes violations.
+## Rule Details
+
+`ResultMaybeAsync<T, E>` is an alias for `Result<T, E> | ResultAsync<T, E>`.
+The alias is shorter and clearly expresses that the value may be either synchronous or asynchronous.
 
 ### Incorrect
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-// ❌ using the explicit union
-type Result = Result.Result<string, Error> | Result.ResultAsync<string, Error>;
+class UserNotFoundError extends Error {}
+type User = { id: string; name: string };
+
+// ❌ The explicit union
+type FindUser = (id: string) => Result.Result<User, UserNotFoundError> | Result.ResultAsync<User, UserNotFoundError>;
 ```
 
 ### Correct
@@ -24,6 +30,13 @@ type Result = Result.Result<string, Error> | Result.ResultAsync<string, Error>;
 ```ts
 import { Result } from '@praha/byethrow';
 
-// ✅ using ResultMaybeAsync
-type Result = Result.ResultMaybeAsync<string, Error>;
+class UserNotFoundError extends Error {}
+type User = { id: string; name: string };
+
+// ✅ ResultMaybeAsync
+type FindUser = (id: string) => Result.ResultMaybeAsync<User, UserNotFoundError>;
 ```
+
+## Options
+
+This rule has no options.

@@ -1,0 +1,111 @@
+---
+description: 'Result.parseと、Zod・Valibot・ArkTypeなどのStandard Schema互換ライブラリを使って未知の入力をバリデーションし、バリデーションの問題をResultに変換する方法。'
+---
+
+# 値をパースする
+
+リクエストボディ、JSON ファイル、環境変数など、プログラムの外から来るデータは、バリデーションするまでは `unknown` です。
+`parse` はそのような値をスキーマに照らしてバリデーションし、その結果を `Result` として返します。
+
+## `parse` でバリデーションする
+
+`parse` は、[Standard Schema](https://standardschema.dev/) を実装したスキーマであれば何でも受け付けます。Standard Schema は、[Zod](https://zod.dev/)、[Valibot](https://valibot.dev/)、[ArkType](https://arktype.io/) などのバリデーションライブラリがサポートしている共通インターフェースです。
+このページの例では Zod を使います。
+
+```ts
+import { Result } from '@praha/byethrow';
+import { z } from 'zod';
+
+const User = z.object({
+  name: z.string().min(1),
+  email: z.email(),
+});
+
+const result = Result.parse(User, { name: 'Alice', email: 'alice@example.com' });
+// 型: Result.Result<{ name: string; email: string }, ReadonlyArray<StandardSchemaV1.Issue>>
+```
+
+値がスキーマに一致する場合、結果はパースされた値を持つ `Success` になり、その値はスキーマに従って型付けされます。
+一致しない場合、結果はバリデーションの問題（issue）の一覧を持つ `Failure` になります。
+
+## バリデーションの問題を読み取る
+
+各 issue は `message` と、不正なプロパティを指す `path`（省略される場合もあります）を持ちます。
+
+```ts
+import { Result } from '@praha/byethrow';
+import { z } from 'zod';
+
+const User = z.object({
+  name: z.string().min(1),
+  email: z.email(),
+});
+// ---cut-before---
+const result = Result.parse(User, { name: '', email: 'not an email' });
+
+if (Result.isFailure(result)) {
+  for (const issue of result.error) {
+    console.log(issue.path, issue.message);
+  }
+}
+```
+
+## パイプラインの中で `parse` を使う
+
+スキーマだけを渡して呼び出すと、`parse` は引数をバリデーションする関数を返します。
+この形はパイプラインに自然に組み込めます。パイプラインについては「[pipe の基本](../chaining/pipe-basics)」で学びます。
+
+```ts
+import { z } from 'zod';
+
+const User = z.object({
+  name: z.string().min(1),
+  email: z.email(),
+});
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+
+const parseJson = Result.fn({
+  try: (text: string) => JSON.parse(text) as unknown,
+  catch: (error) => new Error('Invalid JSON', { cause: error }),
+});
+
+const parseUser = (text: string) => Result.pipe(
+  parseJson(text),
+  Result.andThen(Result.parse(User)),
+);
+```
+
+issue の一覧を独自のエラー型に置き換えるには、[`mapError`](../chaining/mapping-results) を使います。
+
+```ts
+import { z } from 'zod';
+
+const User = z.object({
+  name: z.string().min(1),
+  email: z.email(),
+});
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+
+class ValidationError extends Error {
+  override readonly name = 'ValidationError';
+}
+
+const validateUser = (input: unknown) => Result.pipe(
+  input,
+  Result.parse(User),
+  Result.mapError((issues) => new ValidationError('Invalid user', { cause: issues })),
+);
+```
+
+:::warning
+`parse` は同期的なバリデーションにのみ対応しています。
+スキーマが非同期のバリデーション（例えば非同期の refinement）を行う場合、`parse` は `TypeError` を投げます。
+:::
+
+## リファレンス
+
+| API                                                            | 用途                                     |
+|----------------------------------------------------------------|------------------------------------------|
+| [parse(schema, value)](../../../../api/functions/Result.parse) | Standard Schema で値をバリデーションする |

@@ -1,30 +1,36 @@
 ---
-description: Oxlint rule that disallows vague types such as unknown, any, or object in the success position of Result, ResultAsync, and ResultMaybeAsync
+description: Oxlint rule that disallows vague success types such as unknown, any, object, or {} in Result, ResultAsync, and ResultMaybeAsync type annotations.
 ---
 
 # no-ambiguous-success-type
 
 Disallows non-specific types in the success position of `Result`, `ResultAsync`, and `ResultMaybeAsync`.
 
-## Rule details
+## Rule Details
 
-Using vague types like `unknown`, `any`, `object`, or `{}` as the success type of a `Result` hides information from callers. Always use a concrete type so that consumers know exactly what they receive on success.
+When the success type of a `Result` is vague, callers don't know what they receive on success and have to check or cast the value themselves.
+Use a concrete type instead.
 
-The following types are disallowed in the success position: `unknown`, `any`, `object`, `{}`
+The following types are reported in the success position: `unknown`, `any`, `object`, and `{}`.
+`void` is allowed for operations that don't return a value.
+
+The rule checks explicit type annotations such as `Result.Result<T, E>`. Types inferred by TypeScript are not checked.
 
 ### Incorrect
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-// ❌ using unknown
-type Result1 = Result.Result<unknown, Error>;
+class FetchError extends Error {}
 
-// ❌ using any
-type Result2 = Result.Result<any, Error>;
+// ❌ unknown
+type FetchResult1 = Result.Result<unknown, FetchError>;
 
-// ❌ using object
-type Result3 = Result.Result<object, Error>;
+// ❌ any
+type FetchResult2 = Result.Result<any, FetchError>;
+
+// ❌ object
+type FetchResult3 = Result.Result<object, FetchError>;
 ```
 
 ### Correct
@@ -32,9 +38,19 @@ type Result3 = Result.Result<object, Error>;
 ```ts
 import { Result } from '@praha/byethrow';
 
-// ✅ using a concrete type
-type Result1 = Result.Result<{ id: string }, Error>;
+class FetchError extends Error {}
 
-// ✅ void is allowed for operations that return no value
-type Result2 = Result.Result<void, Error>;
+// ✅ A concrete type
+type FetchResult = Result.Result<{ id: string }, FetchError>;
+
+// ✅ void for operations that return no value
+type DeleteResult = Result.Result<void, FetchError>;
 ```
+
+:::tip
+When a value really is unknown, such as a parsed JSON body, validate it with [`Result.parse`](../../tutorial/basics/parsing-values) to obtain a concrete type.
+:::
+
+## Options
+
+This rule has no options.

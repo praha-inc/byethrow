@@ -18,5 +18,10 @@
     "type": "file",
     "name": "wrapping-functions",
     "label": "関数をラップする"
+  },
+  {
+    "type": "file",
+    "name": "parsing-values",
+    "label": "値をパースする"
   }
 ]

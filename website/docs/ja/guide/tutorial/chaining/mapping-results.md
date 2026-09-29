@@ -1,45 +1,35 @@
 ---
-description: 'Result.mapで成功値を変換し、Result.mapErrorでエラー値を変換する方法。ドメインエラーをHTTPレスポンスに変換する実例付き。'
+description: 'Result.map で成功値を、Result.mapError でエラー値を変換する方法。表示用データへの整形や、エラーを HTTP レスポンスに変換する例を紹介します。'
 ---
 
 # Result を変換する
 
-`map` と `mapError` 関数を使うと、`Result` の型（`Success` または `Failure`）を変えずに、内部の値を変換できます。
+`map` と `mapError` は、`Result` が `Success` か `Failure` かを変えずに、その中身を変換します。
 
-## `map` - 成功値を変換する
+## `map` で値を変換する
 
-`map` 関数は `Result` の成功値を変換します。
-`Result` が `Failure` の場合は、変更されずにそのまま通過します。
-
-### 基本的な使い方
+`map` は、渡された関数で成功値を変換します。
+`Result` が `Failure` の場合、関数は呼び出されず、`Failure` がそのまま返されます。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.pipe(
+const success = Result.pipe(
   Result.succeed(2),
   Result.map((value) => value * 10),
 );
 // { type: 'Success', value: 20 }
-```
 
-### `Result` が `Failure` の場合
-
-入力が `Failure` の場合、`map` は何もせず、`Failure` をそのまま返します。
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.pipe(
+const failure = Result.pipe(
   Result.fail('error'),
-  Result.map((value) => value * 10),
+  Result.map((value) => value * 10), // 呼び出されない
 );
 // { type: 'Failure', error: 'error' }
 ```
 
-### 例：表示用のデータフォーマット
+### 例：表示用にデータを整形する
 
-よくある使い方として、生データを表示に適した形式に変換する例があります。
+`map` のよくある使い方は、生のデータを UI が必要とする形に変換することです。
 
 ```ts
 declare const fetchProduct: (id: number) => Result.ResultAsync<ProductRow, 'NotFound'>;
@@ -58,12 +48,10 @@ type ProductView = {
   price: string;
 };
 
-const formatPrice = (cents: number): string => `$${(cents / 100).toFixed(2)}`;
-
 const toProductView = (product: ProductRow): ProductView => ({
   id: String(product.id),
   name: product.name,
-  price: formatPrice(product.priceInCents),
+  price: `$${(product.priceInCents / 100).toFixed(2)}`,
 });
 
 const getProductForDisplay = (id: number): Result.ResultAsync<ProductView, 'NotFound'> => {
@@ -72,50 +60,39 @@ const getProductForDisplay = (id: number): Result.ResultAsync<ProductView, 'NotF
     Result.map(toProductView),
   );
 };
-// 生の商品データを UI に適した形式に変換
 ```
 
-## `mapError` - 失敗値を変換する
+## `mapError` でエラーを変換する
 
-`mapError` 関数は `Result` の失敗値を変換します。
-`Result` が `Success` の場合は、変更されずにそのまま通過します。
-
-### 基本的な使い方
+`mapError` は、エラーに対する `map` の対になる関数です。
+エラー値を変換し、`Success` の場合は関数を呼び出さずにそのまま返します。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.pipe(
+const failure = Result.pipe(
   Result.fail('NotFound'),
   Result.mapError((error) => new Error(error)),
 );
 // { type: 'Failure', error: Error('NotFound') }
-```
 
-### Result が Success の場合
-
-入力が `Success` の場合、`mapError` は何もせず、`Success` をそのまま返します。
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.pipe(
+const success = Result.pipe(
   Result.succeed(123),
-  Result.mapError((error) => new Error(error)),
+  Result.mapError((error) => new Error(error)), // 呼び出されない
 );
 // { type: 'Success', value: 123 }
 ```
 
-### 例：内部エラーを HTTP レスポンスに変換
+### 例：ドメインエラーを HTTP エラーに変換する
 
-よくある使い方として、ドメイン固有のエラーを標準化された HTTP エラーレスポンスに変換する例があります。
+`mapError` のよくある使い方は、ある層のエラーを別の層の言葉に翻訳することです。たとえば、ドメインエラーを HTTP レスポンスに変換します。
 
 ```ts
 declare const processRequest: () => Result.ResultAsync<{ data: string }, DomainError>;
 // ---cut-before---
 import { Result } from '@praha/byethrow';
 
-type DomainError = 
+type DomainError =
   | { type: 'NotFound'; resource: string }
   | { type: 'ValidationError'; field: string; message: string }
   | { type: 'Unauthorized' };
@@ -151,81 +128,62 @@ const handleRequest = (): Result.ResultAsync<{ data: string }, HttpError> => {
     Result.mapError(toHttpError),
   );
 };
-// ドメインエラーを HTTP 適切なエラーレスポンスに変換
 ```
 
-## `map` と `mapError` の組み合わせ
+## `map` と `mapError` を組み合わせる
 
-同じパイプラインで `map` と `mapError` の両方を使って、成功値と失敗値の両方を変換できます。
-
-データベースからユーザーを取得する関数があるとします。
-生データは UI 用にフォーマットが必要で、内部エラーコードはユーザーフレンドリーなメッセージに変換する必要がある場合を考えます。
+2 つの関数は同じパイプラインの中で併用できます。
+結果が成功か失敗かに応じて、実際に実行されるのはどちらか一方だけです。
 
 ```ts
-type UserRow = {
-  id: number;
-  first_name: string;
-  last_name: string;
-  created_at: string;
-};
-
-type UserView = {
-  id: string;
-  fullName: string;
-  memberSince: string;
-};
-
-type DatabaseError = 'RECORD_NOT_FOUND' | 'CONNECTION_FAILED' | 'TIMEOUT';
-
-type HttpError = {
-  status: number;
-  body: { error: string; details?: string };
-};
+type UserRow = { id: number; first_name: string; last_name: string };
+type UserView = { id: string; fullName: string };
+type DatabaseError = 'RECORD_NOT_FOUND' | 'CONNECTION_FAILED';
+type HttpError = { status: number; body: { error: string } };
 
 declare const fetchUser: (id: number) => Result.ResultAsync<UserRow, DatabaseError>;
+declare const toView: (row: UserRow) => UserView;
+declare const toHttpError: (error: DatabaseError) => HttpError;
 // ---cut-before---
 import { Result } from '@praha/byethrow';
-
-const toView = (row: UserRow): UserView => ({
-  id: String(row.id),
-  fullName: `${row.first_name} ${row.last_name}`,
-  memberSince: new Date(row.created_at).toLocaleDateString(),
-});
-
-const toHttpError = (error: DatabaseError): HttpError => {
-  switch (error) {
-    case 'RECORD_NOT_FOUND':
-      return {
-        status: 404,
-        body: {
-          error: 'User Not Found',
-          details: 'The requested user does not exist.',
-        },
-      };
-    case 'CONNECTION_FAILED':
-    case 'TIMEOUT':
-      return {
-        status: 503,
-        body: {
-          error: 'Service Unavailable',
-          details: 'Please try again later.',
-        },
-      };
-  }
-};
 
 const getUserForView = (id: number): Result.ResultAsync<UserView, HttpError> => {
   return Result.pipe(
     fetchUser(id),
-    Result.map(toView),
-    Result.mapError(toHttpError),
+    Result.map(toView),           // 成功時のみ実行される
+    Result.mapError(toHttpError), // 失敗時のみ実行される
   );
-}
+};
+```
+
+## `map` か `andThen` か？
+
+`map` に渡す関数は、プレーンな値を返す必要があります。
+変換そのものが失敗しうるために関数が `Result` を返す場合は、代わりに `andThen` を使ってください。`andThen` は次のページで解説します。
+
+```ts
+declare const parseAge: (input: string) => Result.Result<number, string>;
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+
+// ❌ map は返された Result をさらに Result で包んでしまう
+const nested = Result.pipe(
+  Result.succeed('20'),
+  Result.map(parseAge),
+);
+// 型: Result.Result<Result.Result<number, string>, never>
+
+// ✅ andThen は返された Result をそのまま次の結果として使う
+const flat = Result.pipe(
+  Result.succeed('20'),
+  Result.andThen(parseAge),
+);
+// 型: Result.Result<number, string>
 ```
 
 ## リファレンス
 
-| 関数                                                        | 目的                |
-|-----------------------------------------------------------|-------------------|
-| [map(fn)](../../../../api/functions/Result.map)           | Result の成功値を変換する  |
-| [mapError(fn)](../../../../api/functions/Result.mapError) | Result のエラー値を変換する |
+| API                                                       | 用途               |
+|-----------------------------------------------------------|--------------------|
+| [map(fn)](../../../../api/functions/Result.map)           | 成功値を変換する   |
+| [mapError(fn)](../../../../api/functions/Result.mapError) | エラー値を変換する |

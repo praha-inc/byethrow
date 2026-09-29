@@ -1,17 +1,17 @@
 ---
-description: '@praha/byethrowのResultとRの2種類のインポート方法、Tree-shakingサポート、コードベースで統一すべき理由を解説。'
+description: '@praha/byethrow の 2 つのインポート方法（Result 名前空間と R エイリアス）、どちらもツリーシェイキングに対応していること、そしてコードベースごとにどちらか一方に統一すべき理由。'
 ---
 
-# Resultのインポート方法
+# Result のインポート方法
 
-`@praha/byethrow` は、効率的な開発と学習コストのバランスを取るために、2つの異なるインポート方法を提供しています。
-どちらのアプローチもTree-shakingを完全にサポートしており、未使用の機能は最終バンドルから自動的に除外されます。
+`@praha/byethrow` は、同じ関数群を `Result` と `R` の 2 つの名前でエクスポートしています。
+どちらもツリーシェイキングに完全に対応しているため、どちらを選ぶかは純粋にスタイルの問題です。
 
-## 2つのインポート方法
+## 2 つのインポート方法
 
-### 明示的な名前空間アプローチ（`Result`）
+### `Result`：明示的なアプローチ
 
-明確さを重視するコードには、`Result` を使用します。
+`Result` ネームスペースを使うと、各関数がどこから来たものかが一目でわかります。
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -26,7 +26,7 @@ const validateUser = (id: string) => {
 const result = Result.pipe(
   Result.succeed('u123'),
   Result.andThen(validateUser),
-  Result.map(id => ({ id, name: 'John Doe' }))
+  Result.map((id) => ({ id, name: 'John Doe' })),
 );
 
 if (Result.isSuccess(result)) {
@@ -34,9 +34,9 @@ if (Result.isSuccess(result)) {
 }
 ```
 
-### 短縮エイリアス（`R`）
+### `R`：簡潔なエイリアス
 
-簡潔さを重視するコードには、`R` エイリアスを使用します。
+`R` エイリアスを使うと、パイプラインを短く書けます。
 
 ```ts
 import { R } from '@praha/byethrow';
@@ -51,7 +51,7 @@ const validateUser = (id: string) => {
 const result = R.pipe(
   R.succeed('u123'),
   R.andThen(validateUser),
-  R.map(id => ({ id, name: 'John Doe' }))
+  R.map((id) => ({ id, name: 'John Doe' })),
 );
 
 if (R.isSuccess(result)) {
@@ -59,52 +59,50 @@ if (R.isSuccess(result)) {
 }
 ```
 
-## Tree-Shakingサポート
+このドキュメントの例では `Result` を使っていますが、`R` でもすべて同じように動作します。
 
-`@praha/byethrow` は**完全なTree-shakingサポート**を実現しています。
+## ツリーシェイキング
+
+名前空間としてインポートしていても、各関数は独立したエクスポートです。
+モダンなバンドラーは、実際に使っている関数だけをバンドルに含めます。
 
 ```ts
-// 例：小規模アプリケーションでの使用
 import { R } from '@praha/byethrow';
 
-// 実際に使用されているのはこれらの機能のみ
+// バンドルに含まれるのは `fn` とその依存コードだけ。
+// `andThen` や `pipe` などの関数は取り除かれる。
 const parseNumber = R.fn({
   try: (input: string) => parseInt(input, 10),
-  catch: () => new Error('Invalid number')
+  catch: () => new Error('Invalid number'),
 });
-
-// この場合、parseNumberに必要な最小限のコードのみが
-// バンドルに含まれ、他の機能（andThen、pipeなど）は除外されます
 ```
 
-## ベストプラクティス
+## スタイルの選び方
 
-### インポート方法の選択
+- **`Result`**：明示的で意味がわかりやすいコードを好む場合。初めて触れる人にとっても検索しやすくなります。
+- **`R`**：タイプ量を減らし、パイプラインをコンパクトに書きたい場合。
 
-- **`Result` を使用する**：各操作の目的を明確に示す、明示的で説明的な命名を好む場合
-- **`R` を使用する**：より少ないキーストロークと簡潔なコードで、より速い開発を好む場合
+### 2 つを混在させない
 
-### 重要：インポート方法を混在させない
-
-**同じコードベース内で `Result` と `R` を混在させることは強くお勧めしません。**
-コードの可読性と一貫性を維持するために、プロジェクト全体で1つのアプローチを選択し、一貫して使用するように気をつけてください。
+**どちらか一方のスタイルを選び、コードベース全体で統一することを強く推奨します。**
+混在させると、コードの一貫性が失われ、検索もしにくくなります。
 
 ```ts
 // @filename: mixed-imports.ts
-// ❌ アプローチを混在させないでください - 一貫性のないコードになります
+// ❌ 両方のスタイルを混在させている
 import { Result, R } from '@praha/byethrow';
 
 const validateId = (id: string) => {
-  return Result.succeed(id); // Resultを使用
+  return Result.succeed(id);
 };
 
-const processData = R.pipe(  // Rを使用
+const processData = R.pipe(
   R.succeed('data'),
-  R.andThen(validateId)
+  R.andThen(validateId),
 );
 
 // @filename: consistent-imports.ts
-// ✅ 1つのアプローチを選択し、一貫して使用してください
+// ✅ 1 つのスタイルで統一している
 import { Result } from '@praha/byethrow';
 
 const validateId = (id: string) => {
@@ -113,6 +111,8 @@ const validateId = (id: string) => {
 
 const processData = Result.pipe(
   Result.succeed('data'),
-  Result.andThen(validateId)
+  Result.andThen(validateId),
 );
 ```
+
+Lint ルールの [consistent-namespace](../ecosystem/linter/consistent-namespace) を使うと、選んだスタイルを強制し、違反を自動で修正できます。

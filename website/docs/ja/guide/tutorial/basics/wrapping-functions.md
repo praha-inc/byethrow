@@ -1,79 +1,68 @@
 ---
-description: 'Result.fnとResult.tryを使って例外を投げる可能性のある関数をResult型にラップし、安全に扱う方法の解説。'
+description: '例外を投げるコードをResultに変換する方法。再利用可能なラッパーを作るResult.fnと、その場で一度だけ実行するResult.try、非同期関数やsafeオプションの扱いを解説。'
 ---
 
 # 関数をラップする
 
-例外を投げるコード（サードパーティライブラリ、組み込み API、レガシーコード）を扱う必要がある場合があります。
-`fn` と `try` 関数は、これらの例外を投げる可能性のある操作をラップし、`Result` 型に変換します。
+サードパーティのライブラリ、`JSON.parse` のような組み込み API、レガシーコードは、例外を投げることがよくあります。
+`fn` と `try` はそのようなコードをラップし、投げられた例外を `Failure` に変換します。
 
-## `fn`で再利用可能な関数を作成する
+## `fn` で再利用可能なラッパーを作る
 
-`fn` 関数は、エラーを投げる可能性のある関数をラップし、`Result` 返す新しい関数を返します。
-再利用可能な関数を作成したい場合に便利です。
+`fn` は例外を投げる可能性のある関数を受け取り、代わりに `Result` を返す新しい関数を返します。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const parseJSON = Result.fn({
+const parseJson = Result.fn({
   try: (input: string) => JSON.parse(input) as unknown,
   catch: (error) => new Error('Invalid JSON', { cause: error }),
 });
 
-const result = parseJSON('{"name": "Alice"}');
+const result = parseJson('{"name": "Alice"}');
 // 型: Result.Result<unknown, Error>
-
-if (Result.isSuccess(result)) {
-  console.log(result.value); // { name: "Alice" }
-}
 ```
 
-### 動作の仕組み
+受け取るオプションは 2 つです。
 
-- `try` プロパティには、エラーを投げる可能性のある関数を含めます（引数を受け取れます）
-- `catch` プロパティは、投げられらたエラーを処理し、任意のエラー型に変換します
-- エラーを投げる代わりに `Result` を返すラップされた関数を返します
+- `try`：ラップする関数です。ラップされた関数は同じ引数を受け取ります。
+- `catch`：投げられた値を独自のエラー型に変換します。投げられた値は `unknown` なので、`cause` として渡して元のエラーを残しておきましょう。
 
-### エラーを投げない関数
+`try` が正常に値を返すと、その戻り値が `Success` になります。例外を投げると、`catch` が返した値が `Failure` になります。
 
-関数がエラーを投げない事が確実な場合は、`safe` オプションを使用します。
+### 非同期関数
+
+`try` が `Promise` を返す場合、ラップされた関数は `ResultAsync` を返します。
+reject された Promise も、投げられた例外と同じように `Failure` に変換されます。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const double = Result.fn({
-  safe: true,
-  try: (x: number) => x * 2,
-});
-
-const result = double(5);
-// 型: Result.Result<number, never>
-// エラー型は `never` です。例外が発生しないことを保証しているためです
-```
-
-### 非同期関数での使用
-
-`fn` 関数は非同期関数をシームレスに処理し、`ResultAsync` を生成する関数を返します。
-
-```ts
-import { Result } from '@praha/byethrow';
+type User = { id: string; name: string };
 
 const fetchUser = Result.fn({
   try: async (id: string) => {
     const response = await fetch(`/api/users/${id}`);
-    if (!response.ok) throw new Error('Not found');
-    return await response.json() as { id: string; name: string };
+    return await response.json() as User;
   },
   catch: (error) => new Error('Failed to fetch user', { cause: error }),
 });
 
-const result = await fetchUser('123');
-// 型: Result.Result<{ id: string; name: string }, Error>
+const result = await fetchUser('u123');
+// 型: Result.Result<User, Error>
 ```
 
-## `try` で実行とラップを行う
+:::tip
+`try` は、それ自体が例外を投げるコードをラップするためだけに使いましょう。
+HTTP ステータスがエラーを示している場合のような想定内の失敗を伝えるために、自分で `throw` してはいけません。
+代わりに、「[Result をつなげる](../chaining/chaining-results)」で紹介しているように、`Result.fail` を返すステップをつなげてください。
+[no-throw-in-callback](../../ecosystem/linter/no-throw-in-callback) Lint ルールがこの間違いを検出します。
+:::
 
-`try` 関数は、エラーを投げる可能性のある関数を実行し、直接 `Result` を返します。
+## `try` でコードを一度だけ実行する
+
+`try` は関数をすぐに実行し、その結果を `Result` として返します。
+コードをその場で一度だけ実行したい場合に便利です。
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -83,36 +72,10 @@ const result = Result.try({
   catch: (error) => new Error('Invalid JSON', { cause: error }),
 });
 // 型: Result.Result<{ name: string }, Error>
-
-if (Result.isSuccess(result)) {
-  console.log(result.value.name); // "Alice"
-}
 ```
 
-### 動作の仕組み
-
-- `try` プロパティには、エラーを投げる可能性のある引数なしの関数を含めます
-- `catch` プロパティは、投げられたエラーを処理し、任意のエラー型に変換します
-- 関数は即座に実行され、`Result` を返します
-
-### エラーを投げない関数
-
-関数がエラーを投げない事が確実な場合は、`safe` オプションを使用します。
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.try({
-  safe: true,
-  try: () => Math.random() + 1,
-});
-// 型: Result.Result<number, never>
-// エラー型は `never` です。例外が発生しないことを保証しているためです
-```
-
-### 非同期関数での使用
-
-`try` 関数は非同期関数をシームレスに処理し、`ResultAsync` を返します。
+オプションは `fn` と同じですが、`try` の関数は引数を受け取りません。
+非同期関数にも対応しており、その場合は `ResultAsync` を返します。
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -124,53 +87,64 @@ const result = await Result.try({
 // 型: Result.Result<Response, Error>
 ```
 
-## `fn` と `try` 関数の使い分け
+## `fn` と `try` の使い分け
 
-| シナリオ                 | 使用する関数 |
-|----------------------|--------|
-| 一度実行してすぐに結果を取得する     | `try`  |
-| 再利用可能なラップされた関数を作成する  | `fn`   |
-| 関数が引数を受け取る必要がある      | `fn`   |
-| インラインの一回限りのエラーハンドリング | `try`  |
+| シナリオ                                             | 使う関数 |
+|------------------------------------------------------|----------|
+| 引数を受け取ることもある、再利用可能な関数を定義する | `fn`     |
+| 必要な場所で、コードを一度だけ実行する               | `try`    |
 
-### 例：それぞれを使うべき場面
-
-一回限りの実行には `try` を使用します。
-
-```ts
-type Config = { name: string };
-class ConfigError extends Error {}
-// ---cut-before---
-import { Result } from '@praha/byethrow';
-
-// 起動時に一度だけ設定を読み込む
-const config = Result.try({
-  try: () => JSON.parse('{"name": "Alice"}') as Config,
-  catch: (error) => new ConfigError('Invalid config', { cause: error }),
-});
-```
-
-再利用可能なユーティリティには `fn` を使用します。
+例えば、さまざまな場所から呼び出すユーティリティには `fn` を、起動時の設定の読み込みのような一度きりの操作には `try` を使います。
 
 ```ts
 class ParseError extends Error {}
+type Config = { name: string };
+declare const configText: string;
 // ---cut-before---
 import { Result } from '@praha/byethrow';
 
-// 再利用可能な JSON パーサーを作成
-const parseJSON = Result.fn({
+// 再利用可能な JSON パーサー
+const parseJson = Result.fn({
   try: (input: string) => JSON.parse(input) as unknown,
   catch: (error) => new ParseError('Invalid JSON', { cause: error }),
 });
 
-// 複数回使用
-const config = parseJSON('{"name": "Alice"}');
-const data = parseJSON('{"name": "Bob"}');
+// 起動時に一度だけ設定を読み込む
+const config = Result.try({
+  try: () => JSON.parse(configText) as Config,
+  catch: (error) => new ParseError('Invalid config', { cause: error }),
+});
 ```
+
+## 例外を投げない関数: `safe` オプション
+
+関数が例外を投げないことがわかっている場合は、`catch` の代わりに `safe: true` を指定します。
+エラーの型は `never` になります。
+
+```ts
+import { Result } from '@praha/byethrow';
+
+const double = Result.fn({
+  safe: true,
+  try: (x: number) => x * 2,
+});
+
+const result = double(5);
+// 型: Result.Result<number, never>
+```
+
+通常の関数を、`Result` のパイプラインに組み込める形に変えたいときに便利です。
+`try` も同じオプションを受け付けます。
+
+:::warning
+`safe: true` を指定すると、例外はキャッチされません。
+関数が実際に例外を投げた場合（または Promise が reject された場合）、その例外は通常どおり呼び出し元に伝わります。
+関数が失敗しないと確信できる場合にだけ、このオプションを使ってください。
+:::
 
 ## リファレンス
 
-| 関数                                                   | 目的                            |
-|------------------------------------------------------|-------------------------------|
-| [try(options)](../../../../api/functions/Result.try) | エラーを投げる関数を実行し Result を返す      |
-| [fn(options)](../../../../api/functions/Result.fn)   | エラーを投げる関数を Result を返す関数にラップする |
+| API                                                  | 用途                                              |
+|------------------------------------------------------|---------------------------------------------------|
+| [fn(options)](../../../../api/functions/Result.fn)   | 例外を投げる関数を、Result を返す関数にラップする |
+| [try(options)](../../../../api/functions/Result.try) | 例外を投げる関数を一度だけ実行し、Result を返す   |

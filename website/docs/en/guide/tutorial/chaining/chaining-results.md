@@ -1,58 +1,48 @@
 ---
-description: Chaining Result computations with andThen for sequential success steps and orElse for error recovery and fallback strategies.
+description: Chaining steps that can fail with Result.andThen, and recovering from failures with Result.orElse, including partial recovery, fallbacks, and how error types change along the way.
 ---
 
 # Chaining Results
 
-The `andThen` and `orElse` functions allow you to chain computations that may themselves return a `Result`. Unlike `map` and `mapError` which only transform values, these functions enable sequential operations where each step can succeed or fail.
+`andThen` and `orElse` chain steps that themselves return a `Result`.
+While `map` and `mapError` only transform values, these functions let each step decide whether the pipeline continues as a success or a failure.
 
-## `andThen` - Chaining Success Computations
+## Chaining Steps with `andThen`
 
-The `andThen` function chains the next computation using the success value. If the original `Result` is a `Failure`, it is returned unchanged. Otherwise, the provided function is called, and its result is returned as-is.
-
-### Basic Usage
+`andThen` calls the given function with the success value and returns the `Result` that the function returns.
+If the input is a `Failure`, the function is not called and the `Failure` is returned as-is:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.pipe(
+// The function returns a Success
+const doubled = Result.pipe(
   Result.succeed(3),
   Result.andThen((value) => Result.succeed(value * 2)),
 );
 // { type: 'Success', value: 6 }
-```
 
-### When the Input is a Failure
+// The function returns a Failure
+const rejected = Result.pipe(
+  Result.succeed(3),
+  Result.andThen((value) => Result.fail(`Rejected: ${value}`)),
+);
+// { type: 'Failure', error: 'Rejected: 3' }
 
-If the input is a `Failure`, `andThen` does nothing and returns the `Failure` as-is:
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.pipe(
+// The input is already a Failure
+const skipped = Result.pipe(
   Result.fail('error'),
-  Result.andThen((value) => Result.succeed(value * 2)),
+  Result.andThen((value) => Result.succeed(value * 2)), // Not called
 );
 // { type: 'Failure', error: 'error' }
 ```
 
-### When the Function Returns a Failure
+The error type of the output is the union of the input's error type and the error type returned by the function.
+As you chain more steps, every possible error is tracked in the type.
 
-The chained function can return a `Failure`, which propagates through the pipeline:
+### Example: Sequential Steps
 
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.pipe(
-  Result.succeed(3),
-  Result.andThen((value) => Result.fail('error: ' + value)),
-);
-// { type: 'Failure', error: 'error: 3' }
-```
-
-### Example: Sequential Validation
-
-A common use case is chaining multiple validation or processing steps:
+A typical use of `andThen` is running a sequence of steps, where each step uses the result of the previous one:
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -64,63 +54,113 @@ declare const validateEmail: (user: User) => Result.Result<User, 'InvalidEmail'>
 declare const saveUser: (user: User) => Result.ResultAsync<User, 'SaveFailed'>;
 
 const result = await Result.pipe(
-  Result.succeed('user-123'),
+  Result.succeed('u123'),
   Result.andThen(findUserById),
   Result.andThen(validateEmail),
   Result.andThen(saveUser),
 );
-// If any step fails, the pipeline short-circuits with that error
+// Type: Result.Result<User, 'NotFound' | 'InvalidEmail' | 'SaveFailed'>
+// If any step fails, the remaining steps are skipped
 ```
 
-## `orElse` - Recovering from Failures
+### Example: Rejecting Unexpected Values
 
-The `orElse` function chains the next computation using the error value. If the original `Result` is a `Success`, it is returned unchanged. Otherwise, the provided function is called, and its result is returned as-is.
-
-This is useful for error recovery - providing fallback values or retrying with different strategies.
-
-### Basic Usage
+`andThen` is also the place to turn a value you don't accept into a `Failure`.
+For example, `fetch` does not throw on HTTP error statuses, so check the response in a separate step:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.pipe(
+class NetworkError extends Error {
+  override readonly name = 'NetworkError';
+}
+
+class HttpError extends Error {
+  override readonly name = 'HttpError';
+}
+
+const request = Result.fn({
+  try: (url: string) => fetch(url),
+  catch: (error) => new NetworkError('Request failed', { cause: error }),
+});
+
+const result = await Result.pipe(
+  request('/api/users/u123'),
+  Result.andThen((response) => {
+    if (!response.ok) {
+      return Result.fail(new HttpError(`Unexpected status: ${response.status}`));
+    }
+    return Result.succeed(response);
+  }),
+);
+// Type: Result.Result<Response, NetworkError | HttpError>
+```
+
+## Recovering with `orElse`
+
+`orElse` is the counterpart of `andThen` for failures.
+It calls the given function with the error value and returns the `Result` that the function returns.
+If the input is a `Success`, the function is not called:
+
+```ts
+import { Result } from '@praha/byethrow';
+
+// The function recovers with a Success
+const recovered = Result.pipe(
+  Result.fail('original error'),
+  Result.orElse(() => Result.succeed('default value')),
+);
+// { type: 'Success', value: 'default value' }
+
+// The function returns a new Failure
+const replaced = Result.pipe(
+  Result.fail('original error'),
+  Result.orElse((error) => Result.fail(`New error: ${error}`)),
+);
+// { type: 'Failure', error: 'New error: original error' }
+
+// The input is already a Success
+const untouched = Result.pipe(
   Result.succeed(42),
-  Result.orElse((error) => Result.succeed(0)),
+  Result.orElse(() => Result.succeed(0)), // Not called
 );
 // { type: 'Success', value: 42 }
 ```
 
-### When the Input is a Failure
+Unlike `andThen`, the original error type is replaced by the error type that the function returns.
+If the function always returns a `Success`, the error type becomes `never`.
 
-If the input is a `Failure`, `orElse` runs the recovery function:
+### Example: Recovering from Specific Errors
 
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.pipe(
-  Result.fail('original error'),
-  Result.orElse((error) => Result.succeed('default value')),
-);
-// { type: 'Success', value: 'default value' }
-```
-
-### When the Recovery Function Returns a Failure
-
-The recovery function can also return a `Failure`:
+You don't have to recover from every error.
+Handle the errors you can, and return the others as they are:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.pipe(
-  Result.fail('original error'),
-  Result.orElse((error) => Result.fail('new error: ' + error)),
+type User = { id: string; name: string };
+
+declare const findUser: (id: string) => Result.ResultAsync<User, 'NotFound' | 'Timeout'>;
+
+const guest: User = { id: 'guest', name: 'Guest' };
+
+const result = await Result.pipe(
+  findUser('u123'),
+  Result.orElse((error) => {
+    if (error === 'NotFound') {
+      return Result.succeed(guest);
+    }
+    return Result.fail(error);
+  }),
 );
-// { type: 'Failure', error: 'new error: original error' }
+// Type: Result.Result<User, 'Timeout'>
 ```
 
-### Example: Fallback Strategy
+Notice that `'NotFound'` has disappeared from the error type, because it can no longer occur.
 
-A common pattern is implementing fallback strategies:
+### Example: Fallback Sources
+
+`orElse` is also useful for trying an alternative when the first attempt fails:
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -134,12 +174,13 @@ const config = await Result.pipe(
   loadConfigFromFile(),
   Result.orElse(() => loadConfigFromEnv()),
 );
-// Try file first, then environment variables, else fail
+// Type: Result.Result<Config, 'EnvNotSet'>
+// Tries the file first, then falls back to environment variables
 ```
 
 ## Combining `andThen` and `orElse`
 
-You can use both functions together to create complex flows with both success chaining and error recovery:
+Both functions can be combined to express flows with both chaining and recovery:
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -155,12 +196,12 @@ const getValidatedUser = (id: string) => Result.pipe(
   Result.orElse(() => fetchUserFromDb(id)),
   Result.andThen(validateUser),
 );
-// Try cache first, fall back to DB, then validate the result
+// Tries the cache first, falls back to the database, then validates the user
 ```
 
 ## References
 
-| Function                                                | Purpose                                       |
-|---------------------------------------------------------|-----------------------------------------------|
-| [andThen(fn)](../../../../api/functions/Result.andThen) | Chain a computation using the success value   |
-| [orElse(fn)](../../../../api/functions/Result.orElse)   | Recover from a failure with a new computation |
+| API                                                     | Purpose                                      |
+|---------------------------------------------------------|----------------------------------------------|
+| [andThen(fn)](../../../../api/functions/Result.andThen) | Chain the next step using the success value  |
+| [orElse(fn)](../../../../api/functions/Result.orElse)   | Recover from a failure using the error value |

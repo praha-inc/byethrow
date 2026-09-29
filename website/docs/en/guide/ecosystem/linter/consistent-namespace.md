@@ -1,21 +1,30 @@
 ---
-description: Oxlint rule that enforces a single namespace alias — Result or R — for @praha/byethrow imports, with auto-fix support
+description: Oxlint rule that enforces a single namespace alias — Result or R — for @praha/byethrow imports, with auto-fix support.
 ---
 
 # consistent-namespace
 
-Enforces that imports from `@praha/byethrow` use a consistent namespace alias — either `Result` or `R`.
+Enforces that `@praha/byethrow` is always imported under the same namespace alias, either `Result` or `R`.
 
-## Rule details
+This rule is auto-fixable. The fix renames the import and every reference to it.
 
-When working with `@praha/byethrow`, you can import the namespace as either `Result` or `R`. Mixing both aliases in a project makes code inconsistent and harder to search. This rule enforces a single preferred alias and auto-fixes violations.
+## Rule Details
 
-The default preferred namespace is `Result`.
+`@praha/byethrow` exports the same functions as both `Result` and `R`.
+Using both in one codebase makes the code inconsistent and harder to search, as explained in [Importing Result](../../best-practices/importing-result).
+This rule reports every import whose local name is not the preferred alias.
 
 ### Incorrect
 
 ```ts
-// ❌ mixing Result and R in the same codebase
+// ❌ R is used although Result is preferred
+import { R } from '@praha/byethrow';
+
+const success = R.succeed(42);
+```
+
+```ts
+// ❌ Mixing Result and R
 import { Result, R } from '@praha/byethrow';
 
 const success = Result.succeed(42);
@@ -25,27 +34,20 @@ const failure = R.fail(new Error('Something went wrong'));
 ### Correct
 
 ```ts
-// ✅ using Result consistently
+// ✅ Using Result consistently
 import { Result } from '@praha/byethrow';
 
 const success = Result.succeed(42);
 const failure = Result.fail(new Error('Something went wrong'));
 ```
 
-```ts
-// ✅ using R consistently (when configured to prefer R)
-import { R } from '@praha/byethrow';
-
-const success = R.succeed(42);
-const failure = R.fail(new Error('Something went wrong'));
-```
-
 ## Options
 
-The rule accepts a single string option for the preferred namespace (default: `"Result"`).
+The rule accepts the preferred alias as a string. The default is `"Result"`.
 
-prefer R instead of Result:
-```ts
+To prefer `R` instead:
+
+```ts title="oxlint.config.ts"
 import { defineConfig } from 'oxlint';
 
 export default defineConfig({
@@ -53,4 +55,14 @@ export default defineConfig({
     'byethrow/consistent-namespace': ['error', 'R'],
   },
 });
+```
+
+With this option, the following code is correct:
+
+```ts
+// ✅ Using R consistently
+import { R } from '@praha/byethrow';
+
+const success = R.succeed(42);
+const failure = R.fail(new Error('Something went wrong'));
 ```

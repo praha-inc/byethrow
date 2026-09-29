@@ -1,15 +1,15 @@
 ---
-description: 'Result.doとResult.bindを組み合わせたdo/bindパターンで、複数の依存した計算結果を蓄積しながらオブジェクトを構築する方法。'
+description: 'Result.do と Result.bind を使い、複数の Result からオブジェクトを 1 フィールドずつ組み立てる方法。各ステップでそれまでに計算した値を利用できます。'
 ---
 
 # オブジェクトを構築する
 
-各フィールドが成功した計算に依存する複雑なオブジェクトを構築する場合、`do`/`bind` パターンが非常に便利です。
-これにより、成功した結果を蓄積しながらオブジェクトを構築できます。
+それぞれ失敗しうる処理から得られる複数の値が必要で、しかも後のステップが前のステップの結果に依存していることがあります。
+`do` / `bind` パターンを使うと、こうした値を 1 フィールドずつひとつのオブジェクトにまとめられます。
 
-## `do` とは？
+## `do` から始める
 
-`do` は空のオブジェクトを持つ `Success` という特別な `Result` を作成します。
+`do` は空のオブジェクトを持つ `Success` を作成します。これがこのパターンの出発点です。
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -18,13 +18,13 @@ const start = Result.do();
 // { type: 'Success', value: {} }
 ```
 
-## `bind` とは？
+## `bind` でフィールドを追加する
 
-`bind` は蓄積されたオブジェクトに新しいフィールドを追加し、以下の処理を行います。
-1. 現在の蓄積されたオブジェクトを受け取る
-2. `Result` を返す計算を実行する
-3. 成功した場合、指定されたキーでオブジェクトに結果をマージする
-4. 失敗した場合、ショートサーキットして失敗を返す
+`bind(name, fn)` は、蓄積されたオブジェクトにフィールドを追加します。
+
+1. それまでに蓄積されたオブジェクトを引数に `fn` を呼び出します。
+2. `fn` が `Success` を返した場合、その値を `name` というキーでオブジェクトに追加します。
+3. `fn` が `Failure` を返した場合、パイプラインはそこで停止し、その `Failure` が返されます。
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -37,9 +37,9 @@ const result = Result.pipe(
 // { type: 'Success', value: { name: 'Alice', age: 30 } }
 ```
 
-### 以前の値の使用
+### 前の値を利用する
 
-`bind` の強力な点は、各ステップで以前の値にアクセスできることです。
+`bind` の重要な特徴は、各ステップがそれより前に追加されたフィールドを利用できることです。
 
 ```ts
 declare const fetchUser: (userId: string) => Result.ResultAsync<{ id: string; profileId: string }, 'UserNotFound'>;
@@ -47,16 +47,17 @@ declare const fetchProfile: (profileId: string) => Result.ResultAsync<{ bio: str
 // ---cut-before---
 import { Result } from '@praha/byethrow';
 
-const result = Result.pipe(
+const result = await Result.pipe(
   Result.do(),
-  Result.bind('user', () => fetchUser('user-123')),
-  Result.bind('profile', ({ user }) => fetchProfile(user.profileId)), // userを使用！
+  Result.bind('user', () => fetchUser('u123')),
+  Result.bind('profile', ({ user }) => fetchProfile(user.profileId)), // `user` を利用
 );
+// 型: Result.Result<{ user: { id: string; profileId: string }; profile: { bio: string } }, 'UserNotFound' | 'ProfileNotFound'>
 ```
 
-### 失敗時のショートサーキット
+### 失敗すると短絡する
 
-いずれかの `bind` が失敗すると、後続の `bind` はスキップされます。
+いずれかの `bind` が失敗すると、残りのステップはスキップされます。
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -64,16 +65,15 @@ import { Result } from '@praha/byethrow';
 const result = Result.pipe(
   Result.do(),
   Result.bind('a', () => Result.succeed(1)),
-  Result.bind('b', () => Result.fail('Error!')),  // ここで失敗
-  Result.bind('c', () => Result.succeed(3)),      // スキップ
-  Result.bind('d', () => Result.succeed(4)),      // スキップ
+  Result.bind('b', () => Result.fail('Error!')), // ここで失敗
+  Result.bind('c', () => Result.succeed(3)),     // スキップされる
 );
 // { type: 'Failure', error: 'Error!' }
 ```
 
-### 例：関連データの取得
+## 例：関連データを取得する
 
-複数の関連リソースを取得して組み合わせる必要がある場合の例。
+あるデータを取得するために別のデータが必要な場合でも、`bind` を使えば途中の値をすべて最後まで利用できます。
 
 ```ts
 declare const fetchOrder: (orderId: string) => Result.ResultAsync<{ id: string; userId: string; productIds: string[] }, 'OrderNotFound'>;
@@ -99,16 +99,20 @@ const getOrderDetails = (orderId: string): Result.ResultAsync<OrderDetails, 'Ord
       orderId: order.id,
       customerName: user.name,
       products,
-      totalPrice: products.reduce((sum, p) => sum + p.price, 0),
+      totalPrice: products.reduce((sum, product) => sum + product.price, 0),
     })),
   );
 };
-// 注文データを使用してユーザーと製品を取得し、すべてを組み合わせます
 ```
+
+:::tip
+`bind` はステップを 1 つずつ順番に実行します。これは、あるステップが前のステップに依存している場合に必要な動作です。
+処理同士が互いに独立している場合は、[次のページ](./aggregating-results)で紹介する `sequence` や `collect` の方が適しています。`collect` なら非同期処理を並列に実行することもできます。
+:::
 
 ## リファレンス
 
-| 関数                                                      | 目的                   |
-|---------------------------------------------------------|----------------------|
-| [do()](../../../../api/functions/Result.do)             | `Success<{}>`で開始     |
-| [bind(name, fn)](../../../../api/functions/Result.bind) | 蓄積されたオブジェクトにフィールドを追加 |
+| API                                                     | 用途                                                   |
+|---------------------------------------------------------|--------------------------------------------------------|
+| [do()](../../../../api/functions/Result.do)             | 空のオブジェクトを持つ成功の Result を作成する         |
+| [bind(name, fn)](../../../../api/functions/Result.bind) | 蓄積されたオブジェクトから計算したフィールドを追加する |

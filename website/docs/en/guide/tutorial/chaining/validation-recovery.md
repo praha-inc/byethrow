@@ -1,75 +1,61 @@
 ---
-description: Running side-effect validations with andThrough and cleanup on failure with orThrough while preserving the original Result value.
+description: Running extra steps that can fail while keeping the original Result — Result.andThrough for validations and side effects, and Result.orThrough for cleanup and rollback after a failure.
 ---
 
-# Validation and Recovery
+# Validation and Cleanup
 
-The `andThrough` and `orThrough` functions allow you to run additional computations for validation or recovery while preserving the original result value.
+Sometimes you want to run an additional step that can fail, without replacing the value you already have.
+`andThrough` and `orThrough` run such a step and, if it succeeds, keep the original `Result`.
 
-## `andThrough` - Validation Without Transformation
+## Running Checks with `andThrough`
 
-The `andThrough` function runs an additional computation using the success value, but **returns the original result** if the additional computation is successful. If either the original result or the side effect result is a `Failure`, that failure is returned.
+`andThrough` calls the given function with the success value, just like `andThen`.
+The difference is what happens when the function succeeds:
 
-This is useful for running validations or side effects without altering the main result on success.
-
-### Basic Usage
+- If the function returns a `Success`, its value is discarded and the **original** `Success` is returned.
+- If the function returns a `Failure`, that `Failure` is returned.
+- If the input is a `Failure`, the function is not called.
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.pipe(
+const checkPositive = (value: number) => {
+  return 0 < value ? Result.succeed() : Result.fail('Must be positive');
+};
+
+const passed = Result.pipe(
   Result.succeed(5),
-  Result.andThrough((value) => {
-    return 0 < value ? Result.succeed() : Result.fail('Must be > 0');
-  }),
+  Result.andThrough(checkPositive),
 );
-// { type: 'Success', value: 5 } - original value is preserved
-```
+// { type: 'Success', value: 5 } - the original value is kept
 
-### When the Input is a Failure
+const rejected = Result.pipe(
+  Result.succeed(-10),
+  Result.andThrough(checkPositive),
+);
+// { type: 'Failure', error: 'Must be positive' }
 
-If the input is a `Failure`, `andThrough` does nothing and returns the `Failure` as-is:
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.pipe(
+const skipped = Result.pipe(
   Result.fail('error'),
-  Result.andThrough((value) => {
-    return 0 < value ? Result.succeed() : Result.fail('Must be > 0');
-  }),
+  Result.andThrough(checkPositive), // Not called
 );
 // { type: 'Failure', error: 'error' }
 ```
 
-### When the Function Returns a Failure
-
-If the side effect returns a `Failure`, that failure is returned instead:
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.pipe(
-  Result.succeed(-10),
-  Result.andThrough((value) => {
-    return 0 < value ? Result.succeed() : Result.fail('Must be > 0');
-  }),
-);
-// { type: 'Failure', error: 'Must be > 0' }
-```
+This makes `andThrough` a good fit for validations and for side effects that can fail, such as writing an audit log, where the next step still needs the original value.
 
 ### Example: Multiple Validations
 
-A common use case is running multiple validations on a value:
+Each validation only needs to report whether the value is acceptable, so it can simply return `Result.Result<void, E>`:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
 type User = { name: string; age: number; email: string };
 
-declare const validateName: (user: User) => Result.Result<void, 'Invalid name'>;
-declare const validateAge: (user: User) => Result.Result<void, 'Invalid age'>;
-declare const validateEmail: (user: User) => Result.Result<void, 'Invalid email'>;
+declare const validateName: (user: User) => Result.Result<void, 'InvalidName'>;
+declare const validateAge: (user: User) => Result.Result<void, 'InvalidAge'>;
+declare const validateEmail: (user: User) => Result.Result<void, 'InvalidEmail'>;
 
 const validateUser = (user: User) => Result.pipe(
   Result.succeed(user),
@@ -77,88 +63,80 @@ const validateUser = (user: User) => Result.pipe(
   Result.andThrough(validateAge),
   Result.andThrough(validateEmail),
 );
-// Returns the original user if all validations pass, otherwise the first error
+// Type: Result.Result<User, 'InvalidName' | 'InvalidAge' | 'InvalidEmail'>
+// Returns the original user if every validation passes, otherwise the first error
 ```
 
-## `orThrough` - Recovery with Original Failure
+:::tip
+`andThrough` stops at the first failed validation.
+To report every validation error at once, use [`collect`](../combining/aggregating-results) instead.
+:::
 
-The `orThrough` function runs an additional computation to attempt recovery from a failure, but **returns the original failure** if the recovery is successful.
+## Cleaning Up with `orThrough`
 
-If the original result is a `Success`, it is returned immediately without running the function. If the original result is a `Failure`, the function is executed with the error value. If the function returns a `Success`, the original failure is returned. If the function returns a `Failure`, that new failure is returned.
+`orThrough` is the counterpart of `andThrough` for failures.
+It calls the given function with the error value, typically to clean up after a failed operation:
 
-This is useful for attempting to recover from a failed operation (e.g., cleanup, rollback) while still preserving the original error.
-
-### Basic Usage
+- If the function returns a `Success`, the **original** `Failure` is returned.
+- If the function returns a `Failure`, that new `Failure` is returned.
+- If the input is a `Success`, the function is not called.
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.pipe(
-  Result.succeed(5),
-  Result.orThrough((error) => {
-    // failure recovery logic here
-    return Result.succeed();
-  }),
-);
-// { type: 'Success', value: 5 } - success passes through unchanged
-```
-
-### When the Input is a Failure
-
-If the input is a `Failure`, `orThrough` runs the function but preserves the original error:
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.pipe(
-  Result.fail('error'),
-  Result.orThrough((error) => {
-    // failure recovery logic here
-    return Result.succeed();
-  }),
-);
-// Logs 'Logging error: error' and returns { type: 'Failure', error: 'error' }
-```
-
-### When the Function Returns a Failure
-
-If the function returns a `Failure`, that new failure replaces the original:
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.pipe(
+const cleanedUp = Result.pipe(
   Result.fail('original error'),
-  Result.orThrough((error) => {
-    return Result.fail('new error');
-  }),
+  Result.orThrough(() => Result.succeed()),
 );
-// { type: 'Failure', error: 'new error' }
+// { type: 'Failure', error: 'original error' } - the original error is kept
+
+const cleanupFailed = Result.pipe(
+  Result.fail('original error'),
+  Result.orThrough(() => Result.fail('cleanup error')),
+);
+// { type: 'Failure', error: 'cleanup error' }
+
+const skipped = Result.pipe(
+  Result.succeed(5),
+  Result.orThrough(() => Result.succeed()), // Not called
+);
+// { type: 'Success', value: 5 }
 ```
 
-### Example: Recovery with Cleanup
+Unlike `orElse`, `orThrough` never turns a failure into a success.
+It is meant for work that has to happen *because* of a failure, while the failure itself is still reported.
 
-A common use case is attempting to recover from a failed operation while performing cleanup:
+### Example: Rolling Back on Failure
+
+Suppose a post is created in two steps: uploading its content, then saving a database record.
+If saving the record fails, the uploaded file should be deleted, but the caller should still receive the `SavePostFailed` error:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-declare const uploadFile: (path: string, content: string) => Result.Result<void, 'UploadFileFailed'>;
-declare const savePost: (id: string) => Result.Result<void, 'PostCreateFailed'>;
-declare const deleteFile: (path: string) => Result.Result<void, 'DeleteFileFailed'>;
+declare const uploadFile: (path: string, content: string) => Result.ResultAsync<void, 'UploadFailed'>;
+declare const savePost: (id: string, path: string) => Result.ResultAsync<void, 'SavePostFailed'>;
+declare const deleteFile: (path: string) => Result.ResultAsync<void, 'DeleteFileFailed'>;
 
-const createPost = (id: string, path: string, content: string) => Result.pipe(
-  uploadFile(`/posts/${id}`, content),
-  Result.andThen(() => savePost(id)),
-  Result.orThrough(() => deleteFile(`/posts/${id}`)),
-);
-// If createPost fails, deleteFile is called to clean up
-// but the original PostCreateFailed is returned
+const createPost = (id: string, content: string) => {
+  const path = `/posts/${id}`;
+  return Result.pipe(
+    uploadFile(path, content),
+    Result.andThen(() => Result.pipe(
+      savePost(id, path),
+      // Runs only when savePost fails
+      Result.orThrough(() => deleteFile(path)),
+    )),
+  );
+};
+// Type: Result.ResultAsync<void, 'UploadFailed' | 'SavePostFailed' | 'DeleteFileFailed'>
 ```
+
+`orThrough` is placed right after `savePost`, so the cleanup runs only when saving fails, not when the upload itself fails.
 
 ## References
 
-| Function                                                      | Purpose                                              |
-|---------------------------------------------------------------|------------------------------------------------------|
-| [andThrough(fn)](../../../../api/functions/Result.andThrough) | Run validation while preserving the original value   |
-| [orThrough(fn)](../../../../api/functions/Result.orThrough)   | Attempt recovery while preserving the original error |
+| API                                                           | Purpose                                                |
+|---------------------------------------------------------------|--------------------------------------------------------|
+| [andThrough(fn)](../../../../api/functions/Result.andThrough) | Run a step on success while keeping the original value |
+| [orThrough(fn)](../../../../api/functions/Result.orThrough)   | Run a step on failure while keeping the original error |

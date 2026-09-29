@@ -1,99 +1,76 @@
 ---
-description: Install @praha/byethrow and learn core patterns — Result.succeed, Result.fail, Result.pipe, map, andThen, and async operations.
+description: Install @praha/byethrow and learn the core workflow — create Results with succeed and fail, wrap throwing code with fn, compose steps with pipe, map, and andThen, recover with orElse, and handle async operations.
 ---
 
 import { PackageManagerTabs } from '../../../../theme';
 
 # Quick Start
 
-Get up and running with `@praha/byethrow` in minutes!
-
-This guide will walk you through the essential concepts and usage patterns.
+This guide walks you through the core workflow of `@praha/byethrow` in a few minutes.
 
 ## Installation
 
-Install the package using your preferred package manager:
+Install the package with your preferred package manager:
 
 <PackageManagerTabs command="install @praha/byethrow" />
 
-## Basic Concepts
-
-`@praha/byethrow` provides a `Result` type that represents the outcome of an operation that might fail. Instead of throwing exceptions, functions return a `Result` that can be either:
-
-- **Success**: Contains a value of type `T`
-- **Failure**: Contains an error of type `E`
-
-This approach makes error handling explicit and predictable.
-
 ## Your First `Result`
 
-Let's start with a simple example:
+A `Result` is either a **Success** that holds a value, or a **Failure** that holds an error.
+Create them with `Result.succeed` and `Result.fail`, and return them instead of throwing:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-// Creating a successful result
-const success = Result.succeed('Hello, World!');
+const divide = (a: number, b: number) => {
+  if (b === 0) {
+    return Result.fail(new Error('Cannot divide by zero'));
+  }
+  return Result.succeed(a / b);
+};
+```
 
-// Creating a failed result
-const failure = Result.fail(new Error('Something went wrong'));
+To read the contents, first check which variant you have with `Result.isSuccess` or `Result.isFailure`.
+TypeScript then knows whether `value` or `error` is available:
 
-// Checking the result
-if (Result.isSuccess(success)) {
-  console.log(success.value); // "Hello, World!"
-}
+```ts
+import { Result } from '@praha/byethrow';
 
-if (Result.isFailure(failure)) {
-  console.log(failure.error.message); // "Something went wrong"
+declare const divide: (a: number, b: number) => Result.Result<number, Error>;
+// ---cut-before---
+const result = divide(10, 2);
+
+if (Result.isSuccess(result)) {
+  console.log(result.value); // 5
+} else {
+  console.error(result.error.message);
 }
 ```
 
-## Handling Operations That Might Fail
+## Wrapping Code That Throws
 
-Use `Result.fn` to wrap functions that might throw exceptions:
+Existing code, built-in APIs, and third-party libraries often throw.
+`Result.fn` wraps such a function so that it returns a `Result` instead:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const parseNumber = Result.fn({
-  try: (input: string) => {
-    const num = Number(input);
-    if (Number.isNaN(num)) {
-      throw new Error('Not a valid number');
-    }
-    return num;
-  },
-  catch: (error) => new Error('Failed to parse number', { cause: error }),
+const parseJson = Result.fn({
+  try: (text: string) => JSON.parse(text) as unknown,
+  catch: (error) => new Error('Invalid JSON', { cause: error }),
 });
 
-const result = parseNumber('42');
-if (Result.isSuccess(result)) {
-  console.log(result.value); // 42
-}
+parseJson('{"name": "Alice"}');
+// { type: 'Success', value: { name: 'Alice' } }
+
+parseJson('not json');
+// { type: 'Failure', error: Error('Invalid JSON') }
 ```
 
-## Transforming Values
+## Composing Steps with `pipe`
 
-Use `Result.map` to transform successful values:
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const double = (x: number) => x * 2;
-
-const result = Result.pipe(
-  Result.succeed(21),
-  Result.map(double)
-);
-
-if (Result.isSuccess(result)) {
-  console.log(result.value); // 42
-}
-```
-
-## Chaining Operations
-
-One of the most powerful features is chaining operations together using `Result.pipe`:
+`Result.pipe` passes a value through a series of steps from top to bottom.
+Use `Result.andThen` for steps that can fail (they return a `Result`), and `Result.map` for steps that simply transform the value:
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -106,84 +83,77 @@ const validateId = (id: string) => {
 };
 
 const findUser = (id: string) => {
-  // Simulate a database lookup
-  if (id === 'u123') {
-    return Result.succeed({ id, name: 'John Doe' });
+  if (id !== 'u123') {
+    return Result.fail(new Error('User not found'));
   }
-  return Result.fail(new Error('User not found'));
+  return Result.succeed({ id, name: 'John Doe' });
 };
 
-const toWelcome = (user: Result.InferSuccess<typeof findUser>) => {
-  return `Welcome, ${user.name}!`;
-};
-
-// Chain multiple operations
-const result = Result.pipe(
-  Result.succeed('u123'),
+const welcome = (id: string) => Result.pipe(
+  Result.succeed(id),
   Result.andThen(validateId),
   Result.andThen(findUser),
-  Result.map(toWelcome)
+  Result.map((user) => `Welcome, ${user.name}!`),
 );
 
-if (Result.isSuccess(result)) {
-  console.log(result.value); // "Welcome, John Doe!"
-}
+welcome('u123');
+// { type: 'Success', value: 'Welcome, John Doe!' }
+
+welcome('x999');
+// { type: 'Failure', error: Error('Invalid ID format') }
 ```
 
-## Error Handling
+As soon as a step fails, the remaining steps are skipped and the failure is passed straight to the end of the pipeline.
+You don't need to check for errors after every step.
 
-Handle errors gracefully with `Result.orElse`:
+## Recovering from Failures
+
+Use `Result.orElse` to handle a failure and continue with a fallback:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const riskyOperation = () => Result.fail(new Error('Operation failed'));
-
-const fallback = () => Result.succeed('Default value');
-
+declare const welcome: (id: string) => Result.Result<string, Error>;
+// ---cut-before---
 const result = Result.pipe(
-  riskyOperation(),
-  Result.orElse(fallback)
+  welcome('x999'),
+  Result.orElse(() => Result.succeed('Welcome, guest!')),
 );
-
-if (Result.isSuccess(result)) {
-  console.log(result.value); // "Default value"
-}
+// { type: 'Success', value: 'Welcome, guest!' }
 ```
 
 ## Working with Async Operations
 
-`@praha/byethrow` works seamlessly with asynchronous operations:
+Async functions work with exactly the same API.
+When any step returns a `Promise`, the whole pipeline becomes asynchronous, so just `await` the result:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const validateId = (id: string) => {
-  if (!id.startsWith('u')) {
-    return Result.fail(new Error('Invalid ID format'));
-  }
-  return Result.succeed(id);
-};
+type User = { id: string; name: string };
 
-const findUser = Result.fn({
-  try: async (userId: string) => {
-    const response = await fetch(`/api/users/${userId}`);
-    return await response.json();
+declare const validateId: (id: string) => Result.Result<string, Error>;
+// ---cut-before---
+const fetchUser = Result.fn({
+  try: async (id: string) => {
+    const response = await fetch(`/api/users/${id}`);
+    return await response.json() as User;
   },
-  catch: (error) => new Error('Failed to find user', { cause: error }),
+  catch: (error) => new Error('Failed to fetch user', { cause: error }),
 });
 
 const result = await Result.pipe(
   Result.succeed('u123'),
-  Result.andThen(validateId),
-  Result.andThen(findUser),
+  Result.andThen(validateId), // sync
+  Result.andThen(fetchUser),  // async
+  Result.map((user) => user.name),
 );
-
-if (Result.isSuccess(result)) {
-  console.log('User data:', result.value);
-}
+// Type: Result.Result<string, Error>
 ```
 
----
+## Next Steps
 
-Happy coding with `@praha/byethrow`! 🚀
+- [Tutorial](../tutorial/basics/result-type): Learn every function in depth, step by step.
+- [Custom Error](../best-practices/custom-error): Replace generic `Error` objects with specific error types.
+- [Linter Plugin](../ecosystem/linter/index) and [Testing](../ecosystem/testing): Keep your codebase consistent and your tests expressive.
+- [Examples](../../examples/parse-package-json): See byethrow in complete, runnable projects.

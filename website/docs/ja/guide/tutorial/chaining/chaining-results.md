@@ -1,61 +1,48 @@
 ---
-description: 'andThenで成功時の計算を連結しorElseで失敗から回復する、Resultを使った順次処理とエラー回復パターンの解説。'
+description: 'Result.andThen で失敗しうるステップをつなげ、Result.orElse で失敗から回復する方法。部分的な回復やフォールバック、処理の過程でエラー型がどう変わるかを解説します。'
 ---
 
-# 関数を合成する
+# Result をつなげる
 
-`andThen` と `orElse` 関数を使うと、それ自体が `Result` を返す可能性のある計算を連結できます。
-値を変換するだけの `map` や `mapError` とは異なり、これらの関数は各ステップが成功または失敗する可能性のある順次処理を可能にします。
+`andThen` と `orElse` は、それ自体が `Result` を返すステップをつなげます。
+`map` と `mapError` が値を変換するだけなのに対し、これらの関数では各ステップが、パイプラインを成功として続けるか失敗として続けるかを決められます。
 
-## `andThen` - 成功時の計算を連結
+## `andThen` でステップをつなげる
 
-`andThen` 関数は成功値を使って次の計算を連結します。
-元の `Result` が `Failure` の場合は、変更されずにそのまま返されます。
-それ以外の場合、提供された関数が呼び出され、その結果がそのまま返されます。
-
-### 基本的な使い方
+`andThen` は成功値を引数に渡された関数を呼び出し、その関数が返した `Result` を返します。
+入力が `Failure` の場合、関数は呼び出されず、`Failure` がそのまま返されます。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.pipe(
+// 関数が Success を返す
+const doubled = Result.pipe(
   Result.succeed(3),
   Result.andThen((value) => Result.succeed(value * 2)),
 );
 // { type: 'Success', value: 6 }
-```
 
-### 入力が `Failure` の場合
+// 関数が Failure を返す
+const rejected = Result.pipe(
+  Result.succeed(3),
+  Result.andThen((value) => Result.fail(`Rejected: ${value}`)),
+);
+// { type: 'Failure', error: 'Rejected: 3' }
 
-入力が `Failure` の場合、`andThen` は何もせず、`Failure` をそのまま返します。
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.pipe(
+// 入力がすでに Failure
+const skipped = Result.pipe(
   Result.fail('error'),
-  Result.andThen((value) => Result.succeed(value * 2)),
+  Result.andThen((value) => Result.succeed(value * 2)), // 呼び出されない
 );
 // { type: 'Failure', error: 'error' }
 ```
 
-### 関数が `Failure` を返す場合
+出力のエラー型は、入力のエラー型と、関数が返すエラー型のユニオンになります。
+ステップをつなげていくにつれて、起こりうるすべてのエラーが型として追跡されます。
 
-連結された関数は `Failure` を返すことができ、それはパイプラインを通じて伝播します。
+### 例：順番に実行するステップ
 
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.pipe(
-  Result.succeed(3),
-  Result.andThen((value) => Result.fail('error: ' + value)),
-);
-// { type: 'Failure', error: 'error: 3' }
-```
-
-### 例：順次バリデーション
-
-よくある使い方として、複数のバリデーションや処理ステップを連結する例があります。
+`andThen` の典型的な使い方は、前のステップの結果を使って次のステップを実行していく一連の処理です。
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -67,65 +54,113 @@ declare const validateEmail: (user: User) => Result.Result<User, 'InvalidEmail'>
 declare const saveUser: (user: User) => Result.ResultAsync<User, 'SaveFailed'>;
 
 const result = await Result.pipe(
-  Result.succeed('user-123'),
+  Result.succeed('u123'),
   Result.andThen(findUserById),
   Result.andThen(validateEmail),
   Result.andThen(saveUser),
 );
-// いずれかのステップが失敗すると、パイプラインはそのエラーでショートサーキットする
+// 型: Result.Result<User, 'NotFound' | 'InvalidEmail' | 'SaveFailed'>
+// いずれかのステップが失敗すると、残りのステップはスキップされる
 ```
 
-## `orElse` - 失敗からの回復
+### 例：受け入れられない値を拒否する
 
-`orElse` 関数はエラー値を使って次の計算を連結します。
-元の `Result` が `Success` の場合は、変更されずにそのまま返されます。
-それ以外の場合、提供された関数が呼び出され、その結果がそのまま返されます。
-
-これはエラー回復に便利で、フォールバック値を提供したり、異なる戦略でリトライしたりできます。
-
-### 基本的な使い方
+`andThen` は、受け入れられない値を `Failure` に変える場所でもあります。
+たとえば `fetch` は HTTP のエラーステータスでは例外を投げないため、別のステップでレスポンスを確認します。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.pipe(
+class NetworkError extends Error {
+  override readonly name = 'NetworkError';
+}
+
+class HttpError extends Error {
+  override readonly name = 'HttpError';
+}
+
+const request = Result.fn({
+  try: (url: string) => fetch(url),
+  catch: (error) => new NetworkError('Request failed', { cause: error }),
+});
+
+const result = await Result.pipe(
+  request('/api/users/u123'),
+  Result.andThen((response) => {
+    if (!response.ok) {
+      return Result.fail(new HttpError(`Unexpected status: ${response.status}`));
+    }
+    return Result.succeed(response);
+  }),
+);
+// 型: Result.Result<Response, NetworkError | HttpError>
+```
+
+## `orElse` で回復する
+
+`orElse` は、失敗に対する `andThen` の対になる関数です。
+エラー値を引数に渡された関数を呼び出し、その関数が返した `Result` を返します。
+入力が `Success` の場合、関数は呼び出されません。
+
+```ts
+import { Result } from '@praha/byethrow';
+
+// 関数が Success を返して回復する
+const recovered = Result.pipe(
+  Result.fail('original error'),
+  Result.orElse(() => Result.succeed('default value')),
+);
+// { type: 'Success', value: 'default value' }
+
+// 関数が新しい Failure を返す
+const replaced = Result.pipe(
+  Result.fail('original error'),
+  Result.orElse((error) => Result.fail(`New error: ${error}`)),
+);
+// { type: 'Failure', error: 'New error: original error' }
+
+// 入力がすでに Success
+const untouched = Result.pipe(
   Result.succeed(42),
-  Result.orElse((error) => Result.succeed(0)),
+  Result.orElse(() => Result.succeed(0)), // 呼び出されない
 );
 // { type: 'Success', value: 42 }
 ```
 
-### 入力が `Failure` の場合
+`andThen` とは異なり、元のエラー型は関数が返すエラー型に置き換えられます。
+関数が常に `Success` を返す場合、エラー型は `never` になります。
 
-入力が `Failure` の場合、`orElse` は回復関数を実行します。
+### 例：特定のエラーから回復する
 
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.pipe(
-  Result.fail('original error'),
-  Result.orElse((error) => Result.succeed('default value')),
-);
-// { type: 'Success', value: 'default value' }
-```
-
-### 回復関数が `Failure` を返す場合
-
-回復関数も `Failure` を返すことができます。
+すべてのエラーから回復する必要はありません。
+対処できるエラーだけを処理し、それ以外はそのまま返しましょう。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.pipe(
-  Result.fail('original error'),
-  Result.orElse((error) => Result.fail('new error: ' + error)),
+type User = { id: string; name: string };
+
+declare const findUser: (id: string) => Result.ResultAsync<User, 'NotFound' | 'Timeout'>;
+
+const guest: User = { id: 'guest', name: 'Guest' };
+
+const result = await Result.pipe(
+  findUser('u123'),
+  Result.orElse((error) => {
+    if (error === 'NotFound') {
+      return Result.succeed(guest);
+    }
+    return Result.fail(error);
+  }),
 );
-// { type: 'Failure', error: 'new error: original error' }
+// 型: Result.Result<User, 'Timeout'>
 ```
 
-### 例：フォールバック戦略
+`'NotFound'` はもう起こりえないため、エラー型から消えていることに注目してください。
 
-よくあるパターンとして、フォールバック戦略の実装があります。
+### 例：フォールバック先を用意する
+
+`orElse` は、最初の試みが失敗したときに代替手段を試す場合にも便利です。
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -139,12 +174,13 @@ const config = await Result.pipe(
   loadConfigFromFile(),
   Result.orElse(() => loadConfigFromEnv()),
 );
-// まずファイルを試し、次に環境変数を試し、それでもダメなら失敗
+// 型: Result.Result<Config, 'EnvNotSet'>
+// まずファイルを試し、だめなら環境変数にフォールバックする
 ```
 
-## `andThen` と `orElse` の組み合わせ
+## `andThen` と `orElse` を組み合わせる
 
-両方の関数を一緒に使って、成功時の連結とエラー回復の両方を含む複雑なフローを作成できます。
+2 つの関数を組み合わせると、ステップの連結と回復の両方を含むフローを表現できます。
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -160,12 +196,12 @@ const getValidatedUser = (id: string) => Result.pipe(
   Result.orElse(() => fetchUserFromDb(id)),
   Result.andThen(validateUser),
 );
-// まずキャッシュを試し、DB にフォールバックし、その後結果をバリデート
+// まずキャッシュを試し、だめならデータベースにフォールバックし、最後にユーザーを検証する
 ```
 
 ## リファレンス
 
-| 関数                                                      | 目的             |
-|---------------------------------------------------------|----------------|
-| [andThen(fn)](../../../../api/functions/Result.andThen) | 成功値を使って計算を連結する |
-| [orElse(fn)](../../../../api/functions/Result.orElse)   | 失敗から新しい計算で回復する |
+| API                                                     | 用途                                 |
+|---------------------------------------------------------|--------------------------------------|
+| [andThen(fn)](../../../../api/functions/Result.andThen) | 成功値を使って次のステップをつなげる |
+| [orElse(fn)](../../../../api/functions/Result.orElse)   | エラー値を使って失敗から回復する     |

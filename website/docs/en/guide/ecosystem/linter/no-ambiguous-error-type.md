@@ -1,28 +1,38 @@
 ---
-description: Oxlint rule that disallows vague types such as unknown, any, or Error in the error position of Result, ResultAsync, and ResultMaybeAsync
+description: Oxlint rule that disallows vague error types such as unknown, any, string, or Error in Result, ResultAsync, and ResultMaybeAsync type annotations.
 ---
 
 # no-ambiguous-error-type
 
 Disallows non-specific types in the error position of `Result`, `ResultAsync`, and `ResultMaybeAsync`.
 
-## Rule details
+## Rule Details
 
-Using vague types like `unknown`, `any`, `Error`, or primitive types as the error type of a `Result` means callers cannot distinguish between different error cases. Always use a concrete, domain-specific error class so that error handling is exhaustive and self-documenting.
+When the error type of a `Result` is vague, callers cannot tell the different failure cases apart and cannot handle them exhaustively.
+Use a concrete, domain-specific error type instead, as described in [Custom Error](../../best-practices/custom-error).
+
+The following types are reported in the error position:
+
+- `unknown` and `any`
+- Primitive types: `string`, `number`, `boolean`, `bigint`, `symbol`, `null`, and `undefined`
+- `object` and `{}`
+- The base `Error` class
+
+The rule checks explicit type annotations such as `Result.Result<T, E>`. Types inferred by TypeScript are not checked.
 
 ### Incorrect
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-// ❌ using unknown
-type Result1 = Result.Result<string, unknown>;
+// ❌ unknown
+type FindUserResult = Result.Result<string, unknown>;
 
-// ❌ using a primitive
-type Result2 = Result.Result<string, string>;
+// ❌ A primitive type
+type ParseResult = Result.Result<number, string>;
 
-// ❌ using the base Error class
-type Result3 = Result.Result<string, Error>;
+// ❌ The base Error class
+type SaveResult = Result.ResultAsync<void, Error>;
 ```
 
 ### Correct
@@ -30,7 +40,14 @@ type Result3 = Result.Result<string, Error>;
 ```ts
 import { Result } from '@praha/byethrow';
 
-// ✅ using a concrete error class
-class NotFoundError extends Error {}
-type Result = Result.Result<string, NotFoundError>;
+class UserNotFoundError extends Error {
+  override readonly name = 'UserNotFoundError';
+}
+
+// ✅ A concrete error class
+type FindUserResult = Result.Result<string, UserNotFoundError>;
 ```
+
+## Options
+
+This rule has no options.

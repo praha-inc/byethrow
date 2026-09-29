@@ -2,7 +2,7 @@
   {
     "type": "file",
     "name": "pipe-basics",
-    "label": "pipe 関数の扱い方"
+    "label": "pipe の基本"
   },
   {
     "type": "file",
@@ -12,16 +12,16 @@
   {
     "type": "file",
     "name": "chaining-results",
-    "label": "関数を合成する"
+    "label": "Result をつなげる"
   },
   {
     "type": "file",
     "name": "validation-recovery",
-    "label": "検証とエラーからの回復"
+    "label": "検証と後処理"
   },
   {
     "type": "file",
     "name": "debugging",
-    "label": "Result をデバッグする"
+    "label": "デバッグ"
   }
 ]

@@ -1,17 +1,17 @@
 ---
-description: Two import styles for @praha/byethrow — the Result namespace and the R shorthand alias — with tree-shaking support explained.
+description: The two import styles of @praha/byethrow — the Result namespace and the R shorthand alias — how both support tree-shaking, and why you should pick one per codebase.
 ---
 
 # Importing Result
 
-`@praha/byethrow` provides two distinct import methods to balance efficient development with learnability.
-Both approaches fully support tree-shaking, ensuring that unused features are automatically excluded from your final bundle.
+`@praha/byethrow` exports the same set of functions under two names: `Result` and `R`.
+Both fully support tree-shaking, so the choice is purely a matter of style.
 
-## Two Import Methods
+## Two Import Styles
 
-### Explicit Namespace Approach (`Result`)
+### `Result`: Explicit
 
-For verbose and explicit code that prioritizes clarity, use the `Result` namespace:
+The `Result` namespace makes it obvious where each function comes from:
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -26,7 +26,7 @@ const validateUser = (id: string) => {
 const result = Result.pipe(
   Result.succeed('u123'),
   Result.andThen(validateUser),
-  Result.map(id => ({ id, name: 'John Doe' }))
+  Result.map((id) => ({ id, name: 'John Doe' })),
 );
 
 if (Result.isSuccess(result)) {
@@ -34,9 +34,9 @@ if (Result.isSuccess(result)) {
 }
 ```
 
-### Shorthand Alias (`R`)
+### `R`: Concise
 
-For concise code that favors brevity, use the `R` alias:
+The `R` alias keeps pipelines short:
 
 ```ts
 import { R } from '@praha/byethrow';
@@ -51,7 +51,7 @@ const validateUser = (id: string) => {
 const result = R.pipe(
   R.succeed('u123'),
   R.andThen(validateUser),
-  R.map(id => ({ id, name: 'John Doe' }))
+  R.map((id) => ({ id, name: 'John Doe' })),
 );
 
 if (R.isSuccess(result)) {
@@ -59,52 +59,50 @@ if (R.isSuccess(result)) {
 }
 ```
 
-## Tree-Shaking Support
+The examples in this documentation use `Result`, but everything works the same with `R`.
 
-`@praha/byethrow` achieves **complete tree-shaking support**:
+## Tree-Shaking
+
+Although you import a namespace, each function is an independent export.
+Modern bundlers include only the functions you actually use:
 
 ```ts
-// Example: Usage in a small application
 import { R } from '@praha/byethrow';
 
-// Only these features are actually used
+// Only `fn` and the code it depends on end up in the bundle.
+// Functions such as `andThen` and `pipe` are removed.
 const parseNumber = R.fn({
   try: (input: string) => parseInt(input, 10),
-  catch: () => new Error('Invalid number')
+  catch: () => new Error('Invalid number'),
 });
-
-// In this case, only the minimal code required for parseNumber
-// is included in the bundle, while other features (andThen, pipe, etc.) are excluded
 ```
 
-## Best Practices
+## Choosing a Style
 
-### Choosing Between Import Methods
+- **`Result`** if you prefer explicit, self-descriptive code. It is also easier for newcomers to search for.
+- **`R`** if you prefer fewer keystrokes and compact pipelines.
 
-- **Use `Result`** if you prefer explicit and descriptive naming that clearly indicates the purpose of each operation
-- **Use `R`** if you prefer fewer keystrokes and more concise code for faster development
+### Don't Mix the Two
 
-### Important: Avoid Mixing Import Methods
-
-**We strongly recommend against mixing `Result` and `R` within the same codebase.**
-Choose one approach and stick with it consistently throughout your project to maintain code readability and consistency.
+**We strongly recommend choosing one style and using it throughout your codebase.**
+Mixing them makes code inconsistent and harder to search:
 
 ```ts
 // @filename: mixed-imports.ts
-// ❌ Don't mix approaches - this creates inconsistent code
+// ❌ Mixing both styles
 import { Result, R } from '@praha/byethrow';
 
 const validateId = (id: string) => {
-  return Result.succeed(id); // Using Result
+  return Result.succeed(id);
 };
 
-const processData = R.pipe(  // Using R
+const processData = R.pipe(
   R.succeed('data'),
-  R.andThen(validateId)
+  R.andThen(validateId),
 );
 
 // @filename: consistent-imports.ts
-// ✅ Choose one approach and use it consistently
+// ✅ Using one style consistently
 import { Result } from '@praha/byethrow';
 
 const validateId = (id: string) => {
@@ -113,6 +111,8 @@ const validateId = (id: string) => {
 
 const processData = Result.pipe(
   Result.succeed('data'),
-  Result.andThen(validateId)
+  Result.andThen(validateId),
 );
 ```
+
+The [consistent-namespace](../ecosystem/linter/consistent-namespace) lint rule enforces your chosen style and fixes violations automatically.

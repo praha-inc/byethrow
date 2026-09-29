@@ -1,0 +1,186 @@
+---
+description: '@praha/byethrow の Result をアサートするためのカスタムマッチャー toBeSuccess と toBeFailure、および Vitest・Jest・Rstest でのセットアップ方法。'
+---
+
+import { PackageManagerTabs } from '../../../../theme';
+
+# テスト
+
+`@praha/byethrow-testing` は `Result` をアサートするためのカスタムマッチャーを提供します。テストが短くなり、失敗時のメッセージもわかりやすくなります。
+
+## インストール
+
+<PackageManagerTabs command="install -D @praha/byethrow-testing" />
+
+## セットアップ
+
+セットアップファイルでマッチャーを登録し、テストランナーの設定からそのファイルを読み込みます。
+
+### Vitest
+
+```ts title="vitest.setup.ts"
+import { resultMatchers } from '@praha/byethrow-testing';
+import { expect } from 'vitest';
+
+import type { ResultMatchers } from '@praha/byethrow-testing';
+
+declare module 'vitest' {
+  interface Matchers<R, T> extends ResultMatchers<R, T> {}
+}
+
+expect.extend(resultMatchers);
+```
+
+```ts title="vitest.config.ts"
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  test: {
+    setupFiles: ['./vitest.setup.ts'],
+  },
+});
+```
+
+### Jest
+
+```ts title="jest.setup.ts"
+import { expect } from '@jest/globals';
+import { resultMatchers } from '@praha/byethrow-testing';
+
+import type { ResultMatchers } from '@praha/byethrow-testing';
+
+declare module 'expect' {
+  interface Matchers<R, T> extends ResultMatchers<R, T> {}
+}
+
+expect.extend(resultMatchers);
+```
+
+```ts title="jest.config.ts"
+export default {
+  setupFilesAfterEnv: ['./jest.setup.ts'],
+};
+```
+
+### Rstest
+
+```ts title="rstest.setup.ts"
+import { resultMatchers } from '@praha/byethrow-testing';
+import { expect } from '@rstest/core';
+
+import type { ResultMatchers } from '@praha/byethrow-testing';
+
+declare module '@rstest/core' {
+  interface Matchers<T> extends ResultMatchers<void, T> {}
+}
+
+expect.extend(resultMatchers);
+```
+
+```ts title="rstest.config.ts"
+import { defineConfig } from '@rstest/core';
+
+export default defineConfig({
+  setupFiles: ['./rstest.setup.ts'],
+});
+```
+
+## マッチャー
+
+### `toBeSuccess(callback?)`
+
+受け取った値が `Success` であることをアサートします。
+コールバックを渡すと、成功値に対してさらにアサーションを行えます。
+
+```ts
+import type { ResultMatchers } from '@praha/byethrow-testing';
+
+declare module 'vitest' {
+  interface Matchers<R, T> extends ResultMatchers<R, T> {}
+}
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+import { test, expect } from 'vitest';
+
+test('result is success', () => {
+  const result = Result.succeed(42);
+
+  expect(result).toBeSuccess();
+});
+
+test('result is success with value', () => {
+  const result = Result.succeed(42);
+
+  expect(result).toBeSuccess((value) => {
+    expect(value).toBe(42);
+  });
+});
+```
+
+コールバックは結果が `Success` の場合にのみ呼び出され、`value` には `Result` の成功型が付きます。
+
+### `toBeFailure(callback?)`
+
+受け取った値が `Failure` であることをアサートします。
+コールバックを渡すと、エラー値に対してさらにアサーションを行えます。
+
+```ts
+import type { ResultMatchers } from '@praha/byethrow-testing';
+
+declare module 'vitest' {
+  interface Matchers<R, T> extends ResultMatchers<R, T> {}
+}
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+import { test, expect } from 'vitest';
+
+test('result is failure', () => {
+  const result = Result.fail(new Error('something went wrong'));
+
+  expect(result).toBeFailure();
+});
+
+test('result is failure with error', () => {
+  const result = Result.fail(new Error('something went wrong'));
+
+  expect(result).toBeFailure((error) => {
+    expect(error.message).toBe('something went wrong');
+  });
+});
+```
+
+## ヒント
+
+### 非同期の Result をテストする
+
+マッチャーは受け取った値を同期的に検査します。そのため、`ResultAsync` は `await` してから `expect` に渡してください。
+
+```ts
+import type { ResultMatchers } from '@praha/byethrow-testing';
+
+declare module 'vitest' {
+  interface Matchers<R, T> extends ResultMatchers<R, T> {}
+}
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+import { test, expect } from 'vitest';
+
+const fetchAnswer = async (): Result.ResultAsync<number, Error> => Result.succeed(42);
+
+test('async result is success', async () => {
+  const result = await fetchAnswer();
+
+  expect(result).toBeSuccess((value) => {
+    expect(value).toBe(42);
+  });
+});
+```
+
+### `.not` は使わない
+
+`.not.toBeSuccess()` と `.not.toBeFailure()` はサポートされておらず、常に失敗します。
+代わりに反対のマッチャーを使ってください。`.not.toBeSuccess()` ではなく `toBeFailure()` を、その逆も同様です。
+
+### Linter でマッチャーの使用を徹底する
+
+[prefer-result-matchers](./linter/prefer-result-matchers) の Lint ルールは、`expect(Result.isSuccess(result)).toBe(true)` のようなアサーションを検出し、これらのマッチャーを使う形に書き換えます。
