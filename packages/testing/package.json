@@ -53,7 +53,7 @@
     "@praha/byethrow": "workspace:*",
     "@rslib/core": "1.0.2",
     "oxlint": "1.86.0",
-    "typescript": "6.0.3",
+    "typescript": "7.0.2",
     "vitest": "5.0.2"
   },
   "peerDependencies": {
