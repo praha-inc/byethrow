@@ -1,21 +1,26 @@
 ---
-description: Oxlint rule that disallows throw statements inside @praha/byethrow callbacks — use Result.fail() to represent errors instead
+description: Oxlint rule that disallows throw statements inside callbacks passed to @praha/byethrow functions — return Result.fail() to represent errors instead.
 ---
 
 # no-throw-in-callback
 
-Disallows `throw` statements inside callbacks passed to `@praha/byethrow` functions such as `Result.andThen`, `Result.map`, etc.
+Disallows `throw` statements inside callbacks passed to `@praha/byethrow` functions, such as `Result.andThen`, `Result.map`, and `Result.fn`.
 
-## Rule details
+## Rule Details
 
-Throwing inside a `@praha/byethrow` callback breaks the `Result` contract, not an exception. Use `Result.fail()` to represent errors instead, keeping error handling explicit and composable.
+Throwing inside a callback turns an expected failure back into an exception.
+The error disappears from the `Result` type, and callers can no longer see or handle it.
+Return `Result.fail()` instead, so that the error stays explicit and composable.
+
+This also applies to the `try` callback of `Result.fn` and `Result.try`.
+Those callbacks are meant to wrap code that throws on its own, not to signal failures with your own `throw`.
 
 ### Incorrect
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-// ❌ throwing inside a callback
+// ❌ Throwing inside a callback
 const result = Result.pipe(
   Result.succeed(32),
   Result.andThen((value) => {
@@ -32,7 +37,7 @@ class NegativeValueError extends Error {}
 // ---cut-before---
 import { Result } from '@praha/byethrow';
 
-// ✅ returning a failure Result
+// ✅ Returning a Failure
 const result = Result.pipe(
   Result.succeed(32),
   Result.andThen((value) => {
@@ -41,3 +46,7 @@ const result = Result.pipe(
   }),
 );
 ```
+
+## Options
+
+This rule has no options.

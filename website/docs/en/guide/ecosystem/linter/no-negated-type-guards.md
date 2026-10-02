@@ -1,28 +1,31 @@
 ---
-description: Oxlint rule that disallows the negation operator on Result.isSuccess() or Result.isFailure() — auto-fixes to the direct type guard equivalent
+description: Oxlint rule that disallows negating Result.isSuccess() or Result.isFailure() with the ! operator, and auto-fixes it to the opposite type guard.
 ---
 
 # no-negated-type-guards
 
 Disallows using the negation operator (`!`) on `Result.isSuccess()` or `Result.isFailure()`.
 
-## Rule details
+This rule is auto-fixable. The fix replaces the negated call with the opposite type guard.
 
-`!Result.isSuccess(result)` is equivalent to `Result.isFailure(result)`, but the negated form is less readable and requires an extra mental step to parse. This rule auto-fixes violations.
+## Rule Details
+
+`!Result.isSuccess(result)` means the same as `Result.isFailure(result)`, but the negated form takes an extra mental step to read.
+Since a `Result` is always either a success or a failure, there is always a direct type guard you can use instead.
 
 ### Incorrect
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result: Result.Result<string, Error> = Result.succeed('hello');
+declare const result: Result.Result<string, Error>;
 
-// ❌ negating isSuccess
+// ❌ Negating isSuccess
 if (!Result.isSuccess(result)) {
   // handle failure
 }
 
-// ❌ negating isFailure
+// ❌ Negating isFailure
 if (!Result.isFailure(result)) {
   // handle success
 }
@@ -33,9 +36,9 @@ if (!Result.isFailure(result)) {
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result: Result.Result<string, Error> = Result.succeed('hello');
+declare const result: Result.Result<string, Error>;
 
-// ✅ using the direct type guard
+// ✅ Using the direct type guard
 if (Result.isFailure(result)) {
   // handle failure
 }
@@ -44,3 +47,7 @@ if (Result.isSuccess(result)) {
   // handle success
 }
 ```
+
+## Options
+
+This rule has no options.

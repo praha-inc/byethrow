@@ -1,23 +1,24 @@
 ---
-description: "@praha/byethrow のコールバック内での try-catch を禁止し、Result.fn() でのラップを促すOxlintルール"
+description: '@praha/byethrow の関数に渡すコールバック内での try-catch を禁止する Oxlint ルール。例外を投げるコードは Result.fn() でラップします。'
 ---
 
 # no-try-catch-in-callback
 
-`Result.andThen` / `Result.map` などの `@praha/byethrow` の関数に渡すコールバック内での `try-catch` ブロックを禁止します。
+`Result.andThen` や `Result.map` など、`@praha/byethrow` の関数に渡すコールバック内で `try-catch` ブロックを使うことを禁止します。
 
 ## ルールの詳細
 
-`@praha/byethrow` のコールバック内に `try-catch` があるということは、エラーハンドリングが `Result` から外れているサインです。例外をスローする可能性があるコードは `Result.fn()` でラップし、パイプラインをクリーンに保ってください。
+コールバック内の `try-catch` は、エラーハンドリングが `Result` のモデルから外れてしまっているサインです。
+代わりに例外を投げるコードを [`Result.fn()` または `Result.try()`](../../tutorial/basics/wrapping-functions) でラップし、パイプライン自体には `try-catch` を書かないようにしてください。
 
-### 誤り
+### 誤った例
 
 ```ts
 class ParseError extends Error {}
 // ---cut-before---
 import { Result } from '@praha/byethrow';
 
-// ❌ コールバック内にtry-catch
+// ❌ コールバック内で try-catch を使っている
 const result = Result.pipe(
   Result.succeed('{"key": "value"}'),
   Result.andThen((value) => {
@@ -30,21 +31,25 @@ const result = Result.pipe(
 );
 ```
 
-### 正しい
+### 正しい例
 
 ```ts
 class ParseError extends Error {}
 // ---cut-before---
 import { Result } from '@praha/byethrow';
 
-const parser = Result.fn({
-  try: (value: string) => JSON.parse(value),
-  catch: (error: unknown) => new ParseError(),
+const parseJson = Result.fn({
+  try: (value: string) => JSON.parse(value) as unknown,
+  catch: (error) => new ParseError('Invalid JSON', { cause: error }),
 });
 
-// ✅ Result.fn()でラップ
+// ✅ 例外を投げるコードを Result.fn() でラップしている
 const result = Result.pipe(
   Result.succeed('{"key": "value"}'),
-  Result.andThen(parser),
+  Result.andThen(parseJson),
 );
 ```
+
+## オプション
+
+このルールにオプションはありません。

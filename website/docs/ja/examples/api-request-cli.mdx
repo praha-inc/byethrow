@@ -1,14 +1,25 @@
 ---
 pageType: doc-wide
 outline: false
-description: '@praha/byethrowを使ってCLIアプリからAPIリクエストを行い、発生しうるエラーを適切に処理する実装例。'
+description: '@praha/byethrow で PokéAPI を呼び出すコマンドラインアプリ。ネットワーク・タイムアウト・HTTP・JSON のエラーの型付け、Valibot によるレスポンス検証、再利用可能なリトライとキャッシュのラッパー。'
 ---
 
 import { SourceCode, Stackblitz } from '../../../theme';
 
 # API を実行する CLI <SourceCode href="https://github.com/praha-inc/byethrow/tree/main/examples/api-request-cli" />
 
-この例では、`@praha/byethrow` ライブラリを使用して、コマンドラインインターフェース（CLI）アプリケーションから API リクエストを行い、発生しうるエラーを適切に処理する方法を示します。
+この例は、[PokéAPI](https://pokeapi.co/) からデータを取得するコマンドラインアプリケーションです。
+`list` はポケモンの名前を 1 ページ分表示し、`describe <name>` は 1 匹のポケモンの詳細を表示します。
+すべての失敗が型で表現された、堅牢な HTTP クライアントの作り方を示しています。
+
+## この例で学べること
+
+- **型付けされた HTTP エラー**：`fetch` のラッパーは、ネットワークエラー、タイムアウト、OK 以外の HTTP ステータス、不正な JSON を区別し、それぞれを `FetchError` ユニオン型に含まれる個別のエラークラスとして扱います。
+- **タイムアウト**：`Failure` に解決されるタイムアウトを、`Promise.race` でリクエストと競争させています。
+- **レスポンスの拒否**：[Result をつなげる](../guide/tutorial/chaining/chaining-results)で説明しているとおり、`Result.andThen` で OK 以外のステータスのレスポンスを `Failure` に変換します。
+- **再利用可能なラッパー**：`retry` と `cache` は、`ResultAsync` を返す任意の関数をラップする高階関数で、`Result.pipe` で適用しています。
+- **レスポンスの検証**：API のレスポンスは、Valibot のスキーマと [`Result.parse`](../guide/tutorial/basics/parsing-values) で検証しています。
+- **入力の検証**：`--page` 引数は、`Result` を返す関数で整数に変換しています。
 
 <Stackblitz
   repository="praha-inc/byethrow/tree/main/examples/api-request-cli"

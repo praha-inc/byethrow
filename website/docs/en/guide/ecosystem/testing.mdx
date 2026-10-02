@@ -1,0 +1,186 @@
+---
+description: Custom test matchers toBeSuccess and toBeFailure for asserting @praha/byethrow Results, with setup instructions for Vitest, Jest, and Rstest.
+---
+
+import { PackageManagerTabs } from '../../../../theme';
+
+# Testing
+
+`@praha/byethrow-testing` provides custom matchers for asserting `Result` values, making your tests shorter and their failure messages clearer.
+
+## Installation
+
+<PackageManagerTabs command="install -D @praha/byethrow-testing" />
+
+## Setup
+
+Register the matchers in a setup file, then load that file from your test runner's configuration.
+
+### Vitest
+
+```ts title="vitest.setup.ts"
+import { resultMatchers } from '@praha/byethrow-testing';
+import { expect } from 'vitest';
+
+import type { ResultMatchers } from '@praha/byethrow-testing';
+
+declare module 'vitest' {
+  interface Matchers<R, T> extends ResultMatchers<R, T> {}
+}
+
+expect.extend(resultMatchers);
+```
+
+```ts title="vitest.config.ts"
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  test: {
+    setupFiles: ['./vitest.setup.ts'],
+  },
+});
+```
+
+### Jest
+
+```ts title="jest.setup.ts"
+import { expect } from '@jest/globals';
+import { resultMatchers } from '@praha/byethrow-testing';
+
+import type { ResultMatchers } from '@praha/byethrow-testing';
+
+declare module 'expect' {
+  interface Matchers<R, T> extends ResultMatchers<R, T> {}
+}
+
+expect.extend(resultMatchers);
+```
+
+```ts title="jest.config.ts"
+export default {
+  setupFilesAfterEnv: ['./jest.setup.ts'],
+};
+```
+
+### Rstest
+
+```ts title="rstest.setup.ts"
+import { resultMatchers } from '@praha/byethrow-testing';
+import { expect } from '@rstest/core';
+
+import type { ResultMatchers } from '@praha/byethrow-testing';
+
+declare module '@rstest/core' {
+  interface Matchers<T> extends ResultMatchers<void, T> {}
+}
+
+expect.extend(resultMatchers);
+```
+
+```ts title="rstest.config.ts"
+import { defineConfig } from '@rstest/core';
+
+export default defineConfig({
+  setupFiles: ['./rstest.setup.ts'],
+});
+```
+
+## Matchers
+
+### `toBeSuccess(callback?)`
+
+Asserts that the received value is a `Success`.
+Optionally, pass a callback to make further assertions on the success value:
+
+```ts
+import type { ResultMatchers } from '@praha/byethrow-testing';
+
+declare module 'vitest' {
+  interface Matchers<R, T> extends ResultMatchers<R, T> {}
+}
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+import { test, expect } from 'vitest';
+
+test('result is success', () => {
+  const result = Result.succeed(42);
+
+  expect(result).toBeSuccess();
+});
+
+test('result is success with value', () => {
+  const result = Result.succeed(42);
+
+  expect(result).toBeSuccess((value) => {
+    expect(value).toBe(42);
+  });
+});
+```
+
+The callback is only called when the result is a `Success`, and `value` is typed as the success type of the `Result`.
+
+### `toBeFailure(callback?)`
+
+Asserts that the received value is a `Failure`.
+Optionally, pass a callback to make further assertions on the error value:
+
+```ts
+import type { ResultMatchers } from '@praha/byethrow-testing';
+
+declare module 'vitest' {
+  interface Matchers<R, T> extends ResultMatchers<R, T> {}
+}
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+import { test, expect } from 'vitest';
+
+test('result is failure', () => {
+  const result = Result.fail(new Error('something went wrong'));
+
+  expect(result).toBeFailure();
+});
+
+test('result is failure with error', () => {
+  const result = Result.fail(new Error('something went wrong'));
+
+  expect(result).toBeFailure((error) => {
+    expect(error.message).toBe('something went wrong');
+  });
+});
+```
+
+## Tips
+
+### Testing Async Results
+
+The matchers check the value they receive synchronously, so `await` a `ResultAsync` before passing it to `expect`:
+
+```ts
+import type { ResultMatchers } from '@praha/byethrow-testing';
+
+declare module 'vitest' {
+  interface Matchers<R, T> extends ResultMatchers<R, T> {}
+}
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+import { test, expect } from 'vitest';
+
+const fetchAnswer = async (): Result.ResultAsync<number, Error> => Result.succeed(42);
+
+test('async result is success', async () => {
+  const result = await fetchAnswer();
+
+  expect(result).toBeSuccess((value) => {
+    expect(value).toBe(42);
+  });
+});
+```
+
+### Don't Use `.not`
+
+`.not.toBeSuccess()` and `.not.toBeFailure()` are not supported and always fail.
+Use the opposite matcher instead: `toBeFailure()` rather than `.not.toBeSuccess()`, and vice versa.
+
+### Enforce the Matchers with the Linter
+
+The [prefer-result-matchers](./linter/prefer-result-matchers) lint rule detects assertions such as `expect(Result.isSuccess(result)).toBe(true)` and rewrites them to use these matchers.
