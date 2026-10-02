@@ -1,5 +1,37 @@
 # @praha/byethrow-testing
 
+## 0.13.0
+
+### Minor Changes
+
+- [#988](https://github.com/praha-inc/byethrow/pull/988) [`033b0b6`](https://github.com/praha-inc/byethrow/commit/033b0b6347c48b68407a9334fdadcab2408ee52e) Thanks [@Karibash](https://github.com/Karibash)! - Change `ResultMatchers` to accept two type parameters
+  
+  **BREAKING CHANGES:**
+  
+  `ResultMatchers<T>` is now `ResultMatchers<R, T>`, where `R` is the matcher return type and `T` is the received value type. This mirrors the `Matchers<R, T>` interface of Jest and Vitest 5, and lets `.resolves` / `.rejects` chains return `Promise<void>` correctly. Update your setup file as follows:
+  
+  ```ts
+  // Jest
+  declare module 'expect' {
+    interface Matchers<R, T> extends ResultMatchers<R, T> {}
+  }
+  
+  // Vitest
+  declare module 'vitest' {
+    interface Matchers<R, T> extends ResultMatchers<R, T> {}
+  }
+  
+  // Rstest
+  declare module '@rstest/core' {
+    interface Matchers<T> extends ResultMatchers<void, T> {}
+  }
+  ```
+
+### Patch Changes
+
+- Updated dependencies [[`ae57dc7`](https://github.com/praha-inc/byethrow/commit/ae57dc74cf937a1b359eebadf6c9e360b5ab5aa9)]:
+  - @praha/byethrow@0.13.0
+
 ## 0.12.0
 
 ### Patch Changes
