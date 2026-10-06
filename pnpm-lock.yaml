@@ -259,8 +259,8 @@ importers:
         specifier: 1.0.3
         version: 1.0.3(typescript@6.0.3)
       '@types/node':
-        specifier: 24.19.0
-        version: 24.19.0
+        specifier: 24.19.1
+        version: 24.19.1
       oxlint:
         specifier: 1.86.0
         version: 1.86.0(oxlint-tsgolint@7.0.2003)
@@ -357,8 +357,8 @@ importers:
         specifier: 0.12.3
         version: 0.12.3
       '@types/node':
-        specifier: 24.19.0
-        version: 24.19.0
+        specifier: 24.19.1
+        version: 24.19.1
       '@types/react':
         specifier: 19.3.0
         version: 19.3.0
@@ -2022,8 +2022,8 @@ packages:
   '@types/node@24.13.6':
     resolution: {integrity: sha512-SGrw/h3KPFshy3OE6ZL53LMBG5vGQQ8/gIpiqz/kRZhPJ7HgwCEs8LBuNtWLa8dvGZVpSF7+Bf+c11HUrCb/yg==}
 
-  '@types/node@24.19.0':
-    resolution: {integrity: sha512-zY+5tKxXdhGh1PYI0ac+7juvEu4OI6vWtVVoj5i2m42jxAY1U+zHGt6QCyOFwykdP62sM3MJ9stoYYUw5aCWew==}
+  '@types/node@24.19.1':
+    resolution: {integrity: sha512-aS3/DG0oM05K0RIXXP+hKjinGG5IgSSVGzswZxW3O0sS3pH4/fycXundUC9XsszgKCk4gHXylTEK6hyFxVxnoQ==}
 
   '@types/react-dom@19.3.0':
     resolution: {integrity: sha512-ZI7bU42mZXXKHn/qNLEw2IrbiINU7X5+vfgdixBHkCNpYWXjKgfQ/P+uyGb5CjOLB9UcnTeg3rylQtV2hym44Q==}
@@ -4871,7 +4871,7 @@ snapshots:
     dependencies:
       '@jest/fake-timers': 30.5.2
       '@jest/types': 30.5.1
-      '@types/node': 24.19.0
+      '@types/node': 24.19.1
       jest-mock: 30.5.2
 
   '@jest/expect-utils@30.5.2':
@@ -4889,7 +4889,7 @@ snapshots:
     dependencies:
       '@jest/types': 30.5.1
       '@sinonjs/fake-timers': 15.4.0
-      '@types/node': 24.19.0
+      '@types/node': 24.19.1
       jest-message-util: 30.5.1
       jest-mock: 30.5.2
       jest-util: 30.5.1
@@ -5706,7 +5706,7 @@ snapshots:
     dependencies:
       undici-types: 7.18.2
 
-  '@types/node@24.19.0':
+  '@types/node@24.19.1':
     dependencies:
       undici-types: 7.24.6
 
@@ -6641,7 +6641,7 @@ snapshots:
     dependencies:
       '@jest/types': 30.5.1
       '@parcel/watcher': 2.6.0
-      '@types/node': 24.19.0
+      '@types/node': 24.19.1
       anymatch: 3.1.3
       fb-watchman: 2.0.2
       fdir: 6.5.0(picomatch@4.0.7)
@@ -6717,7 +6717,7 @@ snapshots:
 
   jest-worker@30.5.1:
     dependencies:
-      '@types/node': 24.19.0
+      '@types/node': 24.19.1
       '@ungap/structured-clone': 1.4.0
       jest-util: 30.5.1
       merge-stream: 2.0.0
