@@ -351,8 +351,8 @@ importers:
         specifier: 2.0.22
         version: 2.0.22(@rspress/core@2.0.23(@rspack/core@2.2.7(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))
       '@rspress/plugin-twoslash':
-        specifier: 2.0.22
-        version: 2.0.22(@rspress/core@2.0.23(@rspack/core@2.2.7(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))(react@19.3.0)(supports-color@8.1.1)(typescript@6.0.3)
+        specifier: 2.0.23
+        version: 2.0.23(@rspress/core@2.0.23(@rspack/core@2.2.7(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))(react@19.3.0)(supports-color@8.1.1)(typescript@6.0.3)
       '@rstest/core':
         specifier: 0.12.2
         version: 0.12.2
@@ -1843,8 +1843,8 @@ packages:
     peerDependencies:
       '@rspress/core': ^2.0.10
 
-  '@rspress/plugin-twoslash@2.0.22':
-    resolution: {integrity: sha512-gqWAhazd6zDPKBLeXE/NYnJtjDGCnpPf9YOWF7qBmRjvfLwdPld7p16sb+TEgHjeipze6I4t16krOdX7OUE3iA==}
+  '@rspress/plugin-twoslash@2.0.23':
+    resolution: {integrity: sha512-+5En3mmDTdhe8j5/P31qn9CjoAsEd0Fnv/I7w6Bp1AgRc0TsDaZ82JBngYKvGMAYGIQpY/qiOleHhFMG1sI/pA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@rspress/core': ^2.0.10
@@ -5505,7 +5505,7 @@ snapshots:
     dependencies:
       '@rspress/core': 2.0.23(@rspack/core@2.2.7(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1)
 
-  '@rspress/plugin-twoslash@2.0.22(@rspress/core@2.0.23(@rspack/core@2.2.7(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))(react@19.3.0)(supports-color@8.1.1)(typescript@6.0.3)':
+  '@rspress/plugin-twoslash@2.0.23(@rspress/core@2.0.23(@rspack/core@2.2.7(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))(react@19.3.0)(supports-color@8.1.1)(typescript@6.0.3)':
     dependencies:
       '@floating-ui/dom': 1.8.0
       '@rspress/core': 2.0.23(@rspack/core@2.2.7(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1)
