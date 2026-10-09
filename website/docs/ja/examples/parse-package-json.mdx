@@ -1,14 +1,23 @@
 ---
 pageType: doc-wide
 outline: false
-description: '@praha/byethrowを使ってpackage.jsonファイルをパースし、エラーをResult型で安全に処理する実装例。'
+description: '@praha/byethrow で package.json を読み込んで検証する小さな Node.js プログラム。ファイル読み込みと解析のエラーを Result、Zod、ts-pattern で処理する。'
 ---
 
 import { SourceCode, Stackblitz } from '../../../theme';
 
 # package.json を解析する <SourceCode href="https://github.com/praha-inc/byethrow/tree/main/examples/parse-package-json" />
 
-この例では、`@praha/byethrow` ライブラリを使用して `package.json` ファイルをパースし、発生しうるエラーを適切に処理する方法を示します。
+この例では、カレントディレクトリにある `package.json` を読み込んで内容を検証し、パッケージ名とバージョンを表示します。
+失敗する可能性のあるすべてのステップが `Result` を返し、失敗の種類ごとに専用のメッセージが表示されます。
+
+## この例で学べること
+
+- **Node.js API のラップ**：`readFile` は `fs.readFile` を [`Result.fn`](../guide/tutorial/basics/wrapping-functions) でラップし、ファイルシステムのエラーを `ReadFileError` に変換します。
+- **解析と検証**：`parsePackageJson` はテキストを `Result.try` で解析し、[`Result.parse`](../guide/tutorial/basics/parsing-values) で Zod スキーマに照らして検証します。どの失敗も `Result.mapError` で `ParsePackageJsonError` に変換されます。
+- **ステップの合成**：エントリーポイントでは、`Result.pipe` と `Result.andThen` で 2 つのステップをつなげています。
+- **結果の処理**：`Result.inspect` で結果を表示し、`Result.inspectError` では [`ts-pattern`](../guide/best-practices/pattern-matching) を使ってエラーの種類ごとにメッセージを表示したうえで、終了コードを設定します。
+- **テスト**：テストでは [`@praha/byethrow-testing`](../guide/ecosystem/testing) のマッチャーを使って結果を検証しています。
 
 <Stackblitz
   repository="praha-inc/byethrow/tree/main/examples/parse-package-json"

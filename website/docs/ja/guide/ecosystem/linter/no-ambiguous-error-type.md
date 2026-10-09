@@ -1,36 +1,53 @@
 ---
-description: Result/ResultAsync/ResultMaybeAsync のエラー型に unknown・any・Error などの曖昧な型を禁止するOxlintルール
+description: Result・ResultAsync・ResultMaybeAsync の型注釈で、unknown・any・string・Error などの曖昧なエラー型を禁止する Oxlint ルール。
 ---
 
 # no-ambiguous-error-type
 
-`Result` / `ResultAsync` / `ResultMaybeAsync` のエラー型に曖昧な型を使用することを禁止します。
+`Result`、`ResultAsync`、`ResultMaybeAsync` のエラー型の位置に、具体的でない型を使うことを禁止します。
 
 ## ルールの詳細
 
-`unknown`・`any`・`Error`・プリミティブ型などの曖昧な型をエラー型に使用すると、呼び出し元がエラーの種類を区別できなくなります。具体的なドメイン固有のエラークラスを使用することで、エラーハンドリングを網羅的かつ自己文書化した形にできます。
+`Result` のエラー型が曖昧だと、呼び出し側は失敗の種類を区別できず、すべてのケースを漏れなく処理することもできません。
+[カスタムエラー](../../best-practices/custom-error)で説明しているように、代わりにドメイン固有の具体的なエラー型を使ってください。
 
-### 誤り
+エラー型の位置で次の型が使われていると報告されます。
 
-```ts
-import { Result } from '@praha/byethrow';
+- `unknown` と `any`
+- プリミティブ型：`string`、`number`、`boolean`、`bigint`、`symbol`、`null`、`undefined`
+- `object` と `{}`
+- 基底クラスの `Error`
 
-// ❌ unknownを使用
-type Result1 = Result.Result<string, unknown>;
+このルールは `Result.Result<T, E>` のような明示的な型注釈をチェックします。TypeScript が推論した型はチェックされません。
 
-// ❌ プリミティブを使用
-type Result2 = Result.Result<string, string>;
-
-// ❌ 基底クラスのErrorを使用
-type Result3 = Result.Result<string, Error>;
-```
-
-### 正しい
+### 誤った例
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-// ✅ 具体的なエラークラスを使用
-class NotFoundError extends Error {}
-type Result = Result.Result<string, NotFoundError>;
+// ❌ unknown
+type FindUserResult = Result.Result<string, unknown>;
+
+// ❌ プリミティブ型
+type ParseResult = Result.Result<number, string>;
+
+// ❌ 基底クラスの Error
+type SaveResult = Result.ResultAsync<void, Error>;
 ```
+
+### 正しい例
+
+```ts
+import { Result } from '@praha/byethrow';
+
+class UserNotFoundError extends Error {
+  override readonly name = 'UserNotFoundError';
+}
+
+// ✅ 具体的なエラークラス
+type FindUserResult = Result.Result<string, UserNotFoundError>;
+```
+
+## オプション
+
+このルールにオプションはありません。

@@ -1,0 +1,93 @@
+---
+description: "@praha/byethrow-oxlint は byethrow のベストプラクティスを強制する Oxlint プラグインです。インストール方法、推奨プリセット、ルールの個別設定、設定項目、ルール一覧を紹介します。"
+---
+
+import { PackageManagerTabs } from '../../../../../theme';
+
+# Linter プラグイン
+
+`@praha/byethrow-oxlint` は、このドキュメントで紹介しているベストプラクティスを強制する [Oxlint](https://oxc.rs/docs/guide/usage/linter) プラグインです。
+パイプライン内での throw や曖昧なエラー型の使用といったよくある間違いを検出し、その多くを自動で修正します。
+
+## インストール
+
+<PackageManagerTabs command="install -D @praha/byethrow-oxlint" />
+
+## セットアップ
+
+### 推奨プリセットを使う
+
+最も簡単な始め方は、推奨プリセットを継承することです。
+
+```ts title="oxlint.config.ts"
+import oxlintByethrowPlugin from '@praha/byethrow-oxlint';
+import { defineConfig } from 'oxlint';
+
+export default defineConfig({
+  extends: [
+    oxlintByethrowPlugin.recommended,
+  ],
+});
+```
+
+このプリセットは、すべてのルールをデフォルトのオプションで error として有効にします。
+テストコードを対象とする [prefer-result-matchers](./prefer-result-matchers) は、テストファイル（`**/*.test.*`、`**/*.test-d.*`、`**/__tests__/**/*`）に対してのみ有効になります。
+
+### ルールを個別に設定する
+
+より細かく制御したい場合は、プラグインを読み込んで個々のルールを有効にします。
+
+```ts title="oxlint.config.ts"
+import { defineConfig } from 'oxlint';
+
+export default defineConfig({
+  jsPlugins: [
+    {
+      name: 'byethrow',
+      specifier: '@praha/byethrow-oxlint',
+    },
+  ],
+  rules: {
+    'byethrow/consistent-namespace': 'error',
+    'byethrow/no-ambiguous-error-type': 'error',
+    // ...
+  },
+});
+```
+
+## 設定
+
+デフォルトでは、プラグインは `@praha/byethrow` からインポートされた `Result` と `R` を認識します。
+`@praha/byethrow` を独自のパッケージから再エクスポートしている場合は、`settings` に `byethrow` キーを追加して、プラグインがそれも認識できるようにしてください。
+
+| オプション  | 型                   | デフォルト          | 説明                                      |
+|-------------|----------------------|---------------------|-------------------------------------------|
+| `module`    | `string \| string[]` | `"@praha/byethrow"` | byethrow として扱うモジュール指定子       |
+| `namespace` | `string \| string[]` | `["Result", "R"]`   | byethrow の名前空間として扱うインポート名 |
+
+```ts title="oxlint.config.ts"
+import { defineConfig } from 'oxlint';
+
+export default defineConfig({
+  settings: {
+    byethrow: {
+      module: ['@praha/byethrow', '@my-org/result'],
+      namespace: ['Result', 'R'],
+    },
+  },
+});
+```
+
+## ルール一覧
+
+| ルール                                                   | 説明                                                        | 自動修正 |
+|----------------------------------------------------------|-------------------------------------------------------------|----------|
+| [consistent-namespace](./consistent-namespace)           | 名前空間のエイリアス（`Result` または `R`）を統一する       | ✅       |
+| [no-ambiguous-error-type](./no-ambiguous-error-type)     | 曖昧なエラー型を禁止する                                    |          |
+| [no-ambiguous-success-type](./no-ambiguous-success-type) | 曖昧な成功型を禁止する                                      |          |
+| [no-negated-type-guards](./no-negated-type-guards)       | `isSuccess` / `isFailure` の否定を禁止する                  | ✅       |
+| [no-throw-in-callback](./no-throw-in-callback)           | byethrow のコールバック内での `throw` を禁止する            |          |
+| [no-try-catch-in-callback](./no-try-catch-in-callback)   | byethrow のコールバック内での `try-catch` を禁止する        |          |
+| [prefer-result-async](./prefer-result-async)             | `Promise<Result>` より `ResultAsync` を推奨する             | ✅       |
+| [prefer-result-matchers](./prefer-result-matchers)       | テストで `toBeSuccess` / `toBeFailure` マッチャーを推奨する | ✅       |
+| [prefer-result-maybe-async](./prefer-result-maybe-async) | `Result \| ResultAsync` より `ResultMaybeAsync` を推奨する  | ✅       |

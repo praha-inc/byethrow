@@ -1,48 +1,41 @@
 ---
-description: 'Result.fail()で使うカスタムエラークラスの定義方法と、@praha/error-factoryを活用した型安全なエラー設計のベストプラクティス。'
+description: 'Result でカスタムエラー型を使う理由と方法。エラークラスとタグ付きオブジェクトの比較、スタックトレースと cause によるエラーチェーン、@praha/error-factory による簡潔なエラー定義。'
 ---
 
 import { PackageManagerTabs } from '../../../../theme';
 
 # カスタムエラー
 
-`Result.fail()` でエラーを作成する際、単純な文字列やジェネリックなErrorオブジェクトではなく、カスタムエラーの使用を強くお勧めします。
-このガイドでは、カスタムエラーとは何か、なぜ有益なのか、そして効果的に作成する方法を説明します。
+`Result` のエラーにはどんな値でも使えますが、単なる文字列や汎用的な `Error` オブジェクトでは、呼び出し側が失敗の種類を区別しにくくなります。
+失敗の種類ごとに専用のエラー型を用意することを強く推奨します。
+このページでは、その選択肢と、カスタムエラーを効率よく作成する方法を説明します。
 
-## カスタムエラーとは？
+## カスタムエラーを定義する 2 つの方法
 
-カスタムエラーは、ジェネリックなErrorオブジェクトよりも多くの構造とコンテキストを提供する特殊化されたエラークラスです。
-一般的に採用されるカスタムエラーには主に2つの形式があります。
+### 1. エラークラス（推奨）
 
-### 1. カスタムエラークラス（推奨）
-
-カスタムエラークラスは組み込みの `Error` クラスを継承し、追加の機能を提供する方法です。
+組み込みの `Error` クラスを継承したクラスを定義し、一意な `name` を付けます。
 
 ```ts
 import { Result } from '@praha/byethrow';
 import { z } from 'zod';
 
 class ValidationError extends Error {
-  public override readonly name = 'ValidationError';
-
-  constructor(message: string, options?: ErrorOptions) {
-    super(message, options);
-  }
+  override readonly name = 'ValidationError';
 }
 
-// Result.fail()での使用
 const validateEmail = (email: string): Result.Result<string, ValidationError> => {
   return Result.pipe(
     email,
-    Result.parse(z.string().email()),
-    Result.mapError((error) => new ValidationError('Invalid email format', { cause: error })),
+    Result.parse(z.email()),
+    Result.mapError((issues) => new ValidationError('Invalid email format', { cause: issues })),
   );
 };
 ```
 
-### 2. 識別可能なタグを持つオブジェクト
+### 2. タグ付きオブジェクト
 
-プレーンなオブジェクトに識別可能なプロパティを持たせる事でエラー型として使用することもできます。
+エラーの種類を識別するプロパティを持つプレーンオブジェクトを使うこともできます。
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -57,8 +50,8 @@ type ValidationError = {
 const validateEmail = (email: string): Result.Result<string, ValidationError> => {
   return Result.pipe(
     email,
-    Result.parse(z.string().email()),
-    Result.mapError((error) => ({
+    Result.parse(z.email()),
+    Result.mapError(() => ({
       type: 'ValidationError',
       message: 'Invalid email format',
       value: email,
@@ -67,82 +60,50 @@ const validateEmail = (email: string): Result.Result<string, ValidationError> =>
 };
 ```
 
-## なぜカスタムエラークラスを使うのか？
+## エラークラスを推奨する理由
 
-どちらのアプローチでも機能しますが、以下の理由からカスタムErrorクラスの使用をお勧めします。
+どちらの方法でも呼び出し側はエラーを区別できますが、エラークラスには実用上の利点がいくつかあります。
 
-### スタックトレースの利用可能性
+### スタックトレースとエラーチェーン
 
-カスタムErrorクラスは自動的にスタックトレースをキャプチャするため、デバッグが非常に容易になります。
-
-```ts
-// @noErrors
-import { Result } from '@praha/byethrow';
-
-// ---cut-start---
-type User = { id: string; name: string };
-// ---cut-end---
-class DatabaseError extends Error {
-  public override readonly name = 'DatabaseError';
-
-  constructor(message: string, options?: ErrorOptions) {
-    super(message, options);
-  }
-}
-
-const fetchUser = (id: string): Result.Result<User, DatabaseError> => {
-  try {
-    // データベース操作...
-  } catch (error) {
-    // スタックトレースはエラーが発生した正確な場所を示します
-    return Result.fail(new DatabaseError('Failed to fetch user'));
-  }
-};
-```
-
-### `cause` オプションによるエラーチェイン
-
-カスタムErrorクラスは `cause` オプションをサポートしており、元のエラーコンテキストを保持できます。
+`Error` は作成された場所を示すスタックトレースを記録し、`cause` オプションはその原因となった元のエラーを保持します。
+この 2 つを組み合わせることで、デバッグがずっと簡単になります。
 
 ```ts
-// @noErrors
+type User = { id: string; name: string };
+declare const database: { findUser: (id: string) => Promise<User> };
+// ---cut-before---
 import { Result } from '@praha/byethrow';
 
-// ---cut-start---
-type User = { id: string; name: string };
-// ---cut-end---
 class DatabaseError extends Error {
-  public override readonly name = 'DatabaseError';
-
-  constructor(message: string, options?: ErrorOptions) {
-    super(message, options);
-  }
+  override readonly name = 'DatabaseError';
 }
 
-const fetchUser = (id: string): Result.Result<User, DatabaseError> => {
-  try {
-    // データベース操作...
-  } catch (error) {
-    // 元のエラーをcauseとして保持
-    return Result.fail(new DatabaseError('Failed to fetch user', {
-      cause: error 
-    }));
-  }
-};
+const fetchUser = (id: string) => Result.try({
+  try: () => database.findUser(id),
+  // スタックトレースはここを指し、元のエラーは `cause` として保持される
+  catch: (error) => new DatabaseError('Failed to fetch user', { cause: error }),
+});
 ```
 
-## 推奨：`@praha/error-factory` を使用する
+### `throw` との互換性
 
-カスタムエラークラスを効率的に作成するために、`@praha/error-factory` の使用をお勧めします。
-このライブラリはボイラープレートコードを削減し、一貫したエラー構造を保証します。
+`Result` のエラーは、アプリケーションの境界で [`unwrap`](../tutorial/resolving/unwrapping) を使ったときなど、最終的に throw されることがあります。
+エラー監視ツールやランタイムは、throw される値が `Error` のインスタンスであることを前提としています。プレーンオブジェクトを throw するとスタックトレースがなく、うまく報告されないことがよくあります。
+
+## 推奨：`@praha/error-factory` を使う
+
+エラークラスを手書きしていると、すぐに同じようなコードの繰り返しになります。
+[`@praha/error-factory`](https://github.com/praha-inc/error-factory) を使うと、定型的なコードを減らし、エラーの構造を一貫させることができます。
 
 ### インストール
 
 <PackageManagerTabs command="install @praha/error-factory" />
 
-### Resultとの基本的な使い方
+### エラーを定義する
 
-まず、必要なカスタムエラーを定義します。
+`ErrorFactory` が返すクラスを継承します。
+`name` はリテラル型になるため、TypeScript はエラーのユニオン型を `name` によって絞り込めます。
 
 ```ts
 import { ErrorFactory } from '@praha/error-factory';
@@ -155,6 +116,7 @@ class ValidationError extends ErrorFactory({
 class QueryError extends ErrorFactory({
   name: 'QueryError',
   message: 'An error occurred while executing a query',
+  // エラーが持つ追加のフィールド
   fields: ErrorFactory.fields<{ query: string }>(),
 }) {}
 
@@ -164,77 +126,25 @@ class NotFoundError extends ErrorFactory({
 }) {}
 ```
 
-次に、先ほど定義したカスタムエラーと `Result` を一緒に返す関数を作成します。
+`message` には、フィールドからメッセージを組み立てる関数を指定することもできます。
 
 ```ts
 import { ErrorFactory } from '@praha/error-factory';
 
-class ValidationError extends ErrorFactory({
-  name: 'ValidationError',
-  message: 'Invalid input provided',
+class HttpError extends ErrorFactory({
+  name: 'HttpError',
+  message: ({ status }) => `Request failed with status ${status}`,
+  fields: ErrorFactory.fields<{ status: number }>(),
 }) {}
-
-class QueryError extends ErrorFactory({
-  name: 'QueryError',
-  message: 'An error occurred while executing a query',
-  fields: ErrorFactory.fields<{ query: string }>(),
-}) {}
-
-class NotFoundError extends ErrorFactory({
-  name: 'NotFoundError',
-  message: 'Resource not found',
-}) {}
-
-type QueryResult = Record<string, string>;
-const database = { query: (sql: string): Promise<QueryResult> => Promise.resolve({}) };
-type User = { id: string; name: string };
-// ---cut-before---
-import { Result } from '@praha/byethrow';
-import { z } from 'zod';
-
-// Result操作でカスタムエラーを使用
-const validateId = (id: string) => {
-  return Result.pipe(
-    id,
-    Result.parse(z.string().startsWith('u')),
-    Result.mapError((error) => new ValidationError({ cause: error })),
-  );
-};
-
-const executeQuery = (sql: string) => {
-  return Result.try({
-    try: () => database.query(sql),
-    catch: (error) => new QueryError({ query: sql, cause: error }),
-  });
-};
-
-// すべてを組み合わせる
-const findUser = (id: string) => {
-  return Result.pipe(
-    validateId(id),
-    Result.andThen((id) => executeQuery(`SELECT * FROM users WHERE id = '${id}'`)),
-    Result.andThen((row) => {
-      if (!row) {
-        return Result.fail(new NotFoundError());
-      }
-      return Result.succeed({ id: row.id, name: row.name });
-    }),
-  );
-};
 ```
 
-最後に、関数を実行して適切にハンドリングします。
+### Result の中でエラーを使う
+
+失敗が発生した場所でエラーを作成し、元のエラーを `cause` として渡したうえで、必要なフィールドを埋めます。
 
 ```ts
-import { Result } from '@praha/byethrow';
 import { ErrorFactory } from '@praha/error-factory';
-import { z } from 'zod';
 
-type QueryResult = Record<string, string>;
-const database = { query: (sql: string): Promise<QueryResult> => Promise.resolve({}) };
-type User = { id: string; name: string };
-
-// カスタムエラーを定義
 class ValidationError extends ErrorFactory({
   name: 'ValidationError',
   message: 'Invalid input provided',
@@ -251,27 +161,31 @@ class NotFoundError extends ErrorFactory({
   message: 'Resource not found',
 }) {}
 
-// Result操作でカスタムエラーを使用
+type UserRow = { id: string; name: string };
+declare const database: { query: (sql: string, params: unknown[]) => Promise<UserRow | undefined> };
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+import { z } from 'zod';
+
 const validateId = (id: string) => {
   return Result.pipe(
     id,
     Result.parse(z.string().startsWith('u')),
-    Result.mapError((error) => new ValidationError({ cause: error })),
+    Result.mapError((issues) => new ValidationError({ cause: issues })),
   );
 };
 
-const executeQuery = (sql: string) => {
+const executeQuery = (sql: string, params: unknown[]) => {
   return Result.try({
-    try: () => database.query(sql),
+    try: () => database.query(sql, params),
     catch: (error) => new QueryError({ query: sql, cause: error }),
   });
 };
 
-// すべてを組み合わせる
 const findUser = (id: string) => {
   return Result.pipe(
     validateId(id),
-    Result.andThen(() => executeQuery(`SELECT * FROM users WHERE id = '${id}'`)),
+    Result.andThen((id) => executeQuery('SELECT * FROM users WHERE id = ?', [id])),
     Result.andThen((row) => {
       if (!row) {
         return Result.fail(new NotFoundError());
@@ -280,18 +194,46 @@ const findUser = (id: string) => {
     }),
   );
 };
+// 型: (id: string) => Result.ResultAsync<{ id: string; name: string }, ValidationError | QueryError | NotFoundError>
+```
+
+### エラーを処理する
+
+各エラーはリテラル型の `name` を持つため、`switch` 文によってエラーをフィールドも含めた正確なクラスに絞り込めます。
+
+```ts
+import { Result } from '@praha/byethrow';
+import { ErrorFactory } from '@praha/error-factory';
+
+class ValidationError extends ErrorFactory({
+  name: 'ValidationError',
+  message: 'Invalid input provided',
+}) {}
+
+class QueryError extends ErrorFactory({
+  name: 'QueryError',
+  message: 'An error occurred while executing a query',
+  fields: ErrorFactory.fields<{ query: string }>(),
+}) {}
+
+class NotFoundError extends ErrorFactory({
+  name: 'NotFoundError',
+  message: 'Resource not found',
+}) {}
+
+declare const findUser: (id: string) => Result.ResultAsync<{ id: string; name: string }, ValidationError | QueryError | NotFoundError>;
 // ---cut-before---
-// 実行してエラーをハンドリング
 const result = await findUser('u123');
+
 if (Result.isSuccess(result)) {
   console.log(result.value);
 } else {
-  // 各エラータイプを個別にハンドリング
   switch (result.error.name) {
     case 'ValidationError':
       console.error('Validation error:', result.error.message);
       break;
     case 'QueryError':
+      // QueryError に絞り込まれているので `query` にアクセスできる
       console.error('Query error:', result.error.message, 'Query:', result.error.query);
       break;
     case 'NotFoundError':
@@ -300,3 +242,5 @@ if (Result.isSuccess(result)) {
   }
 }
 ```
+
+網羅性チェックを含む、エラーのユニオン型を処理するその他の方法については、[パターンマッチング](./pattern-matching)を参照してください。

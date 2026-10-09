@@ -1,14 +1,23 @@
 ---
 pageType: doc-wide
 outline: false
-description: Example using @praha/byethrow to parse a package.json file and handle file-read and parse errors with Result.
+description: A small Node.js program that reads and validates package.json with @praha/byethrow, handling file-read and parse errors with Result, Zod, and ts-pattern.
 ---
 
 import { SourceCode, Stackblitz } from '../../../theme';
 
 # Parse package.json <SourceCode href="https://github.com/praha-inc/byethrow/tree/main/examples/parse-package-json" />
 
-This example demonstrates how to use the `@praha/byethrow` library to parse a `package.json` file and handle potential errors gracefully.
+This example reads the `package.json` file in the current directory, validates its contents, and prints the package name and version.
+Every step that can fail returns a `Result`, and each kind of failure is reported with its own message.
+
+## What This Example Shows
+
+- **Wrapping Node.js APIs**: `readFile` wraps `fs.readFile` with [`Result.fn`](../guide/tutorial/basics/wrapping-functions) and converts file system errors into a `ReadFileError`.
+- **Parsing and validation**: `parsePackageJson` parses the text with `Result.try` and validates it against a Zod schema with [`Result.parse`](../guide/tutorial/basics/parsing-values). Any failure is converted into a `ParsePackageJsonError` with `Result.mapError`.
+- **Composing steps**: The entry point chains both steps with `Result.pipe` and `Result.andThen`.
+- **Handling the outcome**: `Result.inspect` prints the result, while `Result.inspectError` uses [`ts-pattern`](../guide/best-practices/pattern-matching) to print a message for each error type and sets the exit code.
+- **Testing**: The tests assert results with the matchers from [`@praha/byethrow-testing`](../guide/ecosystem/testing).
 
 <Stackblitz
   repository="praha-inc/byethrow/tree/main/examples/parse-package-json"

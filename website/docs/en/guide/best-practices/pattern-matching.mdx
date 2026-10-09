@@ -1,22 +1,18 @@
 ---
-description: Handling union error types in Result using ts-pattern, instanceof checks, and discriminated unions with switch statements.
+description: Handling Results that can fail with several error types — exhaustive matching with ts-pattern, switch statements on the error name, and instanceof checks.
 ---
 
 import { PackageManagerTabs } from '../../../../theme';
 
 # Pattern Matching
 
-When working with `Result` types that have union error types, pattern matching becomes essential for handling different error scenarios effectively.
-This guide demonstrates how to use pattern matching to handle multiple error types gracefully.
+A `Result` often has a union of error types, one for each way the operation can fail.
+This page shows how to handle each error type appropriately, and how to make sure that none is forgotten.
 
-## Why Pattern Matching for Union Errors?
+## The Example
 
-When your `Result` can fail with multiple different error types, you need a systematic way to handle each error type appropriately.
-Pattern matching provides a clean, type-safe approach to handle all possible error cases.
-
-:::tip
-For more details about `@praha/error-factory`, see the [Custom Error](./custom-error.mdx#recommended-using-prahaerror-factory) page.
-:::
+The examples on this page use a function that deletes a post and can fail in three different ways.
+Each error is a class with a unique `name`, as recommended in [Custom Error](./custom-error):
 
 ```ts
 // @noErrors
@@ -38,38 +34,27 @@ class PostAlreadyDeletedError extends ErrorFactory({
   message: 'This post has already been deleted.',
 }) {}
 
-// Example of a post deletion function
 type PostDeleteError = (
   | PostNotFoundError
   | PostPermissionError
   | PostAlreadyDeletedError
 );
 
-// Function that can return multiple error types
 const deletePost = async (postId: string): Result.ResultAsync<void, PostDeleteError> => {
-  // Implementation that can return any of the error types
+  // Returns one of the errors above on failure
 };
-
-// Handling the result with pattern matching
-await Result.pipe(
-  deletePost('123'),
-  Result.map(() => 'Post deleted successfully!'),
-  Result.inspectError((error) => {
-    // Pattern matching to handle different error types
-  }),
-);
 ```
 
 ## Recommended: Using `ts-pattern`
 
-We strongly recommend using the [`ts-pattern`](https://github.com/gvergnaud/ts-pattern) for pattern matching.
-It provides excellent TypeScript support and ensures exhaustive matching.
+We recommend [`ts-pattern`](https://github.com/gvergnaud/ts-pattern) for pattern matching.
+It has excellent TypeScript support, and `.exhaustive()` reports a compile error if any error type is not handled.
 
 ### Installation
 
 <PackageManagerTabs command="install ts-pattern" />
 
-### Pattern Matching with `ts-pattern`
+### Matching Errors
 
 ```ts
 // @filename: delete-post.ts
@@ -120,16 +105,80 @@ await Result.pipe(
       .with({ name: 'PostAlreadyDeletedError' }, () => {
         console.error('This post has already been deleted.');
       })
-      .exhaustive(); // Ensures all cases are handled
+      .exhaustive(); // Compile error if a case is missing
   }),
 );
 ```
 
-## Alternative: Native TypeScript Pattern Matching
+## Alternative: Native TypeScript
 
-If you prefer not to use external libraries, you can implement pattern matching using TypeScript's built-in features:
+If you prefer not to add a dependency, TypeScript's built-in features work as well.
 
-### Using instanceof Checks
+### Using a `switch` Statement
+
+Because each error has a literal `name`, a `switch` statement narrows the error in each `case`.
+Adding `satisfies never` in the `default` case gives you the same exhaustiveness check as `ts-pattern`:
+
+```ts
+// @filename: delete-post.ts
+import { ErrorFactory } from '@praha/error-factory';
+import { Result } from '@praha/byethrow';
+
+export class PostNotFoundError extends ErrorFactory({
+  name: 'PostNotFoundError',
+  message: 'The requested post was not found.',
+}) {}
+
+export class PostPermissionError extends ErrorFactory({
+  name: 'PostPermissionError',
+  message: 'You do not have permission to perform this action.',
+}) {}
+
+export class PostAlreadyDeletedError extends ErrorFactory({
+  name: 'PostAlreadyDeletedError',
+  message: 'This post has already been deleted.',
+}) {}
+
+export type PostDeleteError = (
+  | PostNotFoundError
+  | PostPermissionError
+  | PostAlreadyDeletedError
+);
+
+export const deletePost = async (postId: string): Result.ResultAsync<void, PostDeleteError> => {
+  return Result.succeed();
+};
+
+// @filename: index.ts
+import { deletePost } from './delete-post';
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+
+await Result.pipe(
+  deletePost('123'),
+  Result.inspectError((error) => {
+    switch (error.name) {
+      case 'PostNotFoundError':
+        console.error('The requested post was not found.');
+        break;
+      case 'PostPermissionError':
+        console.error('You do not have permission to perform this action.');
+        break;
+      case 'PostAlreadyDeletedError':
+        console.error('This post has already been deleted.');
+        break;
+      default:
+        // Compile error if a case is missing
+        error satisfies never;
+    }
+  }),
+);
+```
+
+### Using `instanceof`
+
+`instanceof` checks also narrow the error type.
+Note that they don't provide an exhaustiveness check, so a newly added error type can go unnoticed:
 
 ```ts
 // @filename: delete-post.ts
@@ -182,61 +231,11 @@ await Result.pipe(
 );
 ```
 
-### Using Discriminated Unions
+## Where to Match
 
-```ts
-// @filename: delete-post.ts
-import { ErrorFactory } from '@praha/error-factory';
-import { Result } from '@praha/byethrow';
+The examples above use `inspectError` to run a side effect for each error.
+The same techniques work in any function that receives the error:
 
-export class PostNotFoundError extends ErrorFactory({
-  name: 'PostNotFoundError',
-  message: 'The requested post was not found.',
-}) {}
-
-export class PostPermissionError extends ErrorFactory({
-  name: 'PostPermissionError',
-  message: 'You do not have permission to perform this action.',
-}) {}
-
-export class PostAlreadyDeletedError extends ErrorFactory({
-  name: 'PostAlreadyDeletedError',
-  message: 'This post has already been deleted.',
-}) {}
-
-export type PostDeleteError = (
-  | PostNotFoundError
-  | PostPermissionError
-  | PostAlreadyDeletedError
-);
-
-export const deletePost = async (postId: string): Result.ResultAsync<void, PostDeleteError> => {
-  return Result.succeed();
-};
-
-// @filename: index.ts
-import { deletePost, PostNotFoundError, PostPermissionError, PostAlreadyDeletedError } from './delete-post';
-// ---cut-before---
-import { Result } from '@praha/byethrow';
-
-await Result.pipe(
-  deletePost('123'),
-  Result.inspectError((error) => {
-    switch (error.name) {
-      case 'PostNotFoundError':
-        console.error('The requested post was not found.');
-        break;
-      case 'PostPermissionError':
-        console.error('You do not have permission to perform this action.');
-        break;
-      case 'PostAlreadyDeletedError':
-        console.error('This post has already been deleted.');
-        break;
-      default:
-        // This should never happen if all error types are covered
-        const _exhaustiveCheck: never = error;
-        throw new Error(`Unhandled error type: ${JSON.stringify(_exhaustiveCheck)}`);
-    }
-  }),
-);
-```
+- [`inspectError`](../tutorial/chaining/debugging): Run a side effect, such as logging or printing a message.
+- [`mapError`](../tutorial/chaining/mapping-results): Convert each error into another value, such as an HTTP response.
+- [`orElse`](../tutorial/chaining/chaining-results): Recover from some errors and pass the others on.

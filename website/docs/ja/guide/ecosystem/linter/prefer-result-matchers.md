@@ -1,32 +1,43 @@
 ---
-description: isSuccess/isFailure のboolean assertの代わりに toBeSuccess()/toBeFailure() マッチャーの使用を強制するOxlintルール（自動修正対応）
+description: テストファイルで、isSuccess/isFailure の真偽値に対するアサーションや unwrap の呼び出しの代わりに toBeSuccess() と toBeFailure() マッチャーを使うことを強制する Oxlint ルール。自動修正に対応しています。
 ---
 
 # prefer-result-matchers
 
-テスト内で `@praha/byethrow-testing` の `toBeSuccess()` / `toBeFailure()` を使用することを強制します。
+テストで [`@praha/byethrow-testing`](../testing) の `toBeSuccess()` / `toBeFailure()` マッチャーを使うことを強制します。
+
+このルールは自動修正に対応しています。推奨プリセットでは、テストファイルに対してのみ有効になります。
 
 ## ルールの詳細
 
-`Result.isSuccess(result)` を呼び出してbooleanをアサートするのは冗長です。専用のマッチャー `toBeSuccess()` と `toBeFailure()` はより短く、失敗時のメッセージもわかりやすく、オプションのコールバック内で型も絞り込まれます。このルールは自動修正に対応しています。
+`Result.isSuccess()` が返す真偽値に対してアサーションを書くのは冗長で、失敗しても `false` が `true` ではなかったことしかわかりません。
+また、テスト内で `Result.unwrap()` を呼ぶと、結果が失敗だった場合に役に立たないエラーが投げられます。
+専用のマッチャーを使えば記述が短くなり、失敗時には受け取った `Result` が表示され、コールバックでは型の付いた値を受け取れます。
 
-`@praha/byethrow-testing` のセットアップ方法は[テスト](../testing)を参照してください。
+このルールは次のパターンを報告します。
 
-### 誤り
+- `expect(Result.isSuccess(result))` / `expect(Result.isFailure(result))` に続く `.toBe()`、`.toBeTruthy()`、`.toBeFalsy()`
+- `assert(Result.isSuccess(result))` / `assert(Result.isFailure(result))`
+- `Result.unwrap(result)` / `Result.unwrapError(result)`
+
+### 誤った例
 
 ```ts
 import { Result } from '@praha/byethrow';
-import { expect } from 'vitest';
+import { assert, expect } from 'vitest';
 
-const result: Result.Result<string, Error> = Result.succeed('hello');
+declare const result: Result.Result<string, Error>;
 
-// ❌ isSuccess / isFailureのboolean戻り値をアサート
+// ❌ isSuccess / isFailure が返す真偽値に対してアサーションしている
 expect(Result.isSuccess(result)).toBe(true);
 expect(Result.isFailure(result)).toBeTruthy();
-expect(Result.isSuccess(result)).not.toBe(false);
+assert(Result.isSuccess(result));
+
+// ❌ 値をアサーションするために Result を unwrap している
+expect(Result.unwrap(result)).toBe('hello');
 ```
 
-### 正しい
+### 正しい例
 
 ```ts
 import type { ResultMatchers } from '@praha/byethrow-testing';
@@ -38,32 +49,24 @@ declare module 'vitest' {
 import { Result } from '@praha/byethrow';
 import { expect } from 'vitest';
 
-const result: Result.Result<string, Error> = Result.succeed('hello');
+declare const result: Result.Result<string, Error>;
 
-// ✅ 専用マッチャーを使用
+// ✅ 専用のマッチャーを使っている
 expect(result).toBeSuccess();
 expect(result).toBeFailure();
-```
 
-コールバックで内部の値をアサートする場合:
-
-```ts
-import type { ResultMatchers } from '@praha/byethrow-testing';
-
-declare module 'vitest' {
-  interface Matchers<R, T> extends ResultMatchers<R, T> {}
-}
-// ---cut-before---
-import { Result } from '@praha/byethrow';
-import { expect } from 'vitest';
-
-const result: Result.Result<string, Error> = Result.succeed('hello');
-
+// ✅ コールバックで値をアサーションしている
 expect(result).toBeSuccess((value) => {
-  expect(value).toBe(42);
+  expect(value).toBe('hello');
 });
 
 expect(result).toBeFailure((error) => {
   expect(error).toBeInstanceOf(Error);
 });
 ```
+
+`@praha/byethrow-testing` のセットアップ方法は[テスト](../testing)を参照してください。
+
+## オプション
+
+このルールにオプションはありません。
