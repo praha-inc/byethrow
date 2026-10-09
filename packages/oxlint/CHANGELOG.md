@@ -1,5 +1,12 @@
 # @praha/byethrow-oxlint
 
+## 0.13.0
+
+### Patch Changes
+
+- Updated dependencies [[`ae57dc7`](https://github.com/praha-inc/byethrow/commit/ae57dc74cf937a1b359eebadf6c9e360b5ab5aa9)]:
+  - @praha/byethrow@0.13.0
+
 ## 0.12.0
 
 ### Patch Changes
