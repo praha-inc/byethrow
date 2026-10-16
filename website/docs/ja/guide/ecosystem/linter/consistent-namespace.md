@@ -1,51 +1,53 @@
 ---
-description: "@praha/byethrow のインポートで Result または R の一貫した名前空間エイリアスを強制するOxlintルール（自動修正対応）"
+description: '@praha/byethrow のインポートで使う名前空間のエイリアスを Result か R のどちらかに統一する Oxlint ルール。自動修正に対応しています。'
 ---
 
 # consistent-namespace
 
-`@praha/byethrow` から一貫したネームスペース（`Result` または `R`）でインポートを使用することを強制します。
+`@praha/byethrow` を常に同じ名前空間のエイリアス（`Result` または `R`）でインポートすることを強制します。
+
+このルールは自動修正に対応しています。修正時には、インポートとそのすべての参照がリネームされます。
 
 ## ルールの詳細
 
-`@praha/byethrow` ではネームスペースを `Result` または `R` としてインポートできますが、プロジェクト内で両方が混在していると一貫性が失われ、コード検索が難しくなります。このルールは単一の優先エイリアスを強制し、違反を自動修正します。
+`@praha/byethrow` は同じ関数群を `Result` と `R` の両方の名前でエクスポートしています。
+[Result のインポート方法](../../best-practices/importing-result)で説明しているとおり、1 つのコードベースで両方を使うとコードの一貫性が失われ、検索もしにくくなります。
+このルールは、ローカル名が推奨するエイリアスと異なるインポートをすべて報告します。
 
-デフォルトで優先するネームスペースは `Result` です。
-
-### 誤り
+### 誤った例
 
 ```ts
-// ❌ 同じコードベースでResultとRが混在している
+// ❌ Result を推奨しているのに R を使っている
+import { R } from '@praha/byethrow';
+
+const success = R.succeed(42);
+```
+
+```ts
+// ❌ Result と R を混在させている
 import { Result, R } from '@praha/byethrow';
 
 const success = Result.succeed(42);
 const failure = R.fail(new Error('Something went wrong'));
 ```
 
-### 正しい
+### 正しい例
 
 ```ts
-// ✅ Resultを一貫して使用
+// ✅ Result で統一している
 import { Result } from '@praha/byethrow';
 
 const success = Result.succeed(42);
 const failure = Result.fail(new Error('Something went wrong'));
 ```
 
-```ts
-// ✅ Rを一貫して使用（Rを優先するよう設定した場合）
-import { R } from '@praha/byethrow';
-
-const success = R.succeed(42);
-const failure = R.fail(new Error('Something went wrong'));
-```
-
 ## オプション
 
-ルールは優先する名前空間を単一の文字列で受け取ります（デフォルト: `"Result"`）。
+推奨するエイリアスを文字列で指定します。デフォルトは `"Result"` です。
 
-ResultではなくRを優先する場合:
-```ts
+`R` を推奨する場合は次のように設定します。
+
+```ts title="oxlint.config.ts"
 import { defineConfig } from 'oxlint';
 
 export default defineConfig({
@@ -53,4 +55,14 @@ export default defineConfig({
     'byethrow/consistent-namespace': ['error', 'R'],
   },
 });
+```
+
+このオプションを指定すると、次のコードが正しい例になります。
+
+```ts
+// ✅ R で統一している
+import { R } from '@praha/byethrow';
+
+const success = R.succeed(42);
+const failure = R.fail(new Error('Something went wrong'));
 ```

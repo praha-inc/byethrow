@@ -1,29 +1,42 @@
 ---
-description: Result と ResultAsync のユニオン型の代わりに ResultMaybeAsync の使用を強制するOxlintルール（自動修正対応）
+description: Result と ResultAsync のユニオン型の代わりに型エイリアス ResultMaybeAsync を使うことを強制する Oxlint ルール。自動修正に対応しています。
 ---
 
 # prefer-result-maybe-async
 
-`Result<T, E> | ResultAsync<T, E>` というユニオン型の代わりに `ResultMaybeAsync<T, E>` の使用を強制します。
+ユニオン型 `Result<T, E> | ResultAsync<T, E>` の代わりに `ResultMaybeAsync<T, E>` を使うことを強制します。
+
+このルールは自動修正に対応しています。
 
 ## ルールの詳細
 
-`ResultMaybeAsync<T, E>` は `Result<T, E> | ResultAsync<T, E>` のエイリアスです。専用のエイリアスはより短く表現力があります。このルールは自動修正に対応しています。
+`ResultMaybeAsync<T, E>` は `Result<T, E> | ResultAsync<T, E>` のエイリアスです。
+エイリアスのほうが短く、値が同期と非同期のどちらにもなり得ることを明確に表現できます。
 
-### 誤り
-
-```ts
-import { Result } from '@praha/byethrow';
-
-// ❌ 明示的なユニオン型を使用
-type Result = Result.Result<string, Error> | Result.ResultAsync<string, Error>;
-```
-
-### 正しい
+### 誤った例
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-// ✅ ResultMaybeAsyncを使用
-type Result = Result.ResultMaybeAsync<string, Error>;
+class UserNotFoundError extends Error {}
+type User = { id: string; name: string };
+
+// ❌ ユニオン型を明示的に書いている
+type FindUser = (id: string) => Result.Result<User, UserNotFoundError> | Result.ResultAsync<User, UserNotFoundError>;
 ```
+
+### 正しい例
+
+```ts
+import { Result } from '@praha/byethrow';
+
+class UserNotFoundError extends Error {}
+type User = { id: string; name: string };
+
+// ✅ ResultMaybeAsync
+type FindUser = (id: string) => Result.ResultMaybeAsync<User, UserNotFoundError>;
+```
+
+## オプション
+
+このルールにオプションはありません。
