@@ -8,13 +8,13 @@
   {
     "type": "dir",
     "name": "chaining",
-    "label": "関数を合成する",
+    "label": "処理をつなげる",
     "collapsed": true
   },
   {
     "type": "dir",
     "name": "combining",
-    "label": "Result を合成する",
+    "label": "Result を組み合わせる",
     "collapsed": true
   },
   {

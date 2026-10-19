@@ -1,131 +1,105 @@
 ---
-description: 'Result.unwrapで成功値を、Result.unwrapErrorでエラー値を取り出す方法。デフォルト値の指定とアプリケーション境界での適切な使い方。'
+description: 'Result.unwrap と Result.unwrapError で Result からプレーンな値を取り出す方法。デフォルト値、パイプライン内での利用、非同期への対応、そしてアプリケーションのどこで値を取り出すべきかを解説します。'
 ---
 
-# Result の値を取り出す
+# Result から値を取り出す
 
-`Result` から実際の値を取り出し、`Result` から通常の値に戻す必要がある場合、`unwrap` および `unwrapError` 関数が役立ちます。
-これらの関数は、成功値とエラー値をそれぞれ取り出すための便利な方法を提供します。
+どこかの時点で、`Result` から値を取り出し、Web フレームワークや CLI ランナーなど `Result` を知らないコードに渡す必要があります。
+`unwrap` と `unwrapError` は、`Result` の中身をプレーンな値として取り出します。
 
-## `unwrap` - 成功値を取り出す
+## `unwrap` で値を取り出す
 
-`unwrap` 関数は `Result` から成功値を取り出します。
+`unwrap` は `Result` の成功値を返します。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.succeed(42);
-const value = Result.unwrap(result);
+const value = Result.unwrap(Result.succeed(42));
 // value: 42
 ```
 
-### 失敗時の動作
-
-`Result` が `Failure` でデフォルト値が指定されていない場合、`unwrap` はエラーを投げます。
+`Result` が `Failure` の場合、`unwrap` は**そのエラーを throw します**。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.fail(new Error('Something went wrong'));
-const value = Result.unwrap(result);
-// Throws: Error('Something went wrong')
+const value = Result.unwrap(Result.fail(new Error('Something went wrong')));
+// 例外: Error('Something went wrong')
 ```
 
-### デフォルト値の指定
+### デフォルト値を指定する
 
-デフォルト値を指定することで、エラーが投げられるのを避けられます。
+第 2 引数にデフォルト値を渡すと、throw する代わりにその値を返します。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.fail('error');
-const value = Result.unwrap(result, 0);
-// value: 0 (デフォルト値)
+const fallback = Result.unwrap(Result.fail('error'), 0);
+// fallback: 0
+
+const value = Result.unwrap(Result.succeed(42), 0);
+// value: 42（デフォルト値は無視される）
 ```
 
-```ts
-import { Result } from '@praha/byethrow';
+## `unwrapError` でエラーを取り出す
 
-const success = Result.succeed(42);
-const value = Result.unwrap(success, 0);
-// value: 42 (成功値、デフォルトは無視される)
-```
-
-## `unwrapError` - 失敗値を取り出す
-
-`unwrapError` 関数は逆の動作で失敗値を取り出します。
+`unwrapError` は `unwrap` の対になる関数で、`Result` のエラー値を返します。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.fail('Something went wrong');
-const error = Result.unwrapError(result);
+const error = Result.unwrapError(Result.fail('Something went wrong'));
 // error: 'Something went wrong'
 ```
 
-### 成功時の動作
-
-`Result` が `Success` でデフォルト値が指定されていない場合、`unwrapError` はエラーではなく成功値を投げます。
+`Result` が `Success` の場合、デフォルト値が指定されていなければ、`unwrapError` はその値を throw します。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.succeed(42);
-const error = Result.unwrapError(result);
-// Throws: 42
+const error = Result.unwrapError(Result.succeed(42));
+// 例外: 42
+
+const fallback = Result.unwrapError(Result.succeed(42), 'No error');
+// fallback: 'No error'
 ```
 
-### デフォルトエラーの指定
+## パイプラインの中で値を取り出す
 
-デフォルト値を指定することで、成功値が投げられるのを避けられます。
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.succeed(42);
-const error = Result.unwrapError(result, 'No error');
-// error: 'No error' (デフォルト値)
-```
+`Result` を渡さずに呼び出すと、どちらの関数も引数の `Result` から値を取り出す関数を返します。
+これにより、パイプラインの最後のステップとして使えます。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const failure = Result.fail('Something went wrong');
-const error = Result.unwrapError(failure, 'No error');
-// error: 'Something went wrong' (失敗値、デフォルトは無視される)
-```
-
-## 非同期 `Result`
-
-`unwrap` と `unwrapError` は `ResultAsync` でも動作します。
-
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const asyncResult = Promise.resolve(Result.succeed(42));
-
-// Promise を返す
-const value = await Result.unwrap(asyncResult);
+const value = Result.pipe(
+  Result.succeed(21),
+  Result.map((x) => x * 2),
+  Result.unwrap(), // または Result.unwrap(defaultValue)
+);
 // value: 42
 ```
 
-デフォルト値を指定する場合。
+## 非同期の Result
+
+どちらの関数も `ResultAsync` を受け取り、プレーンな値の `Promise` を返します。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const asyncResult = Promise.resolve(Result.fail('error'));
-const value = await Result.unwrap(asyncResult, 0);
-// value: 0
+const value = await Result.unwrap(Promise.resolve(Result.succeed(42)));
+// value: 42
+
+const fallback = await Result.unwrap(Promise.resolve(Result.fail('error')), 0);
+// fallback: 0
 ```
 
-## `unwrap` を使うべき場面
+## どこで値を取り出すべきか
 
-### 適切なユースケース
+### アプリケーションの境界で
 
-`unwrap` はアプリケーションの境界（HTTP ハンドラや CLI のエントリーポイントなど）で使用します。
-`Result` の世界を抜けて、外部の世界に通常の値を返す必要がある場所です。
+値の取り出しは、HTTP ハンドラーや CLI のエントリーポイントなど、プレーンな値を外部に渡さなければならないアプリケーションの境界で行いましょう。
+想定しているエラーを先に処理し、残ったものだけを `unwrap` に throw させます。
 
 ```ts
 declare const processRequest: (req: Request) => Result.ResultAsync<number, 'NotFound' | 'Unexpected'>;
@@ -146,26 +120,28 @@ const handleRequest = async (req: Request): Promise<Response> => {
           return Result.fail(error);
       }
     }),
-    // 予期しないエラーはここで投げられ、Sentry や CloudWatch などの
-    // インフラレベルのエラー監視ツールで検出できます。
+    // 残ったエラーはここで throw され、Sentry や CloudWatch などの
+    // インフラレベルのエラー監視で検知できる
     Result.unwrap(),
   );
 };
 ```
 
-### `unwrap` を避けるべき場面
+`unwrap` が決して throw しないことをコンパイル時に保証するには、次のページで紹介する [`assertSuccess`](./asserting) と組み合わせてください。
 
-ロジックの途中で `unwrap` を呼び出すことは避けてください。
-そうすると `Result` の「世界」を早期に抜けてしまい、型安全なエラー処理の利点が失われます。
-代わりに、値を `Result` でラップしたまま保持し、`map`、`flatMap`、`orElse` などの関数を組み合わせて変換してください。
+### ロジックの途中では取り出さない
+
+ロジックの途中で値を取り出すのは避けましょう。
+そうすると `Result` の世界から早々に抜け出すことになり、想定内の失敗が再び例外に戻ってしまいます。
+代わりに値を `Result` に包んだまま、`map`、`andThen`、`orElse` などの関数で変換してください。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-// ❌ これはやめましょう
+// ❌ こうしない
 const bad = Result.unwrap(Result.succeed(42)) * 2;
 
-// ✅ 代わりにこうしましょう
+// ✅ 代わりにこうする
 const good = Result.pipe(
   Result.succeed(42),
   Result.map((x) => x * 2),
@@ -174,7 +150,7 @@ const good = Result.pipe(
 
 ## リファレンス
 
-| 関数                                                                  | 目的                                        |
-|---------------------------------------------------------------------|-------------------------------------------|
-| [unwrap(result)](../../../../api/functions/Result.unwrap)           | Result から成功値を取り出す。失敗時はエラーを投げるまたはデフォルト値を返す |
-| [unwrapError(result)](../../../../api/functions/Result.unwrapError) | Result からエラー値を取り出す。成功時は値を投げるまたはデフォルト値を返す  |
+| API                                                                 | 用途                                                        |
+|---------------------------------------------------------------------|-------------------------------------------------------------|
+| [unwrap(result)](../../../../api/functions/Result.unwrap)           | 成功値を取り出す。失敗時は throw するかデフォルト値を返す   |
+| [unwrapError(result)](../../../../api/functions/Result.unwrapError) | エラー値を取り出す。成功時は throw するかデフォルト値を返す |

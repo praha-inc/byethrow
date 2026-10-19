@@ -1,15 +1,16 @@
 ---
-description: 'Result.sequenceで最初の失敗で停止し、Result.collectですべてのエラーを収集する複数Resultの集約方法と非同期動作の違い。'
+description: '複数の Result をひとつにまとめる方法。最初の失敗で停止する Result.sequence と、すべてのエラーを収集する Result.collect の違いを、マッパー関数や非同期処理での挙動も含めて解説します。'
 ---
 
 # Result を集約する
 
-組み合わせる必要がある複数の `Result` がある場合、`sequence` と `collect` が役立ちます。
-どちらも `Result` を集約しますが、失敗の処理方法が異なります。
+複数のバリデーションやリクエストの結果など、いくつもの `Result` があるとき、それらをひとつの `Result` にまとめたいことがよくあります。
+`sequence` と `collect` はどちらもこれを行う関数です。`Result` の配列またはオブジェクトを受け取り、失敗の扱い方が異なります。
 
-## `sequence` - 最初の失敗で停止
+## `sequence` で最初の失敗で停止する
 
-`sequence` はResultを処理し、最初の失敗で停止します。
+`sequence` は、すべての `Result` が成功した場合、すべての値を含む `Success` を返します。
+そうでない場合は、最初に見つかった失敗を返します。
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -22,77 +23,31 @@ const success = Result.sequence([
 ]);
 // { type: 'Success', value: [1, 2, 3] }
 
-// 1つが失敗 - 即座に停止
+// 最初の失敗を返す
 const failure = Result.sequence([
   Result.succeed(1),
-  Result.fail('error'),
-  Result.succeed(3), // 遅延モードでは評価されない
+  Result.fail('error1'),
+  Result.fail('error2'),
 ]);
-// { type: 'Failure', error: 'error' }
+// { type: 'Failure', error: 'error1' }
 ```
 
-### オブジェクトでの使用
+オブジェクトを渡した場合、成功値は同じキーを持つオブジェクトになります。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-// すべて成功
-const success = Result.sequence({
-  name: Result.succeed('Alice'),
-  age: Result.succeed(30),
-  email: Result.succeed('alice@example.com'),
-});
-// { type: 'Success', value: { name: 'Alice', age: 30, email: 'alice@example.com' } }
-
-// 1つが失敗 - 即座に停止
 const result = Result.sequence({
   name: Result.succeed('Alice'),
-  age: Result.fail('error'),
-  email: Result.succeed('alice@example.com'), // 遅延モードでは評価されない
+  age: Result.succeed(30),
 });
-// { type: 'Failure', error: 'error' }
+// { type: 'Success', value: { name: 'Alice', age: 30 } }
 ```
 
-### 例：購入処理パイプライン
+## `collect` ですべてのエラーを収集する
 
-一般的なユースケースは、複数の独立した操作がすべて成功する必要がある購入フローです。
-`sequence` では、いずれかのステップが失敗すると、残りの操作はスキップされます。
-
-```ts
-type User = { id: string; email: string };
-type Product = { id: string; name: string };
-type Stock = { productId: string; reservedAt: Date };
-type Order = { id: string; orderedAt: Date };
-type Confirmation = { id: string; sentAt: Date };
-declare const reserveStock: (product: Product) => Result.ResultAsync<Stock, 'OutOfStock'>;
-declare const createOrder: (user: User, product: Product) => Result.ResultAsync<Order, 'OrderFailed'>;
-declare const sendConfirmationEmail: (user: User, product: Product) => Result.ResultAsync<Confirmation, 'EmailFailed'>;
-const user: User = { id: 'user-1', email: 'user-1@example.com' };
-const book: Product = { id: 'product-2', name: 'Book' };
-const gadget: Product = { id: 'product-1', name: 'Gadget' };
-// ---cut-before---
-import { Result } from '@praha/byethrow';
-
-const processPurchase = (user: User, product: Product) => {
-  return Result.sequence({
-    stock: reserveStock(product),
-    order: createOrder(user, product),
-    confirmation: sendConfirmationEmail(user, product)
-  });
-};
-
-// すべて成功
-await processPurchase(user, book);
-// { type: 'Success', value: { stock: {...}, order: {...}, confirmation: {...} } }
-
-// reserveStockが失敗した場合 → 即座に停止、注文とメールは処理されない
-await processPurchase(user, gadget);
-// { type: 'Failure', error: 'OutOfStock' }
-```
-
-## `collect` - すべてのエラーを収集
-
-`collect` は**すべての**Resultを処理し、すべてのエラーを収集します。
+`collect` も、すべての `Result` が成功した場合は、すべての値を含む `Success` を返します。
+そうでない場合は、**すべての**エラーを配列にした `Failure` を返します。
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -105,7 +60,7 @@ const success = Result.collect([
 ]);
 // { type: 'Success', value: [1, 2, 3] }
 
-// 複数の失敗 - すべてのエラーを収集
+// すべての失敗を返す
 const failure = Result.collect([
   Result.succeed(1),
   Result.fail('error1'),
@@ -114,186 +69,125 @@ const failure = Result.collect([
 // { type: 'Failure', error: ['error1', 'error2'] }
 ```
 
-### オブジェクトでの使用
+### 例：フォームのバリデーション
+
+`collect` はフォームのバリデーションに最適です。ユーザーには問題を 1 つずつではなく、すべてまとめて見せるべきだからです。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-// すべて成功
-const success = Result.collect({
-  name: Result.succeed('Alice'),
-  age: Result.succeed(30),
-  email: Result.succeed('alice@example.com'),
-});
-// { type: 'Success', value: { name: 'Alice', age: 30, email: 'alice@example.com' } }
+type SignUpInput = { name: string; email: string; password: string };
 
-// 複数の失敗 - すべてのエラーを収集
-const result = Result.collect({
-  name: Result.fail('名前は必須です'),
-  age: Result.fail('無効な年齢'),
-  email: Result.succeed('alice@example.com'),
+declare const validateName: (name: string) => Result.Result<string, 'NameRequired'>;
+declare const validateEmail: (email: string) => Result.Result<string, 'InvalidEmail'>;
+declare const validatePassword: (password: string) => Result.Result<string, 'PasswordTooShort'>;
+
+const validateSignUp = (input: SignUpInput) => Result.collect({
+  name: validateName(input.name),
+  email: validateEmail(input.email),
+  password: validatePassword(input.password),
 });
-// { type: 'Failure', error: ['名前は必須です', '無効な年齢'] }
+
+validateSignUp({ name: '', email: 'invalid', password: 'correct horse battery staple' });
+// { type: 'Failure', error: ['NameRequired', 'InvalidEmail'] }
 ```
 
-### 例：並列APIデータ集約
+## マッパー関数を使う
 
-一般的なユースケースは、複数の独立したAPIからデータを取得することです。
-`collect` では、すべてのAPI呼び出しが並列で行われ、複数のサービスが失敗した場合、すべてのエラーがまとめて報告されます。
+どちらの関数も、プレーンな値の配列と、各値を `Result` に変換するマッパー関数を受け取ることができます。
+
+```ts
+import { Result } from '@praha/byethrow';
+
+const parseNumber = (input: string) => {
+  const number = Number(input);
+  if (Number.isNaN(number)) {
+    return Result.fail(`Invalid number: ${input}`);
+  }
+  return Result.succeed(number);
+};
+
+Result.sequence(['1', 'abc', 'xyz'], parseNumber);
+// { type: 'Failure', error: 'Invalid number: abc' }
+
+Result.collect(['1', 'abc', 'xyz'], parseNumber);
+// { type: 'Failure', error: ['Invalid number: abc', 'Invalid number: xyz'] }
+```
+
+`sequence` では、マッパー関数は要素ごとに 1 つずつ呼び出され、失敗が起きると**残りの要素に対しては呼び出されません**。
+`collect` では、マッパー関数はすべての要素に対して呼び出されます。
+
+## 非同期での挙動
+
+どちらの関数も `ResultAsync` を受け取ることができ、入力のいずれかが非同期であれば `ResultAsync` を返します。
+非同期処理がどのように実行されるかは、処理の渡し方によって変わります。
+
+### Result を直接渡す場合
+
+配列やオブジェクトのリテラルの中に `fetchUser(id)` と書くと、リクエストはその場で、つまり `sequence` や `collect` が呼ばれるより前に開始されます。
+どちらの関数も、すでに実行中の処理をどう**待つか**を決めているだけです。
 
 ```ts
 type User = { id: string; name: string };
-type Orders = { userId: string; items: string[] };
-type Reviews = { userId: string; count: number };
+type Order = { id: string };
 type FetchError = { source: string; message: string };
 declare const fetchUser: (id: string) => Result.ResultAsync<User, FetchError>;
-declare const fetchOrders: (userId: string) => Result.ResultAsync<Orders, FetchError>;
-declare const fetchReviews: (userId: string) => Result.ResultAsync<Reviews, FetchError>;
+declare const fetchOrders: (userId: string) => Result.ResultAsync<Order[], FetchError>;
+declare const userId: string;
 // ---cut-before---
 import { Result } from '@praha/byethrow';
 
-const fetchUserDashboard = async (userId: string) => {
-  // 3つのAPI呼び出しはすべて並列で実行
-  return Result.collect({
-    user: fetchUser(userId),
-    orders: fetchOrders(userId),
-    reviews: fetchReviews(userId),
-  });
-};
-
-// すべてのAPIが成功
-await fetchUserDashboard('user-123');
-// {
-//   type: 'Success',
-//   value: {
-//     user: { id: 'user-123', name: 'Alice' },
-//     orders: [{ id: 'order-123', name: 'Product A' }],
-//     reviews: [{ id: 'review-123', comment: 'Great!' }]
-//   },
-// }
-
-// 複数のAPIが失敗 - すべてのエラーが収集される
-await fetchUserDashboard('invalid-user');
-// {
-//   type: 'Failure',
-//   error: [
-//     'User not found',
-//     'Orders fetch failed',
-//   ],
-// }
-```
-
-`collect` は非同期操作を並列で実行するため、すべてのAPI呼び出しが同時に開始され、順次実行と比較してパフォーマンスが向上します。
-さらに、複数のサービスが失敗した場合、すべてのエラーがまとめて報告されるため、デバッグが容易になります。
-
-## 変換関数の使用方法
-
-両方の関数は、値をResultに変換するマッパー関数を受け入れます。
-
-### `sequence`
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const parseNumbers = (strings: string[]) => {
-  return Result.sequence(strings, (str) => {
-    const num = parseInt(str, 10);
-    if (Number.isNaN(num)) {
-      return Result.fail(`無効な数値: ${str}`);
-    }
-    return Result.succeed(num);
-  });
-};
-
-parseNumbers(['1', '2', '3']);
-// { type: 'Success', value: [1, 2, 3] }
-
-parseNumbers(['1', 'abc', 'xyz']);
-// { type: 'Failure', error: '無効な数値: abc' }
-```
-
-### `collect`
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const parseNumbers = (strings: string[]) => {
-  return Result.collect(strings, (str) => {
-    const num = parseInt(str, 10);
-    if (Number.isNaN(num)) {
-      return Result.fail(`無効な数値: ${str}`);
-    }
-    return Result.succeed(num);
-  });
-};
-
-parseNumbers(['1', '2', '3']);
-// { type: 'Success', value: [1, 2, 3] }
-
-parseNumbers(['1', 'abc', 'xyz']);
-// { type: 'Failure', error: ['無効な数値: abc', '無効な数値: xyz'] }
-```
-
-## 非同期の動作
-
-`ResultAsync`（非同期Result）を使用する場合、`sequence` と `collect` は異なる動作をします。
-
-### `sequence` - 順次実行
-
-`sequence` は非同期操作を**順次**（次々と）実行します。
-各 `Result` は次の処理の前に待機され、失敗が発生すると即座に実行が停止します。
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const fetchUser = (id: string): Result.ResultAsync<string, string> =>
-  Promise.resolve(Result.succeed(`User ${id}`));
-
-const fetchOrder = (id: string): Result.ResultAsync<string, string> =>
-  Promise.resolve(Result.succeed(`Order ${id}`));
-
-// 操作は順次実行される：fetchUserが完了してからfetchOrderが開始
-const result = await Result.sequence({
-  user: fetchUser('1'),
-  order: fetchOrder('100'),
-});
-// { type: 'Success', value: { user: 'User 1', order: 'Order 100' } }
-```
-
-### `collect` - 並列実行
-
-`collect` は `Promise.all()` を使用して非同期操作を**並列**で実行します。
-すべての操作が同時に開始され、すべての結果がまとめて待機されます。
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const fetchUser = (id: string): Result.ResultAsync<string, string> =>
-  Promise.resolve(Result.succeed(`User ${id}`));
-
-const fetchOrder = (id: string): Result.ResultAsync<string, string> =>
-  Promise.resolve(Result.succeed(`Order ${id}`));
-
-// 操作は並列で実行される：両方が同時に開始
+// 両方のリクエストがすぐに開始され、並行して実行される
 const result = await Result.collect({
-  user: fetchUser('1'),
-  order: fetchOrder('100'),
+  user: fetchUser(userId),
+  orders: fetchOrders(userId),
 });
-// { type: 'Success', value: { user: 'User 1', order: 'Order 100' } }
+// 型: Result.Result<{ user: User; orders: Order[] }, FetchError[]>
 ```
 
-### `sequence` と `collect` 関数の使い分け
+- `collect` はすべての完了を待ち、すべてのエラーを報告します。
+- `sequence` は順番に完了を待ち、失敗が見つかった時点で結果を返します。他の処理がキャンセルされるわけではなく、その結果が無視されるだけです。
 
-| シナリオ                          | 推奨         |
-|-------------------------------|------------|
-| バリデーションですべてのエラーが必要            | `collect`  |
-| パフォーマンス向上のために並列実行が必要          | `collect`  |
-| 操作が順序に依存する（例：最初の失敗で停止する必要がある） | `sequence` |
-| 失敗の可能性が高い場合に不要な処理を最小化したい      | `sequence` |
+### マッパー関数を使う場合
+
+マッパー関数を使うと、処理を開始するのは `sequence` や `collect` 自身になるため、違いがはっきりと現れます。
+
+```ts
+type User = { id: string; name: string };
+type FetchError = { source: string; message: string };
+declare const fetchUser: (id: string) => Result.ResultAsync<User, FetchError>;
+declare const runMigration: (name: string) => Result.ResultAsync<void, 'MigrationFailed'>;
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+
+// collect: すべてのリクエストが一斉に開始され、並列に実行される
+const users = await Result.collect(['u1', 'u2', 'u3'], fetchUser);
+
+// sequence: 各マイグレーションは前のマイグレーションが成功してから開始され、
+// 失敗した後の残りのマイグレーションはスキップされる
+const migrations = await Result.sequence(
+  ['001-create-users', '002-add-email', '003-create-posts'],
+  runMigration,
+);
+```
+
+:::tip
+失敗した後に後続の処理を開始させたくない場合は、処理を事前に作成しないでください。
+マッパー関数を指定した `sequence` を使うか、[`andThen`](../chaining/chaining-results) や [`bind`](./building-objects) でステップをつなげましょう。
+:::
+
+## `sequence` と `collect` の使い分け
+
+| シナリオ                                                       | 推奨                              |
+|----------------------------------------------------------------|-----------------------------------|
+| フォームのバリデーションなど、すべてのエラーを一度に報告したい | `collect`                         |
+| 互いに独立した非同期処理を並列に実行したい                     | `collect`                         |
+| 最初のエラーだけが分かればよい                                 | `sequence`                        |
+| 処理を 1 つずつ実行し、失敗したら残りをスキップしたい          | マッパー関数を指定した `sequence` |
 
 ## リファレンス
 
-| 関数                                                           | 目的                    |
-|--------------------------------------------------------------|-----------------------|
-| [sequence(array)](../../../../api/functions/Result.sequence) | 最初の失敗で停止してそれを返す       |
-| [collect(array)](../../../../api/functions/Result.collect)   | すべての結果を処理してすべてのエラーを収集 |
+| API                                                           | 用途                                           |
+|---------------------------------------------------------------|------------------------------------------------|
+| [sequence(values)](../../../../api/functions/Result.sequence) | 最初の失敗で停止しながら Result をまとめる     |
+| [collect(values)](../../../../api/functions/Result.collect)   | すべてのエラーを収集しながら Result をまとめる |

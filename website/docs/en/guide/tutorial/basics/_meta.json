@@ -18,5 +18,10 @@
     "type": "file",
     "name": "wrapping-functions",
     "label": "Wrapping Functions"
+  },
+  {
+    "type": "file",
+    "name": "parsing-values",
+    "label": "Parsing Values"
   }
 ]

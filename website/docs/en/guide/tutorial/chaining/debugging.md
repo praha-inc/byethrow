@@ -1,73 +1,66 @@
 ---
-description: Using Result.inspect and Result.inspectError to log values at each pipeline step without altering the Result flow.
+description: Running side effects such as logging at any step of a pipeline with Result.inspect and Result.inspectError, without changing the Result that flows through it.
 ---
 
 # Debugging
 
-When debugging complex pipelines, you need to see what's happening at each step. The `inspect` and `inspectError` functions let you peek at values without affecting the flow.
+When a pipeline doesn't behave as expected, you want to see the value at each step.
+`inspect` and `inspectError` let you run a side effect, such as logging, without affecting the `Result` that flows through the pipeline.
 
-## `inspect` - Peek at Success Values
+## Inspecting Success Values with `inspect`
 
-`inspect` runs a side effect function on success values but always returns the original result unchanged:
+`inspect` calls the given function with the success value and then returns the original `Result` unchanged.
+If the `Result` is a `Failure`, the function is not called:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.pipe(
+const success = Result.pipe(
   Result.succeed(42),
   Result.inspect((value) => console.log('Value:', value)),
-  Result.map((x) => x * 2),
+  Result.map((value) => value * 2),
 );
 // Console: "Value: 42"
 // { type: 'Success', value: 84 }
-```
 
-On failure, `inspect` does nothing:
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.pipe(
+const failure = Result.pipe(
   Result.fail('error'),
   Result.inspect((value) => console.log('Value:', value)), // Not called
 );
 // { type: 'Failure', error: 'error' }
 ```
 
-## `inspectError` - Peek at Error Values
+## Inspecting Errors with `inspectError`
 
-`inspectError` is the counterpart for failure values:
+`inspectError` is the counterpart of `inspect` for errors.
+It calls the given function with the error value, and does nothing for a `Success`:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.pipe(
+const failure = Result.pipe(
   Result.fail('Something went wrong'),
   Result.inspectError((error) => console.error('Error:', error)),
 );
 // Console: "Error: Something went wrong"
 // { type: 'Failure', error: 'Something went wrong' }
-```
 
-On success, `inspectError` does nothing:
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.pipe(
+const success = Result.pipe(
   Result.succeed(42),
   Result.inspectError((error) => console.error('Error:', error)), // Not called
 );
 // { type: 'Success', value: 42 }
 ```
 
-## Example: Trace the Pipeline
+## Example: Tracing a Pipeline
+
+Insert `inspect` between the steps you want to observe, and `inspectError` at the end to log whichever step failed:
 
 ```ts
 type Input = { data: string };
 type Transformed = { transformedData: string };
 type Saved = { id: string };
-declare const validate: (input: Input) => Result.Result<Input, 'ValidateFailed'>;
+declare const validate: (input: Input) => Result.Result<void, 'ValidateFailed'>;
 declare const transform: (input: Input) => Result.Result<Transformed, 'TransformFailed'>;
 declare const save: (input: Transformed) => Result.Result<Saved, 'SaveFailed'>;
 // ---cut-before---
@@ -78,7 +71,6 @@ const processData = (input: Input) => {
     Result.succeed(input),
     Result.inspect((value) => console.log('Input:', value)),
     Result.andThrough(validate),
-    Result.inspect((value) => console.log('After validation:', value)),
     Result.andThen(transform),
     Result.inspect((value) => console.log('After transform:', value)),
     Result.andThen(save),
@@ -88,9 +80,15 @@ const processData = (input: Input) => {
 };
 ```
 
+## Things to Keep in Mind
+
+- **The return value is ignored.** Even if the function returns a `Failure`, the original `Result` is passed on. If a side effect can fail and its failure matters, use [`andThrough`](./validation-recovery) or [`orThrough`](./validation-recovery) instead.
+- **Async functions are awaited.** If the function returns a `Promise`, the pipeline waits for it before continuing, and becomes asynchronous.
+- **Not only for debugging.** Placing `inspect` and `inspectError` at the end of a pipeline is also a simple way to act on the final outcome, such as printing output or setting an exit code. See the [Examples](../../../examples/parse-package-json) for this pattern.
+
 ## References
 
-| Function                                                          | Purpose                                |
+| API                                                               | Purpose                                |
 |-------------------------------------------------------------------|----------------------------------------|
 | [inspect(fn)](../../../../api/functions/Result.inspect)           | Run a side effect on the success value |
 | [inspectError(fn)](../../../../api/functions/Result.inspectError) | Run a side effect on the error value   |

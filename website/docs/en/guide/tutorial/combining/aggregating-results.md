@@ -1,14 +1,16 @@
 ---
-description: Combining multiple Results with Result.sequence (stop on first failure) and Result.collect (gather all errors, parallel async).
+description: Combining multiple Results into one with Result.sequence, which stops at the first failure, and Result.collect, which gathers every error — including mapper functions and how each handles async operations.
 ---
 
 # Aggregating Results
 
-When you have multiple Results that need to be combined, `sequence` and `collect` are your go-to functions. They both aggregate Results, but differ in how they handle failures.
+When you have several Results, such as the outcomes of multiple validations or requests, you often want to combine them into a single `Result`.
+`sequence` and `collect` both do this. They accept an array or an object of Results, and differ in how they handle failures.
 
-## `sequence` - Stop at First Failure
+## Stopping at the First Failure with `sequence`
 
-`sequence` processes Results and stops at the first failure:
+`sequence` returns a `Success` containing all values if every `Result` succeeds.
+Otherwise, it returns the **first** failure it encounters:
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -21,76 +23,31 @@ const success = Result.sequence([
 ]);
 // { type: 'Success', value: [1, 2, 3] }
 
-// One fails - stops immediately
+// Returns the first failure
 const failure = Result.sequence([
   Result.succeed(1),
-  Result.fail('error'),
-  Result.succeed(3), // Never evaluated in lazy mode
+  Result.fail('error1'),
+  Result.fail('error2'),
 ]);
-// { type: 'Failure', error: 'error' }
+// { type: 'Failure', error: 'error1' }
 ```
 
-### With Objects
+When given an object, the success value is an object with the same keys:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-// All succeed
-const success = Result.sequence({
-  name: Result.succeed('Alice'),
-  age: Result.succeed(30),
-  email: Result.succeed('alice@example.com'),
-});
-// { type: 'Success', value: { name: 'Alice', age: 30, email: 'alice@example.com' } }
-
-// One fails - stops immediately
 const result = Result.sequence({
   name: Result.succeed('Alice'),
-  age: Result.fail('error'),
-  email: Result.succeed('alice@example.com'), // Never evaluated in lazy mode
+  age: Result.succeed(30),
 });
-// { type: 'Failure', error: 'error' }
+// { type: 'Success', value: { name: 'Alice', age: 30 } }
 ```
 
-### Example: Purchase Processing Pipeline
+## Collecting Every Error with `collect`
 
-A common use case is a purchase flow where multiple independent operations must all succeed. With `sequence`, if any step fails, the remaining operations are skipped:
-
-```ts
-type User = { id: string; email: string };
-type Product = { id: string; name: string };
-type Stock = { productId: string; reservedAt: Date };
-type Order = { id: string; orderedAt: Date };
-type Confirmation = { id: string; sentAt: Date };
-declare const reserveStock: (product: Product) => Result.ResultAsync<Stock, 'OutOfStock'>;
-declare const createOrder: (user: User, product: Product) => Result.ResultAsync<Order, 'OrderFailed'>;
-declare const sendConfirmationEmail: (user: User, product: Product) => Result.ResultAsync<Confirmation, 'EmailFailed'>;
-const user: User = { id: 'user-1', email: 'user-1@example.com' };
-const book: Product = { id: 'product-2', name: 'Book' };
-const gadget: Product = { id: 'product-1', name: 'Gadget' };
-// ---cut-before---
-import { Result } from '@praha/byethrow';
-
-const processPurchase = (user: User, product: Product) => {
-  return Result.sequence({
-    stock: reserveStock(product),
-    order: createOrder(user, product),
-    confirmation: sendConfirmationEmail(user, product)
-  });
-};
-
-// All succeed:
-await processPurchase(user, book);
-// { type: 'Success', value: { stock: {...}, order: {...}, confirmation: {...} } }
-
-// If reserveStock fails → stops immediately, order and email are not processed
-await processPurchase(user, gadget);
-// { type: 'Failure', error: 'OutOfStock' }
-```
-
-## `collect` - Gather All Errors
-
-`collect` processes **all** Results and gathers all errors:
+`collect` also returns a `Success` containing all values if every `Result` succeeds.
+Otherwise, it returns a `Failure` containing an array of **all** errors:
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -103,7 +60,7 @@ const success = Result.collect([
 ]);
 // { type: 'Success', value: [1, 2, 3] }
 
-// Multiple failures - collects all errors
+// Returns every failure
 const failure = Result.collect([
   Result.succeed(1),
   Result.fail('error1'),
@@ -112,182 +69,125 @@ const failure = Result.collect([
 // { type: 'Failure', error: ['error1', 'error2'] }
 ```
 
-### With Objects
+### Example: Form Validation
+
+`collect` is ideal for validating a form, where the user should see every problem at once rather than one at a time:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-// All succeed
-const success = Result.collect({
-  name: Result.succeed('Alice'),
-  age: Result.succeed(30),
-  email: Result.succeed('alice@example.com'),
-});
-// { type: 'Success', value: { name: 'Alice', age: 30, email: 'alice@example.com' } }
+type SignUpInput = { name: string; email: string; password: string };
 
-// Multiple failures - collects all errors
-const result = Result.collect({
-  name: Result.fail('Name is required'),
-  age: Result.fail('Invalid age'),
-  email: Result.succeed('alice@example.com'),
+declare const validateName: (name: string) => Result.Result<string, 'NameRequired'>;
+declare const validateEmail: (email: string) => Result.Result<string, 'InvalidEmail'>;
+declare const validatePassword: (password: string) => Result.Result<string, 'PasswordTooShort'>;
+
+const validateSignUp = (input: SignUpInput) => Result.collect({
+  name: validateName(input.name),
+  email: validateEmail(input.email),
+  password: validatePassword(input.password),
 });
-// { type: 'Failure', error: ['Name is required', 'Invalid age'] }
+
+validateSignUp({ name: '', email: 'invalid', password: 'correct horse battery staple' });
+// { type: 'Failure', error: ['NameRequired', 'InvalidEmail'] }
 ```
 
-### Example: Parallel API Data Aggregation
+## Using a Mapper Function
 
-A common use case is fetching data from multiple independent APIs. With `collect`, all API calls are made in parallel, and if multiple services fail, all errors are reported together:
-
-```ts
-type User = { id: string; name: string };
-type Orders = { userId: string; items: string[] };
-type Reviews = { userId: string; count: number };
-type FetchError = { source: string; message: string };
-declare const fetchUser: (id: string) => Result.ResultAsync<User, FetchError>;
-declare const fetchOrders: (userId: string) => Result.ResultAsync<Orders, FetchError>;
-declare const fetchReviews: (userId: string) => Result.ResultAsync<Reviews, FetchError>;
-// ---cut-before---
-import { Result } from '@praha/byethrow';
-
-const fetchUserDashboard = async (userId: string) => {
-  // All three API calls execute in parallel
-  return Result.collect({
-    user: fetchUser(userId),
-    orders: fetchOrders(userId),
-    reviews: fetchReviews(userId),
-  });
-};
-
-// All APIs succeed:
-await fetchUserDashboard('user-123');
-// {
-//   type: 'Success',
-//   value: {
-//     user: { id: 'user-123', name: 'Alice' },
-//     orders: [{ id: 'order-123', name: 'Product A' }],
-//     reviews: [{ id: 'review-123', comment: 'Great!' }]
-//   },
-// }
-
-// Multiple APIs fail - all errors are collected:
-await fetchUserDashboard('invalid-user');
-// {
-//   type: 'Failure',
-//   error: [
-//     'User not found',
-//     'Orders fetch failed',
-//   ],
-// }
-```
-
-Since `collect` executes async operations in parallel, all API calls start simultaneously—improving performance compared to sequential execution. Additionally, if multiple services fail, all errors are reported together, making debugging easier.
-
-## Using with Mapper Functions
-
-Both functions accept a mapper function to transform values into Results:
-
-### `sequence` with Mapper
+Both functions also accept an array of plain values and a mapper function that converts each value into a `Result`:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const parseNumbers = (strings: string[]) => {
-  return Result.sequence(strings, (str) => {
-    const num = parseInt(str, 10);
-    if (Number.isNaN(num)) {
-      return Result.fail(`Invalid number: ${str}`);
-    }
-    return Result.succeed(num);
-  });
+const parseNumber = (input: string) => {
+  const number = Number(input);
+  if (Number.isNaN(number)) {
+    return Result.fail(`Invalid number: ${input}`);
+  }
+  return Result.succeed(number);
 };
 
-parseNumbers(['1', '2', '3']);
-// { type: 'Success', value: [1, 2, 3] }
-
-parseNumbers(['1', 'abc', 'xyz']);
+Result.sequence(['1', 'abc', 'xyz'], parseNumber);
 // { type: 'Failure', error: 'Invalid number: abc' }
-```
 
-### `collect` with Mapper
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const parseNumbers = (strings: string[]) => {
-  return Result.collect(strings, (str) => {
-    const num = parseInt(str, 10);
-    if (Number.isNaN(num)) {
-      return Result.fail(`Invalid number: ${str}`);
-    }
-    return Result.succeed(num);
-  });
-};
-
-parseNumbers(['1', '2', '3']);
-// { type: 'Success', value: [1, 2, 3] }
-
-parseNumbers(['1', 'abc', 'xyz']);
+Result.collect(['1', 'abc', 'xyz'], parseNumber);
 // { type: 'Failure', error: ['Invalid number: abc', 'Invalid number: xyz'] }
 ```
 
+With `sequence`, the mapper is called for one element at a time and is **not called for the remaining elements** once a failure occurs.
+With `collect`, the mapper is called for every element.
+
 ## Async Behavior
 
-When working with `ResultAsync` (asynchronous Results), `sequence` and `collect` behave differently:
+Both functions accept `ResultAsync` values and return a `ResultAsync` if any input is asynchronous.
+How the async operations run depends on how you pass them.
 
-### `sequence` - Sequential Execution
+### Passing Results Directly
 
-`sequence` executes async operations **sequentially** (one after another). Each Result is awaited before processing the next one, and execution stops immediately upon encountering a failure:
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const fetchUser = (id: string): Result.ResultAsync<string, string> =>
-  Promise.resolve(Result.succeed(`User ${id}`));
-
-const fetchOrder = (id: string): Result.ResultAsync<string, string> =>
-  Promise.resolve(Result.succeed(`Order ${id}`));
-
-// Operations are executed sequentially: fetchUser completes, then fetchOrder starts
-const result = await Result.sequence({
-  user: fetchUser('1'),
-  order: fetchOrder('100'),
-});
-// { type: 'Success', value: { user: 'User 1', order: 'Order 100' } }
-```
-
-### `collect` - Parallel Execution
-
-`collect` executes async operations **in parallel** using `Promise.all()`. All operations start simultaneously and all results are awaited together:
+When you write `fetchUser(id)` inside an array or object literal, the request starts right there, before `sequence` or `collect` is even called.
+Both functions only decide how to **wait** for operations that are already running:
 
 ```ts
+type User = { id: string; name: string };
+type Order = { id: string };
+type FetchError = { source: string; message: string };
+declare const fetchUser: (id: string) => Result.ResultAsync<User, FetchError>;
+declare const fetchOrders: (userId: string) => Result.ResultAsync<Order[], FetchError>;
+declare const userId: string;
+// ---cut-before---
 import { Result } from '@praha/byethrow';
 
-const fetchUser = (id: string): Result.ResultAsync<string, string> =>
-  Promise.resolve(Result.succeed(`User ${id}`));
-
-const fetchOrder = (id: string): Result.ResultAsync<string, string> =>
-  Promise.resolve(Result.succeed(`Order ${id}`));
-
-// Operations are executed in parallel: both start at the same time
+// Both requests start immediately and run concurrently
 const result = await Result.collect({
-  user: fetchUser('1'),
-  order: fetchOrder('100'),
+  user: fetchUser(userId),
+  orders: fetchOrders(userId),
 });
-// { type: 'Success', value: { user: 'User 1', order: 'Order 100' } }
+// Type: Result.Result<{ user: User; orders: Order[] }, FetchError[]>
 ```
 
-### Choosing Between `sequence` and `collect`
+- `collect` waits for all of them and reports every error.
+- `sequence` waits for them in order and returns as soon as it finds a failure. The other operations are not cancelled; their results are simply ignored.
 
-| Scenario                                                        | Recommended |
-|-----------------------------------------------------------------|-------------|
-| Need all errors for validation                                  | `collect`   |
-| Want parallel execution for better performance                  | `collect`   |
-| Operations depend on order (e.g., must stop on first failure)   | `sequence`  |
-| Want to minimize unnecessary work when failure is likely        | `sequence`  |
+### Using a Mapper Function
+
+With a mapper function, the operations are started by `sequence` or `collect` itself, so the difference becomes significant:
+
+```ts
+type User = { id: string; name: string };
+type FetchError = { source: string; message: string };
+declare const fetchUser: (id: string) => Result.ResultAsync<User, FetchError>;
+declare const runMigration: (name: string) => Result.ResultAsync<void, 'MigrationFailed'>;
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+
+// collect: all requests start at once and run in parallel
+const users = await Result.collect(['u1', 'u2', 'u3'], fetchUser);
+
+// sequence: each migration starts only after the previous one succeeded,
+// and the remaining migrations are skipped after a failure
+const migrations = await Result.sequence(
+  ['001-create-users', '002-add-email', '003-create-posts'],
+  runMigration,
+);
+```
+
+:::tip
+If later operations must not start after a failure, don't create them up front.
+Use `sequence` with a mapper function, or chain the steps with [`andThen`](../chaining/chaining-results) or [`bind`](./building-objects).
+:::
+
+## Choosing Between `sequence` and `collect`
+
+| Scenario                                                    | Recommended              |
+|-------------------------------------------------------------|--------------------------|
+| Report every error at once, such as for form validation     | `collect`                |
+| Run independent async operations in parallel                | `collect`                |
+| Only the first error matters                                | `sequence`               |
+| Run operations one by one and skip the rest after a failure | `sequence` with a mapper |
 
 ## References
 
-| Function                                                     | Purpose                                   |
-|--------------------------------------------------------------|-------------------------------------------|
-| [sequence(array)](../../../../api/functions/Result.sequence) | Stop at the first failure and return it   |
-| [collect(array)](../../../../api/functions/Result.collect)   | Process all results and gather all errors |
+| API                                                           | Purpose                                        |
+|---------------------------------------------------------------|------------------------------------------------|
+| [sequence(values)](../../../../api/functions/Result.sequence) | Combine Results, stopping at the first failure |
+| [collect(values)](../../../../api/functions/Result.collect)   | Combine Results, gathering every error         |

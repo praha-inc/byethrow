@@ -1,74 +1,66 @@
 ---
-description: 'Result.inspectとResult.inspectErrorを使ってパイプラインの各ステップで値を副作用なく確認するデバッグ手法。'
+description: 'Result.inspect と Result.inspectError を使い、パイプラインを流れる Result を変えずに、任意のステップでログ出力などの副作用を実行する方法を解説します。'
 ---
 
-# Result をデバッグする
+# デバッグ
 
-複雑なパイプラインをデバッグする際、各ステップで何が起こっているかを確認する必要があります。
-`inspect` と `inspectError` 関数を使うと、フローに影響を与えずに値を確認できます。
+パイプラインが期待どおりに動かないときは、各ステップの値を確認したくなります。
+`inspect` と `inspectError` を使うと、パイプラインを流れる `Result` に影響を与えずに、ログ出力などの副作用を実行できます。
 
-## `inspect` - 成功値の確認
+## `inspect` で成功値を確認する
 
-`inspect` は成功値に対して副作用関数を実行しますが、常に元の結果を変更せずに返します。
+`inspect` は成功値を引数に渡された関数を呼び出し、元の `Result` を変更せずに返します。
+`Result` が `Failure` の場合、関数は呼び出されません。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.pipe(
+const success = Result.pipe(
   Result.succeed(42),
   Result.inspect((value) => console.log('Value:', value)),
-  Result.map((x) => x * 2),
+  Result.map((value) => value * 2),
 );
 // コンソール: "Value: 42"
 // { type: 'Success', value: 84 }
-```
 
-失敗時、`inspect` は何もしません。
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.pipe(
+const failure = Result.pipe(
   Result.fail('error'),
-  Result.inspect((value) => console.log('Value:', value)), // 呼ばれない
+  Result.inspect((value) => console.log('Value:', value)), // 呼び出されない
 );
 // { type: 'Failure', error: 'error' }
 ```
 
-## `inspectError` - 失敗値の確認
+## `inspectError` でエラーを確認する
 
-`inspectError` は失敗値に対して副作用関数を実行しますが、常に元の結果を変更せずに返します。
+`inspectError` は、エラーに対する `inspect` の対になる関数です。
+エラー値を引数に渡された関数を呼び出し、`Success` の場合は何もしません。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.pipe(
+const failure = Result.pipe(
   Result.fail('Something went wrong'),
   Result.inspectError((error) => console.error('Error:', error)),
 );
 // コンソール: "Error: Something went wrong"
 // { type: 'Failure', error: 'Something went wrong' }
-```
 
-成功時、`inspectError` は何もしません。
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.pipe(
+const success = Result.pipe(
   Result.succeed(42),
-  Result.inspectError((error) => console.error('Error:', error)), // 呼ばれない
+  Result.inspectError((error) => console.error('Error:', error)), // 呼び出されない
 );
 // { type: 'Success', value: 42 }
 ```
 
-## 例：パイプラインのトレース
+## 例：パイプラインを追跡する
+
+観察したいステップの間に `inspect` を挟み、末尾に `inspectError` を置くと、どのステップで失敗してもログに残せます。
 
 ```ts
 type Input = { data: string };
 type Transformed = { transformedData: string };
 type Saved = { id: string };
-declare const validate: (input: Input) => Result.Result<Input, 'ValidateFailed'>;
+declare const validate: (input: Input) => Result.Result<void, 'ValidateFailed'>;
 declare const transform: (input: Input) => Result.Result<Transformed, 'TransformFailed'>;
 declare const save: (input: Transformed) => Result.Result<Saved, 'SaveFailed'>;
 // ---cut-before---
@@ -79,7 +71,6 @@ const processData = (input: Input) => {
     Result.succeed(input),
     Result.inspect((value) => console.log('Input:', value)),
     Result.andThrough(validate),
-    Result.inspect((value) => console.log('After validation:', value)),
     Result.andThen(transform),
     Result.inspect((value) => console.log('After transform:', value)),
     Result.andThen(save),
@@ -89,9 +80,15 @@ const processData = (input: Input) => {
 };
 ```
 
+## 注意点
+
+- **戻り値は無視されます。** 関数が `Failure` を返しても、元の `Result` がそのまま次に渡されます。副作用が失敗する可能性があり、その失敗が重要な場合は、代わりに [`andThrough`](./validation-recovery) や [`orThrough`](./validation-recovery) を使ってください。
+- **非同期関数は待機されます。** 関数が `Promise` を返すと、パイプラインはその完了を待ってから次に進み、非同期になります。
+- **デバッグ専用ではありません。** パイプラインの末尾に `inspect` と `inspectError` を置くのは、出力の表示や終了コードの設定など、最終的な結果に応じた処理を行うシンプルな方法でもあります。このパターンは[実装例](../../../examples/parse-package-json)を参照してください。
+
 ## リファレンス
 
-| 関数                                                                | 目的               |
-|-------------------------------------------------------------------|------------------|
-| [inspect(fn)](../../../../api/functions/Result.inspect)           | 成功値に対して副作用を実行する  |
+| API                                                               | 用途                             |
+|-------------------------------------------------------------------|----------------------------------|
+| [inspect(fn)](../../../../api/functions/Result.inspect)           | 成功値に対して副作用を実行する   |
 | [inspectError(fn)](../../../../api/functions/Result.inspectError) | エラー値に対して副作用を実行する |

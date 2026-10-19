@@ -1,14 +1,15 @@
 ---
-description: Accumulating Result values into typed objects step by step using the Result.do and Result.bind pattern.
+description: Building an object step by step from multiple Results with Result.do and Result.bind, where each step can use the values computed before it.
 ---
 
 # Building Objects
 
-When building complex objects where each field depends on successful computation, the `do`/`bind` pattern provides an elegant solution. It lets you accumulate successful results into a growing object.
+Sometimes you need several values, each produced by an operation that can fail, and later steps depend on earlier ones.
+The `do` / `bind` pattern collects these values into a single object, one field at a time.
 
-## What is `do`?
+## Starting with `do`
 
-`do` creates a starting point—a `Success` with an empty object:
+`do` creates a `Success` holding an empty object. It is the starting point of the pattern:
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -17,13 +18,13 @@ const start = Result.do();
 // { type: 'Success', value: {} }
 ```
 
-## What is `bind`?
+## Adding Fields with `bind`
 
-`bind` adds a new field to the accumulated object. It:
-1. Receives the current accumulated object
-2. Runs a computation that returns a Result
-3. If successful, merges the result into the object under the given key
-4. If failed, short-circuits and returns the failure
+`bind(name, fn)` adds a field to the accumulated object:
+
+1. It calls `fn` with the object accumulated so far.
+2. If `fn` returns a `Success`, its value is added to the object under `name`.
+3. If `fn` returns a `Failure`, the pipeline stops and that `Failure` is returned.
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -38,7 +39,7 @@ const result = Result.pipe(
 
 ### Using Previous Values
 
-The power of `bind` is that each step can access previous values:
+The key feature of `bind` is that each step can use the fields added before it:
 
 ```ts
 declare const fetchUser: (userId: string) => Result.ResultAsync<{ id: string; profileId: string }, 'UserNotFound'>;
@@ -46,16 +47,17 @@ declare const fetchProfile: (profileId: string) => Result.ResultAsync<{ bio: str
 // ---cut-before---
 import { Result } from '@praha/byethrow';
 
-const result = Result.pipe(
+const result = await Result.pipe(
   Result.do(),
-  Result.bind('user', () => fetchUser('user-123')),
-  Result.bind('profile', ({ user }) => fetchProfile(user.profileId)), // Uses user!
+  Result.bind('user', () => fetchUser('u123')),
+  Result.bind('profile', ({ user }) => fetchProfile(user.profileId)), // Uses `user`
 );
+// Type: Result.Result<{ user: { id: string; profileId: string }; profile: { bio: string } }, 'UserNotFound' | 'ProfileNotFound'>
 ```
 
-### Failure Short-Circuits
+### Failures Short-Circuit
 
-If any `bind` fails, subsequent binds are skipped:
+If any `bind` fails, the remaining steps are skipped:
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -63,16 +65,15 @@ import { Result } from '@praha/byethrow';
 const result = Result.pipe(
   Result.do(),
   Result.bind('a', () => Result.succeed(1)),
-  Result.bind('b', () => Result.fail('Error!')),  // Fails here
-  Result.bind('c', () => Result.succeed(3)),      // Skipped
-  Result.bind('d', () => Result.succeed(4)),      // Skipped
+  Result.bind('b', () => Result.fail('Error!')), // Fails here
+  Result.bind('c', () => Result.succeed(3)),     // Skipped
 );
 // { type: 'Failure', error: 'Error!' }
 ```
 
-### Example: Fetching Related Data
+## Example: Fetching Related Data
 
-When you need to fetch multiple related resources and combine them:
+When one piece of data is needed to fetch another, `bind` keeps every intermediate value available until the end:
 
 ```ts
 declare const fetchOrder: (orderId: string) => Result.ResultAsync<{ id: string; userId: string; productIds: string[] }, 'OrderNotFound'>;
@@ -98,16 +99,20 @@ const getOrderDetails = (orderId: string): Result.ResultAsync<OrderDetails, 'Ord
       orderId: order.id,
       customerName: user.name,
       products,
-      totalPrice: products.reduce((sum, p) => sum + p.price, 0),
+      totalPrice: products.reduce((sum, product) => sum + product.price, 0),
     })),
   );
 };
-// Uses order data to fetch user and products, then combines everything
 ```
+
+:::tip
+`bind` runs its steps one after another, which is necessary when a step depends on a previous one.
+If the operations are independent of each other, `sequence` or `collect` on the [next page](./aggregating-results) is a better fit, since `collect` can also run async operations in parallel.
+:::
 
 ## References
 
-| Function                                                | Purpose                         |
-|---------------------------------------------------------|---------------------------------|
-| [do()](../../../../api/functions/Result.do)             | Start with `Success<{}>`        |
-| [bind(name, fn)](../../../../api/functions/Result.bind) | Add field to accumulated object |
+| API                                                     | Purpose                                          |
+|---------------------------------------------------------|--------------------------------------------------|
+| [do()](../../../../api/functions/Result.do)             | Create a success result holding an empty object  |
+| [bind(name, fn)](../../../../api/functions/Result.bind) | Add a field computed from the accumulated object |

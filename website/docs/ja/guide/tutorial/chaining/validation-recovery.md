@@ -1,76 +1,61 @@
 ---
-description: 'andThroughで元の値を保持しながらバリデーションを実行し、orThroughで元のエラーを保持しながらクリーンアップ処理を行う方法。'
+description: '元の Result を保ったまま失敗しうる追加のステップを実行する方法。検証や副作用のための Result.andThrough と、失敗後の後処理やロールバックのための Result.orThrough を解説します。'
 ---
 
-# 検証とエラーからの回復
+# 検証と後処理
 
-`andThrough` と `orThrough` 関数を使うと、元の結果値を保持しながら、検証や回復のための追加計算を実行できます。
+すでに持っている値を置き換えずに、失敗しうる追加のステップを実行したいことがあります。
+`andThrough` と `orThrough` はそのようなステップを実行し、ステップが成功した場合は元の `Result` を保持します。
 
-## `andThrough` - 変換なしの検証
+## `andThrough` でチェックを実行する
 
-`andThrough` 関数は成功値を使って追加の計算を実行しますが、追加の計算が成功した場合は**元の結果を返します**。
-元の結果または副作用の結果のいずれかが `Failure` の場合、その失敗が返されます。
+`andThrough` は `andThen` と同じように、成功値を引数に渡された関数を呼び出します。
+違いは、関数が成功したときの挙動です。
 
-これは、成功時にメインの結果を変更せずに、バリデーションや副作用を実行する場合に便利です。
-
-### 基本的な使い方
+- 関数が `Success` を返した場合、その値は破棄され、**元の** `Success` が返されます。
+- 関数が `Failure` を返した場合、その `Failure` が返されます。
+- 入力が `Failure` の場合、関数は呼び出されません。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.pipe(
+const checkPositive = (value: number) => {
+  return 0 < value ? Result.succeed() : Result.fail('Must be positive');
+};
+
+const passed = Result.pipe(
   Result.succeed(5),
-  Result.andThrough((value) => {
-    return 0 < value ? Result.succeed() : Result.fail('Must be > 0');
-  }),
+  Result.andThrough(checkPositive),
 );
 // { type: 'Success', value: 5 } - 元の値が保持される
-```
 
-### 入力が `Failure` の場合
+const rejected = Result.pipe(
+  Result.succeed(-10),
+  Result.andThrough(checkPositive),
+);
+// { type: 'Failure', error: 'Must be positive' }
 
-入力が `Failure` の場合、`andThrough` は何もせず、`Failure` をそのまま返します。
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.pipe(
+const skipped = Result.pipe(
   Result.fail('error'),
-  Result.andThrough((value) => {
-    return 0 < value ? Result.succeed() : Result.fail('Must be > 0');
-  }),
+  Result.andThrough(checkPositive), // 呼び出されない
 );
 // { type: 'Failure', error: 'error' }
 ```
 
-### 関数が `Failure` を返す場合
-
-副作用が `Failure` を返すと、その失敗が代わりに返されます。
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.pipe(
-  Result.succeed(-10),
-  Result.andThrough((value) => {
-    return 0 < value ? Result.succeed() : Result.fail('Must be > 0');
-  }),
-);
-// { type: 'Failure', error: 'Must be > 0' }
-```
+このため `andThrough` は、バリデーションや、監査ログの書き込みのような失敗しうる副作用に適しています。どちらの場合も、次のステップでは元の値が必要です。
 
 ### 例：複数のバリデーション
 
-よくある使い方として、値に対して複数のバリデーションを実行する例があります。
+各バリデーションは値が受け入れ可能かどうかを伝えるだけなので、単に `Result.Result<void, E>` を返せば十分です。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
 type User = { name: string; age: number; email: string };
 
-declare const validateName: (user: User) => Result.Result<void, 'Invalid name'>;
-declare const validateAge: (user: User) => Result.Result<void, 'Invalid age'>;
-declare const validateEmail: (user: User) => Result.Result<void, 'Invalid email'>;
+declare const validateName: (user: User) => Result.Result<void, 'InvalidName'>;
+declare const validateAge: (user: User) => Result.Result<void, 'InvalidAge'>;
+declare const validateEmail: (user: User) => Result.Result<void, 'InvalidEmail'>;
 
 const validateUser = (user: User) => Result.pipe(
   Result.succeed(user),
@@ -78,90 +63,80 @@ const validateUser = (user: User) => Result.pipe(
   Result.andThrough(validateAge),
   Result.andThrough(validateEmail),
 );
-// すべてのバリデーションが通れば元のユーザーを返し、そうでなければ最初のエラーを返す
+// 型: Result.Result<User, 'InvalidName' | 'InvalidAge' | 'InvalidEmail'>
+// すべてのバリデーションを通過すれば元の user を、そうでなければ最初のエラーを返す
 ```
 
-## `orThrough` - 元の失敗を保持した回復
+:::tip
+`andThrough` は最初に失敗したバリデーションで停止します。
+すべてのバリデーションエラーを一度に報告したい場合は、代わりに [`collect`](../combining/aggregating-results) を使ってください。
+:::
 
-`orThrough` 関数は失敗からの回復を試みる追加の計算を実行しますが、回復が成功した場合は**元の失敗を返します**。
+## `orThrough` で後処理を行う
 
-元の結果が `Success` の場合、関数を実行せずに即座に返されます。
-元の結果が `Failure` の場合、エラー値で関数が実行されます。関数が `Success` を返すと、元の失敗が返されます。
-関数が `Failure` を返すと、その新しい失敗が返されます。
+`orThrough` は、失敗に対する `andThrough` の対になる関数です。
+エラー値を引数に渡された関数を呼び出します。典型的には、失敗した処理の後処理に使います。
 
-これは、失敗した操作からの回復（例：クリーンアップ、ロールバック）を試みながら、元のエラーを保持する場合に便利です。
-
-### 基本的な使い方
+- 関数が `Success` を返した場合、**元の** `Failure` が返されます。
+- 関数が `Failure` を返した場合、その新しい `Failure` が返されます。
+- 入力が `Success` の場合、関数は呼び出されません。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.pipe(
-  Result.succeed(5),
-  Result.orThrough((error) => {
-    // 失敗回復ロジックをここに
-    return Result.succeed();
-  }),
-);
-// { type: 'Success', value: 5 } - 成功はそのまま通過
-```
-
-### 入力が `Failure` の場合
-
-入力が `Failure` の場合、`orThrough` は関数を実行しますが、元のエラーを保持します。
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.pipe(
-  Result.fail('error'),
-  Result.orThrough((error) => {
-    // 失敗回復ロジックをここに
-    return Result.succeed();
-  }),
-);
-// 'Logging error: error' をログに出力し、{ type: 'Failure', error: 'error' } を返す
-```
-
-### 関数が `Failure` を返す場合
-
-関数が `Failure` を返すと、その新しい失敗が元の失敗を置き換えます。
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const result = Result.pipe(
+const cleanedUp = Result.pipe(
   Result.fail('original error'),
-  Result.orThrough((error) => {
-    return Result.fail('new error');
-  }),
+  Result.orThrough(() => Result.succeed()),
 );
-// { type: 'Failure', error: 'new error' }
+// { type: 'Failure', error: 'original error' } - 元のエラーが保持される
+
+const cleanupFailed = Result.pipe(
+  Result.fail('original error'),
+  Result.orThrough(() => Result.fail('cleanup error')),
+);
+// { type: 'Failure', error: 'cleanup error' }
+
+const skipped = Result.pipe(
+  Result.succeed(5),
+  Result.orThrough(() => Result.succeed()), // 呼び出されない
+);
+// { type: 'Success', value: 5 }
 ```
 
-### 例：クリーンアップを伴う回復
+`orElse` とは異なり、`orThrough` が失敗を成功に変えることはありません。
+失敗が起きた*からこそ*必要になる処理を行いつつ、失敗そのものは呼び出し元に報告するためのものです。
 
-よくある使い方として、クリーンアップを行いながら失敗した操作からの回復を試みる例があります。
+### 例：失敗時にロールバックする
+
+投稿を 2 つのステップで作成する場合を考えます。まずコンテンツをアップロードし、次にデータベースにレコードを保存します。
+レコードの保存に失敗した場合はアップロードしたファイルを削除すべきですが、呼び出し元には `SavePostFailed` エラーを返す必要があります。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-declare const uploadFile: (path: string, content: string) => Result.Result<void, 'UploadFileFailed'>;
-declare const savePost: (id: string) => Result.Result<void, 'PostCreateFailed'>;
-declare const deleteFile: (path: string) => Result.Result<void, 'DeleteFileFailed'>;
+declare const uploadFile: (path: string, content: string) => Result.ResultAsync<void, 'UploadFailed'>;
+declare const savePost: (id: string, path: string) => Result.ResultAsync<void, 'SavePostFailed'>;
+declare const deleteFile: (path: string) => Result.ResultAsync<void, 'DeleteFileFailed'>;
 
-const createPost = (id: string, path: string, content: string) => Result.pipe(
-  uploadFile(`/posts/${id}`, content),
-  Result.andThen(() => savePost(id)),
-  Result.orThrough(() => deleteFile(`/posts/${id}`)),
-);
-// createPost が失敗すると、クリーンアップのために deleteFile が呼ばれる
-// しかし元の PostCreateFailed が返される
+const createPost = (id: string, content: string) => {
+  const path = `/posts/${id}`;
+  return Result.pipe(
+    uploadFile(path, content),
+    Result.andThen(() => Result.pipe(
+      savePost(id, path),
+      // savePost が失敗したときだけ実行される
+      Result.orThrough(() => deleteFile(path)),
+    )),
+  );
+};
+// 型: Result.ResultAsync<void, 'UploadFailed' | 'SavePostFailed' | 'DeleteFileFailed'>
 ```
+
+`orThrough` を `savePost` の直後に置いているため、後処理は保存に失敗したときだけ実行され、アップロード自体が失敗したときには実行されません。
 
 ## リファレンス
 
-| 関数                                                            | 目的                     |
-|---------------------------------------------------------------|------------------------|
-| [andThrough(fn)](../../../../api/functions/Result.andThrough) | 元の値を保持しながらバリデーションを実行する |
-| [orThrough(fn)](../../../../api/functions/Result.orThrough)   | 元のエラーを保持しながら回復を試みる     |
+| API                                                           | 用途                                           |
+|---------------------------------------------------------------|------------------------------------------------|
+| [andThrough(fn)](../../../../api/functions/Result.andThrough) | 成功時にステップを実行し、元の値を保持する     |
+| [orThrough(fn)](../../../../api/functions/Result.orThrough)   | 失敗時にステップを実行し、元のエラーを保持する |

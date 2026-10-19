@@ -1,0 +1,111 @@
+---
+description: Validating unknown input with Result.parse and a Standard Schema compatible library such as Zod, Valibot, or ArkType, and turning validation issues into Results.
+---
+
+# Parsing Values
+
+Data that comes from outside your program, such as request bodies, JSON files, or environment variables, is `unknown` until it has been validated.
+`parse` validates such a value against a schema and returns the outcome as a `Result`.
+
+## Validating with `parse`
+
+`parse` accepts any schema that implements [Standard Schema](https://standardschema.dev/), the common interface supported by validation libraries such as [Zod](https://zod.dev/), [Valibot](https://valibot.dev/), and [ArkType](https://arktype.io/).
+The examples on this page use Zod:
+
+```ts
+import { Result } from '@praha/byethrow';
+import { z } from 'zod';
+
+const User = z.object({
+  name: z.string().min(1),
+  email: z.email(),
+});
+
+const result = Result.parse(User, { name: 'Alice', email: 'alice@example.com' });
+// Type: Result.Result<{ name: string; email: string }, ReadonlyArray<StandardSchemaV1.Issue>>
+```
+
+If the value matches the schema, the result is a `Success` holding the parsed value, typed according to the schema.
+Otherwise, the result is a `Failure` holding the list of validation issues.
+
+## Reading Validation Issues
+
+Each issue has a `message` and, optionally, a `path` pointing to the invalid property:
+
+```ts
+import { Result } from '@praha/byethrow';
+import { z } from 'zod';
+
+const User = z.object({
+  name: z.string().min(1),
+  email: z.email(),
+});
+// ---cut-before---
+const result = Result.parse(User, { name: '', email: 'not an email' });
+
+if (Result.isFailure(result)) {
+  for (const issue of result.error) {
+    console.log(issue.path, issue.message);
+  }
+}
+```
+
+## Using `parse` in a Pipeline
+
+When called with only a schema, `parse` returns a function that validates its argument.
+This form fits naturally into a pipeline, which you will learn about in [Pipe Basics](../chaining/pipe-basics):
+
+```ts
+import { z } from 'zod';
+
+const User = z.object({
+  name: z.string().min(1),
+  email: z.email(),
+});
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+
+const parseJson = Result.fn({
+  try: (text: string) => JSON.parse(text) as unknown,
+  catch: (error) => new Error('Invalid JSON', { cause: error }),
+});
+
+const parseUser = (text: string) => Result.pipe(
+  parseJson(text),
+  Result.andThen(Result.parse(User)),
+);
+```
+
+To replace the list of issues with your own error type, use [`mapError`](../chaining/mapping-results):
+
+```ts
+import { z } from 'zod';
+
+const User = z.object({
+  name: z.string().min(1),
+  email: z.email(),
+});
+// ---cut-before---
+import { Result } from '@praha/byethrow';
+
+class ValidationError extends Error {
+  override readonly name = 'ValidationError';
+}
+
+const validateUser = (input: unknown) => Result.pipe(
+  input,
+  Result.parse(User),
+  Result.mapError((issues) => new ValidationError('Invalid user', { cause: issues })),
+);
+```
+
+:::warning
+`parse` only supports synchronous validation.
+If the schema performs asynchronous validation (for example, an async refinement), `parse` throws a `TypeError`.
+:::
+
+## References
+
+| API                                                            | Purpose                                 |
+|----------------------------------------------------------------|-----------------------------------------|
+| [parse(schema, value)](../../../../api/functions/Result.parse) | Validate a value with a Standard Schema |

@@ -1,128 +1,105 @@
 ---
-description: Extracting values from Result with unwrap and unwrapError, including default values, async support, and when to use them safely.
+description: Extracting plain values from a Result with Result.unwrap and Result.unwrapError — default values, use inside pipelines, async support, and where in your application to unwrap.
 ---
 
 # Unwrapping Results
 
-Sometimes you need to extract the actual value from a `Result`, exiting the Result "world" back into plain values. The `unwrap` and `unwrapError` functions help with this.
+At some point, you need to take the value out of a `Result` and hand it to code that doesn't know about Results, such as a web framework or a CLI runner.
+`unwrap` and `unwrapError` extract the contents of a `Result` as a plain value.
 
-## Extracting Success Values with `unwrap`
+## Extracting the Value with `unwrap`
 
-The `unwrap` function extracts the success value from a Result:
+`unwrap` returns the success value of a `Result`:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.succeed(42);
-const value = Result.unwrap(result);
+const value = Result.unwrap(Result.succeed(42));
 // value: 42
 ```
 
-### What Happens on Failure?
-
-If the Result is a `Failure` and no default is provided, `unwrap` throws the error:
+If the `Result` is a `Failure`, `unwrap` **throws its error**:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.fail(new Error('Something went wrong'));
-const value = Result.unwrap(result);
+const value = Result.unwrap(Result.fail(new Error('Something went wrong')));
 // Throws: Error('Something went wrong')
 ```
 
 ### Providing a Default Value
 
-You can provide a default value to avoid throwing:
+Pass a default value as the second argument to return it instead of throwing:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.fail('error');
-const value = Result.unwrap(result, 0);
-// value: 0 (default value)
+const fallback = Result.unwrap(Result.fail('error'), 0);
+// fallback: 0
+
+const value = Result.unwrap(Result.succeed(42), 0);
+// value: 42 (the default is ignored)
 ```
 
-```ts
-import { Result } from '@praha/byethrow';
+## Extracting the Error with `unwrapError`
 
-const success = Result.succeed(42);
-const value = Result.unwrap(success, 0);
-// value: 42 (success value, default ignored)
-```
-
-## Extracting Error Values with `unwrapError`
-
-The `unwrapError` function is the opposite—it extracts the error value:
+`unwrapError` is the counterpart of `unwrap`. It returns the error value of a `Result`:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.fail('Something went wrong');
-const error = Result.unwrapError(result);
+const error = Result.unwrapError(Result.fail('Something went wrong'));
 // error: 'Something went wrong'
 ```
 
-### What Happens on Success?
-
-If the Result is a `Success` and no default is provided, `unwrapError` throws the value:
+If the `Result` is a `Success`, `unwrapError` throws its value, unless a default value is provided:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.succeed(42);
-const error = Result.unwrapError(result);
+const error = Result.unwrapError(Result.succeed(42));
 // Throws: 42
+
+const fallback = Result.unwrapError(Result.succeed(42), 'No error');
+// fallback: 'No error'
 ```
 
-### Providing a Default Error
+## Unwrapping in a Pipeline
 
-You can provide a default value to avoid throwing:
+When called without a `Result`, both functions return a function that unwraps its argument.
+This lets you use them as the last step of a pipeline:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const result = Result.succeed(42);
-const error = Result.unwrapError(result, 'No error');
-// error: 'No error' (default value)
-```
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const failure = Result.fail('Something went wrong');
-const error = Result.unwrapError(failure, 'No error');
-// error: 'Something went wrong' (failure value, default ignored)
-```
-
-## Working with Async Results
-
-Both `unwrap` and `unwrapError` work with `ResultAsync`:
-
-```ts
-import { Result } from '@praha/byethrow';
-
-const asyncResult = Promise.resolve(Result.succeed(42));
-
-// Returns a Promise
-const value = await Result.unwrap(asyncResult);
+const value = Result.pipe(
+  Result.succeed(21),
+  Result.map((x) => x * 2),
+  Result.unwrap(), // or Result.unwrap(defaultValue)
+);
 // value: 42
 ```
 
-With default:
+## Async Results
+
+Both functions accept a `ResultAsync` and return a `Promise` of the plain value:
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-const asyncResult = Promise.resolve(Result.fail('error'));
-const value = await Result.unwrap(asyncResult, 0);
-// value: 0
+const value = await Result.unwrap(Promise.resolve(Result.succeed(42)));
+// value: 42
+
+const fallback = await Result.unwrap(Promise.resolve(Result.fail('error')), 0);
+// fallback: 0
 ```
 
-## When to Use `unwrap`
+## Where to Unwrap
 
-### Good Use Cases
+### At the Boundaries of Your Application
 
-Use `unwrap` at the boundaries of your application—such as HTTP handlers, CLI entry points-where you need to exit the Result world and return plain values to the outside world.
+Unwrap at the boundaries of your application, such as HTTP handlers and CLI entry points, where plain values have to be handed to the outside world.
+Handle the errors you expect first, and let `unwrap` throw only what remains:
 
 ```ts
 declare const processRequest: (req: Request) => Result.ResultAsync<number, 'NotFound' | 'Unexpected'>;
@@ -143,16 +120,20 @@ const handleRequest = async (req: Request): Promise<Response> => {
           return Result.fail(error);
       }
     }),
-    // Unexpected errors are thrown here and can be detected
-    // by infrastructure-level error monitoring tools like Sentry or CloudWatch.
+    // Remaining errors are thrown here, where infrastructure-level
+    // error monitoring such as Sentry or CloudWatch can detect them.
     Result.unwrap(),
   );
 };
 ```
 
-### Avoid Using `unwrap`
+To make sure at compile time that `unwrap` never throws, combine it with [`assertSuccess`](./asserting) on the next page.
 
-Avoid calling `unwrap` in the middle of your logic. Doing so exits the Result "world" prematurely, losing the benefits of type-safe error handling. Instead, keep values wrapped in Results and use combinators like `map`, `flatMap`, or `orElse` to transform them.
+### Not in the Middle of Your Logic
+
+Avoid unwrapping in the middle of your logic.
+Doing so leaves the `Result` world too early and turns expected failures back into exceptions.
+Keep values wrapped and transform them with functions such as `map`, `andThen`, and `orElse` instead:
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -169,7 +150,7 @@ const good = Result.pipe(
 
 ## References
 
-| Function                                                            | Purpose                                                                        |
-|---------------------------------------------------------------------|--------------------------------------------------------------------------------|
-| [unwrap(result)](../../../../api/functions/Result.unwrap)           | Extracts the success value from a Result, or throws/returns default on failure |
-| [unwrapError(result)](../../../../api/functions/Result.unwrapError) | Extracts the error value from a Result, or throws/returns default on success   |
+| API                                                                 | Purpose                                                           |
+|---------------------------------------------------------------------|-------------------------------------------------------------------|
+| [unwrap(result)](../../../../api/functions/Result.unwrap)           | Extract the success value, or throw / return a default on failure |
+| [unwrapError(result)](../../../../api/functions/Result.unwrapError) | Extract the error value, or throw / return a default on success   |

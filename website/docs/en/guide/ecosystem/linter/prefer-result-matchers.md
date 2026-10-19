@@ -1,29 +1,40 @@
 ---
-description: Oxlint rule that enforces toBeSuccess() and toBeFailure() matchers over boolean isSuccess/isFailure assertions in tests, with auto-fix
+description: Oxlint rule for test files that enforces the toBeSuccess() and toBeFailure() matchers over boolean isSuccess/isFailure assertions and unwrap calls, with auto-fix support.
 ---
 
 # prefer-result-matchers
 
-Enforces use of `toBeSuccess()` / `toBeFailure()` from `@praha/byethrow-testing`.
+Enforces the use of the `toBeSuccess()` / `toBeFailure()` matchers from [`@praha/byethrow-testing`](../testing) in tests.
 
-## Rule details
+This rule is auto-fixable. In the recommended preset, it is only enabled for test files.
 
-Checking `Result.isSuccess(result)` and then asserting on the boolean is noisy. The dedicated matchers `toBeSuccess()` and `toBeFailure()` are shorter, produce better failure messages, and narrow the type inside an optional callback. This rule auto-fixes violations.
+## Rule Details
 
-See [Testing](../testing) for setup instructions for `@praha/byethrow-testing`.
+Asserting on the boolean returned by `Result.isSuccess()` is noisy, and a failed assertion only tells you that `false` was not `true`.
+Calling `Result.unwrap()` in a test throws an unhelpful error when the result is a failure.
+The dedicated matchers are shorter, print the received `Result` when they fail, and give you a typed value in their callback.
+
+This rule reports the following patterns:
+
+- `expect(Result.isSuccess(result))` / `expect(Result.isFailure(result))` followed by `.toBe()`, `.toBeTruthy()`, or `.toBeFalsy()`
+- `assert(Result.isSuccess(result))` / `assert(Result.isFailure(result))`
+- `Result.unwrap(result)` / `Result.unwrapError(result)`
 
 ### Incorrect
 
 ```ts
 import { Result } from '@praha/byethrow';
-import { expect } from 'vitest';
+import { assert, expect } from 'vitest';
 
-const result: Result.Result<string, Error> = Result.succeed('hello');
+declare const result: Result.Result<string, Error>;
 
-// ❌ asserting on the boolean return of isSuccess / isFailure
+// ❌ Asserting on the boolean returned by isSuccess / isFailure
 expect(Result.isSuccess(result)).toBe(true);
 expect(Result.isFailure(result)).toBeTruthy();
-expect(Result.isSuccess(result)).not.toBe(false);
+assert(Result.isSuccess(result));
+
+// ❌ Unwrapping the result to assert on its value
+expect(Result.unwrap(result)).toBe('hello');
 ```
 
 ### Correct
@@ -38,32 +49,24 @@ declare module 'vitest' {
 import { Result } from '@praha/byethrow';
 import { expect } from 'vitest';
 
-const result: Result.Result<string, Error> = Result.succeed('hello');
+declare const result: Result.Result<string, Error>;
 
-// ✅ using the dedicated matchers
+// ✅ Using the dedicated matchers
 expect(result).toBeSuccess();
 expect(result).toBeFailure();
-```
 
-With a callback to assert on the inner value:
-
-```ts
-import type { ResultMatchers } from '@praha/byethrow-testing';
-
-declare module 'vitest' {
-  interface Matchers<R, T> extends ResultMatchers<R, T> {}
-}
-// ---cut-before---
-import { Result } from '@praha/byethrow';
-import { expect } from 'vitest';
-
-const result: Result.Result<string, Error> = Result.succeed('hello');
-
+// ✅ Asserting on the value in the callback
 expect(result).toBeSuccess((value) => {
-  expect(value).toBe(42);
+  expect(value).toBe('hello');
 });
 
 expect(result).toBeFailure((error) => {
   expect(error).toBeInstanceOf(Error);
 });
 ```
+
+See [Testing](../testing) for how to set up `@praha/byethrow-testing`.
+
+## Options
+
+This rule has no options.

@@ -1,58 +1,56 @@
 ---
-description: 'Result.pipe関数を使って複数の操作を左から右へ読みやすく連結する方法と、Resultや非同期処理との組み合わせ方。'
+description: 'Result.pipe で処理を上から下へ順につなげる方法。ネストした呼び出しや中間変数を使わずに書けること、失敗時にパイプラインが短絡する仕組み、非同期ステップの扱いを解説します。'
 ---
 
-# pipe 関数の扱い方
+# pipe の基本
 
-`pipe` 関数は `@praha/byethrow` の中核をなす機能の一つです。
-複数の操作を読みやすい左から右への方式で連結できます。
+`pipe` は `@praha/byethrow` の中心となる関数です。
+複数の処理を、上から下へ流れる読みやすいひとつのフローとしてつなげます。
 
 ## `pipe` とは？
 
 `pipe` は初期値を受け取り、一連の関数に順番に渡していきます。
-各関数は前の関数の出力を受け取ります。
+各関数は、ひとつ前の関数の出力を受け取ります。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
 const result = Result.pipe(
-  5,                    // 5 から開始
+  5,                    // 5 から始める
   (x) => x + 1,         // 5 + 1 = 6
   (x) => x * 2,         // 6 * 2 = 12
-  (x) => `Result: ${x}` // 'Result: 12'
+  (x) => `Result: ${x}`, // 'Result: 12'
 );
-// 'Result: 12&
+// 'Result: 12'
 ```
 
 ## なぜ `pipe` を使うのか？
 
-### `pipe` を使わない場合
-
-ネストした関数呼び出しは読みにくいです。
+`pipe` を使わない場合、関数呼び出しをネストすることになり、内側から外側へ読まなければなりません。
 
 ```ts
 declare const add: (a: number, b: number) => number;
 declare const multiply: (a: number, b: number) => number;
 declare const format: (x: number) => string;
 // ---cut-before---
-// ❌ 読みにくい - 内側から外側へ読む必要がある
+// ❌ 読みにくい: 内側から外側へ読む必要がある
 const result = format(multiply(add(5, 1), 2));
 ```
 
-中間変数を使うと冗長になります。
+あるいは中間変数を導入することになり、冗長になります。
 
 ```ts
 declare const add: (a: number, b: number) => number;
 declare const multiply: (a: number, b: number) => number;
 declare const format: (x: number) => string;
 // ---cut-before---
-// ❌ 変数が多すぎる
+// ❌ 冗長: 変数が多すぎる
 const step1 = add(5, 1);
 const step2 = multiply(step1, 2);
 const result = format(step2);
 ```
 
-### `pipe` を使う場合
+`pipe` を使えば、各ステップを実行される順番に並べて書けます。
 
 ```ts
 declare const add: (a: number, b: number) => number;
@@ -61,19 +59,19 @@ declare const format: (x: number) => string;
 // ---cut-before---
 import { Result } from '@praha/byethrow';
 
-// ✅ 明確で、左から右への流れ
+// ✅ 明快: 上から下へ読める
 const result = Result.pipe(
   5,
   (x) => add(x, 1),
   (x) => multiply(x, 2),
-  format
+  format,
 );
 ```
 
-## `Result` と `pipe` を組み合わせる
+## `Result` と組み合わせる
 
-`pipe` の真価は `Result` と一緒に使うときに発揮されます。
-`@praha/byethrow` のすべての変換関数は `pipe` と連携して動作するように設計されています。
+`pipe` の真価は `Result` と組み合わせたときに発揮されます。
+`Result.map` などの関数はカリー化されており、コールバックを渡して呼び出すと `Result` を受け取る関数を返します。これはまさに `pipe` が期待する形です。
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -86,27 +84,59 @@ const result = Result.pipe(
 // { type: 'Success', value: 25 }
 ```
 
-## `pipe` の非同期処理
+### 失敗するとパイプラインは短絡する
 
-パイプ内のいずれかの関数が `Promise` を返すと、結果は `Promise` になります。
+各関数は、`Result` が自分の扱う状態のときだけコールバックを実行します。
+たとえば `map` は `Success` のときだけ値を変換します。あるステップが失敗すると、後続の成功側のステップはスキップされ、`Failure` がそのまま末尾まで流れていきます。
 
 ```ts
 import { Result } from '@praha/byethrow';
 
-type User = { id: string; name: string; };
-
-const fetchUser = async (id: string): Result.ResultAsync<User, string> => {
-  const response = await fetch(`/api/users/${id}`);
-  if (!response.ok) {
-    return Result.fail('User not found');
-  }
-  const user = await response.json();
-  return Result.succeed(user);
-};
-
-const result = await Result.pipe(
-  Result.succeed('user-123'),
-  Result.andThen(fetchUser),
-  Result.map((user) => user.name),
+const result = Result.pipe(
+  Result.succeed(10),
+  Result.andThen((x) => x > 5 ? Result.fail('Too large') : Result.succeed(x)),
+  Result.map((x) => x * 2), // スキップされる
+  Result.map((x) => x + 5), // スキップされる
 );
+// { type: 'Failure', error: 'Too large' }
 ```
+
+そのため、ステップごとにエラーを確認する必要はありません。
+
+## 非同期のステップ
+
+いずれかのステップが `Promise` を返すと、それ以降のパイプラインは非同期に実行され、`pipe` は `Promise` を返します。
+`await` が必要なのは最終結果だけです。
+
+```ts
+import { Result } from '@praha/byethrow';
+
+type User = { id: string; name: string };
+
+declare const fetchUser: (id: string) => Result.ResultAsync<User, 'NotFound'>;
+// ---cut-before---
+const result = await Result.pipe(
+  Result.succeed('u123'),
+  Result.andThen(fetchUser),        // 非同期
+  Result.map((user) => user.name),  // 解決済みの user を受け取る
+);
+// 型: Result.Result<string, 'NotFound'>
+```
+
+## この章で扱う関数
+
+以降のページでは、パイプラインの中で使える関数を紹介します。
+これらは成功側と失敗側の対になっています。
+
+| コールバックの役割                    | 成功時                              | 失敗時                             |
+|---------------------------------------|-------------------------------------|------------------------------------|
+| 値を変換する                          | [map](./mapping-results)            | [mapError](./mapping-results)      |
+| 次の `Result` を返す                  | [andThen](./chaining-results)       | [orElse](./chaining-results)       |
+| `Result` を返すが、元の値は保持される | [andThrough](./validation-recovery) | [orThrough](./validation-recovery) |
+| 副作用を実行し、戻り値は無視される    | [inspect](./debugging)              | [inspectError](./debugging)        |
+
+## リファレンス
+
+| API                                                          | 用途                       |
+|--------------------------------------------------------------|----------------------------|
+| [pipe(value, ...fns)](../../../../api/functions/Result.pipe) | 値を一連の関数に順番に渡す |

@@ -17,7 +17,7 @@
   {
     "type": "file",
     "name": "validation-recovery",
-    "label": "Validation and Recovery"
+    "label": "Validation and Cleanup"
   },
   {
     "type": "file",

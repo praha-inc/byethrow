@@ -1,14 +1,15 @@
 ---
-description: Oxlint rule that disallows try-catch blocks inside @praha/byethrow callbacks — use Result.fn() to wrap throwing code instead
+description: Oxlint rule that disallows try-catch blocks inside callbacks passed to @praha/byethrow functions — wrap throwing code with Result.fn() instead.
 ---
 
 # no-try-catch-in-callback
 
-Disallows `try-catch` blocks inside callbacks passed to `@praha/byethrow` functions such as `Result.andThen`, `Result.map`, etc.
+Disallows `try-catch` blocks inside callbacks passed to `@praha/byethrow` functions, such as `Result.andThen` and `Result.map`.
 
-## Rule details
+## Rule Details
 
-A `try-catch` inside a `@praha/byethrow` callback is a sign that error handling has escaped the `Result` model. Use `Result.fn()` to wrap potentially-throwing code into a `Result`, keeping the pipeline clean.
+A `try-catch` inside a callback is a sign that error handling has escaped the `Result` model.
+Wrap the throwing code with [`Result.fn()` or `Result.try()`](../../tutorial/basics/wrapping-functions) instead, and keep the pipeline itself free of `try-catch`.
 
 ### Incorrect
 
@@ -37,14 +38,18 @@ class ParseError extends Error {}
 // ---cut-before---
 import { Result } from '@praha/byethrow';
 
-const parser = Result.fn({
-  try: (value: string) => JSON.parse(value),
-  catch: (error: unknown) => new ParseError(),
+const parseJson = Result.fn({
+  try: (value: string) => JSON.parse(value) as unknown,
+  catch: (error) => new ParseError('Invalid JSON', { cause: error }),
 });
 
-// ✅ wrapping with Result.fn()
+// ✅ Wrapping the throwing code with Result.fn()
 const result = Result.pipe(
   Result.succeed('{"key": "value"}'),
-  Result.andThen(parser),
+  Result.andThen(parseJson),
 );
 ```
+
+## Options
+
+This rule has no options.

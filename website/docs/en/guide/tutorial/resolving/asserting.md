@@ -1,14 +1,15 @@
 ---
-description: Compile-time Result assertions with assertSuccess and assertFailure, requiring never error or success types for safe unwrapping.
+description: Using Result.assertSuccess and Result.assertFailure to guarantee at compile time that every error (or success) has been handled, and combining them with unwrap for extraction that cannot throw.
 ---
 
 # Asserting Results
 
-When you've exhausted all possible errors through operations like `orElse` or `andThen`, you can use `assertSuccess` and `assertFailure` to assert the Result type at compile time. Combined with `unwrap` and `unwrapError`, this enables safe value extraction.
+After you have handled every possible error, for example with `orElse`, the error type of a `Result` becomes `never`.
+`assertSuccess` and `assertFailure` let you state this in your code, and TypeScript verifies it at compile time.
 
 ## Asserting Success with `assertSuccess`
 
-The `assertSuccess` function asserts that a Result is a `Success`. This function requires the error type to be `never`, ensuring at compile time that the Result is guaranteed to be a `Success`:
+`assertSuccess` takes a `Result` whose error type is `never` and returns it as a `Success`:
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -18,9 +19,9 @@ const success = Result.assertSuccess(result);
 // success: { type: 'Success', value: 42 }
 ```
 
-### When Error Type is Not `never`
+### When Errors Remain
 
-If the error type is not `never`, TypeScript will raise a compilation error:
+If the error type is not `never`, meaning some errors might still occur, TypeScript reports a compile error:
 
 ```ts
 // @errors: 2345
@@ -28,13 +29,13 @@ import { Result } from '@praha/byethrow';
 
 const result: Result.Result<number, string> = Result.succeed(42);
 
-// ❌ TypeScript error: error type is string, not never
+// ❌ The error type is string, not never
 const success = Result.assertSuccess(result);
 ```
 
-### Making Error Type `never` with `orElse`
+### Handling Every Error with `orElse`
 
-Use `orElse` to handle all errors and narrow the error type to `never`:
+Use `orElse` to handle the errors so that the error type becomes `never`:
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -43,19 +44,18 @@ declare const getResult: () => Result.Result<number, 'NotFound' | 'NetworkError'
 
 const result = Result.pipe(
   getResult(),
-  Result.orElse((error) => {
-    // Handle all errors and return a fallback value
-    return Result.succeed(0);
-  }),
-  // Error type is now never
+  Result.orElse(() => Result.succeed(0)), // The error type is now never
   Result.assertSuccess,
 );
 // result: { type: 'Success', value: number }
 ```
 
+If you later add a new error to `getResult` and forget to handle it, `assertSuccess` fails to compile, pointing you to the place that needs updating.
+
 ## Asserting Failure with `assertFailure`
 
-The `assertFailure` function is the opposite—it asserts that a Result is a `Failure`. This function requires the success type to be `never`:
+`assertFailure` is the counterpart of `assertSuccess`.
+It takes a `Result` whose success type is `never` and returns it as a `Failure`:
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -65,43 +65,22 @@ const failure = Result.assertFailure(result);
 // failure: { type: 'Failure', error: 'error' }
 ```
 
-### When Success Type is Not `never`
-
-If the success type is not `never`, TypeScript will raise a compilation error:
+If the success type is not `never`, TypeScript reports a compile error:
 
 ```ts
 // @errors: 2345
 import { Result } from '@praha/byethrow';
 
 const result: Result.Result<number, string> = Result.fail('error');
-// ❌ TypeScript error: success type is number, not never
+
+// ❌ The success type is number, not never
 const failure = Result.assertFailure(result);
 ```
 
-### Making Success Type `never` with `andThen`
+## Unwrapping Safely with `assertSuccess` and `unwrap`
 
-Use `andThen` to make all paths fail and narrow the success type to `never`:
-
-```ts
-import { Result } from '@praha/byethrow';
-
-declare const getResult: () => Result.Result<number, string>;
-
-const result = Result.pipe(
-  getResult(),
-  Result.andThen(() => {
-    // All paths lead to failure
-    return Result.fail('converted error');
-  }),
-  // Success type is now never
-  Result.assertFailure,
-);
-// result: { type: 'Failure', error: string }
-```
-
-## Safe Unwrapping with `assertSuccess` + `unwrap`
-
-By combining `assertSuccess` with `unwrap`, you can safely extract values from a Result. Since the error type is `never` after the assertion, `unwrap` is guaranteed not to throw:
+`unwrap` throws when it receives a `Failure`.
+By calling `assertSuccess` first, you guarantee at compile time that there is no `Failure` left, so `unwrap` cannot throw:
 
 ```ts
 import { Result } from '@praha/byethrow';
@@ -110,32 +89,29 @@ declare const getResult: () => Result.Result<number, 'NotFound' | 'NetworkError'
 
 const value = Result.pipe(
   getResult(),
-  Result.orElse(() => Result.succeed(0)), // Handle all errors
-  Result.assertSuccess, // Error type is now never
-  Result.unwrap(), // Safe: guaranteed not to throw
+  Result.orElse(() => Result.succeed(0)), // Handle every error
+  Result.assertSuccess,                   // Verify that no error remains
+  Result.unwrap(),                        // Cannot throw
 );
 // value: number
 ```
 
-This pattern is particularly useful at application boundaries where you want to ensure type safety while extracting the final value.
+This pattern is especially useful at the boundaries of your application, where you want to extract the final value safely.
 
-## Difference from Runtime Type Guards
+## Compared to Type Guards
 
-It's important to understand the difference between `assertSuccess`/`assertFailure` and `isSuccess`/`isFailure`:
+`assertSuccess` / `assertFailure` and `isSuccess` / `isFailure` serve different purposes:
 
-| Function        | Purpose                                     | Throws on Mismatch?         |
-|-----------------|---------------------------------------------|-----------------------------|
-| `isSuccess`     | Runtime check, returns boolean              | No                          |
-| `isFailure`     | Runtime check, returns boolean              | No                          |
-| `assertSuccess` | Compile-time assertion (requires `never`)   | Yes (if type is wrong)      |
-| `assertFailure` | Compile-time assertion (requires `never`)   | Yes (if type is wrong)      |
+| Function                          | When the check happens | Purpose                                              |
+|-----------------------------------|------------------------|------------------------------------------------------|
+| `isSuccess` / `isFailure`         | Runtime                | Branch on whether a `Result` is a success or failure |
+| `assertSuccess` / `assertFailure` | Compile time           | Declare that only one variant is possible            |
 
-- **`isSuccess`/`isFailure`**: Use when you need to branch based on the Result type at runtime
-- **`assertSuccess`/`assertFailure`**: Use when you've already ensured the Result type at compile time and want to assert it
+As a safeguard, `assertSuccess` and `assertFailure` also throw an error at runtime if they receive the unexpected variant, for example because of an incorrect type assertion elsewhere.
 
 ## References
 
-| Function                                                                | Purpose                                                               |
-|-------------------------------------------------------------------------|-----------------------------------------------------------------------|
-| [assertSuccess(result)](../../../../api/functions/Result.assertSuccess) | Assert that a Result is Success (requires error type to be `never`)   |
-| [assertFailure(result)](../../../../api/functions/Result.assertFailure) | Assert that a Result is Failure (requires success type to be `never`) |
+| API                                                                     | Purpose                                                              |
+|-------------------------------------------------------------------------|----------------------------------------------------------------------|
+| [assertSuccess(result)](../../../../api/functions/Result.assertSuccess) | Assert that a Result is a Success (the error type must be `never`)   |
+| [assertFailure(result)](../../../../api/functions/Result.assertFailure) | Assert that a Result is a Failure (the success type must be `never`) |

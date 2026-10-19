@@ -1,0 +1,75 @@
+---
+description: '@praha/byethrow-docs の CLI で生成するエージェントスキルや llms.txt を使い、Claude Code・GitHub Copilot・Cursor などの AI アシスタントに byethrow のドキュメントを参照させる方法。'
+---
+
+import { PackageManagerTabs } from '../../../../theme';
+
+# LLM 連携
+
+AI アシスタントは byethrow を知らないか、古いバージョンの API しか知らないことがよくあります。
+byethrow はアシスタントが読める形式でドキュメントを提供しているため、コードに対して正確なガイダンスを得られます。
+
+## エージェントスキル（推奨）
+
+`@praha/byethrow-docs` パッケージには、すべてのドキュメントが Markdown ファイルとして同梱されており、AI アシスタントがそれを使えるように設定する CLI も含まれています。
+次の理由から、この方法を推奨します。
+
+- ドキュメントはプロジェクト内に保存されるため、サーバーなしでオフラインでも動作します。
+- ドキュメントのバージョンは、インストールした `@praha/byethrow` のバージョンと常に一致します。
+- アシスタントはドキュメントを検索し、必要な部分だけを読み込めます。
+
+### インストール
+
+`@praha/byethrow` と同じバージョンを、開発依存としてインストールしてください。
+
+<PackageManagerTabs command="install -D @praha/byethrow-docs" />
+
+### セットアップ
+
+利用している AI アシスタントに合わせて `init` コマンドを実行します。
+ドキュメントの場所と検索方法をアシスタントに伝える設定ファイルが作成されます。
+
+```bash
+# Claude Code（.claude/skills/byethrow/SKILL.md を作成）
+npx @praha/byethrow-docs init claude
+
+# GitHub Copilot（.github/skills/byethrow/SKILL.md を作成）
+npx @praha/byethrow-docs init copilot
+
+# Cursor（.cursor/rules/byethrow/RULE.md を作成）
+npx @praha/byethrow-docs init cursor
+```
+
+生成されたファイルをコミットすれば、チーム全員が同じ設定を使えます。
+以降、アシスタントは関連するコードを扱う際に byethrow のドキュメントを参照するようになります。
+
+### CLI コマンド
+
+アシスタントは次のコマンドを使ってドキュメントを探索します。これらは自分で実行することもできます。
+
+```bash
+# 利用可能なドキュメントを一覧表示
+npx @praha/byethrow-docs list
+
+# キーワードに一致するドキュメントを一覧表示
+npx @praha/byethrow-docs list --query "pipe"
+
+# ドキュメントを検索（デフォルトでは最大 5 件）
+npx @praha/byethrow-docs search "your query" --limit 10
+
+# ドキュメントの目次を表示
+npx @praha/byethrow-docs toc path/to/document.md
+```
+
+## llms.txt
+
+このウェブサイトは、[llms.txt](https://llmstxt.org/) の規約に沿ってコンテンツも公開しています。
+Web ページを読めるアシスタントには、次の URL を渡してください。
+
+| URL                                                                                                      | 内容                                    |
+|----------------------------------------------------------------------------------------------------------|-----------------------------------------|
+| [https://praha-inc.github.io/byethrow/llms.txt](https://praha-inc.github.io/byethrow/llms.txt)           | 全ページの一覧と短い説明                |
+| [https://praha-inc.github.io/byethrow/llms-full.txt](https://praha-inc.github.io/byethrow/llms-full.txt) | 全ページの内容をまとめた 1 つのファイル |
+
+各ページは URL の末尾に `.md` を付けることで Markdown としても取得できます。
+例：[https://praha-inc.github.io/byethrow/guide/start/quick.md](https://praha-inc.github.io/byethrow/guide/start/quick.md)
