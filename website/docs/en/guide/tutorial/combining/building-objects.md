@@ -1,11 +1,11 @@
 ---
-description: Building an object step by step from multiple Results with Result.do and Result.bind, where each step can use the values computed before it.
+description: Building an object step by step from multiple Results with Result.do, Result.bind and Result.let, where each step can use the values computed before it.
 ---
 
 # Building Objects
 
 Sometimes you need several values, each produced by an operation that can fail, and later steps depend on earlier ones.
-The `do` / `bind` pattern collects these values into a single object, one field at a time.
+The `do` / `bind` / `let` pattern collects these values into a single object, one field at a time.
 
 ## Starting with `do`
 
@@ -71,6 +71,30 @@ const result = Result.pipe(
 // { type: 'Failure', error: 'Error!' }
 ```
 
+## Adding Plain Values with `let`
+
+Some fields are computed from the fields added so far and cannot fail.
+`let(name, fn)` adds the value returned by `fn` directly, so you don't need to wrap it in `succeed`:
+
+```ts
+import { Result } from '@praha/byethrow';
+
+const result = Result.pipe(
+  Result.do(),
+  Result.bind('price', () => Result.succeed(1000)),
+  Result.bind('quantity', () => Result.succeed(3)),
+  Result.let('total', ({ price, quantity }) => price * quantity),
+);
+// { type: 'Success', value: { price: 1000, quantity: 3, total: 3000 } }
+```
+
+This is the same as `Result.bind('total', ({ price, quantity }) => Result.succeed(price * quantity))`, but it shows at a glance that the step cannot fail.
+
+:::info
+`let` does not await a `Promise` for you, and it has no way to represent a failure.
+If the value comes from an async operation or one that can fail, use `bind` with a function that returns a `Result` or `ResultAsync`.
+:::
+
 ## Example: Fetching Related Data
 
 When one piece of data is needed to fetch another, `bind` keeps every intermediate value available until the end:
@@ -112,7 +136,8 @@ If the operations are independent of each other, `sequence` or `collect` on the 
 
 ## References
 
-| API                                                     | Purpose                                          |
-|---------------------------------------------------------|--------------------------------------------------|
-| [do()](../../../../api/functions/Result.do)             | Create a success result holding an empty object  |
-| [bind(name, fn)](../../../../api/functions/Result.bind) | Add a field computed from the accumulated object |
+| API                                                     | Purpose                                                |
+|---------------------------------------------------------|--------------------------------------------------------|
+| [do()](../../../../api/functions/Result.do)             | Create a success result holding an empty object        |
+| [bind(name, fn)](../../../../api/functions/Result.bind) | Add a field computed from the accumulated object       |
+| [let(name, fn)](../../../../api/functions/Result.let)   | Add a plain value computed from the accumulated object |
