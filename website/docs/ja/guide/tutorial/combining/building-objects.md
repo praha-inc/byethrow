@@ -1,11 +1,11 @@
 ---
-description: 'Result.do と Result.bind を使い、複数の Result からオブジェクトを 1 フィールドずつ組み立てる方法。各ステップでそれまでに計算した値を利用できます。'
+description: 'Result.do、Result.bind、Result.let を使い、複数の Result からオブジェクトを 1 フィールドずつ組み立てる方法。各ステップでそれまでに計算した値を利用できます。'
 ---
 
 # オブジェクトを構築する
 
 それぞれ失敗しうる処理から得られる複数の値が必要で、しかも後のステップが前のステップの結果に依存していることがあります。
-`do` / `bind` パターンを使うと、こうした値を 1 フィールドずつひとつのオブジェクトにまとめられます。
+`do` / `bind` / `let` パターンを使うと、こうした値を 1 フィールドずつひとつのオブジェクトにまとめられます。
 
 ## `do` から始める
 
@@ -71,6 +71,30 @@ const result = Result.pipe(
 // { type: 'Failure', error: 'Error!' }
 ```
 
+## `let` で通常の値を追加する
+
+フィールドの中には、それまでに追加されたフィールドから計算でき、失敗することのないものもあります。
+`let(name, fn)` は `fn` が返した値をそのまま追加するため、`succeed` で包む必要がありません。
+
+```ts
+import { Result } from '@praha/byethrow';
+
+const result = Result.pipe(
+  Result.do(),
+  Result.bind('price', () => Result.succeed(1000)),
+  Result.bind('quantity', () => Result.succeed(3)),
+  Result.let('total', ({ price, quantity }) => price * quantity),
+);
+// { type: 'Success', value: { price: 1000, quantity: 3, total: 3000 } }
+```
+
+これは `Result.bind('total', ({ price, quantity }) => Result.succeed(price * quantity))` と同じですが、そのステップが失敗しないことがひと目でわかります。
+
+:::info
+`let` は `Promise` を自動で await せず、失敗を表現する手段も持ちません。
+値が非同期処理や失敗しうる処理から得られる場合は、`Result` または `ResultAsync` を返す関数とともに `bind` を使ってください。
+:::
+
 ## 例：関連データを取得する
 
 あるデータを取得するために別のデータが必要な場合でも、`bind` を使えば途中の値をすべて最後まで利用できます。
@@ -116,3 +140,4 @@ const getOrderDetails = (orderId: string): Result.ResultAsync<OrderDetails, 'Ord
 |---------------------------------------------------------|--------------------------------------------------------|
 | [do()](../../../../api/functions/Result.do)             | 空のオブジェクトを持つ成功の Result を作成する         |
 | [bind(name, fn)](../../../../api/functions/Result.bind) | 蓄積されたオブジェクトから計算したフィールドを追加する |
+| [let(name, fn)](../../../../api/functions/Result.let)   | 蓄積されたオブジェクトから計算した通常の値を追加する   |
