@@ -18,7 +18,6 @@ import type { InferFailure, InferSuccess, Result, ResultFor, ResultMaybeAsync } 
  * `fn` is expected to be a pure, synchronous computation.
  * Use {@link bind} instead when the value comes from a fallible or asynchronous computation.
  *
- * @function
  * @typeParam N - The key to assign the result of the `fn` computation.
  * @typeParam R1 - The input {@link Result} or {@link ResultAsync}.
  * @typeParam T2 - The value type returned by `fn`.
@@ -63,10 +62,9 @@ import type { InferFailure, InferSuccess, Result, ResultFor, ResultMaybeAsync } 
  *
  * @category Combinators
  */
-const let_: {
-  <N extends string, R1 extends ResultMaybeAsync<any, any>, const T2>(name: N, fn: (a: InferSuccess<R1>) => T2): (result: R1) => InferSuccess<R1> extends object ? ResultFor<R1, { [K in N | keyof InferSuccess<R1>]: K extends Exclude<keyof InferSuccess<R1>, N> ? InferSuccess<R1>[K] : T2 }, InferFailure<R1>> : unknown;
-  <N extends string, T1, const T2>(name: N, fn: (a: T1) => T2): <R1 extends ResultMaybeAsync<T1, any>>(result: R1) => T1 extends object ? ResultFor<R1, { [K in N | keyof T1]: K extends Exclude<keyof T1, N> ? T1[K] : T2 }, InferFailure<R1>> : unknown;
-} = <N extends string, T1 extends object, T2>(name: N, fn: (a: T1) => T2) => {
+function let_<N extends string, R1 extends ResultMaybeAsync<any, any>, const T2>(name: N, fn: (a: InferSuccess<R1>) => T2): (result: R1) => InferSuccess<R1> extends object ? ResultFor<R1, { [K in N | keyof InferSuccess<R1>]: K extends Exclude<keyof InferSuccess<R1>, N> ? InferSuccess<R1>[K] : T2 }, InferFailure<R1>> : unknown;
+function let_<N extends string, T1, const T2>(name: N, fn: (a: T1) => T2): <R1 extends ResultMaybeAsync<T1, any>>(result: R1) => T1 extends object ? ResultFor<R1, { [K in N | keyof T1]: K extends Exclude<keyof T1, N> ? T1[K] : T2 }, InferFailure<R1>> : unknown;
+function let_<N extends string, T1 extends object, T2>(name: N, fn: (a: T1) => T2) {
   return <E1>(result: ResultMaybeAsync<T1, E1>) => {
     const apply = (r: Result<T1, E1>) => {
       if (isFailure(r)) return r;
@@ -76,6 +74,6 @@ const let_: {
     // oxlint-disable-next-line @typescript-eslint/no-unsafe-return
     return (isPromise(result) ? result.then(apply) : apply(result)) as any;
   };
-};
+}
 
 export { let_ as let };

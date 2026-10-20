@@ -12,7 +12,6 @@ import type { InferFailure, InferSuccess, Result, ResultMaybeAsync } from '../re
  *
  * If the input is a {@link Success}, it will throw the success value or return the default value if provided.
  *
- * @function
  * @typeParam R - The input {@link Result} or {@link ResultAsync}.
  * @typeParam T - The default value type (optional).
  *
@@ -52,12 +51,11 @@ import type { InferFailure, InferSuccess, Result, ResultMaybeAsync } from '../re
  *
  * @category Unwraps
  */
-export const unwrapError: {
-  <R extends ResultMaybeAsync<any, any>>(result: R): true extends HasPromise<R> ? Promise<InferFailure<R>> : InferFailure<R>;
-  <R extends ResultMaybeAsync<any, any>, T>(result: R, defaultValue: T): true extends HasPromise<R> ? Promise<InferFailure<R> | T> : InferFailure<R> | T;
-  <R extends ResultMaybeAsync<any, any>>(): (result: R) => true extends HasPromise<R> ? Promise<InferFailure<R>> : InferFailure<R>;
-  <R extends ResultMaybeAsync<any, any>, T>(defaultValue: T): (result: R) => true extends HasPromise<R> ? Promise<InferFailure<R> | T> : InferFailure<R> | T;
-} = <R extends ResultMaybeAsync<any, any>, T = never>(...args: any[]): any => {
+export function unwrapError<R extends ResultMaybeAsync<any, any>>(result: R): true extends HasPromise<R> ? Promise<InferFailure<R>> : InferFailure<R>;
+export function unwrapError<R extends ResultMaybeAsync<any, any>, T>(result: R, defaultValue: T): true extends HasPromise<R> ? Promise<InferFailure<R> | T> : InferFailure<R> | T;
+export function unwrapError<R extends ResultMaybeAsync<any, any>>(): (result: R) => true extends HasPromise<R> ? Promise<InferFailure<R>> : InferFailure<R>;
+export function unwrapError<R extends ResultMaybeAsync<any, any>, T>(defaultValue: T): (result: R) => true extends HasPromise<R> ? Promise<InferFailure<R> | T> : InferFailure<R> | T;
+export function unwrapError<R extends ResultMaybeAsync<any, any>, T = never>(...args: any[]): any {
   // oxlint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const firstArgument = args[0];
 
@@ -92,4 +90,4 @@ export const unwrapError: {
     };
     return isPromise(result) ? result.then(apply) : apply(result);
   };
-};
+}
