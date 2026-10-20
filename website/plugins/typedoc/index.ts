@@ -1,13 +1,31 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { Application, DeclarationReflection } from 'typedoc';
+import { Application, Converter, DeclarationReflection, ReflectionKind } from 'typedoc';
 import { load as pluginFrontmatter } from 'typedoc-plugin-frontmatter';
 import { load as pluginMarkdown, MarkdownPageEvent } from 'typedoc-plugin-markdown';
 
 import type { RspressPlugin } from '@rspress/core';
 import type { Reflection } from 'typedoc';
 import type { MarkdownTheme } from 'typedoc-plugin-markdown';
+import type ts from 'typescript';
+
+/**
+ * Overloaded functions are documented on their first overload signature so that the comment is kept in the emitted `.d.ts`.
+ * TypeDoc copies that comment to every call signature, so it is attached to the function itself instead,
+ * which prevents TypeDoc from repeating it for each signature.
+ */
+const pluginOverloadComment = (app: Application) => {
+  app.converter.on(Converter.EVENT_CREATE_DECLARATION, (context, reflection) => {
+    if (!reflection.kindOf(ReflectionKind.Function) || reflection.comment) return;
+
+    const [declaration, ...overloads] = context.getSymbolFromReflection(reflection)?.declarations ?? [];
+    if (!declaration || overloads.length <= 0) return;
+
+    const comment = context.getSignatureComment(declaration as ts.SignatureDeclaration);
+    if (comment) reflection.comment = comment;
+  });
+};
 
 const pluginDescription = (app: Application) => {
   app.renderer.on(MarkdownPageEvent.BEGIN, (page) => {
@@ -50,7 +68,7 @@ const createApiDocument = async (apiDirectory: string): Promise<void> => {
       '*',
     ],
     // @ts-expect-error Typedoc does not export a type for this options
-    plugin: [pluginFrontmatter, pluginMarkdown, pluginDescription],
+    plugin: [pluginFrontmatter, pluginMarkdown, pluginDescription, pluginOverloadComment],
     entryFileName: 'index',
     hidePageHeader: true,
     hideBreadcrumbs: true,
