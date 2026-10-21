@@ -326,11 +326,11 @@ importers:
         specifier: 1.0.11
         version: 1.0.11
       react:
-        specifier: 19.3.0
-        version: 19.3.0
+        specifier: 19.3.1
+        version: 19.3.1
       react-dom:
-        specifier: 19.3.0
-        version: 19.3.0(react@19.3.0)
+        specifier: 19.3.1
+        version: 19.3.1(react@19.3.1)
     devDependencies:
       '@jest/globals':
         specifier: 30.5.2
@@ -352,7 +352,7 @@ importers:
         version: 2.0.23(@rspress/core@2.0.23(@rspack/core@2.2.9(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))
       '@rspress/plugin-twoslash':
         specifier: 2.0.23
-        version: 2.0.23(@rspress/core@2.0.23(@rspack/core@2.2.9(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))(react@19.3.0)(supports-color@8.1.1)(typescript@6.0.3)
+        version: 2.0.23(@rspress/core@2.0.23(@rspack/core@2.2.9(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))(react@19.3.1)(supports-color@8.1.1)(typescript@6.0.3)
       '@rstest/core':
         specifier: 0.12.3
         version: 0.12.3
@@ -3477,10 +3477,10 @@ packages:
     resolution: {integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==}
     hasBin: true
 
-  react-dom@19.3.0:
-    resolution: {integrity: sha512-JDk8dgif51OjFoDE70+OT9ICyYr+69HlmihNwp1+Nsfbna3t5sIiCa9ZJktDmQ4/1b/rn26hIAR2uYXDMr5r0Q==}
+  react-dom@19.3.1:
+    resolution: {integrity: sha512-Y0bARz53lhEC1NMCASs0/j+faB/zqt3R8hpvg1e8+61ZVJ4UL0UdC4cBbXfZMcIuhrfgeILTLe+ZeBCavQPtKQ==}
     peerDependencies:
-      react: ^19.3.0
+      react: ^19.3.1
 
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
@@ -3523,8 +3523,8 @@ packages:
       react-dom:
         optional: true
 
-  react@19.3.0:
-    resolution: {integrity: sha512-E8LUcbtBWt20bbl2YoHfx4ZDBdxVTfOKtCZn9cDSJ4l6/nuoApcpIBcj47t2wZoVX8g2ZHuMHbiShgCR1T5Sog==}
+  react@19.3.1:
+    resolution: {integrity: sha512-QNhWdt7nrgVWWQG58QuGsAR3jv3Hbe4mb4vz7w2csnHavciZJgda1CPNaldF6eVxv90ud3jUXpKlHL69gO38yw==}
     engines: {node: '>=0.10.0'}
 
   readable-stream@3.6.2:
@@ -4924,11 +4924,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.0)':
+  '@mdx-js/react@3.1.1(@types/react@19.3.0)(react@19.3.1)':
     dependencies:
       '@types/mdx': 2.0.14
       '@types/react': 19.3.0
-      react: 19.3.0
+      react: 19.3.1
 
   '@napi-rs/wasm-runtime@1.1.6(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)':
     dependencies:
@@ -5272,14 +5272,14 @@ snapshots:
   '@rspress/core@2.0.23(@rspack/core@2.2.9(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1)':
     dependencies:
       '@mdx-js/mdx': 3.1.1(supports-color@8.1.1)
-      '@mdx-js/react': 3.1.1(@types/react@19.3.0)(react@19.3.0)
+      '@mdx-js/react': 3.1.1(@types/react@19.3.0)(react@19.3.1)
       '@rsbuild/core': 2.2.13
       '@rsbuild/plugin-react': 2.1.1(@rsbuild/core@2.2.13)(@rspack/core@2.2.9(@swc/helpers@0.5.23))
       '@rspress/shared': 2.0.23(supports-color@8.1.1)
       '@shikijs/rehype': 4.5.0
       '@types/mdast': 4.0.4
       '@types/react': 19.3.0
-      '@unhead/react': 2.1.17(react@19.3.0)
+      '@unhead/react': 2.1.17(react@19.3.1)
       body-scroll-lock: 4.0.0-beta.0
       clsx: 2.1.1
       copy-to-clipboard: 3.3.3
@@ -5290,11 +5290,11 @@ snapshots:
       mdast-util-mdxjs-esm: 2.0.1(supports-color@8.1.1)
       medium-zoom: 1.1.0
       nprogress: 0.2.0
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
       react-lazy-with-preload: 2.2.1
-      react-render-to-markdown: 19.1.0(react@19.3.0)
-      react-router-dom: 7.18.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      react-render-to-markdown: 19.1.0(react@19.3.1)
+      react-router-dom: 7.18.4(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       rehype-external-links: 3.0.0
       rehype-raw: 7.0.0
       remark-cjk-friendly: 2.3.2(@types/mdast@4.0.4)(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(unified@11.0.5)
@@ -5321,7 +5321,7 @@ snapshots:
     dependencies:
       '@rspress/core': 2.0.23(@rspack/core@2.2.9(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1)
 
-  '@rspress/plugin-twoslash@2.0.23(@rspress/core@2.0.23(@rspack/core@2.2.9(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))(react@19.3.0)(supports-color@8.1.1)(typescript@6.0.3)':
+  '@rspress/plugin-twoslash@2.0.23(@rspress/core@2.0.23(@rspack/core@2.2.9(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))(react@19.3.1)(supports-color@8.1.1)(typescript@6.0.3)':
     dependencies:
       '@floating-ui/dom': 1.8.0
       '@rspress/core': 2.0.23(@rspack/core@2.2.9(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1)
@@ -5330,7 +5330,7 @@ snapshots:
       mdast-util-gfm: 3.1.0(supports-color@8.1.1)
       mdast-util-to-hast: 13.2.1
       picocolors: 1.1.1
-      react: 19.3.0
+      react: 19.3.1
       twoslash: 0.3.9(supports-color@8.1.1)(typescript@6.0.3)
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -5568,9 +5568,9 @@ snapshots:
 
   '@ungap/structured-clone@1.4.0': {}
 
-  '@unhead/react@2.1.17(react@19.3.0)':
+  '@unhead/react@2.1.17(react@19.3.1)':
     dependencies:
-      react: 19.3.0
+      react: 19.3.1
       unhead: 2.1.17
 
   '@unrs/resolver-binding-android-arm-eabi@1.12.2':
@@ -7425,9 +7425,9 @@ snapshots:
       minimist: 1.2.8
       strip-json-comments: 2.0.1
 
-  react-dom@19.3.0(react@19.3.0):
+  react-dom@19.3.1(react@19.3.1):
     dependencies:
-      react: 19.3.0
+      react: 19.3.1
       scheduler: 0.28.0
 
   react-is@18.3.1: {}
@@ -7436,33 +7436,33 @@ snapshots:
 
   react-lazy-with-preload@2.2.1: {}
 
-  react-reconciler@0.33.0(react@19.3.0):
+  react-reconciler@0.33.0(react@19.3.1):
     dependencies:
-      react: 19.3.0
+      react: 19.3.1
       scheduler: 0.27.0
 
   react-refresh@0.19.0: {}
 
-  react-render-to-markdown@19.1.0(react@19.3.0):
+  react-render-to-markdown@19.1.0(react@19.3.1):
     dependencies:
-      react: 19.3.0
-      react-reconciler: 0.33.0(react@19.3.0)
+      react: 19.3.1
+      react-reconciler: 0.33.0(react@19.3.1)
 
-  react-router-dom@7.18.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
+  react-router-dom@7.18.4(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
-      react: 19.3.0
-      react-dom: 19.3.0(react@19.3.0)
-      react-router: 7.18.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
+      react-router: 7.18.4(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
 
-  react-router@7.18.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
+  react-router@7.18.4(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
       cookie: 1.1.1
-      react: 19.3.0
+      react: 19.3.1
       set-cookie-parser: 2.7.2
     optionalDependencies:
-      react-dom: 19.3.0(react@19.3.0)
+      react-dom: 19.3.1(react@19.3.1)
 
-  react@19.3.0: {}
+  react@19.3.1: {}
 
   readable-stream@3.6.2:
     dependencies:
