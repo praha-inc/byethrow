@@ -29,7 +29,7 @@
     "@types/node": "24.19.2",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
-    "execa": "10.1.1",
+    "execa": "10.2.0",
     "expect": "30.5.2",
     "oxlint": "1.88.0",
     "rsbuild-plugin-open-graph": "1.1.3",
