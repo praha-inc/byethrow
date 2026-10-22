@@ -354,8 +354,8 @@ importers:
         specifier: 2.0.23
         version: 2.0.23(@rspress/core@2.0.23(@rspack/core@2.2.9(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))(react@19.3.1)(supports-color@8.1.1)(typescript@6.0.3)
       '@rstest/core':
-        specifier: 0.12.3
-        version: 0.12.3
+        specifier: 0.12.4
+        version: 0.12.4
       '@types/node':
         specifier: 24.19.2
         version: 24.19.2
@@ -1752,8 +1752,8 @@ packages:
   '@rspress/shared@2.0.23':
     resolution: {integrity: sha512-kE2GXRCQ7GAl2wll1JBWRHEkZICKcWv3V86m8TkjiWb0eEdjACl3kns7j00KTq4UbE35kUPOs+0Lx8vGqK7q9w==}
 
-  '@rstest/core@0.12.3':
-    resolution: {integrity: sha512-l548qraJA1ymaSRhftgl++HtRf4E5l0Hm8YbzcsrH0t8XIOSpAiXyhgJpeHuyM50fKcNkt1nnS532Y7QV1iwcQ==}
+  '@rstest/core@0.12.4':
+    resolution: {integrity: sha512-NL+lxZ6GiJkL2BYgUR8WU2awQr71GiIzG0rDNKljvhEhmIX61YUoG6qjvLlEFJsvmB/AZmKIYwP/PyFTHZZy1A==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -5348,7 +5348,7 @@ snapshots:
       - core-js
       - supports-color
 
-  '@rstest/core@0.12.3':
+  '@rstest/core@0.12.4':
     dependencies:
       '@rsbuild/core': 2.2.13
       '@types/chai': 5.2.3
