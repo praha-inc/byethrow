@@ -7,7 +7,6 @@ import type { Result } from '../result';
  *
  * Passing a `Promise` is allowed, but it is recommended to `await` it before passing to `succeed`.
  *
- * @function
  * @typeParam T - The type of the value to wrap.
  * @returns A {@link Result} containing the given value.
  *
@@ -32,14 +31,13 @@ import type { Result } from '../result';
  *
  * @category Creators
  */
-export const succeed: {
-  (): Result<void, never>;
-  <const T>(value: T): Result<T, never>;
-} = ((...args: any[]) => {
+export function succeed(): Result<void, never>;
+export function succeed<const T>(value: T): Result<T, never>;
+export function succeed(...args: any[]): any {
   if (args.length <= 0) {
     return { type: 'Success', value: undefined };
   }
 
   const value = args[0];
   return { type: 'Success', value };
-}) as any;
+}

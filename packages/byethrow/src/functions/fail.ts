@@ -7,7 +7,6 @@ import type { Result } from '../result';
  *
  * Passing a `Promise` is allowed, but it is recommended to `await` it before passing to `fail`.
  *
- * @function
  * @typeParam E - The type of the error to wrap.
  * @returns A {@link Result} containing the given error.
  *
@@ -32,14 +31,13 @@ import type { Result } from '../result';
  *
  * @category Creators
  */
-export const fail: {
-  (): Result<never, void>;
-  <const E>(error: E): Result<never, E>;
-} = ((...args: any[]) => {
+export function fail(): Result<never, void>;
+export function fail<const E>(error: E): Result<never, E>;
+export function fail(...args: any[]): any {
   if (args.length <= 0) {
     return { type: 'Failure', error: undefined };
   }
 
   const error = args[0];
   return { type: 'Failure', error };
-}) as any;
+}

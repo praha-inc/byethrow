@@ -12,7 +12,6 @@ import type { InferFailure, InferSuccess, Result, ResultFor, ResultMaybeAsync } 
  * If either the original result or the side effect result is a {@link Failure}, that failure is returned.
  * Useful for running validations or side effects without altering the main result on success.
  *
- * @function
  * @typeParam R1 - The input {@link Result} or {@link ResultAsync}.
  * @typeParam R2 - The result type returned by `fn`.
  *
@@ -59,10 +58,9 @@ import type { InferFailure, InferSuccess, Result, ResultFor, ResultMaybeAsync } 
  *
  * @category Combinators
  */
-export const andThrough: {
-  <R1 extends ResultMaybeAsync<any, any>, R2 extends ResultMaybeAsync<any, any>>(fn: (a: InferSuccess<R1>) => R2): (result: R1) => ResultFor<R1 | R2, InferSuccess<R1>, InferFailure<R1> | InferFailure<R2>>;
-  <F extends (a: any) => ResultMaybeAsync<any, any>>(fn: F): <R1 extends ResultMaybeAsync<Parameters<F>[0], any>>(result: R1) => ResultFor<R1 | ReturnType<F>, InferSuccess<R1>, InferFailure<R1> | InferFailure<F>>;
-} = <R1 extends ResultMaybeAsync<any, any>, R2 extends ResultMaybeAsync<any, any>>(fn: (a: InferSuccess<R1>) => R2) => {
+export function andThrough<R1 extends ResultMaybeAsync<any, any>, R2 extends ResultMaybeAsync<any, any>>(fn: (a: InferSuccess<R1>) => R2): (result: R1) => ResultFor<R1 | R2, InferSuccess<R1>, InferFailure<R1> | InferFailure<R2>>;
+export function andThrough<F extends (a: any) => ResultMaybeAsync<any, any>>(fn: F): <R1 extends ResultMaybeAsync<Parameters<F>[0], any>>(result: R1) => ResultFor<R1 | ReturnType<F>, InferSuccess<R1>, InferFailure<R1> | InferFailure<F>>;
+export function andThrough<R1 extends ResultMaybeAsync<any, any>, R2 extends ResultMaybeAsync<any, any>>(fn: (a: InferSuccess<R1>) => R2) {
   return (result: R1) => {
     const apply = (r: Result<InferSuccess<R1>, InferFailure<R1>>) => {
       if (isFailure(r)) return r;
@@ -80,4 +78,4 @@ export const andThrough: {
 
     return isPromise(result) ? result.then(apply) : apply(result);
   };
-};
+}

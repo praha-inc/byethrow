@@ -10,7 +10,6 @@ import type { InferFailure, InferSuccess, Result, ResultFor, ResultMaybeAsync } 
  * without modifying the original result. This is useful for debugging, logging, or performing
  * other side effects while maintaining the original value and error state.
  *
- * @function
  * @typeParam R1 - The input {@link Result} or {@link ResultAsync}.
  * @typeParam R2 - The return type of the inspection function.
  *
@@ -42,10 +41,9 @@ import type { InferFailure, InferSuccess, Result, ResultFor, ResultMaybeAsync } 
  *
  * @category Combinators
  */
-export const inspectError: {
-  <R1 extends ResultMaybeAsync<any, any>, R2>(fn: (a: InferFailure<R1>) => R2): (result: R1) => ResultFor<R1 | R2, InferSuccess<R1>, InferFailure<R1>>;
-  <F extends (a: any) => unknown>(fn: F): <R1 extends ResultMaybeAsync<any, Parameters<F>[0]>>(result: R1) => ResultFor<R1 | ReturnType<F>, InferSuccess<R1>, InferFailure<R1>>;
-} = <R1 extends ResultMaybeAsync<any, any>, R2>(fn: (a: InferFailure<R1>) => R2) => {
+export function inspectError<R1 extends ResultMaybeAsync<any, any>, R2>(fn: (a: InferFailure<R1>) => R2): (result: R1) => ResultFor<R1 | R2, InferSuccess<R1>, InferFailure<R1>>;
+export function inspectError<F extends (a: any) => unknown>(fn: F): <R1 extends ResultMaybeAsync<any, Parameters<F>[0]>>(result: R1) => ResultFor<R1 | ReturnType<F>, InferSuccess<R1>, InferFailure<R1>>;
+export function inspectError<R1 extends ResultMaybeAsync<any, any>, R2>(fn: (a: InferFailure<R1>) => R2) {
   return (result: R1) => {
     const apply = (r: Result<InferSuccess<R1>, InferFailure<R1>>): any => {
       if (isFailure(r)) {
@@ -60,4 +58,4 @@ export const inspectError: {
     // oxlint-disable-next-line @typescript-eslint/no-unsafe-return
     return isPromise(result) ? result.then(apply) : apply(result);
   };
-};
+}

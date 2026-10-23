@@ -12,7 +12,6 @@ import type { Result, ResultAsync } from '../result';
  * You can use either a custom `catch` handler or rely on the `safe: true` option
  * to assume the function cannot throw.
  *
- * @function
  * @typeParam T - The function type to execute (sync or async) or a Promise type.
  * @typeParam E - The error type to return if `catch` is used.
  * @returns A new function that returns a {@link Result} or {@link ResultAsync} wrapping the original function's return value or the caught error.
@@ -70,20 +69,19 @@ import type { Result, ResultAsync } from '../result';
  *
  * @category Creators
  */
-const fn: {
-  <T extends (...args: readonly any[]) => Promise<any>, E>(
-    options: { try: T; catch: (error: unknown) => E }
-  ): (...args: Parameters<T>) => ResultAsync<Awaited<ReturnType<T>>, E>;
-  <T extends (...args: readonly any[]) => Promise<any>>(
-    options: { safe: true; try: T }
-  ): (...args: Parameters<T>) => ResultAsync<Awaited<ReturnType<T>>, never>;
-  <T extends (...args: readonly any[]) => any, E>(
-    options: { try: T; catch: (error: unknown) => E }
-  ): (...args: Parameters<T>) => Result<ReturnType<T>, E>;
-  <T extends (...args: readonly any[]) => any>(
-    options: { safe: true; try: T }
-  ): (...args: Parameters<T>) => Result<ReturnType<T>, never>;
-} = (options: any) => {
+export function fn<T extends (...args: readonly any[]) => Promise<any>, E>(
+  options: { try: T; catch: (error: unknown) => E },
+): (...args: Parameters<T>) => ResultAsync<Awaited<ReturnType<T>>, E>;
+export function fn<T extends (...args: readonly any[]) => Promise<any>>(
+  options: { safe: true; try: T },
+): (...args: Parameters<T>) => ResultAsync<Awaited<ReturnType<T>>, never>;
+export function fn<T extends (...args: readonly any[]) => any, E>(
+  options: { try: T; catch: (error: unknown) => E },
+): (...args: Parameters<T>) => Result<ReturnType<T>, E>;
+export function fn<T extends (...args: readonly any[]) => any>(
+  options: { safe: true; try: T },
+): (...args: Parameters<T>) => Result<ReturnType<T>, never>;
+export function fn(options: any) {
   const fn = (...args: any[]) => {
     try {
       // oxlint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -106,6 +104,4 @@ const fn: {
 
   // oxlint-disable-next-line @typescript-eslint/no-unsafe-return
   return fn as any;
-};
-
-export { fn };
+}

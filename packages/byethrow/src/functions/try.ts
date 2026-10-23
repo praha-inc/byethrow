@@ -12,7 +12,6 @@ import type { Result, ResultAsync } from '../result';
  * You can use either a custom `catch` handler or rely on the `safe: true` option
  * to assume the function cannot throw.
  *
- * @function
  * @typeParam T - The function type to execute (sync or async) or a Promise type.
  * @typeParam E - The error type to return if `catch` is used.
  * @returns A {@link Result} or {@link ResultAsync} wrapping the function's return value or the caught error.
@@ -71,20 +70,19 @@ import type { Result, ResultAsync } from '../result';
  *
  * @category Creators
  */
-const try_: {
-  <T extends () => Promise<any>, E>(
-    options: { try: T; catch: (error: unknown) => E }
-  ): ResultAsync<Awaited<ReturnType<T>>, E>;
-  <T extends () => Promise<any>>(
-    options: { safe: true; try: T }
-  ): ResultAsync<Awaited<ReturnType<T>>, never>;
-  <T extends () => any, E>(
-    options: { try: T; catch: (error: unknown) => E }
-  ): Result<ReturnType<T>, E>;
-  <T extends () => any>(
-    options: { safe: true; try: T }
-  ): Result<ReturnType<T>, never>;
-} = (options: any) => {
+function try_<T extends () => Promise<any>, E>(
+  options: { try: T; catch: (error: unknown) => E },
+): ResultAsync<Awaited<ReturnType<T>>, E>;
+function try_<T extends () => Promise<any>>(
+  options: { safe: true; try: T },
+): ResultAsync<Awaited<ReturnType<T>>, never>;
+function try_<T extends () => any, E>(
+  options: { try: T; catch: (error: unknown) => E },
+): Result<ReturnType<T>, E>;
+function try_<T extends () => any>(
+  options: { safe: true; try: T },
+): Result<ReturnType<T>, never>;
+function try_(options: any) {
   const fn = (): any => {
     try {
       // oxlint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -107,6 +105,6 @@ const try_: {
 
   // oxlint-disable-next-line @typescript-eslint/no-unsafe-return
   return fn();
-};
+}
 
 export { try_ as try };
