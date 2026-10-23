@@ -1,5 +1,11 @@
 # @praha/byethrow-website
 
+## 0.13.0
+
+### Minor Changes
+
+- [#1013](https://github.com/praha-inc/byethrow/pull/1013) [`cdba2a8`](https://github.com/praha-inc/byethrow/commit/cdba2a87bb04e1ace0b88d092d245f5c5080fc92) Thanks [@Karibash](https://github.com/Karibash)! - Redesign the website
+
 ## 0.12.0
 
 ### Minor Changes
