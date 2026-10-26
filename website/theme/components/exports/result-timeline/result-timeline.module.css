@@ -143,15 +143,19 @@
   background: color-mix(in srgb, var(--rp-c-text-1) 4%, transparent);
 }
 
-/* Grey while the operation runs, then the colour of its outcome once it has finished. */
+/*
+ * Grey while the operation runs, then the colour of its outcome once it has finished.
+ * It spans the whole track and is clipped to the time it has run, so that growing
+ * it only repaints instead of laying the figure out again each frame.
+ */
 .bar {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: calc(var(--start) / var(--axis) * 100%);
-  width: calc(clamp(0, var(--t) - var(--start), var(--end) - var(--start)) / var(--axis) * 100%);
-  overflow: hidden;
-  border-radius: 4px;
+  inset: 0;
+  clip-path: inset(
+    0 calc((var(--axis) - clamp(var(--start), var(--t), var(--end))) / var(--axis) * 100%)
+    0 calc(var(--start) / var(--axis) * 100%)
+    round 4px
+  );
   background: color-mix(in srgb, var(--rp-c-text-1) 28%, transparent);
   opacity: var(--fade);
 }
@@ -197,6 +201,7 @@
   bottom: -0.25rem;
   left: var(--label-width);
   right: 0;
+  container-type: inline-size;
   pointer-events: none;
   opacity: var(--fade);
 }
@@ -211,12 +216,14 @@
   opacity: clamp(0, (var(--t) - var(--at)) * 20 + 1, 1);
 }
 
+/* Moved with a transform across the width of the overlay, which doesn't need a new layout each frame. */
 .playhead {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: calc(var(--t) / var(--axis) * 100%);
+  left: 0;
   width: 1px;
+  transform: translateX(calc(var(--t) / var(--axis) * 100cqw));
   background: var(--rp-c-text-1);
   opacity: 0.45;
 }
