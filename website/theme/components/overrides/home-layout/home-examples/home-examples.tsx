@@ -163,7 +163,9 @@ export const HomeExamples: FC = () => {
               title={copied ? t('examples.copied') : t('examples.copy')}
               onClick={copy}
             >
-              {copied ? <CheckIcon /> : <CopyIcon />}
+              {/* Both icons stay mounted so that they can cross-fade. */}
+              <CopyIcon />
+              <CheckIcon />
             </button>
           </div>
           {/* Only the active snippet is mounted: Twoslash portals its always-visible popups to <body>. */}

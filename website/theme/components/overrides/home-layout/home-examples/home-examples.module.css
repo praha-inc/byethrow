@@ -152,7 +152,7 @@
   border: 0;
   background: transparent;
   cursor: pointer;
-  display: inline-flex;
+  display: inline-grid;
   flex: none;
   width: 30px;
   height: 30px;
@@ -171,9 +171,25 @@
   color: var(--rp-c-brand);
 }
 
+/* Both icons share one cell and cross-fade when the snippet is copied. */
 .copy svg {
+  grid-area: 1 / 1;
   width: 100%;
   height: 100%;
+  transition: opacity 0.2s var(--bt-ease-out), transform 0.2s var(--bt-ease-out), filter 0.2s var(--bt-ease-out);
+}
+
+.copy svg:last-child,
+.copy[data-copied='true'] svg:first-child {
+  opacity: 0;
+  transform: scale(0.9);
+  filter: blur(2px);
+}
+
+.copy[data-copied='true'] svg:last-child {
+  opacity: 1;
+  transform: none;
+  filter: none;
 }
 
 .pane {
@@ -358,5 +374,12 @@
 @media (prefers-reduced-motion: reduce) {
   .pane {
     animation: none;
+  }
+
+  .copy svg,
+  .copy svg:last-child,
+  .copy[data-copied='true'] svg:first-child {
+    transform: none;
+    filter: none;
   }
 }
