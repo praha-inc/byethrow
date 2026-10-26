@@ -322,7 +322,17 @@
   );
 }
 
+/*
+ * Spans its track, so that translating it by its own width carries the dot from one
+ * end to the other without laying the card out again each frame.
+ */
 .runner {
+  position: absolute;
+  inset: 0;
+}
+
+.runner::before {
+  content: '';
   position: absolute;
   top: 50%;
   left: 0;
@@ -330,23 +340,23 @@
   height: 9px;
   margin: -4.5px 0 0 -4.5px;
   border-radius: 50%;
+  background: var(--runner-color);
+  box-shadow: 0 0 10px var(--runner-color);
 }
 
 .runner--ok {
-  background: var(--bt-ok);
-  box-shadow: 0 0 10px var(--bt-ok);
+  --runner-color: var(--bt-ok);
   animation: run-ok 3.6s ease-in-out infinite;
 }
 
 .runner--err {
-  background: var(--bt-err);
-  box-shadow: 0 0 10px var(--bt-err);
+  --runner-color: var(--bt-err);
   animation: run-err 3.6s ease-in-out infinite;
 }
 
 @keyframes run-ok {
   0% {
-    left: 0;
+    transform: translateX(0);
     opacity: 0;
   }
 
@@ -355,13 +365,13 @@
   }
 
   80% {
-    left: 100%;
+    transform: translateX(100%);
     opacity: 1;
   }
 
   88%,
   100% {
-    left: 100%;
+    transform: translateX(100%);
     opacity: 0;
   }
 }
@@ -369,7 +379,7 @@
 @keyframes run-err {
   0%,
   30% {
-    left: 0;
+    transform: translateX(0);
     opacity: 0;
   }
 
@@ -378,13 +388,13 @@
   }
 
   80% {
-    left: 100%;
+    transform: translateX(100%);
     opacity: 1;
   }
 
   88%,
   100% {
-    left: 100%;
+    transform: translateX(100%);
     opacity: 0;
   }
 }
