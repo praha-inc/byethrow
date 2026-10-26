@@ -25,9 +25,10 @@
   overflow: hidden;
   opacity: 0;
   transform: translateY(16px);
+  /* Only the reveal is staggered, so that the border responds to hover straight away. */
   transition:
-    opacity 0.7s var(--bt-ease-out),
-    transform 0.7s var(--bt-ease-out),
+    opacity 0.7s var(--bt-ease-out) var(--reveal-delay, 0ms),
+    transform 0.7s var(--bt-ease-out) var(--reveal-delay, 0ms),
     border-color 0.3s;
 }
 

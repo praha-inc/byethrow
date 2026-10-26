@@ -36,6 +36,9 @@ const FEATURES: readonly Feature[] = [
   { key: 'ecosystem', span: 1, href: './guide/ecosystem/linter', visual: <EcosystemVisual /> },
 ];
 
+/** Delay between cards that come into view together. */
+const STAGGER_MS = 80;
+
 /** Reveals cards as they scroll into view. */
 const useReveal = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -51,10 +54,13 @@ const useReveal = () => {
     }
 
     const observer = new IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        (entry.target as HTMLElement).dataset['reveal'] = 'visible';
-        observer.unobserve(entry.target);
+      // Cards that come into view together appear one after another, in the order they are laid out.
+      const entering = entries.filter((entry) => entry.isIntersecting);
+      for (const [order, entry] of entering.entries()) {
+        const card = entry.target as HTMLElement;
+        card.style.setProperty('--reveal-delay', `${order * STAGGER_MS}ms`);
+        card.dataset['reveal'] = 'visible';
+        observer.unobserve(card);
       }
     }, { rootMargin: '0px 0px -10% 0px', threshold: 0.15 });
 
@@ -89,7 +95,6 @@ export const HomeFeature: FC = () => {
               styles['card'],
               feature.span === 2 && styles['card--wide'],
             ].filter(Boolean).join(' ')}
-            style={{ transitionDelay: `${(index % 3) * 80}ms` }}
           >
             <div className={styles['stage']}>
               <div className={styles['stage-inner']}>{feature.visual}</div>
