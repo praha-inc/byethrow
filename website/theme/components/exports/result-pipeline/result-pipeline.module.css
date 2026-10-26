@@ -1,0 +1,254 @@
+.figure {
+  container-type: inline-size;
+  margin: 1.25rem 0 1.5rem;
+  padding: 0.875rem 1rem 0.75rem;
+  border: 1px solid var(--bt-line-strong);
+  border-radius: var(--bt-radius-md);
+  background: var(--bt-stage);
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.legend {
+  display: inline-flex;
+  gap: 0.875rem;
+  font-family: var(--rp-font-family-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--rp-c-text-2);
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.legend-dot--success {
+  background: var(--bt-ok);
+}
+
+.legend-dot--failure {
+  background: var(--bt-err);
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: var(--rp-c-text-3);
+}
+
+/* The rails take the first column across every row; the rows fill the second. */
+.body {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+/* ---------- rails ---------- */
+
+.rails {
+  grid-column: 1;
+  grid-row: 1 / -1;
+  overflow: visible;
+}
+
+.rail {
+  stroke-width: 2;
+  stroke-linecap: round;
+  opacity: 0.16;
+}
+
+.rail--success,
+.route--success {
+  stroke: var(--bt-ok);
+}
+
+.rail--failure,
+.route--failure {
+  stroke: var(--bt-err);
+}
+
+.route {
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.measure {
+  fill: none;
+  stroke: none;
+}
+
+.station {
+  stroke-width: 1.25;
+  transition: opacity 0.3s, fill 0.3s;
+}
+
+.station--success {
+  stroke: var(--bt-ok);
+  fill: var(--rp-c-brand);
+}
+
+.station--failure {
+  stroke: var(--bt-err);
+  fill: var(--bt-err-dark);
+}
+
+/* A step on the other track is passed by without running. */
+.station--skipped {
+  fill: var(--rp-c-bg);
+  opacity: 0.5;
+}
+
+.end--success {
+  fill: var(--rp-c-brand);
+}
+
+.end--failure {
+  fill: var(--bt-err-dark);
+}
+
+.dot {
+  opacity: 0;
+  fill: var(--rp-c-brand);
+  stroke: var(--rp-c-bg);
+  stroke-width: 2;
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--bt-ok) 70%, transparent));
+  pointer-events: none;
+}
+
+.dot[data-track='failure'] {
+  fill: var(--bt-err-dark);
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--bt-err) 70%, transparent));
+}
+
+/* ---------- rows ---------- */
+
+.row {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+  padding: 0 0.625rem;
+  border-radius: var(--bt-radius-sm);
+  transition: background-color 0.2s;
+}
+
+.row--active {
+  background: color-mix(in srgb, var(--rp-c-text-1) 5%, transparent);
+}
+
+.code {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  font-family: var(--rp-font-family-mono);
+  font-size: 0.8125rem;
+  color: var(--rp-c-text-1);
+  white-space: pre;
+  scrollbar-width: none;
+  transition: opacity 0.3s;
+}
+
+.row--skipped .code {
+  opacity: 0.4;
+}
+
+.skipped {
+  flex: none;
+  font-size: 0.75rem;
+  color: var(--rp-c-text-3);
+}
+
+.toggle {
+  flex: none;
+  display: inline-flex;
+  padding: 2px;
+  border: 1px solid var(--bt-line-strong);
+  border-radius: 999px;
+}
+
+.option {
+  padding: 0.125rem 0.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--rp-c-text-3);
+  font-family: var(--rp-font-family-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.option:hover {
+  color: var(--rp-c-text-1);
+}
+
+.option:focus-visible {
+  outline: 2px solid var(--rp-c-brand);
+  outline-offset: 1px;
+}
+
+.option--success[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--bt-ok) 16%, transparent);
+  color: var(--rp-c-brand);
+}
+
+.option--failure[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--bt-err) 16%, transparent);
+  color: var(--bt-err);
+}
+
+.result-label {
+  font-size: 0.75rem;
+  color: var(--rp-c-text-2);
+}
+
+.value {
+  padding: 0 0.4375rem;
+  border: 1px solid;
+  border-radius: 999px;
+  font-family: var(--rp-font-family-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.value--success {
+  border-color: color-mix(in srgb, var(--bt-ok) 40%, transparent);
+  background: color-mix(in srgb, var(--bt-ok) 10%, transparent);
+  color: var(--rp-c-brand);
+}
+
+.value--failure {
+  border-color: color-mix(in srgb, var(--bt-err) 40%, transparent);
+  background: color-mix(in srgb, var(--bt-err) 10%, transparent);
+  color: var(--bt-err);
+}
+
+/* Too narrow for the outcome beside the code: it moves below, in taller rows that the component draws the rails for. */
+@container (max-width: 479.98px) {
+  .row {
+    flex-wrap: wrap;
+    align-content: center;
+    row-gap: 0.25rem;
+  }
+
+  .code {
+    flex-basis: 100%;
+  }
+}

@@ -2,12 +2,16 @@
 description: Validating unknown input with Result.parse and a Standard Schema compatible library such as Zod, Valibot, or ArkType, and turning validation issues into Results.
 ---
 
+import { ResultFlow } from '../../../../../theme';
+
 # Parsing Values
 
 Data that comes from outside your program, such as request bodies, JSON files, or environment variables, is `unknown` until it has been validated.
 `parse` validates such a value against a schema and returns the outcome as a `Result`.
 
 ## Validating with `parse`
+
+<ResultFlow fn="parse" />
 
 `parse` accepts any schema that implements [Standard Schema](https://standardschema.dev/), the common interface supported by validation libraries such as [Zod](https://zod.dev/), [Valibot](https://valibot.dev/), and [ArkType](https://arktype.io/).
 The examples on this page use Zod:

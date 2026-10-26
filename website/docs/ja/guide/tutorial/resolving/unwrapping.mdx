@@ -2,12 +2,16 @@
 description: 'Result.unwrap と Result.unwrapError で Result からプレーンな値を取り出す方法。デフォルト値、パイプライン内での利用、非同期への対応、そしてアプリケーションのどこで値を取り出すべきかを解説します。'
 ---
 
+import { ResultFlow } from '../../../../../theme';
+
 # Result から値を取り出す
 
 どこかの時点で、`Result` から値を取り出し、Web フレームワークや CLI ランナーなど `Result` を知らないコードに渡す必要があります。
 `unwrap` と `unwrapError` は、`Result` の中身をプレーンな値として取り出します。
 
 ## `unwrap` で値を取り出す
+
+<ResultFlow fn="unwrap" />
 
 `unwrap` は `Result` の成功値を返します。
 
@@ -42,6 +46,8 @@ const value = Result.unwrap(Result.succeed(42), 0);
 ```
 
 ## `unwrapError` でエラーを取り出す
+
+<ResultFlow fn="unwrapError" />
 
 `unwrapError` は `unwrap` の対になる関数で、`Result` のエラー値を返します。
 

@@ -1,0 +1,384 @@
+.figure {
+  margin: 1.25rem 0 1.5rem;
+  padding: 0.875rem 1rem 0.75rem;
+  border: 1px solid var(--bt-line-strong);
+  border-radius: var(--bt-radius-md);
+  background: var(--bt-stage);
+  container-type: inline-size;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.name {
+  font-family: var(--rp-font-family-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--rp-c-text-1);
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: var(--rp-c-text-3);
+}
+
+/* ---------- diagram ---------- */
+
+/* The SVG scales with its width; cap it so labels stay close to the body text size. */
+.svg {
+  display: block;
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  margin-inline: auto;
+  font-family: var(--rp-font-family-mono);
+  font-size: 11px;
+  overflow: visible;
+}
+
+.route {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  opacity: 0.55;
+  transition: opacity 0.3s;
+}
+
+.route--success {
+  stroke: var(--bt-ok);
+}
+
+.route--failure {
+  stroke: var(--bt-err);
+}
+
+/* Inputs whose track changes from case to case. */
+.route--neutral {
+  stroke: color-mix(in srgb, var(--rp-c-text-1) 40%, transparent);
+}
+
+/* Outside a Result: a plain or returned value, or an error thrown off the rails. */
+.route--value,
+.route--returned {
+  stroke: var(--rp-c-text-2);
+}
+
+.route--thrown {
+  stroke: var(--bt-err);
+  stroke-dasharray: 5 4;
+}
+
+.routes--muted .route {
+  opacity: 0.16;
+}
+
+.routes--active .route {
+  opacity: 1;
+  stroke-width: 2.5;
+}
+
+.chip {
+  transition: opacity 0.3s;
+}
+
+.chip rect {
+  stroke-width: 1;
+}
+
+.chip text {
+  font-weight: 600;
+}
+
+.chip--success rect {
+  stroke: color-mix(in srgb, var(--bt-ok) 55%, transparent);
+  fill: color-mix(in srgb, var(--bt-ok) 10%, var(--rp-c-bg));
+}
+
+.chip--success text {
+  fill: var(--rp-c-brand);
+}
+
+.chip--failure rect {
+  stroke: color-mix(in srgb, var(--bt-err) 55%, transparent);
+  fill: color-mix(in srgb, var(--bt-err) 10%, var(--rp-c-bg));
+}
+
+.chip--failure text {
+  fill: var(--bt-err);
+}
+
+.chip--neutral rect {
+  stroke: color-mix(in srgb, var(--rp-c-text-1) 25%, transparent);
+  fill: var(--rp-c-bg);
+}
+
+.chip--neutral text {
+  fill: var(--rp-c-text-2);
+}
+
+.chip--value rect,
+.chip--returned rect {
+  stroke: color-mix(in srgb, var(--rp-c-text-1) 35%, transparent);
+  fill: var(--rp-c-bg);
+}
+
+.chip--value text,
+.chip--returned text {
+  fill: var(--rp-c-text-1);
+}
+
+.chip--thrown rect {
+  stroke: color-mix(in srgb, var(--bt-err) 55%, transparent);
+  stroke-dasharray: 4 3;
+  fill: color-mix(in srgb, var(--bt-err) 10%, var(--rp-c-bg));
+}
+
+.chip--thrown text {
+  fill: var(--bt-err);
+}
+
+.chip--muted {
+  opacity: 0.4;
+}
+
+/* Hidden until the animation places it; the box is drawn on top so the value changes out of sight. */
+.dot {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dot rect {
+  fill: var(--rp-c-brand);
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--bt-ok) 70%, transparent));
+}
+
+.dot text {
+  fill: var(--bt-button-fg);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.dot[data-track='failure'] rect,
+.dot[data-track='thrown'] rect {
+  fill: var(--bt-err-dark);
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--bt-err) 70%, transparent));
+}
+
+.dot[data-track='failure'] text,
+.dot[data-track='thrown'] text {
+  fill: #fff;
+}
+
+.dot[data-track='value'] rect,
+.dot[data-track='returned'] rect {
+  fill: var(--rp-c-text-1);
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--rp-c-text-1) 40%, transparent));
+}
+
+.dot[data-track='value'] text,
+.dot[data-track='returned'] text {
+  fill: var(--rp-c-bg);
+}
+
+.box {
+  transition: opacity 0.3s;
+}
+
+.box rect {
+  fill: var(--rp-c-bg);
+  stroke-width: 1.25;
+  transition: fill 0.3s, stroke 0.3s;
+}
+
+.box text {
+  font-size: 12px;
+  font-weight: 700;
+  transition: fill 0.3s;
+}
+
+.box--success rect {
+  stroke: color-mix(in srgb, var(--bt-ok) 60%, transparent);
+}
+
+.box--success text {
+  fill: var(--rp-c-brand);
+}
+
+.box--failure rect,
+.box--thrown rect {
+  stroke: color-mix(in srgb, var(--bt-err) 60%, transparent);
+}
+
+.box--failure text,
+.box--thrown text {
+  fill: var(--bt-err);
+}
+
+.box--called.box--success rect {
+  fill: var(--rp-c-brand);
+  stroke: var(--rp-c-brand);
+}
+
+.box--called.box--success text {
+  fill: var(--bt-button-fg);
+}
+
+.box--called.box--failure rect,
+.box--called.box--thrown rect {
+  fill: var(--bt-err-dark);
+  stroke: var(--bt-err-dark);
+}
+
+.box--called.box--failure text,
+.box--called.box--thrown text {
+  fill: #fff;
+}
+
+.box--both rect {
+  stroke: color-mix(in srgb, var(--rp-c-text-1) 35%, transparent);
+}
+
+.box--both text {
+  fill: var(--rp-c-text-1);
+}
+
+.box--called.box--both rect {
+  fill: var(--rp-c-text-1);
+  stroke: var(--rp-c-text-1);
+}
+
+.box--called.box--both text {
+  fill: var(--rp-c-bg);
+}
+
+.box--skipped {
+  opacity: 0.4;
+}
+
+/* On narrow screens the SVG shrinks below its natural size, so enlarge the text to compensate. */
+@container (max-width: 480px) {
+  .svg {
+    font-size: 13px;
+  }
+
+  .box text {
+    font-size: 14px;
+  }
+
+  .dot text {
+    font-size: 11px;
+  }
+}
+
+/* ---------- cases ---------- */
+
+.cases {
+  display: grid;
+  gap: 0.125rem;
+  margin: 0.625rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.case {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.5rem;
+  width: 100%;
+  padding: 0.375rem 0.625rem;
+  border: 1px solid transparent;
+  border-radius: var(--bt-radius-sm);
+  background: none;
+  color: var(--rp-c-text-2);
+  font: inherit;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.case:hover {
+  background: color-mix(in srgb, var(--rp-c-text-1) 4%, transparent);
+}
+
+.case:focus-visible {
+  outline: 2px solid var(--rp-c-brand);
+  outline-offset: 2px;
+}
+
+.case--active {
+  border-color: var(--bt-line-strong);
+  background: color-mix(in srgb, var(--rp-c-text-1) 5%, transparent);
+  color: var(--rp-c-text-1);
+}
+
+.case[aria-pressed='true'] {
+  border-color: color-mix(in srgb, var(--rp-c-brand) 60%, transparent);
+}
+
+.inputs {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.bracket {
+  font-family: var(--rp-font-family-mono);
+  color: var(--rp-c-text-3);
+}
+
+.value {
+  padding: 0 0.4375rem;
+  border: 1px solid;
+  border-radius: 999px;
+  font-family: var(--rp-font-family-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.value--success {
+  border-color: color-mix(in srgb, var(--bt-ok) 40%, transparent);
+  background: color-mix(in srgb, var(--bt-ok) 10%, transparent);
+  color: var(--rp-c-brand);
+}
+
+.value--failure,
+.value--thrown {
+  border-color: color-mix(in srgb, var(--bt-err) 40%, transparent);
+  background: color-mix(in srgb, var(--bt-err) 10%, transparent);
+  color: var(--bt-err);
+}
+
+.value--thrown {
+  border-style: dashed;
+}
+
+.value--value,
+.value--returned {
+  border-color: color-mix(in srgb, var(--rp-c-text-1) 25%, transparent);
+  background: color-mix(in srgb, var(--rp-c-text-1) 6%, transparent);
+  color: var(--rp-c-text-1);
+}
+
+.step code {
+  font-family: var(--rp-font-family-mono);
+  font-size: 0.75rem;
+  color: var(--rp-c-text-1);
+}
+
+.arrow {
+  color: var(--rp-c-text-3);
+}

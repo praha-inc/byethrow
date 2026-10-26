@@ -2,12 +2,16 @@
 description: Running side effects such as logging at any step of a pipeline with Result.inspect and Result.inspectError, without changing the Result that flows through it.
 ---
 
+import { ResultFlow } from '../../../../../theme';
+
 # Debugging
 
 When a pipeline doesn't behave as expected, you want to see the value at each step.
 `inspect` and `inspectError` let you run a side effect, such as logging, without affecting the `Result` that flows through the pipeline.
 
 ## Inspecting Success Values with `inspect`
+
+<ResultFlow fn="inspect" />
 
 `inspect` calls the given function with the success value and then returns the original `Result` unchanged.
 If the `Result` is a `Failure`, the function is not called:
@@ -31,6 +35,8 @@ const failure = Result.pipe(
 ```
 
 ## Inspecting Errors with `inspectError`
+
+<ResultFlow fn="inspectError" />
 
 `inspectError` is the counterpart of `inspect` for errors.
 It calls the given function with the error value, and does nothing for a `Success`:

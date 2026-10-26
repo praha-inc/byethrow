@@ -2,12 +2,16 @@
 description: 'Result.inspect と Result.inspectError を使い、パイプラインを流れる Result を変えずに、任意のステップでログ出力などの副作用を実行する方法を解説します。'
 ---
 
+import { ResultFlow } from '../../../../../theme';
+
 # デバッグ
 
 パイプラインが期待どおりに動かないときは、各ステップの値を確認したくなります。
 `inspect` と `inspectError` を使うと、パイプラインを流れる `Result` に影響を与えずに、ログ出力などの副作用を実行できます。
 
 ## `inspect` で成功値を確認する
+
+<ResultFlow fn="inspect" />
 
 `inspect` は成功値を引数に渡された関数を呼び出し、元の `Result` を変更せずに返します。
 `Result` が `Failure` の場合、関数は呼び出されません。
@@ -31,6 +35,8 @@ const failure = Result.pipe(
 ```
 
 ## `inspectError` でエラーを確認する
+
+<ResultFlow fn="inspectError" />
 
 `inspectError` は、エラーに対する `inspect` の対になる関数です。
 エラー値を引数に渡された関数を呼び出し、`Success` の場合は何もしません。

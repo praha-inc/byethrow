@@ -255,8 +255,116 @@
     "en": "MIT License",
     "ja": "MIT ライセンス"
   },
+  "resultFlow.hint": {
+    "en": "Select a case to follow its path",
+    "ja": "ケースを選ぶと、その流れだけを追えます"
+  },
+  "resultFlow.skipped": {
+    "en": "{call} is not called",
+    "ja": "{call} は呼ばれない"
+  },
+  "resultFlow.returns": {
+    "en": "{call} returns {value}",
+    "ja": "{call} が {value} を返す"
+  },
+  "resultFlow.ignored": {
+    "en": "{call} is called and its return value is ignored",
+    "ja": "{call} が呼ばれ、戻り値は無視される"
+  },
+  "resultFlow.values": {
+    "en": "all values are gathered",
+    "ja": "すべての値をまとめる"
+  },
+  "resultFlow.firstError": {
+    "en": "the first error is returned",
+    "ja": "最初のエラーを返す"
+  },
+  "resultFlow.errors": {
+    "en": "all errors are gathered",
+    "ja": "すべてのエラーをまとめる"
+  },
+  "resultFlow.unwrapped": {
+    "en": "{value} is returned",
+    "ja": "{value} を返す"
+  },
+  "resultFlow.thrown": {
+    "en": "{value} is thrown if no default value is given",
+    "ja": "デフォルト値がなければ {value} を throw する"
+  },
+  "resultFlow.defaulted": {
+    "en": "the default value {value} is returned",
+    "ja": "デフォルト値 {value} を返す"
+  },
+  "resultFlow.valid": {
+    "en": "the value matches the schema",
+    "ja": "スキーマに一致する"
+  },
+  "resultFlow.invalid": {
+    "en": "the value does not match the schema",
+    "ja": "スキーマに一致しない"
+  },
+  "resultPipeline.hint": {
+    "en": "Switch the outcome of a step to see where the Result goes",
+    "ja": "ステップの結果を切り替えると、Result の行き先が変わります"
+  },
+  "resultPipeline.skipped": {
+    "en": "skipped",
+    "ja": "スキップ"
+  },
+  "resultPipeline.result": {
+    "en": "Result",
+    "ja": "結果"
+  },
+  "resultPipeline.creates": {
+    "en": "creates {outcomes}",
+    "ja": "{outcomes} を作る"
+  },
+  "resultPipeline.runsOn": {
+    "en": "runs on {track} and returns {outcomes}",
+    "ja": "{track} のときに実行され、{outcomes} を返す"
+  },
+  "resultPipeline.or": {
+    "en": "or",
+    "ja": "または"
+  },
+  "resultTimeline.failing": {
+    "en": "Failing operation",
+    "ja": "失敗する処理"
+  },
+  "resultTimeline.none": {
+    "en": "None",
+    "ja": "なし"
+  },
+  "resultTimeline.notStarted": {
+    "en": "not started",
+    "ja": "開始されない"
+  },
+  "resultTimeline.ignored": {
+    "en": "result ignored",
+    "ja": "結果は無視される"
+  },
+  "resultTimeline.returnsAt": {
+    "en": "returns {value} at {time}",
+    "ja": "{time} の時点で {value} を返す"
+  },
+  "resultTimeline.time": {
+    "en": "Time",
+    "ja": "時間"
+  },
   "stackblitz.open": {
     "en": "Open in StackBlitz",
     "ja": "StackBlitz で開く"
+  },
+  "errorTypeTrace.caption": {
+    "en": "Error type after each step",
+    "ja": "各ステップの後のエラー型"
+  },
+  "errorTypeTrace.added": {
+    "en": "added",
+    "ja": "追加"
+  },
+  "errorTypeTrace.removed": {
+    "en": "removed",
+    "ja": "削除"
   }
 }

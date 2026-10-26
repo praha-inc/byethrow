@@ -5,6 +5,8 @@ import { Application, Converter, DeclarationReflection, ReflectionKind } from 't
 import { load as pluginFrontmatter } from 'typedoc-plugin-frontmatter';
 import { load as pluginMarkdown, MarkdownPageEvent } from 'typedoc-plugin-markdown';
 
+import { FLOWS } from '../../theme/components/exports/result-flow/flows';
+
 import type { RspressPlugin } from '@rspress/core';
 import type { Reflection } from 'typedoc';
 import type { MarkdownTheme } from 'typedoc-plugin-markdown';
@@ -108,6 +110,30 @@ const createMetaJson = async (apiDirectory: string): Promise<void> => {
   ], null, 2));
 };
 
+/**
+ * Shows the flow diagram of every function that has one, right below its description.
+ * Plain `.md` pages cannot render components, so those pages are rewritten as `.mdx`;
+ * links to them keep the `.md` extension, which Rspress resolves to the same route.
+ */
+const embedResultFlows = async (apiDirectory: string): Promise<void> => {
+  await Promise.all(Object.keys(FLOWS).map(async (name) => {
+    const markdownPath = path.join(apiDirectory, 'functions', `Result.${name}.md`);
+    const content = await fs.promises.readFile(markdownPath, 'utf8');
+    const frontmatterEnd = content.indexOf('\n---\n', 1) + '\n---\n'.length;
+    const firstSection = content.indexOf('\n## ', frontmatterEnd);
+    const theme = path.relative(path.dirname(markdownPath), path.join(import.meta.dirname, '../../theme'));
+
+    await fs.promises.writeFile(markdownPath.replace(/\.md$/, '.mdx'), [
+      content.slice(0, frontmatterEnd),
+      `\nimport { ResultFlow } from '${theme}';\n`,
+      content.slice(frontmatterEnd, firstSection),
+      `\n<ResultFlow fn="${name}" />\n`,
+      content.slice(firstSection),
+    ].join(''));
+    await fs.promises.rm(markdownPath);
+  }));
+};
+
 export const pluginTypedoc = (): RspressPlugin => {
   return {
     name: '@praha/typedoc',
@@ -116,6 +142,7 @@ export const pluginTypedoc = (): RspressPlugin => {
         config.locales!.map(async (locale) => {
           const apiDirectory = path.join(config.root!, locale.lang, 'api');
           await createApiDocument(apiDirectory);
+          await embedResultFlows(apiDirectory);
           await createMetaJson(apiDirectory);
         }),
       );

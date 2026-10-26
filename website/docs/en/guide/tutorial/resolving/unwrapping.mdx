@@ -2,12 +2,16 @@
 description: Extracting plain values from a Result with Result.unwrap and Result.unwrapError — default values, use inside pipelines, async support, and where in your application to unwrap.
 ---
 
+import { ResultFlow } from '../../../../../theme';
+
 # Unwrapping Results
 
 At some point, you need to take the value out of a `Result` and hand it to code that doesn't know about Results, such as a web framework or a CLI runner.
 `unwrap` and `unwrapError` extract the contents of a `Result` as a plain value.
 
 ## Extracting the Value with `unwrap`
+
+<ResultFlow fn="unwrap" />
 
 `unwrap` returns the success value of a `Result`:
 
@@ -42,6 +46,8 @@ const value = Result.unwrap(Result.succeed(42), 0);
 ```
 
 ## Extracting the Error with `unwrapError`
+
+<ResultFlow fn="unwrapError" />
 
 `unwrapError` is the counterpart of `unwrap`. It returns the error value of a `Result`:
 
