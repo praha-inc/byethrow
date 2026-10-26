@@ -2,12 +2,16 @@
 description: '元の Result を保ったまま失敗しうる追加のステップを実行する方法。検証や副作用のための Result.andThrough と、失敗後の後処理やロールバックのための Result.orThrough を解説します。'
 ---
 
+import { ResultFlow } from '../../../../../theme';
+
 # 検証と後処理
 
 すでに持っている値を置き換えずに、失敗しうる追加のステップを実行したいことがあります。
 `andThrough` と `orThrough` はそのようなステップを実行し、ステップが成功した場合は元の `Result` を保持します。
 
 ## `andThrough` でチェックを実行する
+
+<ResultFlow fn="andThrough" />
 
 `andThrough` は `andThen` と同じように、成功値を引数に渡された関数を呼び出します。
 違いは、関数が成功したときの挙動です。
@@ -73,6 +77,8 @@ const validateUser = (user: User) => Result.pipe(
 :::
 
 ## `orThrough` で後処理を行う
+
+<ResultFlow fn="orThrough" />
 
 `orThrough` は、失敗に対する `andThrough` の対になる関数です。
 エラー値を引数に渡された関数を呼び出します。典型的には、失敗した処理の後処理に使います。

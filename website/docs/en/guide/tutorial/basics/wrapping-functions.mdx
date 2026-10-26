@@ -2,12 +2,16 @@
 description: Converting code that throws into Results with Result.fn for reusable wrappers and Result.try for one-off execution, including async functions and the safe option.
 ---
 
+import { ResultFlow } from '../../../../../theme';
+
 # Wrapping Functions
 
 Third-party libraries, built-in APIs such as `JSON.parse`, and legacy code often throw exceptions.
 `fn` and `try` wrap such code and convert thrown exceptions into `Failure` results.
 
 ## Creating Reusable Wrappers with `fn`
+
+<ResultFlow fn="fn" />
 
 `fn` takes a potentially throwing function and returns a new function that returns a `Result` instead:
 

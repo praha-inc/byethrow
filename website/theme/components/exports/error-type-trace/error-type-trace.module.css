@@ -1,0 +1,173 @@
+.figure {
+  container-type: inline-size;
+  margin: 1.25rem 0 1.5rem;
+  padding: 0.875rem 1rem 0.75rem;
+  border: 1px solid var(--bt-line-strong);
+  border-radius: var(--bt-radius-md);
+  background: var(--bt-stage);
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.caption {
+  font-size: 0.75rem;
+  color: var(--rp-c-text-2);
+}
+
+.legend {
+  display: inline-flex;
+  gap: 0.875rem;
+  font-family: var(--rp-font-family-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.legend-added {
+  color: var(--bt-err);
+}
+
+.legend-added::before {
+  content: '+ ';
+}
+
+.legend-removed {
+  color: var(--rp-c-text-3);
+  text-decoration: line-through;
+}
+
+/* ---------- steps ---------- */
+
+/* The code takes the width of its longest line, and each error type lines up beside it. */
+.steps {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+  gap: 2px 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.375rem 0.625rem;
+  border-radius: var(--bt-radius-sm);
+  transition: background-color 0.2s;
+}
+
+.step--active {
+  background: color-mix(in srgb, var(--rp-c-text-1) 5%, transparent);
+}
+
+.code {
+  min-width: 0;
+  overflow-x: auto;
+  font-family: var(--rp-font-family-mono);
+  font-size: 0.8125rem;
+  color: var(--rp-c-text-1);
+  white-space: pre;
+  scrollbar-width: none;
+}
+
+.type {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+/* ---------- members ---------- */
+
+.member {
+  position: relative;
+  padding: 0 0.4375rem;
+  border: 1px solid color-mix(in srgb, var(--bt-err) 40%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bt-err) 10%, transparent);
+  color: var(--bt-err);
+  font-family: var(--rp-font-family-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+/* Added to the type by this step. */
+.member--added {
+  border-color: var(--bt-err);
+  background: color-mix(in srgb, var(--bt-err) 18%, transparent);
+  transition-delay: 0.15s;
+}
+
+.member--added::before {
+  content: '+ ';
+}
+
+/*
+ * Removed from the type by this step. It shows up as it was before the step,
+ * then fades and gets struck through.
+ */
+.member--removed {
+  border-color: var(--bt-line-strong);
+  background: none;
+  color: var(--rp-c-text-3);
+  transition: opacity 0.3s, color 0.3s 0.45s, border-color 0.3s 0.45s, background-color 0.3s 0.45s;
+}
+
+.member--removed::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0.375rem;
+  left: 0.375rem;
+  border-top: 1.5px solid currentcolor;
+  transform-origin: left;
+  transition: transform 0.35s 0.3s;
+}
+
+.member--never {
+  border-style: dashed;
+  border-color: var(--bt-line-strong);
+  background: none;
+  color: var(--rp-c-text-3);
+}
+
+/* Steps that the trace hasn't reached yet. */
+.step--pending .member {
+  opacity: 0;
+}
+
+.step--pending .member--added {
+  transform: scale(0.6);
+}
+
+.step--pending .member--removed {
+  border-color: color-mix(in srgb, var(--bt-err) 40%, transparent);
+  background: color-mix(in srgb, var(--bt-err) 10%, transparent);
+  color: var(--bt-err);
+}
+
+.step--pending .member--removed::after {
+  transform: scaleX(0);
+}
+
+/* Too narrow for the error type beside the code: it moves below. */
+@container (max-width: 479.98px) {
+  .steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .step {
+    row-gap: 0.375rem;
+  }
+}

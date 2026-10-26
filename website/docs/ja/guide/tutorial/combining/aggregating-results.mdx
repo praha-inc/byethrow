@@ -2,12 +2,16 @@
 description: '複数の Result をひとつにまとめる方法。最初の失敗で停止する Result.sequence と、すべてのエラーを収集する Result.collect の違いを、マッパー関数や非同期処理での挙動も含めて解説します。'
 ---
 
+import { ResultFlow, ResultTimeline } from '../../../../../theme';
+
 # Result を集約する
 
 複数のバリデーションやリクエストの結果など、いくつもの `Result` があるとき、それらをひとつの `Result` にまとめたいことがよくあります。
 `sequence` と `collect` はどちらもこれを行う関数です。`Result` の配列またはオブジェクトを受け取り、失敗の扱い方が異なります。
 
 ## `sequence` で最初の失敗で停止する
+
+<ResultFlow fn="sequence" />
 
 `sequence` は、すべての `Result` が成功した場合、すべての値を含む `Success` を返します。
 そうでない場合は、最初に見つかった失敗を返します。
@@ -45,6 +49,8 @@ const result = Result.sequence({
 ```
 
 ## `collect` ですべてのエラーを収集する
+
+<ResultFlow fn="collect" />
 
 `collect` も、すべての `Result` が成功した場合は、すべての値を含む `Success` を返します。
 そうでない場合は、**すべての**エラーを配列にした `Failure` を返します。
@@ -148,6 +154,8 @@ const result = await Result.collect({
 - `collect` はすべての完了を待ち、すべてのエラーを報告します。
 - `sequence` は順番に完了を待ち、失敗が見つかった時点で結果を返します。他の処理がキャンセルされるわけではなく、その結果が無視されるだけです。
 
+<ResultTimeline mode="direct" />
+
 ### マッパー関数を使う場合
 
 マッパー関数を使うと、処理を開始するのは `sequence` や `collect` 自身になるため、違いがはっきりと現れます。
@@ -170,6 +178,8 @@ const migrations = await Result.sequence(
   runMigration,
 );
 ```
+
+<ResultTimeline mode="mapper" />
 
 :::tip
 失敗した後に後続の処理を開始させたくない場合は、処理を事前に作成しないでください。

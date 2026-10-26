@@ -2,6 +2,8 @@
 description: 'Result.do、Result.bind、Result.let を使い、複数の Result からオブジェクトを 1 フィールドずつ組み立てる方法。各ステップでそれまでに計算した値を利用できます。'
 ---
 
+import { ResultFlow } from '../../../../../theme';
+
 # オブジェクトを構築する
 
 それぞれ失敗しうる処理から得られる複数の値が必要で、しかも後のステップが前のステップの結果に依存していることがあります。
@@ -19,6 +21,8 @@ const start = Result.do();
 ```
 
 ## `bind` でフィールドを追加する
+
+<ResultFlow fn="bind" />
 
 `bind(name, fn)` は、蓄積されたオブジェクトにフィールドを追加します。
 
@@ -72,6 +76,8 @@ const result = Result.pipe(
 ```
 
 ## `let` で通常の値を追加する
+
+<ResultFlow fn="let" />
 
 フィールドの中には、それまでに追加されたフィールドから計算でき、失敗することのないものもあります。
 `let(name, fn)` は `fn` が返した値をそのまま追加するため、`succeed` で包む必要がありません。

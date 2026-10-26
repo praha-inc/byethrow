@@ -2,6 +2,8 @@
 description: How Result.pipe chains operations from top to bottom instead of nested calls or intermediate variables, how failures short-circuit a pipeline, and how async steps are handled.
 ---
 
+import { ResultPipeline } from '../../../../../theme';
+
 # Pipe Basics
 
 `pipe` is the heart of `@praha/byethrow`.
@@ -102,6 +104,8 @@ const result = Result.pipe(
 ```
 
 This is why you don't need to check for errors after every step.
+
+<ResultPipeline name="shortCircuit" />
 
 ## Async Steps
 

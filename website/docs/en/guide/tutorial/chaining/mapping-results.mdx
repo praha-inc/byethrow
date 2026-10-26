@@ -2,11 +2,15 @@
 description: Transforming the contents of a Result with Result.map for success values and Result.mapError for errors, with examples of formatting data for display and converting errors into HTTP responses.
 ---
 
+import { ResultFlow } from '../../../../../theme';
+
 # Mapping Results
 
 `map` and `mapError` transform the contents of a `Result` without changing whether it is a `Success` or a `Failure`.
 
 ## Transforming Values with `map`
+
+<ResultFlow fn="map" />
 
 `map` transforms the success value with the given function.
 If the `Result` is a `Failure`, the function is not called and the `Failure` is returned as-is:
@@ -63,6 +67,8 @@ const getProductForDisplay = (id: number): Result.ResultAsync<ProductView, 'NotF
 ```
 
 ## Transforming Errors with `mapError`
+
+<ResultFlow fn="mapError" />
 
 `mapError` is the counterpart of `map` for errors.
 It transforms the error value, and returns a `Success` as-is without calling the function:

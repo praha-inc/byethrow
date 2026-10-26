@@ -2,12 +2,16 @@
 description: Combining multiple Results into one with Result.sequence, which stops at the first failure, and Result.collect, which gathers every error — including mapper functions and how each handles async operations.
 ---
 
+import { ResultFlow, ResultTimeline } from '../../../../../theme';
+
 # Aggregating Results
 
 When you have several Results, such as the outcomes of multiple validations or requests, you often want to combine them into a single `Result`.
 `sequence` and `collect` both do this. They accept an array or an object of Results, and differ in how they handle failures.
 
 ## Stopping at the First Failure with `sequence`
+
+<ResultFlow fn="sequence" />
 
 `sequence` returns a `Success` containing all values if every `Result` succeeds.
 Otherwise, it returns the **first** failure it encounters:
@@ -45,6 +49,8 @@ const result = Result.sequence({
 ```
 
 ## Collecting Every Error with `collect`
+
+<ResultFlow fn="collect" />
 
 `collect` also returns a `Success` containing all values if every `Result` succeeds.
 Otherwise, it returns a `Failure` containing an array of **all** errors:
@@ -148,6 +154,8 @@ const result = await Result.collect({
 - `collect` waits for all of them and reports every error.
 - `sequence` waits for them in order and returns as soon as it finds a failure. The other operations are not cancelled; their results are simply ignored.
 
+<ResultTimeline mode="direct" />
+
 ### Using a Mapper Function
 
 With a mapper function, the operations are started by `sequence` or `collect` itself, so the difference becomes significant:
@@ -170,6 +178,8 @@ const migrations = await Result.sequence(
   runMigration,
 );
 ```
+
+<ResultTimeline mode="mapper" />
 
 :::tip
 If later operations must not start after a failure, don't create them up front.

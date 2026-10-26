@@ -2,12 +2,16 @@
 description: 'Result.andThen で失敗しうるステップをつなげ、Result.orElse で失敗から回復する方法。部分的な回復やフォールバック、処理の過程でエラー型がどう変わるかを解説します。'
 ---
 
+import { ErrorTypeTrace, ResultFlow, ResultPipeline } from '../../../../../theme';
+
 # Result をつなげる
 
 `andThen` と `orElse` は、それ自体が `Result` を返すステップをつなげます。
 `map` と `mapError` が値を変換するだけなのに対し、これらの関数では各ステップが、パイプラインを成功として続けるか失敗として続けるかを決められます。
 
 ## `andThen` でステップをつなげる
+
+<ResultFlow fn="andThen" />
 
 `andThen` は成功値を引数に渡された関数を呼び出し、その関数が返した `Result` を返します。
 入力が `Failure` の場合、関数は呼び出されず、`Failure` がそのまま返されます。
@@ -63,6 +67,8 @@ const result = await Result.pipe(
 // いずれかのステップが失敗すると、残りのステップはスキップされる
 ```
 
+<ErrorTypeTrace name="sequentialSteps" />
+
 ### 例：受け入れられない値を拒否する
 
 `andThen` は、受け入れられない値を `Failure` に変える場所でもあります。
@@ -97,6 +103,8 @@ const result = await Result.pipe(
 ```
 
 ## `orElse` で回復する
+
+<ResultFlow fn="orElse" />
 
 `orElse` は、失敗に対する `andThen` の対になる関数です。
 エラー値を引数に渡された関数を呼び出し、その関数が返した `Result` を返します。
@@ -158,6 +166,8 @@ const result = await Result.pipe(
 
 `'NotFound'` はもう起こりえないため、エラー型から消えていることに注目してください。
 
+<ErrorTypeTrace name="recoveringFromSpecificErrors" />
+
 ### 例：フォールバック先を用意する
 
 `orElse` は、最初の試みが失敗したときに代替手段を試す場合にも便利です。
@@ -198,6 +208,8 @@ const getValidatedUser = (id: string) => Result.pipe(
 );
 // まずキャッシュを試し、だめならデータベースにフォールバックし、最後にユーザーを検証する
 ```
+
+<ResultPipeline name="fallback" />
 
 ## リファレンス
 

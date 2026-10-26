@@ -2,12 +2,16 @@
 description: Chaining steps that can fail with Result.andThen, and recovering from failures with Result.orElse, including partial recovery, fallbacks, and how error types change along the way.
 ---
 
+import { ErrorTypeTrace, ResultFlow, ResultPipeline } from '../../../../../theme';
+
 # Chaining Results
 
 `andThen` and `orElse` chain steps that themselves return a `Result`.
 While `map` and `mapError` only transform values, these functions let each step decide whether the pipeline continues as a success or a failure.
 
 ## Chaining Steps with `andThen`
+
+<ResultFlow fn="andThen" />
 
 `andThen` calls the given function with the success value and returns the `Result` that the function returns.
 If the input is a `Failure`, the function is not called and the `Failure` is returned as-is:
@@ -63,6 +67,8 @@ const result = await Result.pipe(
 // If any step fails, the remaining steps are skipped
 ```
 
+<ErrorTypeTrace name="sequentialSteps" />
+
 ### Example: Rejecting Unexpected Values
 
 `andThen` is also the place to turn a value you don't accept into a `Failure`.
@@ -97,6 +103,8 @@ const result = await Result.pipe(
 ```
 
 ## Recovering with `orElse`
+
+<ResultFlow fn="orElse" />
 
 `orElse` is the counterpart of `andThen` for failures.
 It calls the given function with the error value and returns the `Result` that the function returns.
@@ -158,6 +166,8 @@ const result = await Result.pipe(
 
 Notice that `'NotFound'` has disappeared from the error type, because it can no longer occur.
 
+<ErrorTypeTrace name="recoveringFromSpecificErrors" />
+
 ### Example: Fallback Sources
 
 `orElse` is also useful for trying an alternative when the first attempt fails:
@@ -198,6 +208,8 @@ const getValidatedUser = (id: string) => Result.pipe(
 );
 // Tries the cache first, falls back to the database, then validates the user
 ```
+
+<ResultPipeline name="fallback" />
 
 ## References
 

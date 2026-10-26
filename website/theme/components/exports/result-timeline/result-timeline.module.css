@@ -1,0 +1,240 @@
+/*
+ * Everything is placed against the current time `--t`, which the component updates
+ * each frame, on an axis of `--axis` units. A bar grows from `--start` to `--end`,
+ * and whatever happens at `--at` fades in just before the time reaches it, so that
+ * events at the very end of the axis show too.
+ */
+.figure {
+  --t: 0;
+  --axis: 1;
+  --label-width: 4.25rem;
+
+  margin: 1.25rem 0 1.5rem;
+  padding: 0.875rem 1rem 0.75rem;
+  border: 1px solid var(--bt-line-strong);
+  border-radius: var(--bt-radius-md);
+  background: var(--bt-stage);
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.caption {
+  font-size: 0.75rem;
+  color: var(--rp-c-text-2);
+}
+
+.choices {
+  display: inline-flex;
+  flex-wrap: wrap;
+  padding: 2px;
+  border: 1px solid var(--bt-line-strong);
+  border-radius: 999px;
+}
+
+.choice {
+  padding: 0.125rem 0.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--rp-c-text-3);
+  font-family: var(--rp-font-family-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.choice:hover {
+  color: var(--rp-c-text-1);
+}
+
+.choice:focus-visible {
+  outline: 2px solid var(--rp-c-brand);
+  outline-offset: 1px;
+}
+
+.choice[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--rp-c-text-1) 10%, transparent);
+  color: var(--rp-c-text-1);
+}
+
+/* ---------- panels ---------- */
+
+.panel + .panel {
+  margin-top: 0.875rem;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 1.5rem;
+  margin-bottom: 0.375rem;
+}
+
+.name {
+  font-family: var(--rp-font-family-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--rp-c-text-1);
+}
+
+.returns {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  opacity: clamp(0, (var(--t) - var(--at)) * 20 + 1, 1);
+}
+
+.arrow {
+  color: var(--rp-c-text-3);
+}
+
+.value {
+  padding: 0 0.4375rem;
+  border: 1px solid;
+  border-radius: 999px;
+  font-family: var(--rp-font-family-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.value--success {
+  border-color: color-mix(in srgb, var(--bt-ok) 40%, transparent);
+  background: color-mix(in srgb, var(--bt-ok) 10%, transparent);
+  color: var(--rp-c-brand);
+}
+
+.value--failure {
+  border-color: color-mix(in srgb, var(--bt-err) 40%, transparent);
+  background: color-mix(in srgb, var(--bt-err) 10%, transparent);
+  color: var(--bt-err);
+}
+
+/* ---------- lanes ---------- */
+
+.lanes {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--label-width) minmax(0, 1fr);
+  row-gap: 0.375rem;
+}
+
+.label {
+  align-self: center;
+  font-family: var(--rp-font-family-mono);
+  font-size: 0.75rem;
+  color: var(--rp-c-text-2);
+}
+
+.track {
+  position: relative;
+  height: 1.125rem;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--rp-c-text-1) 4%, transparent);
+}
+
+/* Grey while the operation runs, then the colour of its outcome once it has finished. */
+.bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--start) / var(--axis) * 100%);
+  width: calc(clamp(0, var(--t) - var(--start), var(--end) - var(--start)) / var(--axis) * 100%);
+  overflow: hidden;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--rp-c-text-1) 28%, transparent);
+}
+
+.bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--outcome);
+  opacity: clamp(0, (var(--t) - var(--end)) * 20 + 1, 1);
+}
+
+.bar--success {
+  --outcome: var(--bt-ok);
+}
+
+.bar--failure {
+  --outcome: var(--bt-err);
+}
+
+/* Still running after the function has returned, so nothing waits for its result. */
+.bar--ignored {
+  opacity: 0.35;
+}
+
+.note {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--start) / var(--axis) * 100%);
+  display: flex;
+  align-items: center;
+  padding-left: 0.375rem;
+  font-size: 0.6875rem;
+  color: var(--rp-c-text-2);
+  white-space: nowrap;
+  opacity: clamp(0, (var(--t) - var(--at)) * 20 + 1, 1);
+}
+
+.overlay {
+  position: absolute;
+  top: -0.25rem;
+  bottom: -0.25rem;
+  left: var(--label-width);
+  right: 0;
+  pointer-events: none;
+}
+
+/* Where the function returns. */
+.marker {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--at) / var(--axis) * 100%);
+  border-left: 2px dashed var(--rp-c-text-2);
+  opacity: clamp(0, (var(--t) - var(--at)) * 20 + 1, 1);
+}
+
+.playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--t) / var(--axis) * 100%);
+  width: 1px;
+  background: var(--rp-c-text-1);
+  opacity: 0.45;
+}
+
+/* ---------- axis ---------- */
+
+.axis {
+  display: grid;
+  grid-template-columns: var(--label-width) minmax(0, 1fr);
+  margin-top: 0.5rem;
+  font-size: 0.6875rem;
+  color: var(--rp-c-text-3);
+}
+
+.ticks {
+  position: relative;
+  height: 1rem;
+}
+
+.tick {
+  position: absolute;
+  left: calc(var(--at) / var(--axis) * 100%);
+  transform: translateX(-50%);
+  font-family: var(--rp-font-family-mono);
+}

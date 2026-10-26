@@ -2,12 +2,16 @@
 description: Running extra steps that can fail while keeping the original Result — Result.andThrough for validations and side effects, and Result.orThrough for cleanup and rollback after a failure.
 ---
 
+import { ResultFlow } from '../../../../../theme';
+
 # Validation and Cleanup
 
 Sometimes you want to run an additional step that can fail, without replacing the value you already have.
 `andThrough` and `orThrough` run such a step and, if it succeeds, keep the original `Result`.
 
 ## Running Checks with `andThrough`
+
+<ResultFlow fn="andThrough" />
 
 `andThrough` calls the given function with the success value, just like `andThen`.
 The difference is what happens when the function succeeds:
@@ -73,6 +77,8 @@ To report every validation error at once, use [`collect`](../combining/aggregati
 :::
 
 ## Cleaning Up with `orThrough`
+
+<ResultFlow fn="orThrough" />
 
 `orThrough` is the counterpart of `andThrough` for failures.
 It calls the given function with the error value, typically to clean up after a failed operation:

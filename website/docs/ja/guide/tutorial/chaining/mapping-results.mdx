@@ -2,11 +2,15 @@
 description: 'Result.map で成功値を、Result.mapError でエラー値を変換する方法。表示用データへの整形や、エラーを HTTP レスポンスに変換する例を紹介します。'
 ---
 
+import { ResultFlow } from '../../../../../theme';
+
 # Result を変換する
 
 `map` と `mapError` は、`Result` が `Success` か `Failure` かを変えずに、その中身を変換します。
 
 ## `map` で値を変換する
+
+<ResultFlow fn="map" />
 
 `map` は、渡された関数で成功値を変換します。
 `Result` が `Failure` の場合、関数は呼び出されず、`Failure` がそのまま返されます。
@@ -63,6 +67,8 @@ const getProductForDisplay = (id: number): Result.ResultAsync<ProductView, 'NotF
 ```
 
 ## `mapError` でエラーを変換する
+
+<ResultFlow fn="mapError" />
 
 `mapError` は、エラーに対する `map` の対になる関数です。
 エラー値を変換し、`Success` の場合は関数を呼び出さずにそのまま返します。

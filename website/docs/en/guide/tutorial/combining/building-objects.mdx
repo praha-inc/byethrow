@@ -2,6 +2,8 @@
 description: Building an object step by step from multiple Results with Result.do, Result.bind and Result.let, where each step can use the values computed before it.
 ---
 
+import { ResultFlow } from '../../../../../theme';
+
 # Building Objects
 
 Sometimes you need several values, each produced by an operation that can fail, and later steps depend on earlier ones.
@@ -19,6 +21,8 @@ const start = Result.do();
 ```
 
 ## Adding Fields with `bind`
+
+<ResultFlow fn="bind" />
 
 `bind(name, fn)` adds a field to the accumulated object:
 
@@ -72,6 +76,8 @@ const result = Result.pipe(
 ```
 
 ## Adding Plain Values with `let`
+
+<ResultFlow fn="let" />
 
 Some fields are computed from the fields added so far and cannot fail.
 `let(name, fn)` adds the value returned by `fn` directly, so you don't need to wrap it in `succeed`:

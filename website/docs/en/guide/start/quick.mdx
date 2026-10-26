@@ -2,7 +2,7 @@
 description: Install @praha/byethrow and learn the core workflow — create Results with succeed and fail, wrap throwing code with fn, compose steps with pipe, map, and andThen, recover with orElse, and handle async operations.
 ---
 
-import { PackageManagerTabs } from '../../../../theme';
+import { PackageManagerTabs, ResultPipeline } from '../../../../theme';
 
 # Quick Start
 
@@ -105,6 +105,8 @@ welcome('x999');
 
 As soon as a step fails, the remaining steps are skipped and the failure is passed straight to the end of the pipeline.
 You don't need to check for errors after every step.
+
+<ResultPipeline name="welcome" />
 
 ## Recovering from Failures
 

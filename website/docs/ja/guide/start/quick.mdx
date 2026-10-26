@@ -2,7 +2,7 @@
 description: '@praha/byethrowのインストールと基本的な使い方。succeedとfailでのResultの作成、fnによる例外を投げるコードのラップ、pipe・map・andThenによる処理の合成、orElseによる回復、非同期処理の扱い方を解説。'
 ---
 
-import { PackageManagerTabs } from '../../../../theme';
+import { PackageManagerTabs, ResultPipeline } from '../../../../theme';
 
 # クイックスタート
 
@@ -105,6 +105,8 @@ welcome('x999');
 
 いずれかのステップが失敗すると、残りのステップはスキップされ、失敗はそのままパイプラインの最後まで渡されます。
 ステップごとにエラーをチェックする必要はありません。
+
+<ResultPipeline name="welcome" />
 
 ## 失敗から回復する
 

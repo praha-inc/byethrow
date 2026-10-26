@@ -2,6 +2,8 @@
 description: 'Result.pipe で処理を上から下へ順につなげる方法。ネストした呼び出しや中間変数を使わずに書けること、失敗時にパイプラインが短絡する仕組み、非同期ステップの扱いを解説します。'
 ---
 
+import { ResultPipeline } from '../../../../../theme';
+
 # pipe の基本
 
 `pipe` は `@praha/byethrow` の中心となる関数です。
@@ -102,6 +104,8 @@ const result = Result.pipe(
 ```
 
 そのため、ステップごとにエラーを確認する必要はありません。
+
+<ResultPipeline name="shortCircuit" />
 
 ## 非同期のステップ
 

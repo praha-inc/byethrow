@@ -2,12 +2,16 @@
 description: 'Result.parseと、Zod・Valibot・ArkTypeなどのStandard Schema互換ライブラリを使って未知の入力をバリデーションし、バリデーションの問題をResultに変換する方法。'
 ---
 
+import { ResultFlow } from '../../../../../theme';
+
 # 値をパースする
 
 リクエストボディ、JSON ファイル、環境変数など、プログラムの外から来るデータは、バリデーションするまでは `unknown` です。
 `parse` はそのような値をスキーマに照らしてバリデーションし、その結果を `Result` として返します。
 
 ## `parse` でバリデーションする
+
+<ResultFlow fn="parse" />
 
 `parse` は、[Standard Schema](https://standardschema.dev/) を実装したスキーマであれば何でも受け付けます。Standard Schema は、[Zod](https://zod.dev/)、[Valibot](https://valibot.dev/)、[ArkType](https://arktype.io/) などのバリデーションライブラリがサポートしている共通インターフェースです。
 このページの例では Zod を使います。
