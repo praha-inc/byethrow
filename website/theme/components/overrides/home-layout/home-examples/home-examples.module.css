@@ -264,8 +264,11 @@
   transition: transform 0.25s;
 }
 
-.guide:hover svg {
-  transform: translateX(3px);
+/* Touch screens keep :hover after a tap, which would leave the arrow nudged. */
+@media (hover: hover) and (pointer: fine) {
+  .guide:hover svg {
+    transform: translateX(3px);
+  }
 }
 
 /* ---------- responsive ---------- */

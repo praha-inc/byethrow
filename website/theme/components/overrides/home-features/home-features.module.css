@@ -141,8 +141,11 @@
   transition: transform 0.25s;
 }
 
-.more:hover .more-arrow {
-  transform: translateX(3px);
+/* Touch screens keep :hover after a tap, which would leave the arrow nudged. */
+@media (hover: hover) and (pointer: fine) {
+  .more:hover .more-arrow {
+    transform: translateX(3px);
+  }
 }
 
 /* ---------- responsive ---------- */

@@ -134,7 +134,7 @@
     border-color 0.2s,
     color 0.2s,
     box-shadow 0.2s,
-    transform 0.2s;
+    transform 0.16s var(--bt-ease-out);
 }
 
 .bt-button:active,
@@ -194,8 +194,11 @@
   transition: transform 0.2s;
 }
 
-.bt-button:hover .bt-button__icon {
-  transform: translateX(2px);
+/* Touch screens keep :hover after a tap, which would leave the icon nudged. */
+@media (hover: hover) and (pointer: fine) {
+  .bt-button:hover .bt-button__icon {
+    transform: translateX(2px);
+  }
 }
 
 /* ------------------------------------------------------------------ */
