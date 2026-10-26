@@ -179,7 +179,8 @@
 .pane {
   flex: 1;
   min-height: 25rem;
-  animation: pane-enter 0.3s ease-out both;
+  /* Short, so that moving through the tabs with the arrow keys doesn't flash the code. */
+  animation: pane-enter 0.15s var(--bt-ease-out) both;
 }
 
 @keyframes pane-enter {

@@ -33,7 +33,7 @@
   font-family: var(--rp-font-family-mono);
   font-size: 0.75rem;
   letter-spacing: 0.01em;
-  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rise 0.7s var(--bt-ease-out) both;
 }
 
 .badge-dot {
@@ -59,7 +59,7 @@
   letter-spacing: -0.025em;
   line-height: 0.95;
   color: var(--rp-c-text-1);
-  animation: rise 0.8s 0.05s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rise 0.8s 0.05s var(--bt-ease-out) both;
 }
 
 /* `<em>` inside the name is rendered as the "throw" we say goodbye to. */
@@ -99,7 +99,7 @@
   line-height: 1.12;
   word-break: auto-phrase;
   color: var(--rp-c-text-1);
-  animation: rise 0.8s 0.12s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rise 0.8s 0.12s var(--bt-ease-out) both;
 }
 
 .tagline {
@@ -110,7 +110,7 @@
   text-wrap: pretty;
   word-break: auto-phrase;
   color: var(--rp-c-text-2);
-  animation: rise 0.8s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rise 0.8s 0.2s var(--bt-ease-out) both;
 }
 
 .actions {
@@ -118,13 +118,13 @@
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 2.25rem;
-  animation: rise 0.8s 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rise 0.8s 0.28s var(--bt-ease-out) both;
 }
 
 .after-actions {
   width: 100%;
   margin-top: 1.25rem;
-  animation: rise 0.8s 0.36s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rise 0.8s 0.36s var(--bt-ease-out) both;
 }
 
 .visual {
