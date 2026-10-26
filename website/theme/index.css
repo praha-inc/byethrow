@@ -47,6 +47,9 @@
   /* Typography */
   --bt-font-display: 'Mona Sans', var(--rp-font-family-base);
 
+  /* Motion */
+  --bt-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
   /* Home */
   --rp-home-hero-secondary-color: var(--bt-teal);
   --rp-home-hero-title-bg: linear-gradient(100deg, #059669 0%, #0d9488 55%, #0284c7 100%);
@@ -131,7 +134,7 @@
     border-color 0.2s,
     color 0.2s,
     box-shadow 0.2s,
-    transform 0.2s;
+    transform 0.16s var(--bt-ease-out);
 }
 
 .bt-button:active,
@@ -191,8 +194,11 @@
   transition: transform 0.2s;
 }
 
-.bt-button:hover .bt-button__icon {
-  transform: translateX(2px);
+/* Touch screens keep :hover after a tap, which would leave the icon nudged. */
+@media (hover: hover) and (pointer: fine) {
+  .bt-button:hover .bt-button__icon {
+    transform: translateX(2px);
+  }
 }
 
 /* ------------------------------------------------------------------ */

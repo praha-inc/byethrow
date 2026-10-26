@@ -14,7 +14,7 @@
   font-family: var(--rp-font-family-mono);
   font-size: 0.8125rem;
   line-height: 1.7;
-  animation: card-enter 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: card-enter 0.9s var(--bt-ease-out) both;
 }
 
 .card[data-tab='before'] {
@@ -125,7 +125,7 @@
   opacity: 0;
   visibility: hidden;
   transform: translateY(4px);
-  transition: opacity 0.2s, transform 0.2s, visibility 0s 0.2s;
+  transition: opacity 0.2s var(--bt-ease-out), transform 0.2s var(--bt-ease-out), visibility 0s 0.2s;
 }
 
 /* Fades in after the outgoing pane has mostly faded out, so the two don't blur together. */
@@ -133,7 +133,7 @@
   opacity: 1;
   visibility: visible;
   transform: none;
-  transition: opacity 0.3s 0.15s, transform 0.3s 0.15s;
+  transition: opacity 0.3s var(--bt-ease-out) 0.15s, transform 0.3s var(--bt-ease-out) 0.15s;
 }
 
 .code code {
@@ -168,7 +168,8 @@
   padding: 0.75rem 1rem;
   border-top: 1px solid var(--bt-line);
   background: color-mix(in srgb, var(--accent) 7%, transparent);
-  animation: output-enter 0.4s ease-out both;
+  /* Arrives together with the incoming code pane. */
+  animation: output-enter 0.3s var(--bt-ease-out) 0.15s both;
 }
 
 @keyframes output-enter {

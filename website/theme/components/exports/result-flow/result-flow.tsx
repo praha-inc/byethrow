@@ -159,12 +159,13 @@ export type ResultFlowProps = {
 /**
  * The tracks of Results going through one function. Dots follow each case in turn
  * and the matching row of the list below lights up; pointing at or selecting a row
- * follows that case only.
+ * follows that case only. The box lights up when the dots reach it, as the function
+ * is called.
  */
 export const ResultFlow: FC<ResultFlowProps> = ({ fn }) => {
   const t = useI18n<typeof I18nJson>();
   const flow: Flow = FLOWS[fn];
-  const { cases, side } = flow;
+  const { box, cases, side } = flow;
   const slots = Math.max(...cases.map(({ inputs }) => inputs.length));
   const figureRef = useRef<HTMLElement>(null);
   const dotRefs = useRef<Array<SVGGElement | null>>([]);
@@ -174,6 +175,8 @@ export const ResultFlow: FC<ResultFlowProps> = ({ fn }) => {
   const [auto, setAuto] = useState(0);
   const [hovered, setHovered] = useState<number | null>(null);
   const [pinned, setPinned] = useState<number | null>(null);
+  /** The case whose dots have reached the box on this trip, so that the box lights up for that case only. */
+  const [reached, setReached] = useState<number | null>(null);
   const chosen = hovered ?? pinned;
   const current = chosen ?? (playing ? auto : null);
 
@@ -193,6 +196,8 @@ export const ResultFlow: FC<ResultFlowProps> = ({ fn }) => {
     const startInset = Math.max(...flowCase.inputs.map((value, index) => insetOf(dots[index], value)));
     const endInset = insetOf(dots[0], flowCase.output);
     const span = enterLength + leaveLength - startInset - endInset;
+    // The paths end at the centre of the box, so the dots reach its edge half its width earlier.
+    const boxEdge = enterLength - boxWidthOf(box) / 2;
     let start: number | undefined;
     let frame = 0;
 
@@ -213,6 +218,8 @@ export const ResultFlow: FC<ResultFlowProps> = ({ fn }) => {
           moveDot(dot, point, flowCase.output, opacity);
         }
       }
+      // The box goes out together with the dots, before the next trip starts.
+      setReached(travelled >= boxEdge && elapsed < TRAVEL_MS + HOLD_MS - FADE_OUT_MS ? current : null);
 
       if (elapsed < TRAVEL_MS + HOLD_MS) {
         frame = requestAnimationFrame(tick);
@@ -226,7 +233,7 @@ export const ResultFlow: FC<ResultFlowProps> = ({ fn }) => {
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [cases, current, chosen, playing]);
+  }, [box, cases, current, chosen, playing]);
 
   if (import.meta.env.SSG_MD) {
     return <ResultFlowMarkdown fn={fn} />;
@@ -236,6 +243,8 @@ export const ResultFlow: FC<ResultFlowProps> = ({ fn }) => {
   const activeRoute = active && routeOf(flow, active);
   const boxWidth = boxWidthOf(flow.box);
   const boxCalled = active && callsBox(flow, active);
+  // While the dots play, the box lights up once they reach it; otherwise it lights up straight away.
+  const boxLit = boxCalled && (!playing || reached === current);
   // A single input has a chip per lane, while several have one per slot that shows its track in the active case.
   const entryChips = slots > 1
     ? Array.from({ length: slots }, (_, index) => (
@@ -302,7 +311,7 @@ export const ResultFlow: FC<ResultFlowProps> = ({ fn }) => {
           className={cx(
             styles['box'],
             styles[`box--${side}`],
-            active && (boxCalled ? styles['box--called'] : styles['box--skipped']),
+            active && (boxCalled ? boxLit && styles['box--called'] : styles['box--skipped']),
           )}
         >
           <rect x={BOX_X - boxWidth / 2} y={boxYOf(flow) - BOX_HEIGHT / 2} width={boxWidth} height={BOX_HEIGHT} rx="8" />

@@ -18,6 +18,8 @@ const customProperties = (values: Readonly<Record<string, number>>): CSSProperti
 
 const UNIT_MS = 450;
 const HOLD_MS = 1600;
+const FADE_IN_MS = 150;
+const FADE_OUT_MS = 300;
 
 export type ResultTimelineProps = {
   /** Whether the operations are passed as running Results or started by a mapper. */
@@ -42,6 +44,7 @@ export const ResultTimeline: FC<ResultTimelineProps> = ({ mode }) => {
     if (!figure) return;
     if (!playing) {
       figure.style.setProperty('--t', String(axis));
+      figure.style.setProperty('--fade', '1');
       return;
     }
 
@@ -53,6 +56,8 @@ export const ResultTimeline: FC<ResultTimelineProps> = ({ mode }) => {
       start ??= now;
       const elapsed = (now - start) % (travelMs + HOLD_MS);
       figure.style.setProperty('--t', String(Math.min(elapsed / travelMs, 1) * axis));
+      // Fade out before the time goes back to the start, so that the next run doesn't snap into place.
+      figure.style.setProperty('--fade', String(Math.max(0, Math.min(1, elapsed / FADE_IN_MS, (travelMs + HOLD_MS - elapsed) / FADE_OUT_MS))));
       frame = requestAnimationFrame(tick);
     };
 

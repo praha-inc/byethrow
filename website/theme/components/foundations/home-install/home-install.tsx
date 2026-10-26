@@ -114,7 +114,9 @@ export const HomeInstall: FC<HomeInstallProps> = ({ className }) => {
           title={copied ? t('hero.copied') : t('hero.copy')}
           onClick={copy}
         >
-          {copied ? <CheckIcon /> : <CopyIcon />}
+          {/* Both icons stay mounted so that they can cross-fade. */}
+          <CopyIcon />
+          <CheckIcon />
         </button>
       </div>
     </div>

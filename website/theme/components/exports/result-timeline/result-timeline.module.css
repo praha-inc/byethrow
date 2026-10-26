@@ -2,11 +2,13 @@
  * Everything is placed against the current time `--t`, which the component updates
  * each frame, on an axis of `--axis` units. A bar grows from `--start` to `--end`,
  * and whatever happens at `--at` fades in just before the time reaches it, so that
- * events at the very end of the axis show too.
+ * events at the very end of the axis show too. Everything that moves is dimmed by
+ * `--fade` while the time goes back to the start.
  */
 .figure {
   --t: 0;
   --axis: 1;
+  --fade: 1;
   --label-width: 4.25rem;
 
   margin: 1.25rem 0 1.5rem;
@@ -90,7 +92,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
-  opacity: clamp(0, (var(--t) - var(--at)) * 20 + 1, 1);
+  opacity: calc(clamp(0, (var(--t) - var(--at)) * 20 + 1, 1) * var(--fade));
 }
 
 .arrow {
@@ -141,16 +143,21 @@
   background: color-mix(in srgb, var(--rp-c-text-1) 4%, transparent);
 }
 
-/* Grey while the operation runs, then the colour of its outcome once it has finished. */
+/*
+ * Grey while the operation runs, then the colour of its outcome once it has finished.
+ * It spans the whole track and is clipped to the time it has run, so that growing
+ * it only repaints instead of laying the figure out again each frame.
+ */
 .bar {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: calc(var(--start) / var(--axis) * 100%);
-  width: calc(clamp(0, var(--t) - var(--start), var(--end) - var(--start)) / var(--axis) * 100%);
-  overflow: hidden;
-  border-radius: 4px;
+  inset: 0;
+  clip-path: inset(
+    0 calc((var(--axis) - clamp(var(--start), var(--t), var(--end))) / var(--axis) * 100%)
+    0 calc(var(--start) / var(--axis) * 100%)
+    round 4px
+  );
   background: color-mix(in srgb, var(--rp-c-text-1) 28%, transparent);
+  opacity: var(--fade);
 }
 
 .bar::after {
@@ -171,7 +178,7 @@
 
 /* Still running after the function has returned, so nothing waits for its result. */
 .bar--ignored {
-  opacity: 0.35;
+  opacity: calc(0.35 * var(--fade));
 }
 
 .note {
@@ -185,7 +192,7 @@
   font-size: 0.6875rem;
   color: var(--rp-c-text-2);
   white-space: nowrap;
-  opacity: clamp(0, (var(--t) - var(--at)) * 20 + 1, 1);
+  opacity: calc(clamp(0, (var(--t) - var(--at)) * 20 + 1, 1) * var(--fade));
 }
 
 .overlay {
@@ -194,7 +201,9 @@
   bottom: -0.25rem;
   left: var(--label-width);
   right: 0;
+  container-type: inline-size;
   pointer-events: none;
+  opacity: var(--fade);
 }
 
 /* Where the function returns. */
@@ -207,12 +216,14 @@
   opacity: clamp(0, (var(--t) - var(--at)) * 20 + 1, 1);
 }
 
+/* Moved with a transform across the width of the overlay, which doesn't need a new layout each frame. */
 .playhead {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: calc(var(--t) / var(--axis) * 100%);
+  left: 0;
   width: 1px;
+  transform: translateX(calc(var(--t) / var(--axis) * 100cqw));
   background: var(--rp-c-text-1);
   opacity: 0.45;
 }

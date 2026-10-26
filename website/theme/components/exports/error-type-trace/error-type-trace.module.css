@@ -99,7 +99,7 @@
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
-  transition: opacity 0.3s, transform 0.3s;
+  transition: opacity 0.3s, transform 0.3s var(--bt-ease-out);
 }
 
 /* Added to the type by this step. */
@@ -148,7 +148,7 @@
 }
 
 .step--pending .member--added {
-  transform: scale(0.6);
+  transform: scale(0.9);
 }
 
 .step--pending .member--removed {
