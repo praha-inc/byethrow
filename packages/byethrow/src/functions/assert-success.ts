@@ -12,7 +12,6 @@ import type { InferSuccess, Result, ResultMaybeAsync, Success } from '../result'
  * guaranteed to be a {@link Success} at the type level.
  * If the result is a {@link Failure} at runtime, throws an error.
  *
- * @function
  * @typeParam R - The result type that extends {@link ResultMaybeAsync} with `never` as the error type.
  * @param result - The {@link Result} or {@link ResultAsync} to assert as a {@link Success}.
  *                 The error type must be `never`.
@@ -45,9 +44,9 @@ import type { InferSuccess, Result, ResultMaybeAsync, Success } from '../result'
  *
  * @category Assertions
  */
-export const assertSuccess = <R extends ResultMaybeAsync<any, never>>(
+export function assertSuccess<R extends ResultMaybeAsync<any, never>>(
   result: R,
-): true extends HasPromise<R> ? Promise<Success<InferSuccess<R>>> : Success<InferSuccess<R>> => {
+): true extends HasPromise<R> ? Promise<Success<InferSuccess<R>>> : Success<InferSuccess<R>> {
   const apply = (r: Result<InferSuccess<R>, never>): Success<InferSuccess<R>> => {
     if (isFailure(r)) {
       throw new Error('Expected a Success result, but received a Failure');
@@ -57,4 +56,4 @@ export const assertSuccess = <R extends ResultMaybeAsync<any, never>>(
 
   // oxlint-disable-next-line @typescript-eslint/no-unsafe-return
   return (isPromise(result) ? result.then(apply) : apply(result)) as any;
-};
+}

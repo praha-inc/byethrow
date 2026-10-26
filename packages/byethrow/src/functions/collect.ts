@@ -21,7 +21,6 @@ import type {
  * Unlike {@link sequence}, which stops at the first error and returns only that error,
  * `collect` processes all results and collects all errors.
  *
- * @function
  * @typeParam X - The input type (object or array of Results).
  *
  * @example Object of Results (all succeed)
@@ -98,13 +97,12 @@ import type {
  *
  * @category Utilities
  */
-export const collect: {
-  <X extends Record<string, ResultMaybeAsync<any, any>>>(x: X): ResultFor<X[keyof X], { [K in keyof X]: InferSuccess<X[K]> }, InferFailure<X[keyof X]>[]>;
-  <const X extends Array<ResultMaybeAsync<any, any>>>(x: X): ResultFor<X[number], { [K in keyof X]: InferSuccess<X[K]> }, InferFailure<X[number]>[]>;
-  <const X extends ReadonlyArray<ResultMaybeAsync<any, any>>>(x: X): ResultFor<X[number], { [K in keyof X]: InferSuccess<X[K]> }, InferFailure<X[number]>[]>;
-  <const X extends Array<unknown>, Fn extends (value: X[number]) => ResultMaybeAsync<any, any>>(x: X, fn: Fn): ResultFor<ReturnType<Fn>, { [K in keyof X]: InferSuccess<Fn> }, InferFailure<Fn>[]>;
-  <const X extends ReadonlyArray<unknown>, Fn extends (value: X[number]) => ResultMaybeAsync<any, any>>(x: X, fn: Fn): ResultFor<ReturnType<Fn>, { [K in keyof X]: InferSuccess<Fn> }, InferFailure<Fn>[]>;
-} = (value: unknown, fn?: (value: unknown) => ResultMaybeAsync<any, any>): any => {
+export function collect<X extends Record<string, ResultMaybeAsync<any, any>>>(x: X): ResultFor<X[keyof X], { [K in keyof X]: InferSuccess<X[K]> }, InferFailure<X[keyof X]>[]>;
+export function collect<const X extends Array<ResultMaybeAsync<any, any>>>(x: X): ResultFor<X[number], { [K in keyof X]: InferSuccess<X[K]> }, InferFailure<X[number]>[]>;
+export function collect<const X extends ReadonlyArray<ResultMaybeAsync<any, any>>>(x: X): ResultFor<X[number], { [K in keyof X]: InferSuccess<X[K]> }, InferFailure<X[number]>[]>;
+export function collect<const X extends Array<unknown>, Fn extends (value: X[number]) => ResultMaybeAsync<any, any>>(x: X, fn: Fn): ResultFor<ReturnType<Fn>, { [K in keyof X]: InferSuccess<Fn> }, InferFailure<Fn>[]>;
+export function collect<const X extends ReadonlyArray<unknown>, Fn extends (value: X[number]) => ResultMaybeAsync<any, any>>(x: X, fn: Fn): ResultFor<ReturnType<Fn>, { [K in keyof X]: InferSuccess<Fn> }, InferFailure<Fn>[]>;
+export function collect(value: unknown, fn?: (value: unknown) => ResultMaybeAsync<any, any>): any {
   const reduce = <T>(
     entries: Array<readonly [any, any]>,
     callback: (accumulator: T, value: unknown, entry: readonly [any, any]) => void,
@@ -160,4 +158,4 @@ export const collect: {
       {},
     );
   }
-};
+}

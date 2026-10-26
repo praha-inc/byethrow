@@ -3,7 +3,6 @@ import type { Result } from '../result';
 /**
  * Type guard to check if a {@link Result} is a {@link Success}.
  *
- * @function
  * @typeParam R - The type of the result to check.
  * @param result - The {@link Result} to check.
  * @returns `true` if the result is a {@link Success}, otherwise `false`.
@@ -20,6 +19,6 @@ import type { Result } from '../result';
  *
  * @category Type Guards
  */
-export const isSuccess = <R extends Result<unknown, unknown>>(result: R): result is Extract<R, { readonly type: 'Success' }> => {
+export function isSuccess<R extends Result<unknown, unknown>>(result: R): result is Extract<R, { readonly type: 'Success' }> {
   return result.type === 'Success';
-};
+}

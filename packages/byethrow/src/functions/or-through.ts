@@ -16,7 +16,6 @@ import type { InferFailure, InferSuccess, Result, ResultFor, ResultMaybeAsync } 
  *
  * Useful for running error recovery or fallback logic while preserving the original error on success.
  *
- * @function
  * @typeParam R1 - The input {@link Result} or {@link ResultAsync}.
  * @typeParam R2 - The result type returned by `fn`.
  *
@@ -64,10 +63,9 @@ import type { InferFailure, InferSuccess, Result, ResultFor, ResultMaybeAsync } 
  *
  * @category Combinators
  */
-export const orThrough: {
-  <R1 extends ResultMaybeAsync<any, any>, R2 extends ResultMaybeAsync<any, any>>(fn: (a: InferFailure<R1>) => R2): (result: R1) => ResultFor<R1 | R2, InferSuccess<R1>, InferFailure<R1> | InferFailure<R2>>;
-  <F extends (a: any) => ResultMaybeAsync<any, any>>(fn: F): <R1 extends ResultMaybeAsync<any, Parameters<F>[0]>>(result: R1) => ResultFor<R1 | ReturnType<F>, InferSuccess<R1>, InferFailure<R1> | InferFailure<F>>;
-} = <R1 extends ResultMaybeAsync<any, any>, R2 extends ResultMaybeAsync<any, any>>(fn: (error: InferFailure<R1>) => R2) => {
+export function orThrough<R1 extends ResultMaybeAsync<any, any>, R2 extends ResultMaybeAsync<any, any>>(fn: (a: InferFailure<R1>) => R2): (result: R1) => ResultFor<R1 | R2, InferSuccess<R1>, InferFailure<R1> | InferFailure<R2>>;
+export function orThrough<F extends (a: any) => ResultMaybeAsync<any, any>>(fn: F): <R1 extends ResultMaybeAsync<any, Parameters<F>[0]>>(result: R1) => ResultFor<R1 | ReturnType<F>, InferSuccess<R1>, InferFailure<R1> | InferFailure<F>>;
+export function orThrough<R1 extends ResultMaybeAsync<any, any>, R2 extends ResultMaybeAsync<any, any>>(fn: (error: InferFailure<R1>) => R2) {
   return (result: R1) => {
     const apply = (r: Result<InferSuccess<R1>, InferFailure<R1>>) => {
       if (isSuccess(r)) return r;
@@ -85,4 +83,4 @@ export const orThrough: {
 
     return isPromise(result) ? result.then(apply) : apply(result);
   };
-};
+}

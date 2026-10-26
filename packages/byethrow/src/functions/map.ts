@@ -10,7 +10,6 @@ import type { InferFailure, InferSuccess, Result, ResultFor, ResultMaybeAsync } 
  * Applies a transformation function to the success value of a {@link Result} or {@link ResultAsync}.
  * If the input is a {@link Failure}, it will be returned unchanged.
  *
- * @function
  * @typeParam R1 - The input {@link Result} or {@link ResultAsync}.
  * @typeParam T2 - The transformed success value type.
  *
@@ -40,10 +39,9 @@ import type { InferFailure, InferSuccess, Result, ResultFor, ResultMaybeAsync } 
  *
  * @category Combinators
  */
-export const map: {
-  <R1 extends ResultMaybeAsync<any, any>, const T2>(fn: (a: InferSuccess<R1>) => T2): (result: R1) => ResultFor<R1, T2, InferFailure<R1>>;
-  <T1, const T2>(fn: (a: T1) => T2): <R1 extends ResultMaybeAsync<T1, any>>(result: R1) => ResultFor<R1, T2, InferFailure<R1>>;
-} = <T1, T2>(fn: (a: T1) => T2) => {
+export function map<R1 extends ResultMaybeAsync<any, any>, const T2>(fn: (a: InferSuccess<R1>) => T2): (result: R1) => ResultFor<R1, T2, InferFailure<R1>>;
+export function map<T1, const T2>(fn: (a: T1) => T2): <R1 extends ResultMaybeAsync<T1, any>>(result: R1) => ResultFor<R1, T2, InferFailure<R1>>;
+export function map<T1, T2>(fn: (a: T1) => T2) {
   return <R1 extends ResultMaybeAsync<T1, any>>(result: R1): ResultFor<R1, T2, InferFailure<R1>> => {
     const apply = (r: Result<T1, InferFailure<R1>>) => {
       if (isFailure(r)) return r;
@@ -56,4 +54,4 @@ export const map: {
 
     return apply(result) as ResultFor<R1, T2, InferFailure<R1>>;
   };
-};
+}

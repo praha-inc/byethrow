@@ -12,7 +12,6 @@ import type { InferFailure, InferSuccess, Result, ResultMaybeAsync } from '../re
  *
  * If the input is a {@link Failure}, it will throw the error or return the default value if provided.
  *
- * @function
  * @typeParam R - The input {@link Result} or {@link ResultAsync}.
  * @typeParam T - The default value type (optional).
  *
@@ -52,12 +51,11 @@ import type { InferFailure, InferSuccess, Result, ResultMaybeAsync } from '../re
  *
  * @category Unwraps
  */
-export const unwrap: {
-  <R extends ResultMaybeAsync<any, any>>(result: R): true extends HasPromise<R> ? Promise<InferSuccess<R>> : InferSuccess<R>;
-  <R extends ResultMaybeAsync<any, any>, T>(result: R, defaultValue: T): true extends HasPromise<R> ? Promise<InferSuccess<R> | T> : InferSuccess<R> | T;
-  <R extends ResultMaybeAsync<any, any>>(): (result: R) => true extends HasPromise<R> ? Promise<InferSuccess<R>> : InferSuccess<R>;
-  <R extends ResultMaybeAsync<any, any>, T>(defaultValue: T): (result: R) => true extends HasPromise<R> ? Promise<InferSuccess<R> | T> : InferSuccess<R> | T;
-} = <R extends ResultMaybeAsync<any, any>, T = never>(...args: any[]): any => {
+export function unwrap<R extends ResultMaybeAsync<any, any>>(result: R): true extends HasPromise<R> ? Promise<InferSuccess<R>> : InferSuccess<R>;
+export function unwrap<R extends ResultMaybeAsync<any, any>, T>(result: R, defaultValue: T): true extends HasPromise<R> ? Promise<InferSuccess<R> | T> : InferSuccess<R> | T;
+export function unwrap<R extends ResultMaybeAsync<any, any>>(): (result: R) => true extends HasPromise<R> ? Promise<InferSuccess<R>> : InferSuccess<R>;
+export function unwrap<R extends ResultMaybeAsync<any, any>, T>(defaultValue: T): (result: R) => true extends HasPromise<R> ? Promise<InferSuccess<R> | T> : InferSuccess<R> | T;
+export function unwrap<R extends ResultMaybeAsync<any, any>, T = never>(...args: any[]): any {
   // oxlint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const firstArgument = args[0];
 
@@ -92,4 +90,4 @@ export const unwrap: {
     };
     return isPromise(result) ? result.then(apply) : apply(result);
   };
-};
+}
