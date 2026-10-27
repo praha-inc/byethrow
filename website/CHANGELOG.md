@@ -1,5 +1,17 @@
 # @praha/byethrow-website
 
+## 0.13.0
+
+### Minor Changes
+
+- [#1013](https://github.com/praha-inc/byethrow/pull/1013) [`cdba2a8`](https://github.com/praha-inc/byethrow/commit/cdba2a87bb04e1ace0b88d092d245f5c5080fc92) Thanks [@Karibash](https://github.com/Karibash)! - Redesign the website
+
+- [#1075](https://github.com/praha-inc/byethrow/pull/1075) [`03311ce`](https://github.com/praha-inc/byethrow/commit/03311cef20eefc95f44cf88add0a66a3f1221ae2) Thanks [@Karibash](https://github.com/Karibash)! - Add interactive diagrams that visualize how Results flow through combinators, pipelines, async aggregation and error types
+
+### Patch Changes
+
+- [#1076](https://github.com/praha-inc/byethrow/pull/1076) [`28b0a28`](https://github.com/praha-inc/byethrow/commit/28b0a28c287683cb22918254eb8ac89ee2060835) Thanks [@Karibash](https://github.com/Karibash)! - Polish the animations of the home page and the interactive diagrams
+
 ## 0.12.0
 
 ### Minor Changes
