@@ -1,5 +1,21 @@
 # @praha/byethrow
 
+## 0.13.0
+
+### Minor Changes
+
+- [#1056](https://github.com/praha-inc/byethrow/pull/1056) [`15d0047`](https://github.com/praha-inc/byethrow/commit/15d00474df817626d37f99fd3b0281b75626b153) Thanks [@Karibash](https://github.com/Karibash)! - Add a `let` function to attach a plain value to the success object in do-notation pipelines
+
+- [#842](https://github.com/praha-inc/byethrow/pull/842) [`ae57dc7`](https://github.com/praha-inc/byethrow/commit/ae57dc74cf937a1b359eebadf6c9e360b5ab5aa9) Thanks [@iwasa-kosui](https://github.com/iwasa-kosui)! - Remove Promise auto-await from succeed/fail
+  
+  **BREAKING CHANGES:**
+  
+  `succeed` and `fail` no longer detect and auto-await `Promise` arguments. Passing a `Promise` now flows straight through as the wrapped value/error instead of resolving into a `ResultAsync`. Await the `Promise` yourself before calling `succeed`/`fail`, e.g. `succeed(await promise)` instead of `succeed(promise)`.
+
+### Patch Changes
+
+- [#1057](https://github.com/praha-inc/byethrow/pull/1057) [`7b2a19b`](https://github.com/praha-inc/byethrow/commit/7b2a19b253f98bc068e178734ef31a6a4a7ddd0f) Thanks [@Karibash](https://github.com/Karibash)! - Declare all functions with `function` declarations instead of `const` variables so that IDEs treat them as functions (e.g. inserting parentheses on completion)
+
 ## 0.12.0
 
 ## 0.11.2
