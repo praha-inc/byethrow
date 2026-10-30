@@ -64,7 +64,7 @@
     "@praha/byethrow-website": "workspace:*",
     "@rslib/core": "1.0.4",
     "@types/node": "24.19.2",
-    "oxlint": "1.89.0",
+    "oxlint": "1.90.0",
     "tsx": "4.23.15",
     "typescript": "6.0.3"
   },
