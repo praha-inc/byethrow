@@ -15,7 +15,7 @@
   "devDependencies": {
     "@changesets/changelog-github": "1.0.1",
     "@changesets/cli": "3.0.3",
-    "@praha/oxlint-config-standard": "1.0.2",
+    "@praha/oxlint-config-standard": "1.0.3",
     "@tsconfig/strictest": "2.0.8",
     "oxlint": "1.90.0",
     "oxlint-tsgolint": "7.0.2005",

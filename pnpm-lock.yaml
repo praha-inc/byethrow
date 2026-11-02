@@ -182,8 +182,8 @@ importers:
         specifier: 3.0.3
         version: 3.0.3
       '@praha/oxlint-config-standard':
-        specifier: 1.0.2
-        version: 1.0.2(@praha/byethrow@0.12.0(typescript@6.0.3))(eslint@10.14.0(supports-color@8.1.1))(oxlint-tsgolint@7.0.2005)(oxlint@1.90.0(oxlint-tsgolint@7.0.2005))(supports-color@8.1.1)
+        specifier: 1.0.3
+        version: 1.0.3(@praha/byethrow@0.13.0(typescript@6.0.3))(eslint@10.14.0(supports-color@8.1.1))(oxlint-tsgolint@7.0.2005)(oxlint@1.90.0(oxlint-tsgolint@7.0.2005))(supports-color@8.1.1)
       '@tsconfig/strictest':
         specifier: 2.0.8
         version: 2.0.8
@@ -1473,28 +1473,28 @@ packages:
     resolution: {integrity: sha512-pOr5+q1fLYKwFN3LAJuGZEnfXDcQ73zqgDHMtGy+K+uIoUqyY+6MeDCWFwfu+4EFuq76I5EPFofoNAI+Bmmq4A==}
     engines: {node: '>=22.13'}
 
-  '@praha/byethrow-oxlint@0.12.0':
-    resolution: {integrity: sha512-zdg/oa50/N+a62FsCVHz/J+9RnuaIWZVzwo9frIXZdyPuNNHRYBCee9AwCnfYinOQ6dLOzFmOS9lATnw/MDGdQ==}
+  '@praha/byethrow-oxlint@0.13.0':
+    resolution: {integrity: sha512-cXbTuQsrC/DVRn6mj7xYTXpIQCCdCBTKabBGU2vPMle2fe+WV1z+GcBKZorJSS3T8h6Q82or4D96JvPYRH0faw==}
     peerDependencies:
-      '@praha/byethrow': 0.12.0
+      '@praha/byethrow': 0.13.0
       oxlint: ^1.0.0
 
-  '@praha/byethrow@0.12.0':
-    resolution: {integrity: sha512-Q3dRHW8aGqYbEe/W5YKrik6GbtfLGdCrCVcDcP/YJe4uhhbbrkEw9XoRuPZhfMb4uLrUXk27h4phK3I8+cAdRw==}
+  '@praha/byethrow@0.13.0':
+    resolution: {integrity: sha512-YbmTlWzvtwiaK1ZhUOzXleJFju6XvBILxkL3AmvHona7zalABaQsPIGwc6YkugirpwG3n4Sc2iKGSwnTEv/hsQ==}
     peerDependencies:
       typescript: '>=5.0.0'
 
   '@praha/error-factory@1.4.1':
     resolution: {integrity: sha512-HA+y+xwmQIl9EPvZonRk1/hsSAvAlpDjlpruyW8kTAQ++Oq5Fi7hFV0Y84TLHXJ6SciYHlKGqrekrS5wzkD5+Q==}
 
-  '@praha/oxlint-config-internal@1.0.2':
-    resolution: {integrity: sha512-obSKNMD9Xe9cvZItBYpZUngsxd8HziyyMBwP/AhW9/T3lCSNiG9x+Fqe1zi2QMTj87FcD/pQup2AuHQGyrt0Sg==}
+  '@praha/oxlint-config-internal@1.0.3':
+    resolution: {integrity: sha512-IaiM9Y01D09UAwffGn3pj5FpfwHJcP/Ft0FIBZJ2YxmBI1pHVy9KHyoKN5MKvHhI7i/Gisn27Tr0hDp4x7buJg==}
     peerDependencies:
       oxlint: ^1.79.0
       oxlint-tsgolint: '>=0.20.0'
 
-  '@praha/oxlint-config-standard@1.0.2':
-    resolution: {integrity: sha512-9s5alBrysg7c8nbLnWSz4VavdY+u4fJw6Q9Gzd/WP2abu9j7IaJcd/rpEP/6E0T8GPiyDCcQxzhEUv6fJIz7rQ==}
+  '@praha/oxlint-config-standard@1.0.3':
+    resolution: {integrity: sha512-pkSJvvG0iNq4plD4lQWtfF7ILagTcQ8AWi/1qIBhRiTk2M+9Mg8Nes21twpg/0Rel5qb+zs/s75tNTK5feMB+A==}
     peerDependencies:
       oxlint: ^1.79.0
       oxlint-tsgolint: ^7.0.0
@@ -5194,28 +5194,28 @@ snapshots:
 
   '@pnpm/deps.graph-sequencer@1100.0.1': {}
 
-  '@praha/byethrow-oxlint@0.12.0(@praha/byethrow@0.12.0(typescript@6.0.3))(oxlint@1.90.0(oxlint-tsgolint@7.0.2005))':
+  '@praha/byethrow-oxlint@0.13.0(@praha/byethrow@0.13.0(typescript@6.0.3))(oxlint@1.90.0(oxlint-tsgolint@7.0.2005))':
     dependencies:
       '@oxlint/plugins': 1.90.0
-      '@praha/byethrow': 0.12.0(typescript@6.0.3)
+      '@praha/byethrow': 0.13.0(typescript@6.0.3)
       oxlint: 1.90.0(oxlint-tsgolint@7.0.2005)
 
-  '@praha/byethrow@0.12.0(typescript@6.0.3)':
+  '@praha/byethrow@0.13.0(typescript@6.0.3)':
     dependencies:
       '@standard-schema/spec': 1.1.0
       typescript: 6.0.3
 
   '@praha/error-factory@1.4.1': {}
 
-  '@praha/oxlint-config-internal@1.0.2(oxlint-tsgolint@7.0.2005)(oxlint@1.90.0(oxlint-tsgolint@7.0.2005))':
+  '@praha/oxlint-config-internal@1.0.3(oxlint-tsgolint@7.0.2005)(oxlint@1.90.0(oxlint-tsgolint@7.0.2005))':
     dependencies:
       oxlint: 1.90.0(oxlint-tsgolint@7.0.2005)
       oxlint-tsgolint: 7.0.2005
 
-  '@praha/oxlint-config-standard@1.0.2(@praha/byethrow@0.12.0(typescript@6.0.3))(eslint@10.14.0(supports-color@8.1.1))(oxlint-tsgolint@7.0.2005)(oxlint@1.90.0(oxlint-tsgolint@7.0.2005))(supports-color@8.1.1)':
+  '@praha/oxlint-config-standard@1.0.3(@praha/byethrow@0.13.0(typescript@6.0.3))(eslint@10.14.0(supports-color@8.1.1))(oxlint-tsgolint@7.0.2005)(oxlint@1.90.0(oxlint-tsgolint@7.0.2005))(supports-color@8.1.1)':
     dependencies:
-      '@praha/byethrow-oxlint': 0.12.0(@praha/byethrow@0.12.0(typescript@6.0.3))(oxlint@1.90.0(oxlint-tsgolint@7.0.2005))
-      '@praha/oxlint-config-internal': 1.0.2(oxlint-tsgolint@7.0.2005)(oxlint@1.90.0(oxlint-tsgolint@7.0.2005))
+      '@praha/byethrow-oxlint': 0.13.0(@praha/byethrow@0.13.0(typescript@6.0.3))(oxlint@1.90.0(oxlint-tsgolint@7.0.2005))
+      '@praha/oxlint-config-internal': 1.0.3(oxlint-tsgolint@7.0.2005)(oxlint@1.90.0(oxlint-tsgolint@7.0.2005))
       '@stylistic/eslint-plugin': 5.10.0(eslint@10.14.0(supports-color@8.1.1))
       eslint-plugin-import-x: 4.17.1(eslint@10.14.0(supports-color@8.1.1))(supports-color@8.1.1)
       eslint-plugin-unicorn: 64.0.0(eslint@10.14.0(supports-color@8.1.1))
