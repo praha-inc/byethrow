@@ -19,7 +19,7 @@
     "@tsconfig/strictest": "2.0.8",
     "oxlint": "1.90.0",
     "oxlint-tsgolint": "7.0.2005",
-    "pkg-pr-new": "0.0.92",
+    "pkg-pr-new": "0.0.93",
     "turbo": "2.11.10",
     "vitest": "5.0.5"
   },
