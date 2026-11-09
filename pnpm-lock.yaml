@@ -317,8 +317,8 @@ importers:
   website:
     dependencies:
       '@rspress/core':
-        specifier: 2.1.0
-        version: 2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1)
+        specifier: 2.1.1
+        version: 2.1.1(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1)
       '@stackblitz/sdk':
         specifier: 1.11.1
         version: 1.11.1
@@ -349,10 +349,10 @@ importers:
         version: 1.4.1
       '@rspress/plugin-sitemap':
         specifier: 2.1.0
-        version: 2.1.0(@rspress/core@2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))
+        version: 2.1.0(@rspress/core@2.1.1(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))
       '@rspress/plugin-twoslash':
         specifier: 2.1.0
-        version: 2.1.0(@rspress/core@2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))(react@19.3.1)(supports-color@8.1.1)(typescript@6.0.3)
+        version: 2.1.0(@rspress/core@2.1.1(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))(react@19.3.1)(supports-color@8.1.1)(typescript@6.0.3)
       '@rstest/core':
         specifier: 0.12.5
         version: 0.12.5
@@ -1832,8 +1832,8 @@ packages:
       '@rspack/core':
         optional: true
 
-  '@rspress/core@2.1.0':
-    resolution: {integrity: sha512-xw5iGhzLn4O8vGUj8+y7AiVo51Pd1l1GkIBF9q5btfXTYR0xkGY984rxMFOYI43etvlRRkMM2du+IwiyqUnPGA==}
+  '@rspress/core@2.1.1':
+    resolution: {integrity: sha512-GArybZxyifQ/wC8N2SzVyFi5JCJpUXgajITV4if8ylOImjZr8j9Cgy+6o55tXEtq85r6XYYE5fbcEz2nxxCpnA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
@@ -1851,8 +1851,8 @@ packages:
       react: '>=18.0.0'
       typescript: ^5.5.0 || ^6.0.0
 
-  '@rspress/shared@2.1.0':
-    resolution: {integrity: sha512-D2wnLO4aV1eFxNbUqQaLY4QfZZktegM+lCIDbQ9H2wxNQHKde39U1hpRdZKIA4aCuPYf/RSb6EdmJiZOkoZaWw==}
+  '@rspress/shared@2.1.1':
+    resolution: {integrity: sha512-U+OEPt/Ze+ryJdLHvpJJv9hxiRp03rknn5pvhh6v0enjib9SuUrsku/cPzneal3EsNyDZB5kncghpH1iwVKxnA==}
 
   '@rstest/core@0.12.5':
     resolution: {integrity: sha512-qJ+3QOVcuB8DTGXi+OH2TSxruXaiz5xvDDrakyFNpjz580FFDWFR+1Wpg1upa22R6Q0yp/vkxjEveKDIzdBj5w==}
@@ -1872,6 +1872,10 @@ packages:
 
   '@shikijs/core@4.5.0':
     resolution: {integrity: sha512-6CIgwq+bt2JZ3OSjb/nBkkwEf/CfpHcbam+Mg5Pllco7HAGRQ2/EFhZrrJtbyNTgKwknfVS+llsXGygiDGwJWw==}
+    engines: {node: '>=20'}
+
+  '@shikijs/core@4.6.0':
+    resolution: {integrity: sha512-bfd4OKgvoyXYiYmMRuleA656P4V7M/Du9lcTl38Ngm6KszMj7bq4J1IGZwSYR4c95Tv5UQALtYNWUwaI9UT3xw==}
     engines: {node: '>=20'}
 
   '@shikijs/engine-javascript@4.5.0':
@@ -1896,6 +1900,10 @@ packages:
     resolution: {integrity: sha512-UM7ShlA8oz0OWxLLO8BmO9Ip6fVqdkt8yF0EH7nOCqHfrx1eEAzF0ZUVK7L+I8NEgeu1PEWSRlxaiPPeCb4iDg==}
     engines: {node: '>=20'}
 
+  '@shikijs/primitive@4.6.0':
+    resolution: {integrity: sha512-c54+TQEo9ToqgfL/AU8FpjnV09+GA9Oa7M5ROkkXteZfp5XzpAJGXjjvZQFQioJOwm/w/6Z3lIzQstAkl8coag==}
+    engines: {node: '>=20'}
+
   '@shikijs/rehype@4.5.0':
     resolution: {integrity: sha512-+OnQqc4Pdjo4m13sBdlBrPxuylSqWwnw6qOjmLRKGf6yDr1SdhZcKFUEXFGoFRBeRSwogmZp8M3LIAO7Urmxjw==}
     engines: {node: '>=20'}
@@ -1905,6 +1913,10 @@ packages:
 
   '@shikijs/themes@4.5.0':
     resolution: {integrity: sha512-zGb87H3UBbpuI4yoh5UguB1XbU+2BDU3kflM7UfZ+Cy2hWo9lBtqjSVK20gmLY6ukYl040hAypGXMgud9vul8Q==}
+    engines: {node: '>=20'}
+
+  '@shikijs/transformers@4.6.0':
+    resolution: {integrity: sha512-oZ28gYlPOYspv6AD74lCb14AAJugSY/+nJxRWjH42yDbdLAdftVU/PP36tOhb435Sfop2UGWcRGXY7HLLveKCg==}
     engines: {node: '>=20'}
 
   '@shikijs/twoslash@4.5.0':
@@ -1918,6 +1930,10 @@ packages:
 
   '@shikijs/types@4.5.0':
     resolution: {integrity: sha512-drtPrtD8N0DENyD2cyt6Ajy+IWsiCLgMxODwLTpvH1UsN6a9jf90tNTPjqwHvA+0Lzu9e0txk8DjfqH1p9UJRw==}
+    engines: {node: '>=20'}
+
+  '@shikijs/types@4.6.0':
+    resolution: {integrity: sha512-+ENG1adsKt/X7cRYw1Nl7BEpBmPOjmQ7bR/eGmHuMlT8gtOFf3KEi5l31DJYyAWhW6Y6bjP1plU7FmaxWGENFw==}
     engines: {node: '>=20'}
 
   '@shikijs/vscode-textmate@10.1.0':
@@ -5453,14 +5469,15 @@ snapshots:
     optionalDependencies:
       '@rspack/core': 2.3.0(@swc/helpers@0.5.23)
 
-  '@rspress/core@2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1)':
+  '@rspress/core@2.1.1(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1)':
     dependencies:
       '@mdx-js/mdx': 3.1.1(supports-color@8.1.1)
       '@mdx-js/react': 3.1.1(@types/react@19.3.0)(react@19.3.1)
       '@rsbuild/core': 2.3.0
       '@rsbuild/plugin-react': 2.1.1(@rsbuild/core@2.3.0)(@rspack/core@2.3.0(@swc/helpers@0.5.23))
-      '@rspress/shared': 2.1.0(supports-color@8.1.1)
+      '@rspress/shared': 2.1.1(supports-color@8.1.1)
       '@shikijs/rehype': 4.5.0
+      '@shikijs/transformers': 4.6.0
       '@types/mdast': 4.0.4
       '@types/react': 19.3.0
       '@unhead/react': 2.1.17(react@19.3.1)
@@ -5501,14 +5518,14 @@ snapshots:
       - micromark-util-types
       - supports-color
 
-  '@rspress/plugin-sitemap@2.1.0(@rspress/core@2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))':
+  '@rspress/plugin-sitemap@2.1.0(@rspress/core@2.1.1(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))':
     dependencies:
-      '@rspress/core': 2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1)
+      '@rspress/core': 2.1.1(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1)
 
-  '@rspress/plugin-twoslash@2.1.0(@rspress/core@2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))(react@19.3.1)(supports-color@8.1.1)(typescript@6.0.3)':
+  '@rspress/plugin-twoslash@2.1.0(@rspress/core@2.1.1(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1))(react@19.3.1)(supports-color@8.1.1)(typescript@6.0.3)':
     dependencies:
       '@floating-ui/dom': 1.8.0
-      '@rspress/core': 2.1.0(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1)
+      '@rspress/core': 2.1.1(@rspack/core@2.3.0(@swc/helpers@0.5.23))(micromark-util-types@2.0.3)(micromark@4.0.3(supports-color@8.1.1))(supports-color@8.1.1)
       '@shikijs/twoslash': 4.5.0(supports-color@8.1.1)(typescript@6.0.3)
       mdast-util-from-markdown: 2.1.0(supports-color@8.1.1)
       mdast-util-gfm: 3.1.0(supports-color@8.1.1)
@@ -5520,7 +5537,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rspress/shared@2.1.0(supports-color@8.1.1)':
+  '@rspress/shared@2.1.1(supports-color@8.1.1)':
     dependencies:
       '@rsbuild/core': 2.3.0
       '@shikijs/rehype': 4.5.0
@@ -5547,6 +5564,14 @@ snapshots:
     dependencies:
       '@shikijs/primitive': 4.5.0
       '@shikijs/types': 4.5.0
+      '@shikijs/vscode-textmate': 10.1.0
+      '@types/hast': 3.0.5
+      hast-util-to-html: 9.0.6
+
+  '@shikijs/core@4.6.0':
+    dependencies:
+      '@shikijs/primitive': 4.6.0
+      '@shikijs/types': 4.6.0
       '@shikijs/vscode-textmate': 10.1.0
       '@types/hast': 3.0.5
       hast-util-to-html: 9.0.6
@@ -5581,6 +5606,12 @@ snapshots:
       '@shikijs/vscode-textmate': 10.1.0
       '@types/hast': 3.0.5
 
+  '@shikijs/primitive@4.6.0':
+    dependencies:
+      '@shikijs/types': 4.6.0
+      '@shikijs/vscode-textmate': 10.1.0
+      '@types/hast': 3.0.5
+
   '@shikijs/rehype@4.5.0':
     dependencies:
       '@shikijs/types': 4.5.0
@@ -5598,6 +5629,11 @@ snapshots:
     dependencies:
       '@shikijs/types': 4.5.0
 
+  '@shikijs/transformers@4.6.0':
+    dependencies:
+      '@shikijs/core': 4.6.0
+      '@shikijs/types': 4.6.0
+
   '@shikijs/twoslash@4.5.0(supports-color@8.1.1)(typescript@6.0.3)':
     dependencies:
       '@shikijs/core': 4.5.0
@@ -5613,6 +5649,11 @@ snapshots:
       '@types/hast': 3.0.5
 
   '@shikijs/types@4.5.0':
+    dependencies:
+      '@shikijs/vscode-textmate': 10.1.0
+      '@types/hast': 3.0.5
+
+  '@shikijs/types@4.6.0':
     dependencies:
       '@shikijs/vscode-textmate': 10.1.0
       '@types/hast': 3.0.5
