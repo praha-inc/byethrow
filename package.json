@@ -18,7 +18,7 @@
     "@praha/oxlint-config-standard": "1.0.3",
     "@tsconfig/strictest": "2.0.8",
     "oxlint": "1.90.0",
-    "oxlint-tsgolint": "7.0.2005",
+    "oxlint-tsgolint": "7.0.2006",
     "pkg-pr-new": "0.0.93",
     "turbo": "2.11.10",
     "vitest": "5.1.0"
