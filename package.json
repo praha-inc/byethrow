@@ -16,7 +16,7 @@
     "@changesets/changelog-github": "1.0.1",
     "@changesets/cli": "3.0.3",
     "@praha/oxlint-config-standard": "1.0.3",
-    "@tsconfig/strictest": "2.0.8",
+    "@tsconfig/strictest": "2.0.9",
     "oxlint": "1.93.0",
     "oxlint-tsgolint": "7.0.2006",
     "pkg-pr-new": "0.0.93",
