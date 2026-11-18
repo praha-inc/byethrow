@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@praha/byethrow-testing": "0.13.0",
-    "@tsconfig/strictest": "2.0.8",
+    "@tsconfig/strictest": "2.0.9",
     "@types/node": "24.19.2",
     "tsx": "4.23.15",
     "vitest": "4.1.12"
